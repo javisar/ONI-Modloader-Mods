@@ -11,12 +11,9 @@ namespace ImprovedGasColourMod
         [HarmonyPatch(typeof(SimDebugView), "GetOxygenMapColour")]
         public static class ImprovedGasOverlayMod
         {
-            public const float EarPopFloat = 2.5f;
-
             public static bool Prefix(int cell, ref Color __result)
             {
-              //  ModSettings settings = ONI_Common.ModdyMcModscreen
-                float minMass = ONI_Common.State.ConfiguratorState.GasPressureStart;
+                //  ModSettings settings = ONI_Common.ModdyMcModscreen
                 float maxMass = ONI_Common.State.ConfiguratorState.GasPressureEnd;
 
                 Element element = Grid.Element[cell];
@@ -27,76 +24,47 @@ namespace ImprovedGasColourMod
                     return false;
                 }
 
-                Color gasColor = GetCellOverlayColor(cell);
-
-                float gasMass = Grid.Mass[cell];
-
-                gasMass -= minMass;
-
-                if (gasMass < 0)
-                {
-                    gasMass = 0;
-                }
-
-                maxMass -= minMass;
-
-                if (maxMass < float.Epsilon)
-                {
-                    maxMass = float.Epsilon;
-                }
-
-                float intensity;
-                ColorHSV gasColorHSV = gasColor;
                 float mass = Grid.Mass[cell];
-                float maxMarker;
-                float minMarker;
-                    minMarker = SimDebugView.minimumBreathable;
-                    maxMarker = SimDebugView.optimallyBreathable;
-                if (element.id == SimHashes.Oxygen || element.id == SimHashes.ContaminatedOxygen)
-                {
 
-                    // // To red for thin air
-                    // if (intensity < 1f)
-                    // {
-                    //     gasColorHSV.V = Mathf.Min(gasColorHSV.V + 1f - intensity, 0.9f);
-                    // }
+                SimHashes elementID = element.id;
+                Color primaryColor = GetCellOverlayColor(cell);
+                float pressureFraction = GetPressureFraction(mass, maxMass);
+
+                __result = GetGasColor(elementID, primaryColor, pressureFraction);
+
+                return false;
+            }
+
+            private static Color GetGasColor(SimHashes elementID, Color primaryColor, float pressureFraction)
+            {
+                ColorHSV colorHSV = primaryColor.ToHSV();
+
+                colorHSV = ScaleColorToPressure(colorHSV, pressureFraction, elementID);
+
+                // change to true when debugging
+                if (false)
+                {
+                    colorHSV.CheckAndLogOverflow(elementID, pressureFraction);
+                }
+
+                colorHSV = colorHSV.Clamp();
+
+                return colorHSV.ToRgb();
+            }
+
+            private static ColorHSV ScaleColorToPressure(ColorHSV color, float fraction, SimHashes elementID)
+            {
+                if (elementID == SimHashes.CarbonDioxide)
+                {
+                    color.V *= (1 - fraction) * 2;
                 }
                 else
                 {
-                    maxMarker *= 2f;
-
-                    //intensity = GetGasColorIntensity(gasMass, maxMass);
-                    //intensity = Mathf.Max(intensity, 0.15f);
-
-                }
-                intensity = Mathf.Max(0.05f, Mathf.InverseLerp(minMarker, maxMarker, mass));
-
-                // Pop ear drum marker
-                if (mass > EarPopFloat)
-                {
-                    gasColorHSV.H += 0.02f * Mathf.InverseLerp(EarPopFloat, 3.5f, mass);
-                    if (gasColorHSV.H > 1f)
-                    {
-                        gasColorHSV.H -= 1f;
-                    }
-
-                    float intens = Mathf.InverseLerp(EarPopFloat, 20f, mass);
-
-                    float modifier = 1f - intens / 2;
-
-                    gasColorHSV.V *= modifier;
-
+                    color.S *= fraction * 1.25f;
+                    color.V -= (1 - fraction) / 2;
                 }
 
-                // New code, use the saturation of a color for the pressure
-                gasColorHSV.S *= intensity;
-                __result = gasColorHSV;
-
-                return false;
-
-                // gasColor *= intensity;
-                // gasColor.a = 1;
-                // __result = gasColor;
+                return color;
             }
 
             public static Color GetCellOverlayColor(int cellIndex)
@@ -111,19 +79,13 @@ namespace ImprovedGasColourMod
                 return overlayColor;
             }
 
-            private static float GetGasColorIntensity(float mass, float maxMass)
+            private static float GetPressureFraction(float mass, float maxMass)
             {
-                float minIntensity = ONI_Common.State.ConfiguratorState.MinimumGasColorIntensity;
+                float fraction = mass / maxMass;
 
-                float intensity = mass / maxMass;
+                fraction = Mathf.Lerp(0.2f, 1, fraction);
 
-                intensity = Mathf.Sqrt(intensity);
-
-                intensity = Mathf.Clamp01(intensity);
-                intensity *= 1 - minIntensity;
-                intensity += minIntensity;
-
-                return intensity;
+                return fraction;
             }
         }
     }
