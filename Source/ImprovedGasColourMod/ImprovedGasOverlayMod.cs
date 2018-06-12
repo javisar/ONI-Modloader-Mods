@@ -47,7 +47,7 @@ namespace ImprovedGasColourMod
 
                 if (/*config.showEarPopMarker*/ true)
                 {
-                    colorHSV = MarkEarDrumPopPressure(colorHSV, mass);
+                    colorHSV = MarkEarDrumPopPressure(colorHSV, mass, elementID);
                 }
 
                 if (AdvancedDebugging)
@@ -101,11 +101,20 @@ namespace ImprovedGasColourMod
             /// <summary>
             /// Add flat value to color hue when pressure reaches EarPopFloat
             /// </summary>
-            private static ColorHSV MarkEarDrumPopPressure(ColorHSV color, float mass)
+            private static ColorHSV MarkEarDrumPopPressure(ColorHSV color, float mass, SimHashes elementID)
             {
                 if (mass > EarPopFloat)
                 {
-                    color.H += 0.1f;
+                    if (elementID == SimHashes.CarbonDioxide)
+                    {
+                        color.V += 0.3f;
+                        color.S += 0.4f;
+                    }
+                    else
+                    {
+                        // TODO: make hue change customizable in config
+                        color.H += 0.1f;
+                    }
                 }
 
                 return color;
