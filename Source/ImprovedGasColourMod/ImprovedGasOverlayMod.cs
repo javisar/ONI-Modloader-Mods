@@ -11,6 +11,11 @@ namespace ImprovedGasColourMod
         [HarmonyPatch(typeof(SimDebugView), "GetOxygenMapColour")]
         public static class ImprovedGasOverlayMod
         {
+            public const float EarPopFloat = 5;
+
+            // TODO: read from config (major fps drop when enabled)
+            private static bool AdvancedDebugging => false;
+
             public static bool Prefix(int cell, ref Color __result)
             {
                 //  ModSettings settings = ONI_Common.ModdyMcModscreen
@@ -25,31 +30,34 @@ namespace ImprovedGasColourMod
                 }
 
                 float mass = Grid.Mass[cell];
-
                 SimHashes elementID = element.id;
                 Color primaryColor = GetCellOverlayColor(cell);
                 float pressureFraction = GetPressureFraction(mass, maxMass);
 
-                __result = GetGasColor(elementID, primaryColor, pressureFraction);
+                __result = GetGasColor(elementID, primaryColor, pressureFraction, mass);
 
                 return false;
             }
 
-            private static Color GetGasColor(SimHashes elementID, Color primaryColor, float pressureFraction)
+            private static ColorHSV GetGasColor(SimHashes elementID, Color primaryColor, float pressureFraction, float mass)
             {
                 ColorHSV colorHSV = primaryColor.ToHSV();
 
                 colorHSV = ScaleColorToPressure(colorHSV, pressureFraction, elementID);
 
-                // change to true when debugging
-                if (false)
+                if (/*config.showEarPopMarker*/ true)
+                {
+                    colorHSV = MarkEarDrumPopPressure(colorHSV, mass);
+                }
+
+                if (AdvancedDebugging)
                 {
                     colorHSV.CheckAndLogOverflow(elementID, pressureFraction);
                 }
 
                 colorHSV = colorHSV.Clamp();
 
-                return colorHSV.ToRgb();
+                return colorHSV;
             }
 
             private static ColorHSV ScaleColorToPressure(ColorHSV color, float fraction, SimHashes elementID)
@@ -88,6 +96,19 @@ namespace ImprovedGasColourMod
                 fraction = Mathf.Lerp(minFraction, 1, fraction);
 
                 return fraction;
+            }
+
+            /// <summary>
+            /// Add flat value to color hue when pressure reaches EarPopFloat
+            /// </summary>
+            private static ColorHSV MarkEarDrumPopPressure(ColorHSV color, float mass)
+            {
+                if (mass > EarPopFloat)
+                {
+                    color.H += 0.1f;
+                }
+
+                return color;
             }
         }
     }
