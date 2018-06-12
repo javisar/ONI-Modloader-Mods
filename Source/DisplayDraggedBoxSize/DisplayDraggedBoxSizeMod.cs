@@ -35,8 +35,6 @@ namespace DisplayDraggedBoxSize
                         string boxSizeInfo = $" [{x}x{y}]";
 
                         hoverText.ToolName += boxSizeInfo;
-
-                        Debug.Log(cursorPos - downPos);
                     }
                 }
             }
