@@ -1,7 +1,7 @@
 ﻿using Harmony;
 using UnityEngine;
 
-namespace Patches
+namespace DisplayDraggedBoxSize
 {
     public static class DisplayDraggedBoxSizeMod
     {
