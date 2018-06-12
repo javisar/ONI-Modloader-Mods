@@ -40,12 +40,11 @@ namespace ImprovedGasColourMod
 
         public static ColorHSV Clamp(this ColorHSV color)
         {
-            color.H = Mathf.Clamp01(color.H);
+            color.H %= 1;
             color.S = Mathf.Clamp01(color.S);
             color.V = Mathf.Clamp01(color.V);
 
             return color;
         }
-
     }
 }
