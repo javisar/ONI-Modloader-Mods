@@ -21,12 +21,18 @@
             }
         }
 
+        // not used anymore
         public float GasPressureStart { get; set; } = 0.1f;
 
         public bool LegacyTileColorHandling { get; set; } = false;
 
         // gas overlay
         public float MinimumGasColorIntensity { get; set; } = 0.25f;
+
+        // major fps drop when enabled
+        public bool AdvancedGasOverlayDebugging { get; set; } = false;
+
+        public bool ShowEarDrumPopMarker { get; set; } = true;
 
         public bool ShowBuildingsAsWhite { get; set; }
 

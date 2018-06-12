@@ -13,9 +13,6 @@ namespace ImprovedGasColourMod
         {
             public const float EarPopFloat = 5;
 
-            // TODO: read from config (major fps drop when enabled)
-            private static bool AdvancedDebugging => false;
-
             public static bool Prefix(int cell, ref Color __result)
             {
                 //  ModSettings settings = ONI_Common.ModdyMcModscreen
@@ -45,12 +42,12 @@ namespace ImprovedGasColourMod
 
                 colorHSV = ScaleColorToPressure(colorHSV, pressureFraction, elementID);
 
-                if (/*config.showEarPopMarker*/ true)
+                if (ONI_Common.State.ConfiguratorState.ShowEarDrumPopMarker)
                 {
                     colorHSV = MarkEarDrumPopPressure(colorHSV, mass, elementID);
                 }
 
-                if (AdvancedDebugging)
+                if (ONI_Common.State.ConfiguratorState.AdvancedGasOverlayDebugging)
                 {
                     colorHSV.CheckAndLogOverflow(elementID, pressureFraction);
                 }
