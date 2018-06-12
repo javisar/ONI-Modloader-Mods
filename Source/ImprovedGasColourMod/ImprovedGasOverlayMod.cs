@@ -81,9 +81,11 @@ namespace ImprovedGasColourMod
 
             private static float GetPressureFraction(float mass, float maxMass)
             {
+                float minFraction = ONI_Common.State.ConfiguratorState.MinimumGasColorIntensity;
+
                 float fraction = mass / maxMass;
 
-                fraction = Mathf.Lerp(0.2f, 1, fraction);
+                fraction = Mathf.Lerp(minFraction, 1, fraction);
 
                 return fraction;
             }
