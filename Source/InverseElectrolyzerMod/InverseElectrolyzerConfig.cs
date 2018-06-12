@@ -117,7 +117,7 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 		};		
 		elementConverter.outputElements = new ElementConverter.OutputElement[1]
 		{
-			new ElementConverter.OutputElement(1f, SimHashes.Steam, 423.15f, true, 0f, 0.5f, false, 0.75f, 255, 0)
+			new ElementConverter.OutputElement(1f, SimHashes.Steam, 523.15f, true, 0f, 0.5f, false, 0.75f, 255, 0)
 		};
 		/*
 		ElementDropper elementDropper = go.AddComponent<ElementDropper>();

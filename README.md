@@ -75,7 +75,7 @@ Harmony Tutorials
 * https://github.com/roxxploxx/RimWorldModGuide/wiki/SHORTTUTORIAL:-Harmony
 * https://github.com/UnlimitedHugs/RimworldHugsLib/wiki/Introduction-to-Patching
 * https://github.com/UnlimitedHugs/RimworldHugsLib/wiki/Detouring
-
+* https://oxygennotincluded.gamepedia.com/Guide/Working_with_the_Game_Files
 
 
 Disclaimer
