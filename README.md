@@ -16,7 +16,7 @@ This project uses source code of and is based on:
 Examples
 --------
 * AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders.
-* CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher).
+* CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
 * CustomWorldMod: Enables the player to user custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
 * FastModeMod: Duplicants will build and dig very fast.
@@ -27,14 +27,14 @@ Examples
 * LiquidTankMod: Storage for liquids.
 * Patches (Do not use): Some incomplete tests.
 * PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material.
-* SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak)).
+* SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * SpeedControlMod: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode.
 * StorageLockerMod: Storage lockers won't need a foundation to be built.
 * ONI-Common: Common code, required by these mods:
-  * DraggablePanelMod: Makes panels draggable (Made by [@fistak](https://github.com/fistak)).
+  * DraggablePanelMod: Makes panels draggable (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
   * ImprovedGasColourMod: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)).
-  * MaterialColor: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak)).
-  * OnionPatches: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis)
+  * MaterialColor: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
+  * OnionPatches: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
 
 Requirements
