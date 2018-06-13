@@ -20,7 +20,7 @@ Examples
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
 * CustomWorldMod: Enables the player to user custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
 * FastModeMod: Duplicants will build and dig very fast.
-* DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool (thanks to fistak from github)
+* DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool (thanks to [@fistak](https://github.com/fistak))
 * InstantResearchMod: Forces instant research without Debug mode.
 * InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam.
