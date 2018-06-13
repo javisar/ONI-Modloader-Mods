@@ -19,10 +19,8 @@ Examples
 * CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher).
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
 * CustomWorldMod: Enables the player to user custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
-* DraggablePanelMod: Makes panels draggable (Made by [@fistak](https://github.com/fistak)). REQUIRES ONI-Common.
 * DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool (thanks to fistak from github)
 * FastModeMod: Duplicants will build an dig very fast.
-* ImprovedGasColourMod: Replaces the oxygen overly with gas colors. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)). REQUIRES ONI-Common.
 * InstantResearchMod: Forces instant research without Debug mode.
 * InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam.
@@ -35,6 +33,11 @@ Examples
 * SensorsMod: It modifies some ranges y automation sensors (Made by [@fistak](https://github.com/fistak)).
 * SpeedControlMod: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode.
 * StorageLockerMod: Storage lockers won't need a foundation to be built.
+* ONI-Common: Common code, required by these mods:
+  * DraggablePanelMod: Makes panels draggable (Made by [@fistak](https://github.com/fistak)). REQUIRES ONI-Common.
+  * ImprovedGasColourMod: Replaces the oxygen overly with gas colors. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)). REQUIRES ONI-Common.
+  * MaterialColor: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak)). REQUIRES ONI-Common.
+  * OnionPatches: Custom world seeds. DebugHandler hook. REQUIRES ONI-Common. Made by [@Moonkis](https://github.com/Moonkis)
 
 
 Requirements
