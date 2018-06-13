@@ -18,7 +18,7 @@ Examples
 * AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders.
 * CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
-* CustomWorldMod: Enables the player to user custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
+* CustomWorldMod: Enables the player to use custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
 * FastModeMod: Duplicants will build and dig very fast.
 * DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool (thanks to [@fistak](https://github.com/fistak))
 * InstantResearchMod: Forces instant research without Debug mode.
