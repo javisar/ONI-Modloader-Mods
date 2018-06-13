@@ -19,6 +19,7 @@ Examples
 * CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from Onion patcher).
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
 * CustomWorldMod: Enables the player to user custom world sizes. (Remade by Killface)
+* DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool (thanks to fistak from github)
 * DraggablePanelMod: Makes panels draggable. REQUIRES ONI-Common.
 * FastModeMod: Duplicants will build an dig very fast.
 * ImprovedGasColourMod: Replaces the oxygen overly with gas colors. Also visualizes the density (taken from Onion patcher, modified). REQUIRES ONI-Common.
