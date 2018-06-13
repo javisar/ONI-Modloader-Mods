@@ -25,9 +25,6 @@ Examples
 * InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam.
 * LiquidTankMod: Storage for liquids.
-* MaterialColor: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak)). REQUIRES ONI-Common.
-* ONI-Common: Common code for Onion Patches and other mods.
-* OnionPatches: Custom world seeds. DebugHandler hook. REQUIRES ONI-Common. Made by [@Moonkis](https://github.com/Moonkis)
 * Patches (Do not use): Some incomplete tests.
 * PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material.
 * SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak)).
