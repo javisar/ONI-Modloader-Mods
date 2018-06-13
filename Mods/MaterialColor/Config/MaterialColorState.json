@@ -7,5 +7,7 @@
   "LegacyTileColorHandling": false,
   "MinimumGasColorIntensity": 0.25,
   "GasPressureStart": 0.1,
-  "GasPressureEnd": 2.5
+  "GasPressureEnd": 2.5,
+  "ShowEarDrumPopMarker": true,
+  "AdvancedGasOverlayDebugging": false
 }
