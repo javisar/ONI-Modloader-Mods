@@ -22,7 +22,7 @@ Examples
 * DraggablePanelMod: Makes panels draggable (Made by [@fistak](https://github.com/fistak)). REQUIRES ONI-Common.
 * DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool (thanks to fistak from github)
 * FastModeMod: Duplicants will build an dig very fast.
-* ImprovedGasColourMod: Replaces the oxygen overly with gas colors. Also visualizes the density (Made by [@fistak](https://github.com/fistak), modified). REQUIRES ONI-Common.
+* ImprovedGasColourMod: Replaces the oxygen overly with gas colors. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)). REQUIRES ONI-Common.
 * InstantResearchMod: Forces instant research without Debug mode.
 * InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam.
