@@ -27,7 +27,6 @@ Examples
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam.
 * LiquidTankMod: Storage for liquids.
 * MaterialColor: Adds an overlay option to visualize what a building is made of (taken from Onion patcher). REQUIRES ONI-Common.
-* NoSteamMod: Prevents game closing if Steam is not installed.
 * ONI-Common: Common code for Onion Patches and other mods.
 * OnionPatches: Custom world seeds. DebugHandler hook. REQUIRES ONI-Common.
 * Patches (Do not use): Some incomplete tests.
