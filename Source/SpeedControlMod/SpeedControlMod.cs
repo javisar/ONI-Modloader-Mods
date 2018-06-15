@@ -10,7 +10,7 @@
     {
         private static bool Prefix(SpeedControlScreen __instance)
         {
-            Debug.Log(" === SpeedControlMod INI === ");
+            //Debug.Log(" === SpeedControlMod INI === ");
 
             if (__instance.IsPaused)
             {
@@ -29,9 +29,9 @@
                 Time.timeScale = 10f;
             }
 
-            __instance.OnGameSpeedChanged?.Invoke();
+            //__instance.OnGameSpeedChanged?.Invoke();
 
-            Debug.Log(" === SpeedControlMod END === ");
+            //Debug.Log(" === SpeedControlMod END === ");
 
             return false;
         }
