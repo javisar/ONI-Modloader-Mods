@@ -32,7 +32,7 @@ namespace DisplayDraggedBoxSize
                         int x = Mathf.Abs(downPosXY.X - cursorPosXY.X) + 1;
                         int y = Mathf.Abs(downPosXY.Y - cursorPosXY.Y) + 1;
 
-                        string boxSizeInfo = $" [{x}x{y}]";
+                        string boxSizeInfo = $" [{x}x{y}, {x*y} tiles total]";
 
                         hoverText.ToolName += boxSizeInfo;
                     }
