@@ -36,7 +36,7 @@ namespace InstantResearch
 			
 			private static void Prefix(ManagementMenu __instance, ref KToggle toggle, ref bool disabled, ref bool active, ref string tooltip, ref TextStyleSetting tooltip_style)
 			{
-				Debug.Log(" === ManagementMenu.ConfigureToggle Postfix === ");
+				//Debug.Log(" === ManagementMenu.ConfigureToggle Postfix === ");
 
 				//__instance.CheckResearch(null);
 				//this.ConfigureToggle(this.researchInfo.toggle, flag, active, tooltip, base.ToggleToolTipTextStyleSetting);

@@ -52,10 +52,10 @@ namespace AlternateOrdersMod
 
     }
 
-    [HarmonyPatch(typeof(Refinery), "OnCompleteWork", new Type[] { typeof(Worker) })]
+    [HarmonyPatch(typeof(Refinery), "OnCompleteWork", new Type[] { })]
     internal class AlternateOrdersMod2b
     {        
-        private static void Postfix(Refinery __instance, Worker worker)
+        private static void Postfix(Refinery __instance)
         {
             Debug.Log(" === AlternateOrdersMod2b Postfix === ");
             try
