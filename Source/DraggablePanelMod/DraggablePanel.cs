@@ -16,6 +16,9 @@
 
         private bool _isDragging;
 
+        // TODO: enable debug from config file
+        private const bool Debugging = false;
+
         public static void Attach(KScreen screen)
         {
             DraggablePanel panel = screen.FindOrAddUnityComponent<DraggablePanel>();
@@ -26,17 +29,29 @@
             }
 
             panel.Screen = screen;
+
+            if (Debugging)
+            {
+                Debug.Log("DraggablePanel: attached to KScreen" + screen.displayName);
+            }
         }
 
         // TODO: call when position is set by game
         public static void SetPositionFromFile(KScreen screen)
         {
-
             DraggablePanel panel = screen.FindOrAddUnityComponent<DraggablePanel>();
 
-            if (panel != null && panel.LoadPosition(out Vector2 newPosition))
+            if (panel != null)
             {
-                panel.SetPosition(newPosition);
+                if (panel.LoadPosition(out Vector2 newPosition))
+                {
+                    panel.SetPosition(newPosition);
+                    Debug.Log("DraggablePanel: set position to " + newPosition);
+                }
+            }
+            else if (Debugging)
+            {
+                Debug.Log("DraggablePanel: can't FindOrAddUnityComponent");
             }
         }
 
@@ -54,27 +69,30 @@
             {
                 if (this.Screen.GetMouseOver)
                 {
-                    this.Offset = Input.mousePosition - this.Screen.transform.position;
+                    this.Offset = mousePos - this.Screen.transform.position;
 
                     this._isDragging = true;
                 }
             }
 
-            if (this._isDragging && Input.GetMouseButtonUp(0))
+            if (this._isDragging)
             {
-                this._isDragging = false;
+                Vector3 newPosition = mousePos - this.Offset;
 
-                this.SavePosition(mousePos - this.Offset);
+                if (Input.GetMouseButtonUp(0))
+                {
+                    this._isDragging = false;
+
+                    this.SavePosition(newPosition);
+
+                    if (Debugging)
+                    {
+                        Debug.Log("DraggablePanel: Saved new panel position");
+                    }
+                }
+
+                this.SetPosition(newPosition);
             }
-
-            if (!this._isDragging)
-            {
-                return;
-            }
-
-            Vector3 newPosition = mousePos - this.Offset;
-
-            this.SetPosition(newPosition);
         }
 
         private bool LoadPosition(out Vector2 position)
