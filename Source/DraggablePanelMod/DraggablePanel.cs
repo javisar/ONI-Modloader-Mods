@@ -32,13 +32,18 @@
 
             if (Debugging)
             {
-                Debug.Log("DraggablePanel: attached to KScreen" + screen.displayName);
+                Debug.Log("DraggablePanel: Attached to KScreen" + screen.displayName);
             }
         }
 
         // TODO: call when position is set by game
         public static void SetPositionFromFile(KScreen screen)
         {
+            if (Debugging)
+            {
+                Debug.Log("DraggablePanel: SetPositionFromFile enter");
+            }
+
             DraggablePanel panel = screen.FindOrAddUnityComponent<DraggablePanel>();
 
             if (panel != null)
@@ -46,12 +51,12 @@
                 if (panel.LoadPosition(out Vector2 newPosition))
                 {
                     panel.SetPosition(newPosition);
-                    Debug.Log("DraggablePanel: set position to " + newPosition);
+                    Debug.Log("DraggablePanel: Loaded position: " + newPosition);
                 }
             }
             else if (Debugging)
             {
-                Debug.Log("DraggablePanel: can't FindOrAddUnityComponent");
+                Debug.Log("DraggablePanel: Can't FindOrAddUnityComponent");
             }
         }
 
@@ -87,7 +92,7 @@
 
                     if (Debugging)
                     {
-                        Debug.Log("DraggablePanel: Saved new panel position");
+                        Debug.Log("DraggablePanel: Saved new panel position: " + newPosition);
                     }
                 }
 
