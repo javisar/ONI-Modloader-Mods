@@ -9,7 +9,7 @@
     /// </summary>
     public class DraggablePanel : MonoBehaviour
     {
-        public Vector3 Offset;
+        public Vector2 Offset;
 
         // Use GetComponent<KScreen>() instead?
         public KScreen Screen;
@@ -68,13 +68,14 @@
                 return;
             }
 
-            Vector3 mousePos = Input.mousePosition;
+            Vector2 mousePos = Input.mousePosition;
 
             if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
             {
                 if (this.Screen.GetMouseOver)
                 {
-                    this.Offset = mousePos - this.Screen.transform.position;
+                    // TODO: cache RectTransform component
+                    this.Offset = mousePos - this.Screen.GetComponentInParent<RectTransform>().anchoredPosition;
 
                     this._isDragging = true;
                 }
@@ -82,7 +83,7 @@
 
             if (this._isDragging)
             {
-                Vector3 newPosition = mousePos - this.Offset;
+                Vector2 newPosition = mousePos - this.Offset;
 
                 if (Input.GetMouseButtonUp(0))
                 {
@@ -119,7 +120,7 @@
                 return;
             }
 
-            this.Screen.transform.position = newPosition;
+            this.Screen.GetComponentInParent<RectTransform>().anchoredPosition = newPosition;
         }
     }
 }
