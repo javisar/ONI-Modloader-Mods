@@ -9,12 +9,15 @@
     /// </summary>
     public class DraggablePanel : MonoBehaviour
     {
-        public Vector3 Offset;
+        public Vector2 Offset;
 
         // Use GetComponent<KScreen>() instead?
         public KScreen Screen;
 
         private bool _isDragging;
+
+        // TODO: enable debug from config file
+        private const bool Debugging = false;
 
         public static void Attach(KScreen screen)
         {
@@ -26,17 +29,34 @@
             }
 
             panel.Screen = screen;
+
+            if (Debugging)
+            {
+                Debug.Log("DraggablePanel: Attached to KScreen" + screen.displayName);
+            }
         }
 
         // TODO: call when position is set by game
         public static void SetPositionFromFile(KScreen screen)
         {
+            if (Debugging)
+            {
+                Debug.Log("DraggablePanel: SetPositionFromFile enter");
+            }
 
             DraggablePanel panel = screen.FindOrAddUnityComponent<DraggablePanel>();
 
-            if (panel != null && panel.LoadPosition(out Vector2 newPosition))
+            if (panel != null)
             {
-                panel.SetPosition(newPosition);
+                if (panel.LoadPosition(out Vector2 newPosition))
+                {
+                    panel.SetPosition(newPosition);
+                    Debug.Log("DraggablePanel: Loaded position: " + newPosition);
+                }
+            }
+            else if (Debugging)
+            {
+                Debug.Log("DraggablePanel: Can't FindOrAddUnityComponent");
             }
         }
 
@@ -48,33 +68,37 @@
                 return;
             }
 
-            Vector3 mousePos = Input.mousePosition;
+            Vector2 mousePos = Input.mousePosition;
 
             if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
             {
                 if (this.Screen.GetMouseOver)
                 {
-                    this.Offset = Input.mousePosition - this.Screen.transform.position;
+                    // TODO: cache RectTransform component
+                    this.Offset = mousePos - this.Screen.GetComponentInParent<RectTransform>().anchoredPosition;
 
                     this._isDragging = true;
                 }
             }
 
-            if (this._isDragging && Input.GetMouseButtonUp(0))
+            if (this._isDragging)
             {
-                this._isDragging = false;
+                Vector2 newPosition = mousePos - this.Offset;
 
-                this.SavePosition(mousePos - this.Offset);
+                if (Input.GetMouseButtonUp(0))
+                {
+                    this._isDragging = false;
+
+                    this.SavePosition(newPosition);
+
+                    if (Debugging)
+                    {
+                        Debug.Log("DraggablePanel: Saved new panel position: " + newPosition);
+                    }
+                }
+
+                this.SetPosition(newPosition);
             }
-
-            if (!this._isDragging)
-            {
-                return;
-            }
-
-            Vector3 newPosition = mousePos - this.Offset;
-
-            this.SetPosition(newPosition);
         }
 
         private bool LoadPosition(out Vector2 position)
@@ -96,7 +120,7 @@
                 return;
             }
 
-            this.Screen.transform.position = newPosition;
+            this.Screen.GetComponentInParent<RectTransform>().anchoredPosition = newPosition;
         }
     }
 }
