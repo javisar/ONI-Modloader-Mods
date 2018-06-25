@@ -15,26 +15,26 @@ This project uses source code of and is based on:
 
 Examples
 --------
-* AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders.
-* CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from Onion patcher).
+* AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
+* CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
-* CustomWorldMod: Enables the player to user custom world sizes. (Remade by Killface)
-* DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool (thanks to fistak from github)
-* DraggablePanelMod: Makes panels draggable. REQUIRES ONI-Common.
-* FastModeMod: Duplicants will build an dig very fast.
-* ImprovedGasColourMod: Replaces the oxygen overly with gas colors. Also visualizes the density (taken from Onion patcher, modified). REQUIRES ONI-Common.
-* InstantResearchMod: Forces instant research without Debug mode.
-* InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door
-* InverseElectrolyzerMod: Combines hydrogen and oxygen into steam.
-* LiquidTankMod: Storage for liquids.
-* MaterialColor: Adds an overlay option to visualize what a building is made of (taken from Onion patcher). REQUIRES ONI-Common.
-* ONI-Common: Common code for Onion Patches and other mods.
-* OnionPatches: Custom world seeds. DebugHandler hook. REQUIRES ONI-Common.
+* CustomWorldMod: Enables the player to use custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
+* FastModeMod: Duplicants will build and dig very fast. Made by [@javisar](https://github.com/javisar).
+* DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool. Made by [@fistak](https://github.com/fistak).
+* InstantResearchMod: Forces instant research without Debug mode. Made by [@javisar](https://github.com/javisar).
+* InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door. Made by [@javisar](https://github.com/javisar).
+* InverseElectrolyzerMod: Combines hydrogen and oxygen into steam. Made by [@javisar](https://github.com/javisar).
+* LiquidTankMod: Storage for liquids. Made by [@javisar](https://github.com/javisar).
 * Patches (Do not use): Some incomplete tests.
-* PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material.
-* SensorsMod: It modifies some ranges y automation sensors (taken from Etiam's MateralColor mod pack).
-* SpeedControlMod: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode.
-* StorageLockerMod: Storage lockers won't need a foundation to be built.
+* PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
+* SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
+* SpeedControlMod: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
+* StorageLockerMod: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
+* ONI-Common: Common code, required by these mods:
+  * DraggablePanelMod: Makes panels draggable (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
+  * ImprovedGasColourMod: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)).
+  * MaterialColor: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
+  * OnionPatches: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
 
 Requirements
