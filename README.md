@@ -26,6 +26,7 @@ Examples
 * InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door. Made by [@javisar](https://github.com/javisar).
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam. Made by [@javisar](https://github.com/javisar).
 * LiquidTankMod: Storage for liquids. Made by [@javisar](https://github.com/javisar).
+* NoFixedTemps: The output fluid temperatures of the machinery aren't fixed. Made by [@javisar](https://github.com/javisar).
 * Patches (Do not use): Some incomplete tests.
 * PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
 * SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
