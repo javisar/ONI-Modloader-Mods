@@ -52,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "11_Outdated", "11_Outdated"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayDraggedBoxSize", "DisplayDraggedBoxSize\DisplayDraggedBoxSize.csproj", "{77C68CDF-0CC0-4DD2-BEDD-C9B0D05CC546}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirLockMod", "AirLockMod\AirLockMod.csproj", "{905554DA-759F-438D-9520-016BA8CAD9AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -302,6 +304,18 @@ Global
 		{77C68CDF-0CC0-4DD2-BEDD-C9B0D05CC546}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77C68CDF-0CC0-4DD2-BEDD-C9B0D05CC546}.Release|x86.ActiveCfg = Release|Any CPU
 		{77C68CDF-0CC0-4DD2-BEDD-C9B0D05CC546}.Release|x86.Build.0 = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Debug|x86.Build.0 = Debug|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Patching|Any CPU.ActiveCfg = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Patching|Any CPU.Build.0 = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Patching|x86.ActiveCfg = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Patching|x86.Build.0 = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Release|x86.ActiveCfg = Release|Any CPU
+		{905554DA-759F-438D-9520-016BA8CAD9AC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -331,6 +345,7 @@ Global
 		{E17824E3-3934-4CFF-831C-A8EB3ECD6724} = {8E4312B0-3AE8-42CB-A2ED-CB8E39B39CD4}
 		{05AEF266-9A07-41B4-83C5-FC6632B27A0E} = {0263B9CC-A5D0-433C-82D2-20AAD99BAE40}
 		{77C68CDF-0CC0-4DD2-BEDD-C9B0D05CC546} = {8E4312B0-3AE8-42CB-A2ED-CB8E39B39CD4}
+		{905554DA-759F-438D-9520-016BA8CAD9AC} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {34648007-CC4C-4A8D-91A2-485820AFC9A9}
