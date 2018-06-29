@@ -15,7 +15,6 @@ This project uses source code of and is based on:
 
 Examples
 --------
-* AirLockMod: This door doesn't allow gases or liquids to flow. Made by [@javisar](https://github.com/javisar).
 * AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
 * CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
