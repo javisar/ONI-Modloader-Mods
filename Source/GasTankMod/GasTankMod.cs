@@ -13,9 +13,9 @@ namespace GasTankMod
 		private static void Prefix()
 		{
 			Debug.Log(" === GeneratedBuildings.LoadGeneratedBuildings Prefix === " + GasTankConfig.ID);
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDTANK.NAME", "Gas Tank");
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDTANK.DESC", "");
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDTANK.EFFECT", "");
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.GASTANK.NAME", "Gas Tank");
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.GASTANK.DESC", "");
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.GASTANK.EFFECT", "");
 
 			List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[10].data);
 			ls.Add(GasTankConfig.ID);
