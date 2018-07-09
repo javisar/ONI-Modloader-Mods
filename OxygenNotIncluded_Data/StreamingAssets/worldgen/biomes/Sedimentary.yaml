@@ -1,0 +1,116 @@
+TerrainBiomeLookupTable:
+  Basic:
+  - content: SandStone
+    bandSize: 0.2
+  - content: Sand
+    bandSize: 0.15
+  - content: Dirt
+    bandSize: 0.2
+  - content: Algae
+    bandSize: 0.4
+  - content: Cuprite
+    bandSize: 0.06
+    overrides:
+      massOverride: 350
+  - content: OxyRock
+    bandSize: 0.04
+  - content: Oxygen
+    bandSize: 1.3
+  - content: UraniumOre
+    bandSize: 1    
+  Basic_CO2:
+  - content: SandStone
+    bandSize: 0.2
+  - content: Cuprite
+    bandSize: 0.15
+    overrides:
+      massOverride: 350
+  - content: Dirt
+    bandSize: 0.2
+  - content: Algae
+    bandSize: 0.4
+  - content: Cuprite
+    bandSize: 0.06
+    overrides:
+      massOverride: 350
+  - content: CarbonDioxide
+    bandSize: 1
+  Basic_Vacuum:
+  - content: SandStone
+    bandSize: 0.2
+  - content: Dirt
+    bandSize: 0.2
+  - content: Cuprite
+    bandSize: 0.1
+    overrides:
+      massOverride: 350
+  - content: Vacuum
+    bandSize: 1
+  Metal_CO2:
+  - content: SandStone
+    bandSize: 0.2
+  - content: Sand
+    bandSize: 0.15
+  - content: Dirt
+    bandSize: 0.1
+  - content: Cuprite
+    bandSize: 0.25
+    overrides:
+      massOverride: 350
+  - content: Carbon
+    bandSize: 0.2
+  - content: CarbonDioxide
+    bandSize: 0.7
+  - content: Cuprite
+    bandSize: 0.8
+    overrides:
+      massOverride: 350
+  - content: Dirt
+    bandSize: 0.2
+  Metal_Vacuum:
+  - content: SandStone
+    bandSize: 0.2
+  - content: Sand
+    bandSize: 0.15
+  - content: Dirt
+    bandSize: 0.2
+  - content: Cuprite
+    bandSize: 0.15
+    overrides:
+      massOverride: 350
+  - content: Carbon
+    bandSize: 0.2
+  - content: Vacuum
+    bandSize: 0.8
+  - content: Cuprite
+    bandSize: 0.5
+    overrides:
+      massOverride: 350
+  - content: Dirt
+    bandSize: 0.2
+  Lake_Oxygen:
+  - content: SandStone
+    bandSize: 0.2
+  - content: Sand
+    bandSize: 0.15
+  - content: Dirt
+    bandSize: 0.2
+  - content: Algae
+    bandSize: 0.3
+  - content: Oxygen
+    bandSize: 0.8
+  - content: Water
+    bandSize: 0.5
+  Lake_CO2:
+  - content: SandStone
+    bandSize: 0.2
+  - content: Sand
+    bandSize: 0.15
+  - content: Dirt
+    bandSize: 0.2
+  - content: Algae
+    bandSize: 0.3
+  - content: CarbonDioxide
+    bandSize: 1
+  - content: Water
+    bandSize: 0.5
