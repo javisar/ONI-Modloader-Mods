@@ -16,6 +16,7 @@ This project uses source code of and is based on:
 Examples
 --------
 * AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
+* BuildableAETNMod: Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. Made by [@javisar](https://github.com/javisar).
 * CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
 * CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
 * CustomWorldMod: Enables the player to use custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
