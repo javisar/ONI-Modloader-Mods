@@ -1,6 +1,6 @@
 # ONI-Modloader Mods
 
-Example mods for ONI-Modloader:
+Used with ONI-Modloader:
 https://github.com/javisar/ONI-Modloader
 
 Forums in Klei:
