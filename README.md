@@ -42,8 +42,8 @@ Examples
 
 Requirements
 ------------
-* .NET Framework 3.5
-* Harmony Patcher
+* .NET Framework 4
+* Harmony Patcher 1.1.0
 * Mono.Cecil
 * Visual Studio 2015
 

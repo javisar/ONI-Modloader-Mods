@@ -10,11 +10,13 @@
         {
             byte[] bytes = File.ReadAllBytes(path);
             Texture2D texture =
-            new Texture2D(width, height, TextureFormat.RGB24, false) { filterMode = FilterMode.Trilinear };
+				new Texture2D(width, height, TextureFormat.RGB24, false) { filterMode = FilterMode.Trilinear };
+			//Debug.Log(" === SIZE "+bytes.Length+" === ");
+			// texture.LoadImage(bytes);
+			//texture.LoadRawTextureData(bytes);
+			ImageConversion.LoadImage(texture, bytes);
 
-            texture.LoadImage(bytes);
-
-            return Sprite.Create(texture, new Rect(0, 0, width, height), new Vector2(0.5f, 0.0f), 1.0f);
+			return Sprite.Create(texture, new Rect(0, 0, width, height), new Vector2(0.5f, 0.0f), 1.0f);
         }
     }
 }
