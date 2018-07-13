@@ -54,11 +54,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GasWarpConfig.cs" />
+    <Compile Include="GasWarpMod.cs" />
     <Compile Include="FluidWarpMod.cs" />
+    <Compile Include="LiquidWarpMod.cs" />
     <Compile Include="LiquidWarpConfig.cs" />
     <Compile Include="PacketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValveWarpBase.cs" />
+    <None Include="ValveWarpBase.cs.bak" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

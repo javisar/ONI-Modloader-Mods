@@ -3,10 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FluidWarpMod
+namespace WarpMod
 {
-    public class PacketData
+	public static class LiquidWarpData
+	{
+		public static List<PacketData> LiquidPackets = new List<PacketData>();
+
+	}
+
+	public static class GasWarpData
+	{
+		public static List<PacketData> GasPackets = new List<PacketData>();
+
+	}
+
+	public class PacketData
     {
+		public int content_type;
         public float current_flow;
         public int cell_idx;
         public SimHashes element;
@@ -15,9 +28,10 @@ namespace FluidWarpMod
         public byte disease_idx;
         public int disease_count;
 
-        public PacketData(float current_flow, int cell_idx, SimHashes element, float mass, float temperature, byte disease_idx, int disease_count)
+        public PacketData(int content_type, float current_flow, int cell_idx, SimHashes element, float mass, float temperature, byte disease_idx, int disease_count)
         {
-            this.current_flow = current_flow;
+			this.content_type = content_type;
+			this.current_flow = current_flow;
             this.cell_idx = cell_idx;
             this.element = element;
             this.mass = mass;

@@ -7,26 +7,58 @@ using Harmony;
 using UnityEngine;
 using WarpMod;
 
-namespace LiquidWarpMod
+namespace GasWarpMod
 {
-	internal class FluidWarpMod_Utils
+       
+    
+    [HarmonyPatch(typeof(GeneratedBuildings), "LoadGeneratedBuildings")]
+    internal class GasWarpMod_GeneratedBuildings_LoadGeneratedBuildings
 	{
-		public static ConduitType GetConduitType(ValveSideScreen __instance) {			
-			FieldInfo fi1 = AccessTools.Field(typeof(ValveSideScreen), "targetValve");
-			FieldInfo fi2 = AccessTools.Field(typeof(Valve), "valveBase");
+        private static void Prefix()
+        {
+            Debug.Log(" === GeneratedBuildings Prefix === " + GasWarpConfig.ID);
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.NAME", "Gas Stargate");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.DESC", "Gas Stargates provides an easy way to transport gases from one place to another.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
 
-			ConduitType type = ((ValveBase)fi2.GetValue(fi1.GetValue(__instance))).conduitType;
-			return type;
-		}
-	}
+            List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[10].data);
+            ls.Add(GasWarpConfig.ID);
+            TUNING.BUILDINGS.PLANORDER[10].data = (string[])ls.ToArray();
 
+            TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(GasWarpConfig.ID);
+
+
+        }
+        private static void Postfix()
+        {
+
+            Debug.Log(" === GeneratedBuildings Postfix === " + GasWarpConfig.ID);
+            object obj = Activator.CreateInstance(typeof(GasWarpConfig));
+            BuildingConfigManager.Instance.RegisterBuilding(obj as IBuildingConfig);
+        }
+    }
+
+    [HarmonyPatch(typeof(Db), "Initialize")]
+    internal class GasWarpMod_Db_Initialize
+	{
+        private static void Prefix(Db __instance)
+        {
+            Debug.Log(" === Database.Techs loaded === " + GasWarpConfig.ID);
+            List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["ImprovedGasPiping"]);
+            ls.Add(GasWarpConfig.ID);
+            Database.Techs.TECH_GROUPING["ImprovedGasPiping"] = (string[])ls.ToArray();
+
+            //Database.Techs.TECH_GROUPING["TemperatureModulation"].Add("InsulatedPressureDoor");
+        }
+    }
+	/*
 	[HarmonyPatch(typeof(ValveBase), "ConduitUpdate")]
-	internal class FluidWarpMod_ValveBase_ConduitUpdate
+	internal class GasWarpMod_ValveBase_ConduitUpdate
 	{
 		private static bool Prefix(ValveBase __instance, float dt)
 		{
-			Debug.Log(" === ValveBase.ConduitUpdate(" + dt + ") Prefix " + __instance.conduitType);
-			if (__instance.conduitType != (ConduitType)100 && __instance.conduitType != (ConduitType)101) return true;
+			Debug.Log(" === ValveBase.ConduitUpdate("+dt+") Prefix "+ __instance.conduitType);
+			if (__instance.conduitType != (ConduitType)101) return true;
 
 			FieldInfo fi1 = AccessTools.Field(typeof(ValveBase), "inputCell");
 			FieldInfo fi2 = AccessTools.Field(typeof(ValveBase), "outputCell");
@@ -57,11 +89,11 @@ namespace LiquidWarpMod
 					int disease_count = (int)(num2 * (float)contents.diseaseCount);
 					Debug.Log("List " + num);
 
-					LiquidWarpData.LiquidPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
-
+					GasWarpData.GasPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+					
 					//float num3 = flowManager.AddElement(this.outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
 					//Game.Instance.accumulators.Accumulate(this.flowAccumulator, num3);				
-
+					
 					//float num3 = Mathf.Min(num, 10f - contents.mass);
 					float num3 = num;
 					if (num3 > 0f)
@@ -81,7 +113,7 @@ namespace LiquidWarpMod
 
 				PacketData toRemove = null;
 
-				foreach (PacketData packet in LiquidWarpData.LiquidPackets)
+				foreach (PacketData packet in GasWarpData.GasPackets)
 				{
 					Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
 					if ((float)fi.GetValue(__instance) == packet.current_flow
@@ -97,7 +129,7 @@ namespace LiquidWarpMod
 
 				if (toRemove != null)
 				{
-					LiquidWarpData.LiquidPackets.Remove(toRemove);
+					GasWarpData.GasPackets.Remove(toRemove);
 					toRemove = null;
 				}
 
@@ -109,66 +141,6 @@ namespace LiquidWarpMod
 			return false;
 		}
 	}
-
-	[HarmonyPatch(typeof(ValveSideScreen), "OnSpawn")]
-    internal class FluidWarpMod_ValveSideScreen_OnSpawn
-	{
-        private static void Postfix(ValveSideScreen __instance)
-        {
-            Debug.Log(" === FluidWarpMod_ValveSideScreen_OnSpawn Postfix === ");
-
-			FieldInfo fi0 = AccessTools.Field(typeof(ValveSideScreen), "unitsLabel");
-			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);			
-			if (type == (ConduitType)100 || type == (ConduitType)101)
-			{
-				((LocText)fi0.GetValue(__instance)).text = "Ch.";
-			}
-		
-		}
-        
-    }
-
-	[HarmonyPatch(typeof(ValveSideScreen), "GetTitle")]
-	internal class FluidWarpMod_ValveSideScreen_GetTitle
-	{
-		private static bool Prefix(ValveSideScreen __instance, ref string __result)
-		{
-			Debug.Log(" === FluidWarpMod_ValveSideScreen_GetTitle Postfix === ");
-
-			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
-			if (type == (ConduitType)100 || type == (ConduitType)101)
-			{
-				__result = "Channel";
-				return false;
-			}
-			else
-			{
-				return true;
-			}		
-
-		}
-
-	}
-
-	[HarmonyPatch(typeof(ValveSideScreen), "SetTarget")]
-	internal class FluidWarpMod_ValveSideScreen_SetTarget
-	{
-		private static void Postfix(ValveSideScreen __instance)
-		{
-			Debug.Log(" === FluidWarpMod_ValveSideScreen_SetTarget Postfix === ");
-
-			FieldInfo fi3 = AccessTools.Field(typeof(ValveSideScreen), "minFlowLabel");
-			FieldInfo fi4 = AccessTools.Field(typeof(ValveSideScreen), "maxFlowLabel");
-
-			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
-			if (type == (ConduitType)100 || type == (ConduitType)101)
-			{
-				((LocText)fi3.GetValue(__instance)).text = "Ch.";
-				((LocText)fi4.GetValue(__instance)).text = "Ch.";
-			}
-
-		}
-
-	}
-
+	
+	*/
 }
