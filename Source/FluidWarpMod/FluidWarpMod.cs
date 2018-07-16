@@ -25,7 +25,7 @@ namespace LiquidWarpMod
 	{
 		private static bool Prefix(ValveBase __instance, float dt)
 		{
-			Debug.Log(" === ValveBase.ConduitUpdate(" + dt + ") Prefix " + __instance.conduitType);
+			//Debug.Log(" === ValveBase.ConduitUpdate(" + dt + ") Prefix " + __instance.conduitType);
 			if (__instance.conduitType != (ConduitType)100 && __instance.conduitType != (ConduitType)101) return true;
 
 			FieldInfo fi1 = AccessTools.Field(typeof(ValveBase), "inputCell");
@@ -49,13 +49,13 @@ namespace LiquidWarpMod
 				FieldInfo fi = AccessTools.Field(typeof(ValveBase), "currentFlow");
 				//float num = Mathf.Min(contents.mass, (float)fi.GetValue(this) * dt);
 				float num = Mathf.Min(contents.mass, 10f * dt);
-				Debug.Log("ConduitUpdate " + num);
+				//Debug.Log("ConduitUpdate " + num);
 				if (num > 0f)
 				{
 
 					float num2 = num / contents.mass;
 					int disease_count = (int)(num2 * (float)contents.diseaseCount);
-					Debug.Log("List " + num);
+					//Debug.Log("List " + num);
 
 					LiquidWarpData.LiquidPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
 
@@ -83,12 +83,12 @@ namespace LiquidWarpMod
 
 				foreach (PacketData packet in LiquidWarpData.LiquidPackets)
 				{
-					Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
+					//Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
 					if ((float)fi.GetValue(__instance) == packet.current_flow
 						&& (int)__instance.conduitType == packet.content_type)
 					{
 						float num3 = flowManager.AddElement((int)fi2.GetValue(__instance), packet.element, packet.mass, packet.temperature, packet.disease_idx, packet.disease_count);
-						Debug.Log("Adding Element to pipe: " + packet.mass + "," + num3);
+						//Debug.Log("Adding Element to pipe: " + packet.mass + "," + num3);
 						Game.Instance.accumulators.Accumulate((HandleVector<int>.Handle)fi3.GetValue(__instance), num3);
 						toRemove = packet;
 						break;
