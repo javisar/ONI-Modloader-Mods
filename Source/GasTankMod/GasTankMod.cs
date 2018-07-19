@@ -48,4 +48,22 @@ namespace GasTankMod
 		}
 	}
 
+	[HarmonyPatch(typeof(KSerialization.Manager), "Initialize")]
+	internal class KSerialization_Manager_Initialize
+	{
+		private static bool Prefix(ref IList<Type> root_types)
+		{
+			Debug.Log(" === KSerialization_Manager_Initialize === ");
+
+			List<Type> result = new List<Type>();
+			for (int i = 0; i < root_types.Count; i++)
+			{
+				result.Add(root_types[i]);
+			}
+			result.Add(typeof(GasTank));
+			root_types = result.ToArray();
+
+			return true;
+		}
+	}
 }
