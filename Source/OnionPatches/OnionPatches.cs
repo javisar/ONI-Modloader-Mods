@@ -29,8 +29,9 @@ namespace OnionPatches
 		}
 		*/
 
+
 		[HarmonyPatch(typeof(DebugHandler))]
-		public static class DebugHandlerMod
+        public static class DebugHandlerMod
 		{
 			public static void Postfix(DebugHandler __instance)
 			{

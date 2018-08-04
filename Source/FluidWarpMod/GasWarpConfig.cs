@@ -1,7 +1,4 @@
-﻿// LiquidValveConfig
-using LiquidWarpMod;
-using System.Collections.Generic;
-using TUNING;
+﻿using TUNING;
 using UnityEngine;
 
 public class GasWarpConfig : IBuildingConfig
