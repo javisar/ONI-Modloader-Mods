@@ -52,6 +52,8 @@ Outdated mods:
 * InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door. Made by [@javisar](https://github.com/javisar).
 * Patches (Do not use): Some incomplete tests.
 
+More mods in:
+* https://github.com/Cairath/ONI-Mods
 
 Downloads
 ---------
