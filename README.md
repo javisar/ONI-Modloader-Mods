@@ -18,7 +18,6 @@ Examples
 * AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
 * BuildableAETNMod: Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. Made by [@javisar](https://github.com/javisar).
 * CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
-* CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
 * CustomWorldMod: Enables the player to use custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
 * FastModeMod: Duplicants will build and dig very fast. Made by [@javisar](https://github.com/javisar).
 * FluidWarpMod: Teleports liquids and gases between places. Made by [@javisar](https://github.com/javisar).
@@ -39,11 +38,14 @@ Examples
   * MaterialColor: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
   * OnionPatches: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
+Outdated mods:
+* CritterNumberSensor: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath] here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/
+
 
 Requirements
 ------------
-* .NET Framework 4
-* Harmony Patcher 1.1.0
+* .NET Framework 3.5
+* Harmony Patcher 1.2
 * Mono.Cecil
 * Visual Studio 2015
 

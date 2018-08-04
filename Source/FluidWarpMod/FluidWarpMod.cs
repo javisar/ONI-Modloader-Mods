@@ -128,14 +128,16 @@ namespace LiquidWarpMod
         
     }
 
-	[HarmonyPatch(typeof(ValveSideScreen), "GetTitle")]
-	internal class FluidWarpMod_ValveSideScreen_GetTitle
+	[HarmonyPatch(typeof(SideScreenContent), "GetTitle")]
+	internal class FluidWarpMod_SideScreenContent_GetTitle
 	{
-		private static bool Prefix(ValveSideScreen __instance, ref string __result)
+		private static bool Prefix(SideScreenContent __instance, ref string __result)
 		{
-			Debug.Log(" === FluidWarpMod_ValveSideScreen_GetTitle Postfix === ");
+			Debug.Log(" === FluidWarpMod_SideScreenContent_GetTitle Postfix === ");
 
-			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
+			if (!(__instance is ValveSideScreen)) return true;
+
+			ConduitType type = FluidWarpMod_Utils.GetConduitType((ValveSideScreen)__instance);
 			if (type == (ConduitType)100 || type == (ConduitType)101)
 			{
 				__result = "Channel";

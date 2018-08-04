@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DraggablePanelMod</RootNamespace>
     <AssemblyName>DraggablePanelMod</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -75,7 +75,7 @@
     <ProjectReference Include="..\ONI-Common\ONI-Common.csproj">
       <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
       <Name>ONI-Common</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
