@@ -32,8 +32,17 @@ namespace LiquidWarpMod
 			FieldInfo fi2 = AccessTools.Field(typeof(ValveBase), "outputCell");
 			FieldInfo fi3 = AccessTools.Field(typeof(ValveBase), "flowAccumulator");
 
-			//Debug.Log("ConduitUpdate " + dt);
-			ConduitFlow flowManager = Conduit.GetFlowManager(__instance.conduitType);
+            ConduitFlow flowManager = null;
+            //Debug.Log("ConduitUpdate " + dt);
+            if (__instance.conduitType == (ConduitType)100)
+            {
+                flowManager = Conduit.GetFlowManager(ConduitType.Liquid);
+            }
+            else if (__instance.conduitType == (ConduitType)101)
+            {
+                flowManager = Conduit.GetFlowManager(ConduitType.Gas);
+            }
+            
 			ConduitFlow.Conduit conduit = flowManager.GetConduit((int)fi1.GetValue(__instance));
 
 			if (!flowManager.HasConduit((int)fi1.GetValue(__instance)) || !flowManager.HasConduit((int)fi2.GetValue(__instance)))
@@ -55,10 +64,16 @@ namespace LiquidWarpMod
 
 					float num2 = num / contents.mass;
 					int disease_count = (int)(num2 * (float)contents.diseaseCount);
-					//Debug.Log("List " + num);
+                    //Debug.Log("List " + num);
 
-					LiquidWarpData.LiquidPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
-
+                    if (__instance.conduitType == (ConduitType)100)
+                    {
+                        LiquidWarpData.LiquidPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+                    }
+                    else if (__instance.conduitType == (ConduitType)101)
+                    {
+                        GasWarpData.GasPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+                    }
 					//float num3 = flowManager.AddElement(this.outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
 					//Game.Instance.accumulators.Accumulate(this.flowAccumulator, num3);				
 
@@ -101,8 +116,27 @@ namespace LiquidWarpMod
 					toRemove = null;
 				}
 
+                foreach (PacketData packet in GasWarpData.GasPackets)
+                {
+                    //Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
+                    if ((float)fi.GetValue(__instance) == packet.current_flow
+                        && (int)__instance.conduitType == packet.content_type)
+                    {
+                        float num3 = flowManager.AddElement((int)fi2.GetValue(__instance), packet.element, packet.mass, packet.temperature, packet.disease_idx, packet.disease_count);
+                        //Debug.Log("Adding Element to pipe: " + packet.mass + "," + num3);
+                        Game.Instance.accumulators.Accumulate((HandleVector<int>.Handle)fi3.GetValue(__instance), num3);
+                        toRemove = packet;
+                        break;
+                    }
+                }
 
-				__instance.UpdateAnim();
+                if (toRemove != null)
+                {
+                    GasWarpData.GasPackets.Remove(toRemove);
+                    toRemove = null;
+                }
+
+                __instance.UpdateAnim();
 				return false;
 			}
 
