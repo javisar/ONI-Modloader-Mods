@@ -64,6 +64,7 @@ namespace LiquidWarpMod
 
 					float num2 = num / contents.mass;
 					int disease_count = (int)(num2 * (float)contents.diseaseCount);
+
                     //Debug.Log("List " + num);
 
                     if (__instance.conduitType == (ConduitType)100)
@@ -74,6 +75,7 @@ namespace LiquidWarpMod
                     {
                         GasWarpData.GasPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
                     }
+
 					//float num3 = flowManager.AddElement(this.outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
 					//Game.Instance.accumulators.Accumulate(this.flowAccumulator, num3);				
 
