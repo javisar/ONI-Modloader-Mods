@@ -12,7 +12,7 @@ namespace RoomSizeMod
       
         private static void Postfix(RoomProber __instance)
         {
-            Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
+            //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
             RoomProber.MaxRoomSize = 1024;
         }
     }
