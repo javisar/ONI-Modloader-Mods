@@ -64,9 +64,3 @@ Downloads
 * Be sure to also copy all config and icons folders.
 
 
-This project uses source code of and is based on:
-* https://github.com/zeobviouslyfakeacc/ModLoaderInstaller
-* https://github.com/spaar/besiege-modloader
-* https://github.com/pardeike/Harmony
-* https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
-
