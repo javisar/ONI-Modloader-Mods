@@ -1,10 +1,18 @@
 # ONI-Modloader Mods
 
-Example mods for ONI-Modloader:
+To use with ONI-Modloader. More info:
 https://github.com/javisar/ONI-Modloader
 
 Forums in Klei:
 https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/
+
+
+Disclaimers
+----------
+* Please don't report bugs you encounter to Klei while mods are active. People at Klei work hard and shouldn't be bothered with bug reports which might originate from mods.
+* BE AWARE that many of the mods are still a WIP and may fail. If you are having problems use a clean ONI installation and try to test the mods one by one to narrow the error. Then post a issue in github.
+* We do not take any responsibility for broken saves or any other damage. Use this software at your own risk.
+* If you load a savegame, it requires that you have exactly the same mods when you saved it.
 
 This project uses source code of and is based on:
 * https://github.com/zeobviouslyfakeacc/ModLoaderInstaller
@@ -13,22 +21,26 @@ This project uses source code of and is based on:
 * https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
 
 
+NOTE: Compiled for EU-280450 and ONI-Modloader v0.4.5
+
+
 Examples
 --------
-* AirLockMod: This door doesn't allow gases or liquids to flow. Made by [@javisar](https://github.com/javisar).
 * AlternateOrdersMod: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
+* BuildableAETNMod: Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. Made by [@javisar](https://github.com/javisar).
 * CameraControllerMod: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
-* CritterNumberSensor: Sensor for the critter number in a room (thanks to R9MX4 from Klei forum)
 * CustomWorldMod: Enables the player to use custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
-* FastModeMod: Duplicants will build and dig very fast. Made by [@javisar](https://github.com/javisar).
 * DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool. Made by [@fistak](https://github.com/fistak).
+* FastModeMod: Duplicants will build and dig very fast. Made by [@javisar](https://github.com/javisar).
+* FluidWarpMod: Teleports liquids and gases between places. Made by [@javisar](https://github.com/javisar).
+* GasTankMod: Storage for gases. Made by [@javisar](https://github.com/javisar).
 * InstantResearchMod: Forces instant research without Debug mode. Made by [@javisar](https://github.com/javisar).
-* InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door. Made by [@javisar](https://github.com/javisar).
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam. Made by [@javisar](https://github.com/javisar).
 * LiquidTankMod: Storage for liquids. Made by [@javisar](https://github.com/javisar).
+* NaphthaViscosityMod: Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. Made by [@javisar](https://github.com/javisar).
 * NoFixedTemps: The output fluid temperatures of the machinery aren't fixed. Made by [@javisar](https://github.com/javisar).
-* Patches (Do not use): Some incomplete tests.
 * PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
+* RoomSizeMod: Increases the room size info tooltip from 128 to a maximun of 1024 tiles. Made by [@javisar](https://github.com/javisar).
 * SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * SpeedControlMod: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
 * StorageLockerMod: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
@@ -38,48 +50,18 @@ Examples
   * MaterialColor: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
   * OnionPatches: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
+Outdated mods:
+* CritterNumberSensor: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath] here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/
+* InsulatedDoorsMod: Doors can be constructed using any buildable element (ie: Abyssalite). Also it adds a new element Insulated Pressure Door. Made by [@javisar](https://github.com/javisar).
+* Patches (Do not use): Some incomplete tests.
 
-Requirements
-------------
-* .NET Framework 3.5
-* Harmony Patcher
-* Mono.Cecil
-* Visual Studio 2015
-
-
-Creating a Mod
---------------
-1. Copy the following files from  ONI folder to the solution folder '\Source\lib\'
-   * Assembly-CSharp.dll
-   * Assembly-CSharp-firstpass.dll
-   * Assembly-UnityScript-firstpass.dll
-   * UnityEngine.dll
-   * UnityEngine.UI.dll
-2. Open the solution with Visual Studio.
-3. Create a new mod or modify the 'Patches' project.
-4. Compile it to generate the mod dll file.
-
-Dlls will be recognized by the mod loader if 
-• they reside in the main mod direcotory 
-OR
-• they are inside a subfolder inside a subfolder names 'Assemblies' (see MaterialColor mod)
-
+More mods in:
+* https://github.com/Cairath/ONI-Mods
 
 Downloads
 ---------
-Choose 'Clone or download'.
-See Releases section.
+* Choose 'Clone or download'.
+* Put the desired dlls into the Mods folder "OxygenNotIncluded\Mods".
+* Be sure to also copy all config and icons folders.
 
 
-Harmony Tutorials
------------------
-* https://github.com/pardeike/Harmony/wiki/
-* https://github.com/roxxploxx/RimWorldModGuide/wiki/SHORTTUTORIAL:-Harmony
-* https://github.com/UnlimitedHugs/RimworldHugsLib/wiki/Introduction-to-Patching
-* https://github.com/UnlimitedHugs/RimworldHugsLib/wiki/Detouring
-* https://oxygennotincluded.gamepedia.com/Guide/Working_with_the_Game_Files
-
-
-Disclaimer
-----------
-We do not take any responsibility for broken saves or any other damage. Use this software at your own risk.

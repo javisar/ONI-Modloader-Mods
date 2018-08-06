@@ -15,15 +15,18 @@ namespace CustomWorldMod
             // 256x512 default
 
             Debug.Log("CWS: Using custom world size ...");
-            if (!CustomGameSettings.Get().is_custom_game)
+            //if (!CustomGameSettings.Get().is_custom_game)
+            if (!CustomGameSettings.Instance.is_custom_game)
             {
                 Debug.Log("CWS: Nah, no custom game ...");
                 return;
             }
 
-            SettingConfig settingConfig = CustomGameSettings.Get().QualitySettings[CustomWorldMod.UseCustomWorldSize];
+            //SettingConfig settingConfig = CustomGameSettings.Get().QualitySettings[CustomWorldMod.UseCustomWorldSize];
+            SettingConfig settingConfig = CustomGameSettings.Instance.QualitySettings[CustomWorldMod.UseCustomWorldSize];
             SettingLevel currentQualitySetting =
-            CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.UseCustomWorldSize);
+            //CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.UseCustomWorldSize);
+            CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldMod.UseCustomWorldSize);
 
             bool allowCustomSize = !settingConfig.IsDefaultLevel(currentQualitySetting.id);
 
@@ -33,8 +36,10 @@ namespace CustomWorldMod
                 return;
             }
 
-            SettingLevel currentQualitySettingX = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.WorldsizeX);
-            SettingLevel currentQualitySettingY = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.WorldsizeY);
+            //SettingLevel currentQualitySettingX = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.WorldsizeX);
+            //SettingLevel currentQualitySettingY = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.WorldsizeY);
+            SettingLevel currentQualitySettingX = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldMod.WorldsizeX);
+            SettingLevel currentQualitySettingY = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldMod.WorldsizeY);
             Int32.TryParse(currentQualitySettingX.id, out width);
             Int32.TryParse(currentQualitySettingY.id, out height);
 

@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{905554DA-759F-438D-9520-016BA8CAD9AC}</ProjectGuid>
+    <ProjectGuid>{74B7B353-BB3E-4EE1-9035-7357D5472D39}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AirLockMod</RootNamespace>
-    <AssemblyName>AirLockMod</AssemblyName>
+    <RootNamespace>FluidWarpMod</RootNamespace>
+    <AssemblyName>FluidWarpMod</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,9 +43,15 @@
       <HintPath>..\lib\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
       <HintPath>..\lib\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
@@ -53,10 +60,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirLockMod.cs" />
-    <Compile Include="AirLockDoor.cs" />
-    <Compile Include="AirLockConfig.cs" />
+    <Compile Include="GasWarpConfig.cs" />
+    <Compile Include="GasWarpMod.cs" />
+    <Compile Include="FluidWarpMod.cs" />
+    <Compile Include="LiquidWarpMod.cs" />
+    <Compile Include="LiquidWarpConfig.cs" />
+    <Compile Include="PacketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="ValveWarpBase.cs.bak" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
