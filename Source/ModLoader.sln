@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluidWarpMod", "FluidWarpMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomSizeMod", "RoomSizeMod\RoomSizeMod.csproj", "{7D13E2D1-D400-4A50-8AFA-147EAF5375C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaphthaViscosityMod", "NaphthaViscosityMod\NaphthaViscosityMod.csproj", "{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -260,6 +262,14 @@ Global
 		{7D13E2D1-D400-4A50-8AFA-147EAF5375C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D13E2D1-D400-4A50-8AFA-147EAF5375C1}.Release|x86.ActiveCfg = Release|Any CPU
 		{7D13E2D1-D400-4A50-8AFA-147EAF5375C1}.Release|x86.Build.0 = Release|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Debug|x86.Build.0 = Debug|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Release|x86.ActiveCfg = Release|Any CPU
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +303,7 @@ Global
 		{DB33F126-AECD-4E02-9F1F-1E4B08DC27C4} = {3DDC5DF0-0321-41EA-B556-022CEE509815}
 		{74B7B353-BB3E-4EE1-9035-7357D5472D39} = {3DDC5DF0-0321-41EA-B556-022CEE509815}
 		{7D13E2D1-D400-4A50-8AFA-147EAF5375C1} = {3DDC5DF0-0321-41EA-B556-022CEE509815}
+		{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6} = {3DDC5DF0-0321-41EA-B556-022CEE509815}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {34648007-CC4C-4A8D-91A2-485820AFC9A9}
