@@ -38,6 +38,7 @@ Examples
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam. Made by [@javisar](https://github.com/javisar).
 * LiquidTankMod: Storage for liquids. Made by [@javisar](https://github.com/javisar).
 * PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
+* SculpturesReloadedMod: Allows more materials at building the scultures. Made by [@javisar](https://github.com/javisar).
 * SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * SpeedControlMod: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
 * StorageLockerMod: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
