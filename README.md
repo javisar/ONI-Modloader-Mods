@@ -38,7 +38,7 @@ Examples
 * InverseElectrolyzerMod: Combines hydrogen and oxygen into steam. Made by [@javisar](https://github.com/javisar).
 * LiquidTankMod: Storage for liquids. Made by [@javisar](https://github.com/javisar).
 * NaphthaViscosityMod: Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. Made by [@javisar](https://github.com/javisar).
-* NoFixedTemps: The output fluid temperatures of the machinery aren't fixed. Made by [@javisar](https://github.com/javisar).
+* NoFixedTemps: The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). Made by [@javisar](https://github.com/javisar).
 * PressureDoorMod: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
 * RoomSizeMod: Increases the room size info tooltip from 128 to a maximun of 1024 tiles. Made by [@javisar](https://github.com/javisar).
 * SensorsMod: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
