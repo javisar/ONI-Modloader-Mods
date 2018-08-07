@@ -32,6 +32,7 @@ Examples
 * CustomWorldMod: Enables the player to use custom world sizes. (Made by [@Moonkis](https://github.com/Moonkis), remade by [@Killface1980](https://github.com/Killface1980))
 * DisplayDraggedBoxSize: Shows selected rectangle dimensions using any tool. Made by [@fistak](https://github.com/fistak).
 * FastModeMod: Duplicants will build and dig very fast. Made by [@javisar](https://github.com/javisar).
+* FluidPhysicsMod: Overwrite some fluids molar mass to make them equal, this produces more mixing. Very Experimental. (Oxygen,Hydrogen,ChlorineGas,ContaminatedOxygen,Propane,Helium,Methane,CarbonDioxide,Water,DirtyWater,CrudeOil,Petroleum). Made by [@javisar](https://github.com/javisar).
 * FluidWarpMod: Teleports liquids and gases between places. Made by [@javisar](https://github.com/javisar).
 * GasTankMod: Storage for gases. Made by [@javisar](https://github.com/javisar).
 * InstantResearchMod: Forces instant research without Debug mode. Made by [@javisar](https://github.com/javisar).
