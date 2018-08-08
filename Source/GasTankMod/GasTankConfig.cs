@@ -48,7 +48,7 @@ public class GasTankConfig : IBuildingConfig
 
 		GasTank liquidCooledFan = go.AddOrGet<GasTank>();
 		//liquidCooledFan.gasStorage = storage;
-		liquidCooledFan.liquidStorage = storage;
+		liquidCooledFan.gasStorage = storage;
 		//liquidCooledFan.waterKGConsumedPerKJ = 1f / (num * num2);
 		//liquidCooledFan.coolingKilowatts = 80f;
 		//liquidCooledFan.minCooledTemperature = 290f;
