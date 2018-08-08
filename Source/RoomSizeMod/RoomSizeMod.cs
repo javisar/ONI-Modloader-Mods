@@ -8,6 +8,19 @@ using UnityEngine;
 
 namespace RoomSizeMod
 {
+
+    [HarmonyPatch(typeof(RoomProber))]
+    internal class RoomSizeMod_RoomProber
+    {
+
+        private static void Postfix(RoomProber __instance)
+        {
+            //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
+            RoomProber.MaxRoomSize = 1024;
+        }
+    }
+
+    /*
 	public static class RoomSizeModData
 	{
 		//public static List<PacketData> LiquidPackets = new List<PacketData>();
@@ -19,21 +32,10 @@ namespace RoomSizeMod
 		public SimHashes element = 0;
 		public float mass = 0;
 		public float temperature = 0;
-
+        public int numCells = 0;
 		
 	}
 	
-
-	[HarmonyPatch(typeof(RoomProber))]
-    internal class RoomSizeMod_RoomProber
-    {
-      
-        private static void Postfix(RoomProber __instance)
-        {
-            //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
-            RoomProber.MaxRoomSize = 1024;
-        }
-    }
 
 	[HarmonyPatch(typeof(RoomDetails), "RoomDetailString")]
 	internal class RoomSizeMod_RoomDetails_RoomDetailString
@@ -48,7 +50,7 @@ namespace RoomSizeMod
 
 			foreach (KeyValuePair<SimHashes, RoomElementData> entry in data)
 			{
-				__result += "\n    • " + entry.Key + ": " + Math.Round(entry.Value.mass) +" Kg at "+ Math.Round(entry.Value.temperature/ci.numCells) + " ºC";
+				__result += "\n    • " + entry.Key + ": " + Math.Round(entry.Value.mass) +" Kg at "+(entry.Value.temperature/ entry.Value.numCells - 273.15f).ToString("N1") + " ºC";
 			}
 			
 		}
@@ -79,7 +81,7 @@ namespace RoomSizeMod
 
 		private static void Prefix(RoomProber __instance, ref ICollection<int> visited_cells)
 		{
-			Debug.Log(" === RoomSizeMod_RoomProberRebuildDirtyCavities Postfix === ");
+			//Debug.Log(" === RoomSizeMod_RoomProber_RebuildDirtyCavities Postfix === ");
 
 			FieldInfo fi1 = AccessTools.Field(typeof(RoomProber), "CellCavityID");
 			FieldInfo fi2 = AccessTools.Field(typeof(RoomProber), "cavityInfos");
@@ -115,36 +117,12 @@ namespace RoomSizeMod
 					}
 					rData.mass += mass;
 					rData.temperature += temperature;
-					/*
-					//CavityInfo data = this.cavityInfos.GetData(handle);
-					CavityInfo data = ((KCompactedVector<CavityInfo>)fi2.GetValue(__instance)).GetData(handle);
-					if (0 < data.numCells && data.numCells <= RoomProber.MaxRoomSize)
-					{
-						GameObject gameObject = Grid.Objects[visited_cell, 1];
-						if ((UnityEngine.Object)gameObject != (UnityEngine.Object)null)
-						{
-							KPrefabID component = gameObject.GetComponent<KPrefabID>();
-							
-							//bool flag = false;
-							//foreach (KPrefabID building in data.buildings)
-							//{
-							//	if (component.InstanceID == building.InstanceID)
-							//	{
-							//		flag = true;
-							//		break;
-							//	}
-							//}
-							//if (!flag)
-							//{
-							//	data.AddBuilding(component);
-							//}
-							
-						}
-					}
-					*/
-				}
+                    rData.numCells += 1;
+                    
+                }
 			}
 			//visited_cells.Clear();
 		}
 	}
+    */
 }
