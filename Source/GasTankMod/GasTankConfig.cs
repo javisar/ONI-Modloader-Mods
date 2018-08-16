@@ -39,8 +39,7 @@ public class GasTankConfig : IBuildingConfig
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		Storage storage = go.AddComponent<Storage>();
-		Storage storage2 = go.AddComponent<Storage>();
-		storage2.capacityKg = 20000f;
+		storage.capacityKg = 20000f;
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = false;
 		go.AddOrGet<LoopingSounds>();
 		Prioritizable.AddRef(go);
@@ -49,7 +48,7 @@ public class GasTankConfig : IBuildingConfig
 
 		GasTank liquidCooledFan = go.AddOrGet<GasTank>();
 		//liquidCooledFan.gasStorage = storage;
-		liquidCooledFan.gasStorage = storage2;
+		liquidCooledFan.gasStorage = storage;
 		//liquidCooledFan.waterKGConsumedPerKJ = 1f / (num * num2);
 		//liquidCooledFan.coolingKilowatts = 80f;
 		//liquidCooledFan.minCooledTemperature = 290f;
@@ -77,7 +76,7 @@ public class GasTankConfig : IBuildingConfig
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Gas;
 		conduitConsumer.consumptionRate = 10f;
-		conduitConsumer.capacityKG = 20000f;
+		//conduitConsumer.capacityKG = 20000f;
 		conduitConsumer.capacityTag = GameTags.Gas;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.alwaysConsume = true;
