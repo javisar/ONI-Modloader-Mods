@@ -53,7 +53,8 @@ Examples
   * **OnionPatches**: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
 Outdated mods:
-* **CritterNumberSensor**: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath](https://github.com/Cairath) here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/ * **DraggablePanelMod**: Makes panels draggable (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
+* **CritterNumberSensor**: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath](https://github.com/Cairath) here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/
+* **DraggablePanelMod**: Makes panels draggable (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * **InsulatedDoorsMod**: Adds a new element Insulated Pressure Door. Requires ONI-Common. Made by [@javisar](https://github.com/javisar).
 * **Patches** (Do not use): Some incomplete tests.
 
