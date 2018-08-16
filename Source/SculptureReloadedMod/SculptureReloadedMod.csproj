@@ -58,7 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScultureReloadedMod.cs" />
+    <Compile Include="SculptureReloadedConfig.cs" />
+    <Compile Include="SculptureReloadedMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

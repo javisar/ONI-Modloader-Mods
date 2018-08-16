@@ -11,41 +11,62 @@ namespace SculptureReloadedMod
     [HarmonyPatch(typeof(BuildingTemplates), "CreateBuildingDef")]
     internal class SculptureReloadedMod_BuildingTemplates_CreateBuildingDef
     {
+
+		[HarmonyPatch(typeof(GeneratedBuildings), "LoadGeneratedBuildings")]
+		internal class SculptureReloadedMod_GeneratedBuildings_LoadGeneratedBuildings
+		{
+			private static void Prefix()
+			{
+				Debug.Log(" === SculptureReloadedMod_GeneratedBuildings_LoadGeneratedBuildings Prefix === " + SculptureReloadedConfig.ID);
+				Strings.Add("STRINGS.BUILDINGS.PREFABS.SCULPTURERELOADED.NAME", "Sculpture");
+				Strings.Add("STRINGS.BUILDINGS.PREFABS.SCULPTURERELOADED.DESC", "");
+				Strings.Add("STRINGS.BUILDINGS.PREFABS.SCULPTURERELOADED.EFFECT", "");
+
+				List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[8].data);
+				ls.Add(SculptureReloadedConfig.ID);
+				TUNING.BUILDINGS.PLANORDER[8].data = (string[])ls.ToArray();
+
+				TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(SculptureReloadedConfig.ID);
+
+
+			}
+			private static void Postfix()
+			{
+
+				Debug.Log(" === GeneratedBuildings.LoadGeneratedBuildings Postfix === " + SculptureReloadedConfig.ID);
+				object obj = Activator.CreateInstance(typeof(SculptureReloadedConfig));
+				BuildingConfigManager.Instance.RegisterBuilding(obj as IBuildingConfig);
+			}
+		}
+
+		[HarmonyPatch(typeof(Db), "Initialize")]
+		internal class SculptureReloadedMod_Db_Initialize
+		{
+			private static void Prefix(Db __instance)
+			{
+				Debug.Log(" === SculptureReloadedMod_Db_Initialize Prefix === " + SculptureReloadedConfig.ID);
+				List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["Artistry"]);
+				ls.Add(SculptureReloadedConfig.ID);
+				Database.Techs.TECH_GROUPING["Artistry"] = (string[])ls.ToArray();
+			}
+		}
+
+		/*
         private static bool Prefix(string id, ref string[] construction_materials)
         {
             Debug.Log(" === SculptureReloadedMod_BuildingTemplates_CreateBuildingDef Prefix === ");
             if (id == "IceSculpture")
             {
-                //List<string> cm = new List<string>(TUNING.MATERIALS.);
-                //cm.Add("Ice");
-                // construction_materials = (string[])cm.ToArray
-                construction_materials = new String[1]
-                {
-                    "SolidOxygen"
-                };
-            }
+				construction_materials = TUNING.MATERIALS.ANY_BUILDABLE;
+			}
             return true;
 
         }
+		*/
 
 
-        [HarmonyPatch(typeof(ElementLoader), "SetupElementsTable")]
-        internal static class SculptureReloadedMod_ElementLoader_SetupElementsTable
-        {
-            private static bool Prefix()
-            {
-                Debug.Log(" === SculptureReloadedMod_ElementLoader_SetupElementsTable Prefix === ");
-                /*
-                Strings.Add("STRINGS.ELEMENTS.URANIUMORE.NAME", UI.FormatAsLink("Uranium Ore", "URANIUMORE"));
-                Strings.Add("STRINGS.ELEMENTS.URANIUMORE.DESC", "Uranium is a radioactive element.");
-                Strings.Add("STRINGS.ELEMENTS.URANIUMORE.BUILD_DESC", "");
-                */
 
-                return true;
-            }
-        }
-
-
+		/*
         [HarmonyPatch(typeof(ElementLoader), "Load")]
         internal static class SculptureReloadedMod_ElementLoader_Load
         {
@@ -68,5 +89,6 @@ namespace SculptureReloadedMod
                 return true;
             }
         }
-    }
+		*/
+	}
 }
