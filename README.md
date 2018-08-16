@@ -36,7 +36,8 @@ Examples
 * **FluidWarpMod**: Teleports liquids and gases between places. Made by [@javisar](https://github.com/javisar).
 * **GasTankMod**: Storage for gases. Made by [@javisar](https://github.com/javisar).
 * **InstantResearchMod**: Forces instant research without Debug mode. Made by [@javisar](https://github.com/javisar).
-* **InverseElectrolyzerMod**: Combines hydrogen and oxygen into steam. Made by [@javisar](https://github.com/javisar).
+* **InverseElectrolyzerMod**: Combines hydrogen and oxygen into steam. Uses oxygen from the environment. Made by [@javisar](https://github.com/javisar).
+* **InverseElectrolyzerAltMod**: Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. Made by [@javisar](https://github.com/javisar).
 * **LiquidTankMod**: Storage for liquids. Made by [@javisar](https://github.com/javisar).
 * **MoreMaterialsMod**: Allows the construction of some buildings with any material (Doors, filters, bed, canvas, tables, wall fire pole, sculptures, shower, toilets, wash basins, bridges, conduits/wires, ladder, pumps, valves, ventS, tiles, lockers, sensors and gates). Made by [@javisar](https://github.com/javisar).
 * **NaphthaViscosityMod**: Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. Made by [@javisar](https://github.com/javisar).
