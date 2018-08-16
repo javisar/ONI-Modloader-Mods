@@ -44,6 +44,7 @@ Examples
 * **NoFixedTemps**: The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). Made by [@javisar](https://github.com/javisar).
 * **PressureDoorMod**: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
 * **RoomSizeMod**: Increases the room size up to 1024 and adds info to the room tooltip. Made by [@javisar](https://github.com/javisar).
+* **SculpturesReloadedMod**: Adds a new sculpture building that allows more materials. Made by [@javisar](https://github.com/javisar).
 * **SensorsMod**: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * **SpeedControlMod**: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
 * **StorageLockerMod**: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
