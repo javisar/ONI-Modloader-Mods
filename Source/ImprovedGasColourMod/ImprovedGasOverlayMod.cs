@@ -1,5 +1,5 @@
 ﻿using Harmony;
-using MaterialColor.Extensions;
+using ONI_Common.Color;
 using UnityEngine;
 
 namespace ImprovedGasColourMod
@@ -16,7 +16,7 @@ namespace ImprovedGasColourMod
             public static bool Prefix(int cell, ref Color __result)
             {
                 //  ModSettings settings = ONI_Common.ModdyMcModscreen
-                float maxMass = ONI_Common.State.ConfiguratorState.GasPressureEnd;
+                float maxMass = StateManager.ConfiguratorState.GasPressureEnd;
 
                 Element element = Grid.Element[cell];
 
@@ -42,12 +42,12 @@ namespace ImprovedGasColourMod
 
                 colorHSV = ScaleColorToPressure(colorHSV, pressureFraction, elementID);
 
-                if (ONI_Common.State.ConfiguratorState.ShowEarDrumPopMarker)
+                if (StateManager.ConfiguratorState.ShowEarDrumPopMarker)
                 {
                     colorHSV = MarkEarDrumPopPressure(colorHSV, mass, elementID);
                 }
 
-                if (ONI_Common.State.ConfiguratorState.AdvancedGasOverlayDebugging)
+                if (StateManager.ConfiguratorState.AdvancedGasOverlayDebugging)
                 {
                     colorHSV.CheckAndLogOverflow(elementID, pressureFraction);
                 }
@@ -86,7 +86,7 @@ namespace ImprovedGasColourMod
 
             private static float GetPressureFraction(float mass, float maxMass)
             {
-                float minFraction = ONI_Common.State.ConfiguratorState.MinimumGasColorIntensity;
+                float minFraction = StateManager.ConfiguratorState.MinimumGasColorIntensity;
 
                 float fraction = mass / maxMass;
 

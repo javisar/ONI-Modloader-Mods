@@ -26,8 +26,23 @@
 
             return result;
         }
-
+        /*
         public void Serialize(object value, string path)
+        {
+            using (StreamWriter streamReader = new StreamWriter(path))
+            {
+                using (JsonTextWriter jsonReader = new JsonTextWriter(streamReader))
+                {
+                    this.Serializer.Serialize(jsonReader, value);
+
+                    jsonReader.Close();
+                }
+
+                streamReader.Close();
+            }
+        }
+        */
+        public void Serialize<T>(T value, string path)
         {
             using (StreamWriter streamReader = new StreamWriter(path))
             {

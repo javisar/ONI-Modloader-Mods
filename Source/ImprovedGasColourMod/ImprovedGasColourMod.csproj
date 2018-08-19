@@ -64,9 +64,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HSVExtensions.cs" />
     <Compile Include="ImprovedGasOverlayMod.cs" />
+    <Compile Include="ImprovedGasOverlayState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StateManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ONI-Common\ONI-Common.csproj">

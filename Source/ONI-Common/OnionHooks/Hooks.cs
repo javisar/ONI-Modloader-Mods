@@ -45,7 +45,7 @@
                 _config = value;
             }
         }
-
+        /*
         public static void OnDebugHandlerCtor()
         {
             try
@@ -58,7 +58,7 @@
                 _logger.Log(e);
             }
         }
-
+        
         public static void OnDoOfflineWorldGen()
         {
             if (Config.Enabled && Config.CustomWorldSize)
@@ -82,6 +82,7 @@
                 ResetGridSettingsChunks(defaultConfig.Width, defaultConfig.Height);
             }
         }
+        
 
         public static void OnInitRandom(ref int worldSeed, ref int layoutSeed, ref int terrainSeed, ref int noiseSeed)
         {
@@ -106,7 +107,9 @@
 
             _logger.Log(message);
         }
+        */
 
+        /*
         public static void UpdateDebugHandler()
         {
 #if !Patch
@@ -116,19 +119,22 @@
 
             // DebugHandler.FreeCameraMode = Config.Enabled && Config.FreeCamera;
         }
+        */
 
         private static void OnConfigChanged(object sender, FileSystemEventArgs e)
         {
             _logger.Log("Config changed");
 
             TryLoadConfig();
-            UpdateDebugHandler();
+            //UpdateDebugHandler();
         }
 
+        /*
         private static void ResetGridSettingsChunks(int width, int height)
         {
             GridSettings.Reset(width * 32, height * 32);
         }
+        */
 
         private static void StartConfigFileWatcher()
         {

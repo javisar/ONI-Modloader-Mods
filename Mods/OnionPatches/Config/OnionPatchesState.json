@@ -1,0 +1,10 @@
+{
+  "Enabled": true,  
+  "Debug": false,
+  "LogSeed": true,
+  "CustomSeeds": false,
+  "WorldSeed": 0,
+  "LayoutSeed": 0,
+  "TerrainSeed": 0,
+  "NoiseSeed": 0
+}

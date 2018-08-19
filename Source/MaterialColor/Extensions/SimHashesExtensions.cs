@@ -4,10 +4,10 @@
 
     using Helpers;
 
-    using ONI_Common;
-    using ONI_Common.Data;
+    using ONI_Common.Color;
 
     using UnityEngine;
+    using MaterialColor.Data;
 
     public static class SimHashesExtensions
     {
