@@ -43,7 +43,7 @@
         {
 			//if (!JsonLoader.TryLoadConfiguratorState(out MaterialColorState state))
 			ImprovedGasOverlayState state;
-			if (!JsonLoader.TryLoadConfiguration("Mods" + System.IO.Path.DirectorySeparatorChar + "ImprovedGasOverlay" + System.IO.Path.DirectorySeparatorChar +"Config"+ System.IO.Path.DirectorySeparatorChar +"ImprovedGasOverlayState.json",out state))
+			if (!JsonLoader.TryLoadConfiguration(ONI_Common.Paths.ModsDirectory + System.IO.Path.DirectorySeparatorChar + "ImprovedGasOverlay" + System.IO.Path.DirectorySeparatorChar +"Config"+ System.IO.Path.DirectorySeparatorChar +"ImprovedGasOverlayState.json",out state))
 			{
 				return false;
             }
