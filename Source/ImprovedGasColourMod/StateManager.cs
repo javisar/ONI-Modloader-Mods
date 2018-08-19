@@ -10,9 +10,12 @@
         [NotNull]
         private static readonly JsonFileManager JsonLoader = new JsonFileManager(new JsonManager(), Logger);        
 
-        private static ImprovedGasOverlayState _configuratorState;
-        
         private static Logger _logger;
+
+        [NotNull]
+        public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger("ImprovedGasOverlayLog.txt"));
+
+        private static ImprovedGasOverlayState _configuratorState;
 
         [NotNull]
         public static ImprovedGasOverlayState ConfiguratorState
@@ -35,9 +38,6 @@
 			}
 		}
         
-        [NotNull]
-        public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger("ImprovedGasOverlayLog.txt"));
-
 
         public static bool TryReloadConfiguratorState()
         {

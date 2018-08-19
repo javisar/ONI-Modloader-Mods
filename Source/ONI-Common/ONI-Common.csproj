@@ -71,6 +71,7 @@
     <Compile Include="IO\FileManager.cs" />
     <Compile Include="Json\ConfiguratorStateManager.cs" />
     <Compile Include="Json\JsonFileManager.cs" />
+    <Compile Include="Json\BaseStateManager.cs" />
     <Compile Include="UI\ModdyMcModscreen.cs" />
     <Compile Include="UI\ModScreen.cs" />
     <Compile Include="Color\ColorHSV.cs" />
