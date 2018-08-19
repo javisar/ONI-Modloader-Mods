@@ -51,7 +51,13 @@ namespace RoomSizeMod
         */
 		private static void ChangeRoomMaximumSize(RoomType roomType, Constraint constraint)
 		{
-			RoomConstraints.Constraint[] additional_constraints = roomType.additional_constraints;
+            if (roomType == null)
+            {
+                Debug.Log(" === RoomSizeMod_ChangeRoomMaximumSize === Cannot find roomtype ");
+                return;
+            }
+            Debug.Log(" === RoomSizeMod_ChangeRoomMaximumSize("+ roomType.Id + ") === ");
+            RoomConstraints.Constraint[] additional_constraints = roomType.additional_constraints;
 			for (int i = 0; i < additional_constraints.Length; i++)
 			{
 				if (additional_constraints[i].name.Contains("Maximum size:"))
@@ -83,6 +89,8 @@ namespace RoomSizeMod
             foreach (KeyValuePair<string, int> entry in RoomSizeMod_State.RoomState.ConfiguratorState.MaximumRoomSizes)
             {
                 Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, ""+ entry.Value), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, ""+ entry.Value), null);
+                //Debug.Log(entry.Key);
+                //Debug.Log(__instance.Get(entry.Key));
                 ChangeRoomMaximumSize(__instance.Get(entry.Key), max_size); 
             }
             

@@ -14,7 +14,7 @@
     "PowerPlant": 192,
     "Farm": 192,
     "CreaturePen": 192,
-    "MachineShop": 192,
+    //"MachineShop": 192,
     "RecRoom": 128
   }
 }
