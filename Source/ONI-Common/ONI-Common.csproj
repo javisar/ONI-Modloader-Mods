@@ -88,7 +88,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\CommonState.cs" />
     <Compile Include="Core\UpdateQueueManager.cs" />
-    <None Include="Config\OnionState.json" />
+    <None Include="ONI-Common\Config\OnionState.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <Compile Include="Reflection\CecilHelper.cs" />
     <Compile Include="Reflection\InstructionInserter.cs" />

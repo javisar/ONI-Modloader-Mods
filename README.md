@@ -50,14 +50,14 @@ Examples
 * **StorageLockerMod**: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
 * **ONI-Common**: Common code, required by these mods:
   * **ImprovedGasColourMod**: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)).
-  * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
-  * **OnionPatches**: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
+  * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).  
 
 Outdated mods:
 * **CritterNumberSensor**: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath](https://github.com/Cairath) here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/
 * **DraggablePanelMod**: Makes panels draggable (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * **InsulatedDoorsMod**: Adds a new element Insulated Pressure Door. Requires ONI-Common. Made by [@javisar](https://github.com/javisar).
 * **Patches** (Do not use): Some incomplete tests.
+* **OnionPatches**: Custom world seeds. DebugHandler hook. Requires ONI-Common. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
 More Harmony based mods in:
 * https://github.com/Cairath/ONI-Mods
