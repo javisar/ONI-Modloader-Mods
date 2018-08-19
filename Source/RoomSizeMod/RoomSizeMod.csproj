@@ -59,8 +59,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RoomSizeState.cs" />
     <Compile Include="RoomSizeMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ONI-Common\ONI-Common.csproj">
+      <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
+      <Name>ONI-Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RoomSize\Config\RoomSizeState.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
