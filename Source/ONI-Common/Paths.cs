@@ -28,19 +28,19 @@
 
         //public const string MaterialColorStateFileName = "MaterialColorState.json";
 
-        public const string ModsDirectory = "Mods";
+        private const string ModsDirectory = "Mods";
 
-        public const string OnionLogFileName = "OnionLog.txt";
+        public const string OnionLogFileName = "ONI-CommonLog.txt";
 
-        public const string OnionStateFileName = "OnionState.json";
+        public const string OnionStateFileName = "ONI-CommonState.json";
 
         //public const string TemperatureStateFileName = "TemperatureOverlayState.json";
 
-        public static readonly string OnionMainPath = ModsDirectory + Path.DirectorySeparatorChar + "ONI-Common";
+        private static readonly string OnionMainPath = ModsDirectory + Path.DirectorySeparatorChar + "ONI-Common";
 
         public static readonly string OnionConfigPath = OnionMainPath + Path.DirectorySeparatorChar + "Config";
 
-        public static readonly string OnionStatePath =
+        private static readonly string OnionStatePath =
         OnionConfigPath + Path.DirectorySeparatorChar + OnionStateFileName;
 
         //public static readonly string OverlayMainPath = ModsDirectory + Path.DirectorySeparatorChar + "Overlays";
@@ -75,11 +75,33 @@
         //public static readonly string InjectorStatePath =
         //MaterialConfigPath + Path.DirectorySeparatorChar + InjectorStateFileName;
 
-        public static readonly string LogsPath = ModsDirectory + Path.DirectorySeparatorChar + "_Logs";
+        private static readonly string LogsPath = ModsDirectory + Path.DirectorySeparatorChar + "_Logs";
 
         //public static readonly string SpritesPath = ModsDirectory + Path.DirectorySeparatorChar + "Sprites";
 
         //public static readonly string MaterialColorOverlayIconPath =
         //SpritesPath + Path.DirectorySeparatorChar + MaterialColorOverlayIconFileName;
+
+        public static string GetLogsPath()
+        {
+            return LogsPath;
+        }
+
+        public static string GetCommonLogFilePath()
+        {
+            return LogsPath + Path.DirectorySeparatorChar + CommonLogFileName;
+        }
+        
+        public static string GetStateFilePath(string name)
+        {
+            return ModsDirectory + Path.DirectorySeparatorChar + name + Path.DirectorySeparatorChar + "Config" + Path.DirectorySeparatorChar + name + "State.json";
+        }
+
+        public static string GetModsPath()
+        {
+            return ModsDirectory;
+        }
     }
+
+    
 }

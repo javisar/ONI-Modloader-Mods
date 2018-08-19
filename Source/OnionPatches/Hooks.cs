@@ -140,7 +140,7 @@
 
         private static void StartConfigFileWatcher()
         {
-            FileChangeNotifier.StartFileWatch("OnionPatchesState.json", Paths.ModsDirectory + Path.DirectorySeparatorChar + "OnionPatches" + Path.DirectorySeparatorChar + "Config", OnConfigChanged);
+            FileChangeNotifier.StartFileWatch("OnionPatchesState.json", Paths.GetModsPath() + Path.DirectorySeparatorChar + "OnionPatches" + Path.DirectorySeparatorChar + "Config", OnConfigChanged);
 
             _logger.Log("Config file watcher started");
         }
@@ -151,7 +151,7 @@
             {
                 //Config = _stateManager.LoadOnionState();
 
-                JsonLoader.TryLoadConfiguration(Paths.ModsDirectory + System.IO.Path.DirectorySeparatorChar + "OnionPatches" + Path.DirectorySeparatorChar + "Config" + System.IO.Path.DirectorySeparatorChar + "OnionPatchesState.json", out _config);
+                JsonLoader.TryLoadConfiguration(Paths.GetModsPath() + System.IO.Path.DirectorySeparatorChar + "OnionPatches" + Path.DirectorySeparatorChar + "Config" + System.IO.Path.DirectorySeparatorChar + "OnionPatchesState.json", out _config);
 
 
                 _logger.Log("OnionState.json loaded");

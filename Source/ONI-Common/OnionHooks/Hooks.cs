@@ -12,7 +12,9 @@
 
         private static OnionState _config;
 
-        private static ConfiguratorStateManager _stateManager;
+        //private static ConfiguratorStateManager _stateManager;
+        public static BaseStateManager<OnionState> ONICommonState
+               = new BaseStateManager<OnionState>(ONI_Common.Paths.GetStateFilePath("ONI-Common"));
 
         public static OnionState Config
         {
@@ -25,7 +27,7 @@
 
                 try
                 {
-                    _stateManager = _stateManager ?? new ConfiguratorStateManager(new JsonManager());
+                    //_stateManager = _stateManager ?? new ConfiguratorStateManager(new JsonManager());
 
                     TryLoadConfig();
                     StartConfigFileWatcher();
@@ -147,7 +149,8 @@
         {
             try
             {
-                Config = _stateManager.LoadOnionState();
+                //Config = _stateManager.LoadOnionState();
+                Config = ONICommonState.ConfiguratorState;
 
                 _logger.Log("OnionState.json loaded");
 

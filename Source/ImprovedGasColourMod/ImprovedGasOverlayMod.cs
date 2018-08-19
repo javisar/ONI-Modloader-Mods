@@ -1,11 +1,17 @@
 ﻿using Harmony;
 using ONI_Common.Color;
+using ONI_Common.Json;
 using UnityEngine;
 
 namespace ImprovedGasColourMod
 {
+   
     public static class HarmonyPatches
     {
+        public static BaseStateManager<ImprovedGasOverlayState> ImprovedGasOverlayState
+            = new BaseStateManager<ImprovedGasOverlayState>(ONI_Common.Paths.GetStateFilePath("ImprovedGasOverlay"));
+
+
         private static readonly Color NotGasColor = new Color(0.6f, 0.6f, 0.6f);
 
         [HarmonyPatch(typeof(SimDebugView), "GetOxygenMapColour")]
@@ -16,7 +22,8 @@ namespace ImprovedGasColourMod
             public static bool Prefix(int cell, ref Color __result)
             {
                 //  ModSettings settings = ONI_Common.ModdyMcModscreen
-                float maxMass = StateManager.ConfiguratorState.GasPressureEnd;
+                //float maxMass = StateManager.ConfiguratorState.GasPressureEnd;
+                float maxMass = ImprovedGasOverlayState.ConfiguratorState.GasPressureEnd;
 
                 Element element = Grid.Element[cell];
 
@@ -42,12 +49,14 @@ namespace ImprovedGasColourMod
 
                 colorHSV = ScaleColorToPressure(colorHSV, pressureFraction, elementID);
 
-                if (StateManager.ConfiguratorState.ShowEarDrumPopMarker)
+                //if (StateManager.ConfiguratorState.ShowEarDrumPopMarker)
+                if (ImprovedGasOverlayState.ConfiguratorState.ShowEarDrumPopMarker)
                 {
                     colorHSV = MarkEarDrumPopPressure(colorHSV, mass, elementID);
                 }
 
-                if (StateManager.ConfiguratorState.AdvancedGasOverlayDebugging)
+                //if (StateManager.ConfiguratorState.AdvancedGasOverlayDebugging)
+                if (ImprovedGasOverlayState.ConfiguratorState.AdvancedGasOverlayDebugging)
                 {
                     colorHSV.CheckAndLogOverflow(elementID, pressureFraction);
                 }
@@ -86,7 +95,8 @@ namespace ImprovedGasColourMod
 
             private static float GetPressureFraction(float mass, float maxMass)
             {
-                float minFraction = StateManager.ConfiguratorState.MinimumGasColorIntensity;
+                //float minFraction = StateManager.ConfiguratorState.MinimumGasColorIntensity;
+                float minFraction = ImprovedGasOverlayState.ConfiguratorState.MinimumGasColorIntensity;
 
                 float fraction = mass / maxMass;
 
