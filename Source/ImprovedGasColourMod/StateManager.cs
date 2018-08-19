@@ -1,6 +1,5 @@
 ﻿namespace ImprovedGasColourMod
 {
-    using ImprovedGasColourMod.Data;
     using JetBrains.Annotations;
     using ONI_Common;
     using ONI_Common.Json;

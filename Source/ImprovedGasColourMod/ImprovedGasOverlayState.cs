@@ -1,4 +1,4 @@
-﻿namespace ImprovedGasColourMod.Data
+﻿namespace ImprovedGasColourMod
 {
     public class ImprovedGasOverlayState
     {
