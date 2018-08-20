@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorHSV.cs" />
     <Compile Include="ImprovedGasOverlayMod.cs" />
     <Compile Include="ImprovedGasOverlayState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

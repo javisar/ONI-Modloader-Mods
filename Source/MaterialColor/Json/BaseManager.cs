@@ -1,8 +1,9 @@
-﻿namespace ONI_Common.Json
+﻿namespace MaterialColor.Json
 {
     using ONI_Common.IO;
+	using ONI_Common.Json;
 
-    public abstract class BaseManager
+	public abstract class BaseManager
     {
         protected Logger _logger;
 

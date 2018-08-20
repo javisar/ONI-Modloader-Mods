@@ -49,7 +49,7 @@
  * */
 
 // ReSharper disable All
-namespace ONI_Common.Color
+namespace ImprovedGasColourMod
 {
     using UnityEngine;
 

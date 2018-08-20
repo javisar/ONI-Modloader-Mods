@@ -8,13 +8,13 @@
 
     public static class Hooks
     {
-        private static readonly Logger _logger = new IO.Logger(Paths.OnionLogFileName);
+        private static readonly Logger _logger = new IO.Logger(Paths.GetLogFileName("ONI-Common"));
 
         private static OnionState _config;
 
         //private static ConfiguratorStateManager _stateManager;
         public static BaseStateManager<OnionState> ONICommonState
-               = new BaseStateManager<OnionState>(ONI_Common.Paths.GetStateFilePath("ONI-Common"));
+               = new BaseStateManager<OnionState>("ONI-Common");
 
         public static OnionState Config
         {
@@ -140,7 +140,7 @@
 
         private static void StartConfigFileWatcher()
         {
-            FileChangeNotifier.StartFileWatch(Paths.OnionStateFileName, Paths.OnionConfigPath, OnConfigChanged);
+            FileChangeNotifier.StartFileWatch(Paths.GetStateFileName("ONI-Common"), Paths.GetStatePath("ONI-Common"), OnConfigChanged);
 
             _logger.Log("Config file watcher started");
         }
@@ -150,9 +150,9 @@
             try
             {
                 //Config = _stateManager.LoadOnionState();
-                Config = ONICommonState.ConfiguratorState;
+                Config = ONICommonState.State;
 
-                _logger.Log("OnionState.json loaded");
+                _logger.Log(Paths.GetStateFileName("ONI-Common")+" loaded");
 
                 return true;
             }
@@ -160,7 +160,7 @@
             {
                 Config = new OnionState();
 
-                const string Message = "OnionState.json loading failed";
+                string Message = Paths.GetStateFileName("ONI-Common")+" loading failed";
 
                 _logger.Log(Message);
                 Debug.LogError(Message);

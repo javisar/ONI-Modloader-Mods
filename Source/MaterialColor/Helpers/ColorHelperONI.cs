@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ONI_Common.Color
+namespace MaterialColor.Helpers
 {
     public static class ColorHelperONI
     {

@@ -1,8 +1,8 @@
-﻿namespace ONI_Common.Color
+﻿namespace MaterialColor.Extensions
 {
     using System;
-
-    using UnityEngine;
+	using ONI_Common.Data;
+	using UnityEngine;
 
     public static class Color32Extensions
     {

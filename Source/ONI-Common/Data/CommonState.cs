@@ -20,6 +20,6 @@
                                                  },
                                                  };
 
-        internal static Logger Logger { get; set; } = new IO.Logger(Paths.CommonLogFileName);
+        internal static Logger Logger { get; set; } = new IO.Logger(Paths.GetLogFileName("ONI-Common"));
     }
 }

@@ -5,7 +5,6 @@
     using Helpers;
     using TemperatureOverlay;    
     using ONI_Common.Core;
-    using ONI_Common.Color;
     using ONI_Common.IO;
     using Rendering;
     using System;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ONI_Common.Json;
 
 namespace RoomSizeMod
 {
@@ -11,6 +12,7 @@ namespace RoomSizeMod
         public Dictionary<string, int> MaximumRoomSizes { get; set; } = new Dictionary<string,int>();
 
 
-
-    }
+		public static BaseStateManager<RoomSizeState> RoomSizeStateManager
+			= new BaseStateManager<RoomSizeState>("RoomSize");
+	}
 }

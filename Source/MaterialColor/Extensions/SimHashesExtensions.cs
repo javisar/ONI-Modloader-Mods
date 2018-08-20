@@ -4,12 +4,11 @@
 
     using Helpers;
 
-    using ONI_Common.Color;
-
     using UnityEngine;
     using MaterialColor.Data;
+	using ONI_Common.Data;
 
-    public static class SimHashesExtensions
+	public static class SimHashesExtensions
     {
         public static Color GetMaterialColorForType(this SimHashes material, string objectTypeName)
         {

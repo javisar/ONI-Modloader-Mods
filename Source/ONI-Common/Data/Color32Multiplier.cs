@@ -1,4 +1,4 @@
-﻿namespace ONI_Common.Color
+﻿namespace ONI_Common.Data
 {
     public class Color32Multiplier
     {

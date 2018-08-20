@@ -1,43 +1,37 @@
-﻿using JetBrains.Annotations;
+﻿
 
 namespace ONI_Common.Json
 {
 
     public class BaseStateManager<T>
     {
-        private string stateFile;
+		public readonly string StateFilePath;
 
-        private ONI_Common.IO.Logger _logger;
+		public readonly ONI_Common.IO.Logger Logger;
 
-        [NotNull]
-        public ONI_Common.IO.Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger("RoomSizeLog.txt"));
+		public readonly JsonFileManager JsonLoader;
 
 
-        [NotNull]
-        private readonly JsonFileManager JsonLoader;
+		private T _state;
 
-        
-        private T _configuratorState;
-
-        [NotNull]
-        public T ConfiguratorState
+        public T State
         {
             get
             {
-                if (_configuratorState != null)
+                if (_state != null)
                 {
-                    return _configuratorState;
+                    return _state;
                 }
 
-                JsonLoader.TryLoadConfiguration(this.stateFile, out _configuratorState);
+                JsonLoader.TryLoadConfiguration(this.StateFilePath, out _state);
 
-                return _configuratorState;
+                return _state;
             }
 
             //private set => _configuratorState = value;
             private set
             {
-                _configuratorState = value;
+				_state = value;
             }
         }
 
@@ -46,21 +40,22 @@ namespace ONI_Common.Json
         {
             //if (!JsonLoader.TryLoadConfiguratorState(out MaterialColorState state))
             T state;
-            if (!JsonLoader.TryLoadConfiguration(this.stateFile, out state))
+            if (!JsonLoader.TryLoadConfiguration(this.StateFilePath, out state))
             {
                 return false;
             }
 
-            ConfiguratorState = state;
+            State = state;
 
             return true;
         }
 
 
-        public BaseStateManager(string path)
+        public BaseStateManager(string name)
         {
-            this.stateFile = path;
-            JsonLoader = new JsonFileManager(new JsonManager(), Logger);
+            this.StateFilePath = ONI_Common.Paths.GetStateFilePath(name);
+			this.Logger = new ONI_Common.IO.Logger(name+"Log.txt");
+			this.JsonLoader = new JsonFileManager(new JsonManager(), Logger);
         }
     }
 }

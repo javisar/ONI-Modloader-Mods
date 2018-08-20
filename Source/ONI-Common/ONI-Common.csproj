@@ -67,22 +67,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Color\Color32Extensions.cs" />
+    <Compile Include="Data\Color32Multiplier.cs" />
     <Compile Include="IO\FileManager.cs" />
     <Compile Include="Json\JsonFileManager.cs" />
     <Compile Include="Json\BaseStateManager.cs" />
     <Compile Include="UI\ModdyMcModscreen.cs" />
     <Compile Include="UI\ModScreen.cs" />
-    <Compile Include="Color\ColorHSV.cs" />
     <Compile Include="Data\OnionState.cs" />
     <Compile Include="OnionHooks\Hooks.cs" />
-    <None Include="Color\ColorHelperONI.cs" />
-    <Compile Include="Color\Color32Multiplier.cs" />
     <Compile Include="Data\ExitCode.cs" />
     <Compile Include="IO\FileChangeNotifier.cs" />
     <Compile Include="IO\IOHelper.cs" />
     <Compile Include="IO\Logger.cs" />
-    <Compile Include="Json\BaseManager.cs" />
     <Compile Include="Json\JsonManager.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
