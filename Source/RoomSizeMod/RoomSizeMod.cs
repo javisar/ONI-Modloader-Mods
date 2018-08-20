@@ -28,7 +28,7 @@ namespace RoomSizeMod
         {
             //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
             //RoomProber.MaxRoomSize = 1024;
-            RoomProber.MaxRoomSize = RoomSizeState.RoomSizeStateManager.State.OverallMaximumRoomSize;
+            RoomProber.MaxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
         }
     }
 
@@ -80,7 +80,7 @@ namespace RoomSizeMod
 			ChangeRoomMaximumSize(__instance.RecRoom,			MAXIMUM_SIZE_128);
             */
             //foreach (KeyValuePair<string, int> entry in RoomSizeStateManager.ConfiguratorState.MaximumRoomSizes)
-            foreach (KeyValuePair<string, int> entry in RoomSizeState.RoomSizeStateManager.State.MaximumRoomSizes)
+            foreach (KeyValuePair<string, int> entry in RoomSizeState.StateManager.State.MaximumRoomSizes)
             {
                 Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, ""+ entry.Value), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, ""+ entry.Value), null);
                 //Debug.Log(entry.Key);

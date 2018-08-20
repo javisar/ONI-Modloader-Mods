@@ -12,7 +12,7 @@ namespace RoomSizeMod
         public Dictionary<string, int> MaximumRoomSizes { get; set; } = new Dictionary<string,int>();
 
 
-		public static BaseStateManager<RoomSizeState> RoomSizeStateManager
+		public static BaseStateManager<RoomSizeState> StateManager
 			= new BaseStateManager<RoomSizeState>("RoomSize");
 	}
 }
