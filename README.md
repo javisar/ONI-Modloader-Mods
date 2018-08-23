@@ -51,6 +51,7 @@ Examples
   * **ImprovedGasColourMod**: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)).
   * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).  
   * **RoomSizeMod**:  Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. Made by [@javisar](https://github.com/javisar).
+  * **VentPressureMod**:  Allows to change the vents maximum pressure. Made by [@javisar](https://github.com/javisar).
 
 Outdated mods:
 * **CritterNumberSensor**: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath](https://github.com/Cairath) here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/

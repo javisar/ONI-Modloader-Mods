@@ -22,8 +22,9 @@ namespace ONI_Common.Json
                 {
                     return _state;
                 }
+				Debug.Log("Loading: " +this.StateFilePath);
 
-                JsonLoader.TryLoadConfiguration(this.StateFilePath, out _state);
+				JsonLoader.TryLoadConfiguration(this.StateFilePath, out _state);
 
                 return _state;
             }
