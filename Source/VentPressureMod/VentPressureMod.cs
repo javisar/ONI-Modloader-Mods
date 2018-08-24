@@ -18,26 +18,27 @@ namespace VentPressureMod
 	}
 
 
-	[HarmonyPatch(typeof(IBuildingConfig), "ConfigureBuildingTemplate")]
-	internal class VentPressureMod_IBuildingConfig_ConfigureBuildingTemplate
+	[HarmonyPatch(typeof(GasVentConfig), "ConfigureBuildingTemplate")]
+	internal class VentPressureMod_GasVentConfig_ConfigureBuildingTemplate
 	{
 
-		private static void Postfix(IBuildingConfig __instance, GameObject go, Tag prefab_tag)
+		private static void Postfix(GasVentConfig __instance, GameObject go, Tag prefab_tag)
 		{
-			//Debug.Log(" === VentPressureMod_IBuildingConfig_ConfigureBuildingTemplate Postfix === ");
+			Debug.Log(" === VentPressureMod_GasVentConfig_ConfigureBuildingTemplate Postfix === ");
 			Vent vent = go.GetComponent<Vent>();
-			//FieldInfo fi = AccessTools.Field(typeof(IBuildingConfig), "ID");
-			foreach (KeyValuePair<string, float> entry in VentPressureState.StateManager.State.MaximumPressure)
-			{
-				Debug.Log(" === VentPressureMod_IBuildingConfig_ConfigureBuildingTemplate Postfix === "+ prefab_tag);
-				if (prefab_tag == entry.Key)
-				{
-					Debug.Log(" === VentPressureMod_IBuildingConfig_ConfigureBuildingTemplate("+entry.Key+"+"+entry.Value+") === ");
-					vent.overpressureMass = entry.Value;
-				}
-			}
+			VentPressureState.StateManager.State.MaximumPressure.TryGetValue("GasVent", out vent.overpressureMass);
 		}
 	}
-	
 
+	[HarmonyPatch(typeof(GasVentHighPressureConfig), "ConfigureBuildingTemplate")]
+	internal class VentPressureMod_GasVentHighPressureConfig_ConfigureBuildingTemplate
+	{
+
+		private static void Postfix(GasVentHighPressureConfig __instance, GameObject go, Tag prefab_tag)
+		{
+			Debug.Log(" === VentPressureMod_GasVentConfig_ConfigureBuildingTemplate Postfix === ");
+			Vent vent = go.GetComponent<Vent>();
+			VentPressureState.StateManager.State.MaximumPressure.TryGetValue("GasVentHighPressure", out vent.overpressureMass);
+		}
+	}
 }
