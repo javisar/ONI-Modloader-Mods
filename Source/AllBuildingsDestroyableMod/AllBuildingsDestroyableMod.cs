@@ -1,5 +1,6 @@
 ﻿using Harmony;
 using Klei.AI;
+using ProcGen;
 using STRINGS;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,195 @@ namespace AllBuildingsDestroyableMod
     {
         private static void Postfix(BuildingDef __instance, ref bool __result, GameObject source_go, int cell, Orientation orientation, ObjectLayer layer, ObjectLayer tile_layer, ref string fail_reason)
         {
-            //Debug.Log(" === AllBuildingsDestroyableMod_BuildingDef_IsAreaClear Postfix === ");
+            //Debug.Log(" === AllBuildingsDestroyableMod_BuildingDef_IsAreaClear Prefix === ");
             //Debug.Log(" === A "+__instance.PrefabID+" ===  ");
+            //Debug.Log(" === A " + __instance.PrefabID + " ===  "+ fail_reason);
+            bool flag = true;
+            //fail_reason = null;
+            switch (__instance.BuildLocationRule)
+            {
+                case BuildLocationRule.Conduit:
+                case BuildLocationRule.LogicBridge:
+                case BuildLocationRule.NotInTiles:
+                    return;
+                default:
+                    break;
+            }
+
+            if (    fail_reason == null 
+                ||  fail_reason != UI.TOOLTIPS.HELP_BUILDLOCATION_OCCUPIED)
+            {
+                return;
+            }
+
             for (int i = 0; i < __instance.PlacementOffsets.Length; i++)
             {
                 CellOffset offset = __instance.PlacementOffsets[i];
                 CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(offset, orientation);
                 int num = Grid.OffsetCell(cell, rotatedCellOffset);
+                /*
+                if (!Grid.IsValidBuildingCell(num))
+                {
+                    fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_INVALID_CELL;
+                    flag = false;
+                    break;
+                }
+                if (Grid.Element[num].id == SimHashes.Unobtanium)
+                {
+                    fail_reason = null;
+                    flag = false;
+                    break;
+                }
+                */
+                GameObject gameObject = Grid.Objects[num, (int)layer];
+                if ((UnityEngine.Object)gameObject != (UnityEngine.Object)null)
+                {
+                    //Debug.Log(gameObject.PrefabID().ToString());
+                    /*
+                    if ((UnityEngine.Object)gameObject != (UnityEngine.Object)null)
+                    {
+                        if (!((UnityEngine.Object)gameObject.GetComponent<Wire>() == (UnityEngine.Object)null) && !((UnityEngine.Object)__instance.BuildingComplete.GetComponent<Wire>() == (UnityEngine.Object)null))
+                        {
+                            break;
+                        }
+                        fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_OCCUPIED;
+                        flag = false;
+                        break;
+                    }
+                    if (tile_layer != ObjectLayer.NumLayers && (UnityEngine.Object)Grid.Objects[num, (int)tile_layer] != (UnityEngine.Object)null && (UnityEngine.Object)Grid.Objects[num, (int)tile_layer].GetComponent<BuildingPreview>() == (UnityEngine.Object)null)
+                    {
+                        fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_OCCUPIED;
+                        flag = false;
+                        break;
+                    }
+                    */
+                    if ((UnityEngine.Object)gameObject != (UnityEngine.Object)null)
+                    {                                      
+                        switch (gameObject.PrefabID().ToString())
+                        {
+                            case "PropClock":
+                            case "PropDesk":
+                            case "PropElevator":
+                            case "PropFacilityChair":
+                            case "PropFacilityChairFlip":
+                            case "PropFacilityChandelier":
+                            case "PropFacilityCouch":
+                            case "PropFacilityDesk":
+                            case "PropFacilityDisplay":
+                            case "PropFacilityDisplay2":
+                            case "PropFacilityDisplay3":
+                            case "PropFacilityGlobeDroors":
+                            case "PropFacilityHangingLight":
+                            case "PropFacilityPainting":
+                            case "PropFacilityStatue":
+                            case "PropFacilityTable":
+                            case "PropFacilityWallDegree":
+                            case "PropLight":
+                            case "PropReceptionDesk":
+                            case "PropSkeleton":
+                            case "PropSurfaceSatellite1":
+                            case "PropSurfaceSatellite2":
+                            case "PropSurfaceSatellite3":
+                            case "PropTable":
+                            case "PropTallPlant":
+                                __result = true;
+                                fail_reason = null;
+                                break;
+                            default:                                
+                                break;
+                        }
+                    }
+
+                }
+                /*
+                if ((UnityEngine.Object)gameObject != (UnityEngine.Object)null)
+                {
+                    if (!((UnityEngine.Object)gameObject.GetComponent<Wire>() == (UnityEngine.Object)null) && !((UnityEngine.Object)__instance.BuildingComplete.GetComponent<Wire>() == (UnityEngine.Object)null))
+                    {
+                        break;
+                    }
+                    fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_OCCUPIED;
+                    flag = false;
+                    break;
+                }
+                if (tile_layer != ObjectLayer.NumLayers && (UnityEngine.Object)Grid.Objects[num, (int)tile_layer] != (UnityEngine.Object)null && (UnityEngine.Object)Grid.Objects[num, (int)tile_layer].GetComponent<BuildingPreview>() == (UnityEngine.Object)null)
+                {
+                    fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_OCCUPIED;
+                    flag = false;
+                    break;
+                }
+                
+                if (__instance.BuildLocationRule == BuildLocationRule.Tile)
+                {
+                    GameObject gameObject2 = Grid.Objects[num, 25];
+                    if ((UnityEngine.Object)gameObject2 != (UnityEngine.Object)null && (UnityEngine.Object)gameObject2 != (UnityEngine.Object)source_go)
+                    {
+                        Building component = gameObject2.GetComponent<Building>();
+                        if (component.Def.BuildLocationRule == BuildLocationRule.NotInTiles)
+                        {
+                            fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_WIRE_OBSTRUCTION;
+                            flag = false;
+                            break;
+                        }
+                    }
+                    gameObject2 = Grid.Objects[cell, 2];
+                    if ((UnityEngine.Object)gameObject2 != (UnityEngine.Object)null && (UnityEngine.Object)gameObject2 != (UnityEngine.Object)source_go)
+                    {
+                        Building component2 = gameObject2.GetComponent<Building>();
+                        if ((UnityEngine.Object)component2 != (UnityEngine.Object)null && component2.Def.BuildLocationRule == BuildLocationRule.NotInTiles)
+                        {
+                            fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_WIRE_OBSTRUCTION;
+                            flag = false;
+                            break;
+                        }
+                    }
+                }
+                else if (__instance.BuildLocationRule == BuildLocationRule.OnFloorOverSpace && World.Instance.zoneRenderData.GetSubWorldZoneType(num) != SubWorld.ZoneType.Space)
+                {
+                    fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_SPACE;
+                    flag = false;
+                    break;
+                }
+                */
+            }
+            //__result = flag && __instance.IsValidConduitLocation(source_go, cell, orientation, out fail_reason) && __instance.AreLogicPortsInValidPositions(source_go, cell, out fail_reason);            
+        }
+
+    
+
+        /*
+        private static void Postfix(BuildingDef __instance, ref bool __result, GameObject source_go, int cell, Orientation orientation, ObjectLayer layer, ObjectLayer tile_layer, ref string fail_reason)
+        {
+            //Debug.Log(" === AllBuildingsDestroyableMod_BuildingDef_IsAreaClear Postfix === ");
+            //Debug.Log(" === A "+__instance.PrefabID+" ===  ");
+            switch (__instance.BuildLocationRule)
+            {
+                case BuildLocationRule.Conduit:
+                case BuildLocationRule.LogicBridge:
+                case BuildLocationRule.NotInTiles:
+                    return;
+                default:
+                    break;
+            }
+
+            for (int i = 0; i < __instance.PlacementOffsets.Length; i++)
+            {
+                CellOffset offset = __instance.PlacementOffsets[i];
+                CellOffset rotatedCellOffset = Rotatable.GetRotatedCellOffset(offset, orientation);
+                int num = Grid.OffsetCell(cell, rotatedCellOffset);
+
+                if (!Grid.IsValidBuildingCell(num))
+                {
+                    fail_reason = UI.TOOLTIPS.HELP_BUILDLOCATION_INVALID_CELL;
+                    flag = false;
+                    break;
+                }
+                if (Grid.Element[num].id == SimHashes.Unobtanium)
+                {
+                    fail_reason = null;
+                    flag = false;
+                    break;
+                }
 
                 GameObject gameObject = Grid.Objects[num, (int)layer];
                 if ((UnityEngine.Object)gameObject != (UnityEngine.Object)null)
@@ -68,6 +251,7 @@ namespace AllBuildingsDestroyableMod
             //__result = true;
             //fail_reason = null;
         }
+        */
     }
 
 
