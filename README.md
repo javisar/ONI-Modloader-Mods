@@ -26,6 +26,7 @@ This project uses source code of and is based on:
 
 Examples
 --------
+* **AllBuildingsDestroyable**: Allows to construct on top of Gravitas furniture. Also POI's buildings are no longer invincible. Made by [@javisar](https://github.com/javisar).
 * **AlternateOrdersMod**: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
 * **BuildableAETNMod**: Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. Made by [@javisar](https://github.com/javisar).
 * **CameraControllerMod**: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
