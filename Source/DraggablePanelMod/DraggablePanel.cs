@@ -48,11 +48,13 @@
 
             if (panel != null)
             {
+                /*
                 if (panel.LoadPosition(out Vector2 newPosition))
                 {
                     panel.SetPosition(newPosition);
                     Debug.Log("DraggablePanel: Loaded position: " + newPosition);
                 }
+                */
             }
             else if (Debugging)
             {
@@ -89,7 +91,7 @@
                 {
                     this._isDragging = false;
 
-                    this.SavePosition(newPosition);
+                    //this.SavePosition(newPosition);
 
                     if (Debugging)
                     {
@@ -100,7 +102,7 @@
                 this.SetPosition(newPosition);
             }
         }
-
+        /*
         private bool LoadPosition(out Vector2 position)
         {
             return DraggableUI.UIState.LoadWindowPosition(this.gameObject, out position);
@@ -111,7 +113,7 @@
         {
             DraggableUI.UIState.SaveWindowPosition(this.gameObject, position);
         }
-
+        */
         // use offset?
         private void SetPosition(Vector3 newPosition)
         {

@@ -26,6 +26,7 @@ This project uses source code of and is based on:
 
 Examples
 --------
+* **AllBuildingsDestroyable**: Allows to construct on top of Gravitas furniture. Also POI's buildings are no longer invincible. Made by [@javisar](https://github.com/javisar).
 * **AlternateOrdersMod**: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
 * **BuildableAETNMod**: Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. Made by [@javisar](https://github.com/javisar).
 * **CameraControllerMod**: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
@@ -43,21 +44,22 @@ Examples
 * **NaphthaViscosityMod**: Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. Made by [@javisar](https://github.com/javisar).
 * **NoFixedTemps**: The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). Made by [@javisar](https://github.com/javisar).
 * **PressureDoorMod**: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
-* **RoomSizeMod**:  Recognizes rooms (count cells) to a room size maximum of 1024. Doubles the maximum room size for all rooms. Made by [@javisar](https://github.com/javisar).
 * **SculpturesReloadedMod**: Adds a new sculpture building that allows more materials. Made by [@javisar](https://github.com/javisar).
 * **SensorsMod**: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * **SpeedControlMod**: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
 * **StorageLockerMod**: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
 * **ONI-Common**: Common code, required by these mods:
   * **ImprovedGasColourMod**: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)).
-  * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
-  * **OnionPatches**: Custom world seeds. DebugHandler hook. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
+  * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).  
+  * **RoomSizeMod**:  Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. Made by [@javisar](https://github.com/javisar).
+  * **VentPressureMod**:  Allows to change the vents maximum pressure. Made by [@javisar](https://github.com/javisar).
 
 Outdated mods:
 * **CritterNumberSensor**: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath](https://github.com/Cairath) here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/
 * **DraggablePanelMod**: Makes panels draggable (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * **InsulatedDoorsMod**: Adds a new element Insulated Pressure Door. Requires ONI-Common. Made by [@javisar](https://github.com/javisar).
 * **Patches** (Do not use): Some incomplete tests.
+* **OnionPatches**: Custom world seeds. DebugHandler hook. Requires ONI-Common. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
 More Harmony based mods in:
 * https://github.com/Cairath/ONI-Mods

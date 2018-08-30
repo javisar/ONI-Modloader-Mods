@@ -1,15 +1,24 @@
 ﻿using Harmony;
+using ONI_Common.Json;
 using STRINGS;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using UnityEngine;
 using static RoomConstraints;
 
 namespace RoomSizeMod
 {
+    
+    [HarmonyPatch(typeof(Game),"OnPrefabInit")]
+    internal class RoomSizeMod_Game_OnPrefabInit
+    {
+
+        private static void Postfix(Game __instance)
+        {
+            Debug.Log(" === RoomSizeMod_Game_OnPrefabInit Postfix === ");
+
+        }
+    }
+
 
     [HarmonyPatch(typeof(RoomProber))]
     internal class RoomSizeMod_RoomProber
@@ -18,7 +27,8 @@ namespace RoomSizeMod
         private static void Postfix(RoomProber __instance)
         {
             //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
-            RoomProber.MaxRoomSize = 1024;
+            //RoomProber.MaxRoomSize = 1024;
+            RoomProber.MaxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
         }
     }
 
@@ -26,15 +36,22 @@ namespace RoomSizeMod
 	[HarmonyPatch(new Type[] { typeof(ResourceSet)})]
 	internal class RoomSizeMod_RoomTypes
 	{
+        /*
 		public static Constraint MAXIMUM_SIZE_128 = new Constraint(null, (Room room) => room.cavity.numCells <= 128, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, "128"), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, "128"), null);
 		public static Constraint MAXIMUM_SIZE_160 = new Constraint(null, (Room room) => room.cavity.numCells <= 160, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, "160"), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, "160"), null);
 		public static Constraint MAXIMUM_SIZE_192 = new Constraint(null, (Room room) => room.cavity.numCells <= 192, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, "192"), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, "192"), null);
 		public static Constraint MAXIMUM_SIZE_224 = new Constraint(null, (Room room) => room.cavity.numCells <= 224, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, "224"), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, "224"), null);
 		public static Constraint MAXIMUM_SIZE_240 = new Constraint(null, (Room room) => room.cavity.numCells <= 240, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, "240"), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, "240"), null);
-
+        */
 		private static void ChangeRoomMaximumSize(RoomType roomType, Constraint constraint)
 		{
-			RoomConstraints.Constraint[] additional_constraints = roomType.additional_constraints;
+            if (roomType == null)
+            {
+                Debug.Log(" === RoomSizeMod_ChangeRoomMaximumSize === Cannot find roomtype ");
+                return;
+            }
+            Debug.Log(" === RoomSizeMod_ChangeRoomMaximumSize("+ roomType.Id + ") === ");
+            RoomConstraints.Constraint[] additional_constraints = roomType.additional_constraints;
 			for (int i = 0; i < additional_constraints.Length; i++)
 			{
 				if (additional_constraints[i].name.Contains("Maximum size:"))
@@ -46,8 +63,8 @@ namespace RoomSizeMod
 
 		private static void Postfix(ref Database.RoomTypes __instance)
 		{
-			Debug.Log(" === RoomSizeMod_RoomTypes Postfix === "+ __instance.PlumbedBathroom);
-
+			Debug.Log(" === RoomSizeMod_RoomTypes Postfix === ");
+            /*
 			ChangeRoomMaximumSize(__instance.PlumbedBathroom,	MAXIMUM_SIZE_128);
 			ChangeRoomMaximumSize(__instance.Latrine,			MAXIMUM_SIZE_128);
 			ChangeRoomMaximumSize(__instance.Bedroom,			MAXIMUM_SIZE_128);
@@ -61,10 +78,25 @@ namespace RoomSizeMod
 			ChangeRoomMaximumSize(__instance.CreaturePen,		MAXIMUM_SIZE_192);
 			ChangeRoomMaximumSize(__instance.MachineShop,		MAXIMUM_SIZE_192);
 			ChangeRoomMaximumSize(__instance.RecRoom,			MAXIMUM_SIZE_128);
-		}
+            */
+            //foreach (KeyValuePair<string, int> entry in RoomSizeStateManager.ConfiguratorState.MaximumRoomSizes)
+            foreach (KeyValuePair<string, int> entry in RoomSizeState.StateManager.State.MaximumRoomSizes)
+            {
+                Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, ""+ entry.Value), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, ""+ entry.Value), null);
+                //Debug.Log(entry.Key);
+                //Debug.Log(__instance.Get(entry.Key));
+                ChangeRoomMaximumSize(__instance.Get(entry.Key), max_size); 
+            }
+            
+           
+
+        }
 	}
 
-	/*
+
+    
+
+    /*
 	public static class RoomSizeModData
 	{
 		//public static List<PacketData> LiquidPackets = new List<PacketData>();

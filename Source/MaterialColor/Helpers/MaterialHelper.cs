@@ -15,7 +15,7 @@
                 return primaryElement.ElementID;
             }
 
-            ONI_Common.State.Logger.Log("PrimaryElement not found in: " + component);
+            State.Logger.Log("PrimaryElement not found in: " + component);
             return SimHashes.Vacuum;
         }
 
@@ -36,7 +36,7 @@
                 return element.id;
             }
 
-            ONI_Common.State.Logger.Log("Element from cell failed.");
+            State.Logger.Log("Element from cell failed.");
 
             return SimHashes.Vacuum;
         }
@@ -49,8 +49,8 @@
             }
             catch (Exception e)
             {
-                ONI_Common.State.Logger.Log("Cell or element index from index failed");
-                ONI_Common.State.Logger.Log(e);
+                State.Logger.Log("Cell or element index from index failed");
+                State.Logger.Log(e);
             }
 
             return SimHashes.Vacuum;

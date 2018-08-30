@@ -64,8 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HSVExtensions.cs" />
+    <Compile Include="ColorHSV.cs" />
     <Compile Include="ImprovedGasOverlayMod.cs" />
+    <Compile Include="ImprovedGasOverlayState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +75,11 @@
       <Name>ONI-Common</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImprovedGasOverlay\Config\ImprovedGasOverlayState.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

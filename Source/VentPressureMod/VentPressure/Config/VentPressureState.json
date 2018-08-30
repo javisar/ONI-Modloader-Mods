@@ -1,0 +1,8 @@
+{
+    "Enabled": true,
+
+    "MaximumPressure": {
+        "GasVent": 10000,
+        "GasVentHighPressure": 10000
+    }
+}

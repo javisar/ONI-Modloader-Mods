@@ -14,9 +14,9 @@
 
         private Dictionary<string, SerializeableVector2> _windowPositions;
 
-        private Dictionary<string, SerializeableVector2> WindowPositions =>
-        this._windowPositions ?? (this._windowPositions = this.LoadFile());
-
+        //private Dictionary<string, SerializeableVector2> WindowPositions =>
+        //this._windowPositions ?? (this._windowPositions = this.LoadFile());
+        /*
         public bool LoadWindowPosition(GameObject window, out Vector2 position)
         {
             if (window == null)
@@ -40,11 +40,11 @@
 
             this.WindowPositions[key] = this.VectorToTuple(position);
 
-            this.UpdateFile();
+            //this.UpdateFile();
         }
 
         private string ExtractKey(GameObject window) => window.name;
-
+        
         private Dictionary<string, SerializeableVector2> LoadFile()
         {
             try
@@ -54,9 +54,9 @@
                                                                                               .DraggableUIStatePath);
             }
             catch (Exception e)
-            {
+            {               
                 State.Logger.Log("Draggable UI state load failed.");
-                State.Logger.Log(e);
+                State.Logger.Log(e);              
 
                 return new Dictionary<string, SerializeableVector2>();
             }
@@ -71,10 +71,10 @@
             catch (Exception e)
             {
                 State.Logger.Log("Draggable UI state save failed.");
-                State.Logger.Log(e);
+                State.Logger.Log(e);                
             }
         }
-
+        */
         private SerializeableVector2 VectorToTuple(Vector2 vector) => new SerializeableVector2(vector.x, vector.y);
     }
 }

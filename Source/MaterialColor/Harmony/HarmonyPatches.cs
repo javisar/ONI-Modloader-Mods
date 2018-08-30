@@ -3,10 +3,8 @@
     using Harmony;
     using Extensions;
     using Helpers;
-    using TemperatureOverlay;
-    using ONI_Common;
+    using TemperatureOverlay;    
     using ONI_Common.Core;
-    using ONI_Common.Data;
     using ONI_Common.IO;
     using Rendering;
     using System;
@@ -20,8 +18,9 @@
     using Action = Action;
 	using static KInputController;
 	using System.Reflection;
+    using MaterialColor.Data;
 
-	public static class HarmonyPatches
+    public static class HarmonyPatches
     {
 
         private static bool _configuratorStateChanged;
@@ -361,7 +360,7 @@
                 {
                     FileChangeNotifier.StartFileWatch(
                                                       Paths.TemperatureStateFileName,
-                                                      Paths.OverlayConfigPath,
+                                                      Paths.MaterialConfigPath,
                                                       OnTemperatureStateChanged);
                 }
             }

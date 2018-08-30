@@ -14,9 +14,9 @@
 
         public void Log(string message)
         {
-            IOHelper.EnsureDirectoryExists(Paths.LogsPath);
+            IOHelper.EnsureDirectoryExists(Paths.GetLogsPath());
 
-            string path = Paths.LogsPath + Path.DirectorySeparatorChar + this._fileName;
+            string path = Paths.GetLogsPath() + Path.DirectorySeparatorChar + this._fileName;
 
             using (StreamWriter writer = new StreamWriter(path, true))
             {
