@@ -41,6 +41,7 @@ Examples
 * **InverseElectrolyzerAltMod**: Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. Made by [@javisar](https://github.com/javisar).
 * **LiquidTankMod**: Storage for liquids. Made by [@javisar](https://github.com/javisar).
 * **MoreMaterialsMod**: Allows the construction of some buildings with any material (Doors, filters, bed, canvas, tables, wall fire pole, sculptures, shower, toilets, wash basins, bridges, conduits/wires, ladder, pumps, valves, ventS, tiles, lockers, sensors and gates). Made by [@javisar](https://github.com/javisar).
+* **NoOverloadedWiresMod**: Avoid overloaded wires. Made by [@javisar](https://github.com/javisar).
 * **NaphthaViscosityMod**: Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. Made by [@javisar](https://github.com/javisar).
 * **NoFixedTemps**: The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). Made by [@javisar](https://github.com/javisar).
 * **PressureDoorMod**: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Made by [@Killface1980](https://github.com/Killface1980).
