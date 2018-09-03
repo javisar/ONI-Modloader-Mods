@@ -332,7 +332,7 @@ namespace AllBuildingsDestroyableMod
         */
     }
 
-
+	/*
     [HarmonyPatch(typeof(POIBunkerExteriorDoor), "CreateBuildingDef")]
     internal class Patches_POIBunkerExteriorDoor_CreateBuildingDef
     {
@@ -372,7 +372,7 @@ namespace AllBuildingsDestroyableMod
             __result.Invincible = false;
         }
     }
-
+	*/
 
 
     [HarmonyPatch(typeof(PropLightConfig), "CreatePrefab")]
