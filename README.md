@@ -49,6 +49,7 @@ Examples
 * **SensorsMod**: Allows for increased ranges in automation sensors (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
 * **SpeedControlMod**: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
 * **StorageLockerMod**: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
+* **SuperMinerMod**: Digging drops the complete mass of the cell. Made by [@javisar](https://github.com/javisar).
 * **ONI-Common**: Common code, required by these mods:
   * **ImprovedGasColourMod**: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)).
   * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).  
