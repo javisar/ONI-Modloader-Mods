@@ -80,6 +80,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoOverloadedWiresMod", "NoO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMinerMod", "SuperMinerMod\SuperMinerMod.csproj", "{4BF8EC3F-EB0C-4FC7-B2F5-458E91F63E96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroPointModuleMod", "ZeroPointModuleMod\ZeroPointModuleMod.csproj", "{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -360,6 +362,14 @@ Global
 		{4BF8EC3F-EB0C-4FC7-B2F5-458E91F63E96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4BF8EC3F-EB0C-4FC7-B2F5-458E91F63E96}.Release|x86.ActiveCfg = Release|Any CPU
 		{4BF8EC3F-EB0C-4FC7-B2F5-458E91F63E96}.Release|x86.Build.0 = Release|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Debug|x86.Build.0 = Debug|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -403,6 +413,7 @@ Global
 		{651ACC28-7A4C-41DB-8BAB-16830D4713BD} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
 		{5A52B5B1-4151-42A0-BC24-0F5339C0F914} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
 		{4BF8EC3F-EB0C-4FC7-B2F5-458E91F63E96} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
+		{1F1220E9-0CBD-4776-A9FA-31941CE63FA0} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {34648007-CC4C-4A8D-91A2-485820AFC9A9}
