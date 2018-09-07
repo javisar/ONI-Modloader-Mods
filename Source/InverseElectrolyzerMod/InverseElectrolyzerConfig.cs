@@ -54,7 +54,7 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 	{
 		go.AddOrGet<LoopingSounds>();
 		//go.AddOrGet<InverseElectrolyzer>();
-		go.GetComponent<KPrefabID>().AddPrefabTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
+		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 		//go.AddOrGet<Pump>();
 		//Storage storage = BuildingTemplates.CreateDefaultStorage(go, false);
 		//storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
