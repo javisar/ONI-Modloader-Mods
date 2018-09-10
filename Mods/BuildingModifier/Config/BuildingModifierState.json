@@ -2,10 +2,51 @@
   "Enabled": true,
 
   "Modifiers": {
-    "GasReservoirConfig": {
-		"Storage": {
-			"capacityKg": 10000
-		}
-	}
+    "GasReservoir": {
+      "Storage": {
+        "capacityKg": 10000
+      }
+    },
+    "LiquidReservoir": {
+      "Storage": {
+        "capacityKg": 10000
+      }
+    },
+    "PressureDoor": {
+      "RequiresPowerInput": false,
+      "EnergyConsumptionWhenActive": 0,
+      "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+      "ViewMode": "SimViewMode.None"
+    },
+    "LogicPressureSensorGas": {
+      "LogicPressureSensor": {
+        "rangeMax": 25.0
+      }
+    },
+    "LogicPressureSensorLiquid": {
+      "LogicPressureSensor": {
+        "rangeMax": 10000.0
+      }
+    },
+    "LogicTemperatureSensor": {
+      "LogicTemperatureSensor": {
+        "maxTemp": 1573.15
+      }
+    },
+    "StorageLocker": {
+      "BuildLocationRule": "BuildLocationRule.Tile",
+      "ContinuouslyCheckFoundation": false,
+      "PermittedRotations": "PermittedRotations.R360"
+    },
+    "GasVent": {
+      "Vent": {
+        "overpressureMass": 10000.0
+      }
+    },
+    "GasVentHighPressure": {
+      "Vent": {
+        "overpressureMass": 10000.0
+      }
+    }
   }
 }

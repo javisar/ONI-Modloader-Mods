@@ -7,7 +7,7 @@ namespace BuildingModifierMod
     {
         public bool Enabled { get; set; } = true;
 
-        public Dictionary<string, Dictionary<string, Dictionary<string, int>>> Modifiers { get; set; } = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+        public Dictionary<string, Dictionary<string, object>> Modifiers { get; set; } = new Dictionary<string, Dictionary<string, object>>();
 
 
 		public static BaseStateManager<BuildingModifierState> StateManager
