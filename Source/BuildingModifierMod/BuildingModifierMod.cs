@@ -34,8 +34,8 @@ namespace BuildingModifierMod
         }
     }
 
-    [HarmonyPatch(typeof(GeneratedBuildings), "LoadGeneratedBuildings")]
-    internal class BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings
+    [HarmonyPatch(typeof(BuildingDef), "PostProcess")]
+    internal class BuildingModifierMod_BuildingDef_PostProcess
     {
         private static void Process(ref GameObject go, String componentName, JObject jobj)
         {
@@ -75,9 +75,9 @@ namespace BuildingModifierMod
 
         }
 
-        private static void Postfix()
+        private static void Prefix(BuildingDef __instance)
         {
-            Debug.Log(" === BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings Postfix === ");
+            //Debug.Log(" === BuildingModifierMod_BuildingDef_PostProcess Prefix === ");
             /*
             //var harmony = HarmonyInstance.Create("Assembly-CSharp");
             //harmony.PatchAll(Assembly.GetExecutingAssembly());
@@ -101,8 +101,10 @@ namespace BuildingModifierMod
 
             foreach (KeyValuePair<string, Dictionary<string, object>> entry in BuildingModifierState.StateManager.State.Modifiers)
             {
+                //BuildingDef def = Assets.GetBuildingDef(entry.Key);
+                BuildingDef def = __instance;
+                if (!def.PrefabID.Equals(entry.Key)) continue;
                 Debug.Log(entry.Key);
-                BuildingDef def = Assets.GetBuildingDef(entry.Key);
                 Debug.Log(def);
 
                 foreach (KeyValuePair<string, object> modifier in entry.Value)
@@ -111,7 +113,14 @@ namespace BuildingModifierMod
                     Type value = modifier.Value.GetType();
                     if (value.Equals(typeof(JObject)))
                     {
-                        Process(ref def.BuildingComplete, modifier.Key, (JObject) modifier.Value);
+                        try
+                        {
+                            Process(ref def.BuildingComplete, modifier.Key, (JObject)modifier.Value);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.LogError(ex);
+                        }
                     }
                     else if (value.Equals(typeof(Int64)))
                     {
