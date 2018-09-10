@@ -1,0 +1,11 @@
+{
+  "Enabled": true,
+
+  "Modifiers": {
+    "GasReservoirConfig": {
+		"Storage": {
+			"capacityKg": 10000
+		}
+	}
+  }
+}
