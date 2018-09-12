@@ -54,7 +54,6 @@ Examples
   * **RoomSizeMod**:  Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. Made by [@javisar](https://github.com/javisar).
   * **VentPressureMod**:  Allows to change the vents maximum pressure. Made by [@javisar](https://github.com/javisar).
 
-
 Outdated mods:
 * **CritterNumberSensor**: Sensor for the critter number in a room (original from R9MX4). Have a look to the new one from [@Cairath](https://github.com/Cairath) here. https://forums.kleientertainment.com/forums/topic/94120-mods-bunch-of-various-mods-usable-with-the-modloader/
 * **DraggablePanelMod**: Makes panels draggable (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)).
@@ -63,11 +62,6 @@ Outdated mods:
 * **LiquidTankMod**: Storage for liquids. Made by [@javisar](https://github.com/javisar).
 * **Patches** (Do not use): Some incomplete tests.
 * **OnionPatches**: Custom world seeds. DebugHandler hook. Requires ONI-Common. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
-
-
-More Harmony based mods in:
-* https://github.com/Cairath/ONI-Mods
-* https://github.com/rainbowdesign/OxygenNotIncluded-Mods
 
 
 
