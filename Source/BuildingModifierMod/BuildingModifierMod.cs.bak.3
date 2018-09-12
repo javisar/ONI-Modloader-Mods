@@ -18,11 +18,9 @@ namespace BuildingModifierMod
 
 		private static bool Prefix(BuildingConfigManager __instance, IBuildingConfig config)
 		{
-			if (!BuildingModifierState.StateManager.State.Enabled)
-				return true;
 
 			if (BuildingModifierState.StateManager.State.Debug)
-				Debug.Log(" === [BuildingModifier] BuildingModifierMod_BuildingConfigManager_RegisterBuilding Prefix === ");
+				Debug.Log(" === BuildingModifierMod_BuildingConfigManager_RegisterBuilding Prefix === ");
 
             FieldInfo configTableF = AccessTools.Field(typeof(BuildingConfigManager), "configTable");
 			FieldInfo baseTemplateF = AccessTools.Field(typeof(BuildingConfigManager), "baseTemplate");
@@ -33,12 +31,12 @@ namespace BuildingModifierMod
             if (!BuildingModifierState.StateManager.State.Modifiers.ContainsKey(buildingDef.PrefabID) )
             {
 				if (BuildingModifierState.StateManager.State.Debug)
-					Debug.Log(" === [BuildingModifier] Ignoring: " + buildingDef.PrefabID);
+					Debug.Log(" === Ignoring: "+ buildingDef.PrefabID);
 				return true;
             }
-			Debug.Log(" === [BuildingModifier] Processing: " + buildingDef.PrefabID);
+			Debug.Log(" === Processing: " + buildingDef.PrefabID);
 			if (BuildingModifierState.StateManager.State.Debug)
-				Debug.Log(" === [BuildingModifier] CreateBuildingDef === ");
+				Debug.Log(" === CreateBuildingDef === ");
 			PostProcessClass.Process(buildingDef);
 			//configTable[config] = buildingDef;
 			((Dictionary < IBuildingConfig, BuildingDef > )configTableF.GetValue(__instance))[config] = buildingDef;
@@ -55,11 +53,11 @@ namespace BuildingModifierMod
 			}
 			config.ConfigureBuildingTemplate(gameObject, buildingDef.Tag);
 			if (BuildingModifierState.StateManager.State.Debug)
-				Debug.Log(" === [BuildingModifier] ConfigureBuildingTemplate === ");
+				Debug.Log(" === ConfigureBuildingTemplate === ");
 			PostProcessClass.Process(buildingDef);
 			buildingDef.BuildingComplete = BuildingLoader.Instance.CreateBuildingComplete(gameObject, buildingDef);
 			if (BuildingModifierState.StateManager.State.Debug)
-				Debug.Log(" === [BuildingModifier] CreateBuildingComplete === ");
+				Debug.Log(" === CreateBuildingComplete === ");
 			PostProcessClass.Process(buildingDef);
             bool flag = true;
 			//for (int i = 0; i < NonBuildableBuildings.Length; i++)
@@ -83,23 +81,22 @@ namespace BuildingModifierMod
 			buildingDef.PostProcess();
 			config.DoPostConfigureComplete(buildingDef.BuildingComplete);
 			if (BuildingModifierState.StateManager.State.Debug)
-				Debug.Log(" === [BuildingModifier] DoPostConfigureComplete === ");
+				Debug.Log(" === DoPostConfigureComplete === ");
 			PostProcessClass.Process(buildingDef);
 			if (flag)
 			{
 				config.DoPostConfigurePreview(buildingDef, buildingDef.BuildingPreview);
 				if (BuildingModifierState.StateManager.State.Debug)
-					Debug.Log(" === [BuildingModifier] CreateBuildingUnderConstruction === ");
+					Debug.Log(" === CreateBuildingUnderConstruction === ");
 				PostProcessClass.Process(buildingDef);
 				config.DoPostConfigureUnderConstruction(buildingDef.BuildingUnderConstruction);
 				if (BuildingModifierState.StateManager.State.Debug)
-					Debug.Log(" === [BuildingModifier] CreateBuildingPreview === ");
+					Debug.Log(" === CreateBuildingPreview === ");
 				PostProcessClass.Process(buildingDef);
 			}
 			Assets.AddBuildingDef(buildingDef);
 			return false;
 		}
-
 	}
 
 	
@@ -109,11 +106,8 @@ namespace BuildingModifierMod
 
 		private static void Postfix(BuildingConfigManager __instance)
 		{
-			if (!BuildingModifierState.StateManager.State.Enabled)
-				return;
-
 			if (BuildingModifierState.StateManager.State.Debug)
-				Debug.Log(" === [BuildingModifier] BuildingModifierMod_BuildingConfigManager_ConfigurePost Postfix === ");
+				Debug.Log(" === BuildingModifierMod_BuildingConfigManager_ConfigurePost Postfix === ");
 			
 			FieldInfo configTableF = AccessTools.Field(typeof(BuildingConfigManager), "configTable");
 
@@ -124,13 +118,13 @@ namespace BuildingModifierMod
                     continue;
 
 				if (BuildingModifierState.StateManager.State.Debug)
-					Debug.Log(" === [BuildingModifier] ConfigurePost === ");
+					Debug.Log(" === ConfigurePost === ");
 				PostProcessClass.Process(item.Value);
 			}
 
 			if (PostProcessClass.ModifiersAll.Count() != PostProcessClass.ModifiersFound.Count())
 			{
-				Debug.Log(" === [BuildingModifier] Not found modifiers:");
+				Debug.Log(" === BUILDING MODIFIERS Not found modifiers:");
 				foreach (string modifier in PostProcessClass.ModifiersAll)
 				{
 					if (!PostProcessClass.ModifiersFound.Contains(modifier))
@@ -138,9 +132,6 @@ namespace BuildingModifierMod
 						Debug.Log(modifier);
 					}
 				}
-			}
-			else {
-				Debug.Log(" === [BuildingModifier] Finished.");
 			}
 		}
 	}
@@ -154,7 +145,7 @@ namespace BuildingModifierMod
         public static void Process(BuildingDef def)
 		{
 			if (BuildingModifierState.StateManager.State.Debug)
-				Debug.Log(" === [BuildingModifier] Process === " + def.PrefabID);
+				Debug.Log(" === Process === " + def.PrefabID);
 			bool error = false;
 
 			ModifiersAll.Add(def.PrefabID);
@@ -163,7 +154,9 @@ namespace BuildingModifierMod
 				return;
 
 			Dictionary<string, object> entry = BuildingModifierState.StateManager.State.Modifiers[def.PrefabID];
-			
+
+			//foreach (KeyValuePair<string, Dictionary<string, object>> entry in BuildingModifierState.StateManager.State.Modifiers)
+			//{
 			try
 				{
 					//BuildingDef def = Assets.GetBuildingDef(entry.Key);
@@ -188,7 +181,7 @@ namespace BuildingModifierMod
                                     if (def.BuildingComplete != null)
                                     {
                                         PostProcessClass.ProcessComponent(ref def.BuildingComplete, def.PrefabID, modifier.Key, (JObject)modifier.Value);
-                                        Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+                                        Debug.Log("Found: " + def.PrefabID + "_" + modifier.Key);
                                         ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                                     }
 									else
@@ -200,21 +193,21 @@ namespace BuildingModifierMod
 								{
 									//Debug.LogError(ex);
 									error = true;
-                                    Debug.Log(" === [BuildingModifier] Warning: " + def.PrefabID + "_" + modifier.Key);
+                                    Debug.Log("Warning: " + def.PrefabID + "_" + modifier.Key);
                                 }
 							}
 							else if (value.Equals(typeof(Int64)))
 							{
 								FieldInfo fi = AccessTools.Field(typeof(BuildingDef), modifier.Key);
 								fi.SetValue(def, modifier.Value);
-                                Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+                                Debug.Log("Found: "+ def.PrefabID + "_" + modifier.Key);
                                 ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                             }
 							else if (value.Equals(typeof(Double)))
 							{
 								FieldInfo fi = AccessTools.Field(typeof(BuildingDef), modifier.Key);
 								fi.SetValue(def, modifier.Value);
-                                Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+                                Debug.Log("Found: " + def.PrefabID + "_" + modifier.Key);
                                 ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                             }
 							else if (value.Equals(typeof(String)))
@@ -230,14 +223,14 @@ namespace BuildingModifierMod
 								//var obj = Activator.CreateInstance(tp);
 								//Debug.Log("FINAL: " + fi2.GetValue(null));
 								fi.SetValue(def, fi2.GetValue(null));
-                                Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+                                Debug.Log("Found: " + def.PrefabID + "_" + modifier.Key);
                                 ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                             }
 							else if (value.Equals(typeof(Boolean)))
 							{
 								FieldInfo fi = AccessTools.Field(typeof(BuildingDef), modifier.Key);
 								fi.SetValue(def, modifier.Value);
-                                Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+                                Debug.Log("Found: " + def.PrefabID + "_" + modifier.Key);
                                 ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                             }
 
@@ -246,7 +239,7 @@ namespace BuildingModifierMod
 						catch (Exception ex)
 						{
                             //Debug.LogError(ex);
-                            Debug.Log(" === [BuildingModifier] Warning: " + def.PrefabID + "_" + modifier.Key);
+                            Debug.Log("Warning: "+ def.PrefabID + "_" + modifier.Key);
 
                         }
 					}
@@ -256,7 +249,7 @@ namespace BuildingModifierMod
 				{
 					error = true;
                     //Debug.LogError(ex);
-                    Debug.Log(" === [BuildingModifier] Warning: " + def.PrefabID + "_"+ entry);
+                    Debug.Log("Warning: " + def.PrefabID + "_"+ entry);
                 }
 				//PostProcessClass.PostProcess(ref def.BuildingComplete);
 
@@ -269,21 +262,22 @@ namespace BuildingModifierMod
                 harmony.Patch(original, new HarmonyMethod(null), new HarmonyMethod(postfix));
                 */
 
+			//}
 
 			if (!error)
 			{
-				Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID);
+				Debug.Log("Found: " + def.PrefabID);
 				ModifiersFound.Add(def.PrefabID);
 			}
 		}
 
 		public static void ProcessComponent(ref GameObject go, String buildingName, String componentName, JObject jobj)
 		{
-			Debug.Log(" === [BuildingModifier] ProcessComponent === " + go.PrefabID().Name);
-
+			Debug.Log(" === ProcessComponent === " + go.PrefabID().Name);
+			//Storage storage = go.AddOrGet<Storage>();
+			//storage.capacityKg = 10000f;
 			foreach (JProperty x in (JToken)jobj)
-			{ 
-				// if 'obj' is a JObject
+			{ // if 'obj' is a JObject
 			
 				string name = x.Name;
 				JToken value = x.Value;
@@ -320,13 +314,13 @@ namespace BuildingModifierMod
 						default:
 							break;
 					}
-                    Debug.Log(" === [BuildingModifier] Found: " + buildingName + "_" + componentName + "_" + name);
+                    Debug.Log("Found: " + buildingName + "_" + componentName + "_" + name);
                     ModifiersFound.Add(buildingName + "_" + componentName + "_" + name);
                 }
 				catch (Exception ex)
 				{
                     //Debug.LogError(ex);
-                    Debug.Log(" === [BuildingModifier] Warning: " + buildingName + "_" + componentName + "_" + name);
+                    Debug.Log("Warning: " + buildingName + "_" + componentName + "_" + name);
                     throw ex;
                 }
 			}
@@ -358,7 +352,6 @@ namespace BuildingModifierMod
 
 	}
 
-	/*
     [HarmonyPatch(typeof(BuildingDef), "PostProcess")]
     internal class BuildingModifierMod_BuildingDef_PostProcess
     {
@@ -367,7 +360,7 @@ namespace BuildingModifierMod
         private static void Prefix(BuildingDef __instance)
         {
             //Debug.Log(" === BuildingModifierMod_BuildingDef_PostProcess Prefix === ");
-            
+            /*
             //var harmony = HarmonyInstance.Create("Assembly-CSharp");
             //harmony.PatchAll(Assembly.GetExecutingAssembly());
             //var harmony = HarmonyInstance.Create("ONI-Modloader");
@@ -386,14 +379,15 @@ namespace BuildingModifierMod
             {
                 Debug.Log(method.PrefabID);
             }
-            
+            */
 
             //PostProcessClass.Dummy(__instance);
 
         }
 
+
     }
-	*/
+
 
 	/*
 	[HarmonyPatch(typeof(IBuildingConfig), "CreateBuildingDef")]

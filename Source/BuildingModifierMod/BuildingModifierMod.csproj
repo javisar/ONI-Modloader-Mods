@@ -58,7 +58,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="BuildingModifierMod.cs.bak.3" />
     <Compile Include="BuildingModifierMod.cs" />
+    <None Include="BuildingModifierMod.cs.bak.1" />
+    <None Include="BuildingModifierMod.cs.bak.2" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BuildingModifierState.cs" />
   </ItemGroup>
