@@ -37,7 +37,7 @@ namespace BuildingModifierMod
             Debug.Log(" === [BuildingModifier] Processing: " + buildingDef.PrefabID);
 
             Helper.Log(" === [BuildingModifier] CreateBuildingDef === ");
-            Helper.Process(buildingDef);
+            Helper.Process(buildingDef, null);
             
 
             // Create gameobject
@@ -57,11 +57,11 @@ namespace BuildingModifierMod
 
 			config.ConfigureBuildingTemplate(gameObject, buildingDef.Tag);
             Helper.Log(" === [BuildingModifier] ConfigureBuildingTemplate === ");
-            Helper.Process(buildingDef);
+            Helper.Process(buildingDef, gameObject);
 
 			buildingDef.BuildingComplete = BuildingLoader.Instance.CreateBuildingComplete(gameObject, buildingDef);
             Helper.Log(" === [BuildingModifier] CreateBuildingComplete === ");
-            Helper.Process(buildingDef);
+            Helper.Process(buildingDef, gameObject);
 
             bool flag = true;
 			//for (int i = 0; i < NonBuildableBuildings.Length; i++)
@@ -86,17 +86,17 @@ namespace BuildingModifierMod
 
 			config.DoPostConfigureComplete(buildingDef.BuildingComplete);
             Helper.Log(" === [BuildingModifier] DoPostConfigureComplete === ");
-            Helper.Process(buildingDef);
+            Helper.Process(buildingDef, gameObject);
 
 			if (flag)
 			{
 				config.DoPostConfigurePreview(buildingDef, buildingDef.BuildingPreview);
                 Helper.Log(" === [BuildingModifier] CreateBuildingUnderConstruction === ");
-                Helper.Process(buildingDef);
+                Helper.Process(buildingDef, gameObject);
 
 				config.DoPostConfigureUnderConstruction(buildingDef.BuildingUnderConstruction);
                 Helper.Log(" === [BuildingModifier] CreateBuildingPreview === ");
-                Helper.Process(buildingDef);
+                Helper.Process(buildingDef, gameObject);
 			}
 
 			Assets.AddBuildingDef(buildingDef);
@@ -128,7 +128,7 @@ namespace BuildingModifierMod
                     continue;
 
                 Helper.Log(" === [BuildingModifier] ConfigurePost === ");
-				Helper.Process(item.Value);
+				Helper.Process(item.Value, item.Value.BuildingComplete);
 			}
 
             // List all config attributes not found or that throw an error

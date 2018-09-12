@@ -15,7 +15,7 @@ namespace BuildingModifierMod
         public static HashSet<string> ModifiersFound = new HashSet<string>();
 
         // Applies mod config to building attributes
-        public static void Process(BuildingDef def)
+        public static void Process(BuildingDef def, GameObject go)
         {
             Helper.Log(" === [BuildingModifier] Process === " + def.PrefabID);
             bool error = false;
@@ -50,9 +50,14 @@ namespace BuildingModifierMod
                         {       // Is a Component of the building
                             try
                             {
-                                if (def.BuildingComplete != null)
+                                GameObject buildingComplete = def.BuildingComplete;
+                                //Debug.Log("buildingComplete: " + buildingComplete);
+                                if (buildingComplete == null)
+                                    buildingComplete = go;
+                                //Debug.Log("buildingComplete: " + buildingComplete);
+                                if (buildingComplete != null)
                                 {
-                                    ProcessComponent(ref def.BuildingComplete, def.PrefabID, modifier.Key, (JObject)modifier.Value);
+                                    ProcessComponent(ref buildingComplete, def.PrefabID, modifier.Key, (JObject)modifier.Value);
                                     Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
                                     ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                                 }
@@ -65,7 +70,7 @@ namespace BuildingModifierMod
                             {
                                 //Debug.LogError(ex);
                                 error = true;
-                                Debug.Log(" === [BuildingModifier] Warning: " + def.PrefabID + "_" + modifier.Key);
+                                Debug.Log(" === [BuildingModifier] JObject Warning: " + def.PrefabID + "_" + modifier.Key);
                             }
                         }
                         else if (value.Equals(typeof(Int64))
@@ -101,7 +106,7 @@ namespace BuildingModifierMod
                     catch (Exception ex)
                     {
                         //Debug.LogError(ex);
-                        Debug.Log(" === [BuildingModifier] Warning: " + def.PrefabID + "_" + modifier.Key);
+                        Debug.Log(" === [BuildingModifier] Attribute Warning: " + def.PrefabID + "_" + modifier.Key);
 
                     }
                 }
@@ -193,7 +198,7 @@ namespace BuildingModifierMod
         public static void Log(string txt)
         {
             if (BuildingModifierState.StateManager.State.Debug)
-                Debug.Log(" === [BuildingModifier] Process === " + txt);
+                Debug.Log(txt);
         }
 
 
