@@ -6,6 +6,7 @@ https://github.com/javisar/ONI-Modloader
 Forums in Klei:
 https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/
 
+If you want to **contribute**, there are a list of ideas and requested mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
 
 Disclaimers
 ----------
