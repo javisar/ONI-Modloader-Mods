@@ -9,9 +9,9 @@ using Newtonsoft.Json.Linq;
 
 namespace BuildingModifierMod
 {
-    
-	
-    // Executed every time ONI loads a Building
+
+
+	// Executed every time ONI loads a Building
 	[HarmonyPatch(typeof(BuildingConfigManager), "RegisterBuilding")]
 	internal class BuildingModifierMod_BuildingConfigManager_RegisterBuilding
 	{
@@ -146,8 +146,8 @@ namespace BuildingModifierMod
             Debug.Log(" === [BuildingModifier] Finished.");
         }
 	}
-	
-	
+
+
 
 	/*
     [HarmonyPatch(typeof(BuildingDef), "PostProcess")]
@@ -249,4 +249,18 @@ namespace BuildingModifierMod
 	}
 	*/
 
+	/*
+	[HarmonyPatch(typeof(GasReservoirConfig), "ConfigureBuildingTemplate")]
+	internal class BuildingModifierMod_GasReservoirConfig_ConfigureBuildingTemplate
+	{
+		private static void Postfix(ref GameObject go, Tag prefab_tag)
+		{
+			Debug.Log(" === BuildingModifierMod_GasReservoirConfig_ConfigureBuildingTemplate Postfix === ");
+			Storage storage = go.GetComponent<Storage>();
+			storage.capacityKg = 200;
+			ConduitConsumer conduitConsumer = go.GetComponent<ConduitConsumer>();
+			conduitConsumer.capacityKG = 200;
+		}
+	}
+	*/
 }

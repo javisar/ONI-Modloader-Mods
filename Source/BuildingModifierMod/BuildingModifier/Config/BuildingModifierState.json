@@ -6,11 +6,17 @@
         "GasReservoir": {
             "Storage": {
                 "capacityKg": 10000
+            },
+            "ConduitConsumer": {
+                "capacityKG": 10000
             }
         },
         "LiquidReservoir": {
             "Storage": {
                 "capacityKg": 10000
+            },
+            "ConduitConsumer": {
+                "capacityKG": 10000
             }
         },
         "PressureDoor": {

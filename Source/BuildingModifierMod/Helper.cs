@@ -157,8 +157,11 @@ namespace BuildingModifierMod
 
                     // Tries to find the component
                     MethodInfo method = typeof(GameObject).GetMethod("GetComponent", new Type[] { typeof(Type) });
+					//Debug.Log("method: " + method);
                     var component = method.Invoke(go, new object[] { Type.GetType(componentName + ", Assembly-CSharp") });
-                    FieldInfo fi = AccessTools.Field(Type.GetType(componentName + ", Assembly-CSharp"), name);
+					//Debug.Log("component: " + component);
+					FieldInfo fi = AccessTools.Field(Type.GetType(componentName + ", Assembly-CSharp"), name);
+					//Debug.Log("fi: " + fi);
                     //Debug.Log(value + " " + value.Type);
                     switch (value.Type)
                     {
