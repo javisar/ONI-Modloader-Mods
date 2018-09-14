@@ -74,6 +74,36 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="BuildingModifier\Config\Examples\Batteries.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\ALL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\StorageCapacity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\TEMPLATE.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\Generators.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\VentPressure.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\StorageLockers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\SensorsRange.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\PressureDoor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="BuildingModifier\Config\Examples\ReservoirStorage.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="BuildingModifier\Config\BuildingModifierState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

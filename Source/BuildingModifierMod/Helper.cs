@@ -41,47 +41,62 @@ namespace BuildingModifierMod
                 {
                     try
                     {
-                        //Debug.Log(modifier.Key + ": " + modifier.Value.GetType() + "; " + modifier.Value);
+						Type value = modifier.Value.GetType();
+						Helper.Log(" === [BuildingModifier] "+modifier.Key + ": " + value + "; " + modifier.Value);
 
-                        ModifiersAll.Add(def.PrefabID + "_" + modifier.Key);
+						ModifiersAll.Add(def.PrefabID + "_" + modifier.Key);
 
-                        Type value = modifier.Value.GetType();
-                        if (value.Equals(typeof(JObject)))
-                        {       // Is a Component of the building
-                            try
-                            {
-                                GameObject buildingComplete = def.BuildingComplete;
-                                //Debug.Log("buildingComplete: " + buildingComplete);
-                                if (buildingComplete == null)
-                                    buildingComplete = go;
-                                //Debug.Log("buildingComplete: " + buildingComplete);
-                                if (buildingComplete != null)
-                                {
-                                    ProcessComponent(ref buildingComplete, def.PrefabID, modifier.Key, (JObject)modifier.Value);
-                                    Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
-                                    ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
-                                }
-                                else // def.BuildingComplete still not present
-                                {
-                                    error = true;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                //Debug.LogError(ex);
-                                error = true;
-                                Debug.Log(" === [BuildingModifier] JObject Warning: " + def.PrefabID + "_" + modifier.Key);
-                            }
-                        }
-                        else if (value.Equals(typeof(Int64))
-                            || value.Equals(typeof(Double))
-                            || value.Equals(typeof(Boolean))
-                            )
-                        {   // Basic attributes in BuildingDef with system types
+						if (value.Equals(typeof(JObject)))
+						{       // Is a Component of the building
+							try
+							{
+								GameObject buildingComplete = def.BuildingComplete;
+								//Debug.Log("buildingComplete: " + buildingComplete);
+								if (buildingComplete == null)
+									buildingComplete = go;
+								//Debug.Log("buildingComplete: " + buildingComplete);
+								if (buildingComplete != null)
+								{
+									ProcessObject(ref buildingComplete, def.PrefabID, modifier.Key, (JObject)modifier.Value);
+									Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+									ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
+								}
+								else // def.BuildingComplete still not present
+								{
+									error = true;
+								}
+							}
+							catch (Exception ex)
+							{
+								//Debug.LogError(ex);
+								error = true;
+								Debug.Log(" === [BuildingModifier] JObject Warning: " + def.PrefabID + "_" + modifier.Key);
+							}
+						}
+						else if (value.Equals(typeof(Int64))
+							|| value.Equals(typeof(Double))
+							|| value.Equals(typeof(Boolean))
+							)
+						{   // Basic attributes in BuildingDef with system types
+							FieldInfo fi = AccessTools.Field(typeof(BuildingDef), modifier.Key);
+							Helper.Log(" === [BuildingModifier] FieldInfo: " + fi);
 
-                            FieldInfo fi = AccessTools.Field(typeof(BuildingDef), modifier.Key);
-                            fi.SetValue(def, modifier.Value);
-                            Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+							if (fi.FieldType.Equals(typeof(Single))) {
+								fi.SetValue(def, (int)Convert.ToSingle(modifier.Value));
+							}
+							else if (value.Equals(typeof(Int64)))
+							{
+								fi.SetValue(def, (int)modifier.Value);
+							}
+							else if (value.Equals(typeof(Double)))
+							{
+								fi.SetValue(def, (double)modifier.Value);
+							}
+							else if (value.Equals(typeof(Boolean)))
+							{
+								fi.SetValue(def, (bool)modifier.Value);
+							}
+							Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
                             ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                         }                        
                         else if (value.Equals(typeof(String)))
@@ -105,8 +120,10 @@ namespace BuildingModifierMod
                     }
                     catch (Exception ex)
                     {
-                        //Debug.LogError(ex);
-                        Debug.Log(" === [BuildingModifier] Attribute Warning: " + def.PrefabID + "_" + modifier.Key);
+                        Debug.LogError(ex);
+
+						//Debug.Log(ex.StackTrace);
+						Debug.Log(" === [BuildingModifier] Attribute Warning: " + def.PrefabID + "_" + modifier.Key);
 
                     }
                 }
@@ -137,9 +154,9 @@ namespace BuildingModifierMod
             */
         }
 
-        public static void ProcessComponent(ref GameObject go, String buildingName, String componentName, JObject jobj)
+        public static void ProcessObject(ref GameObject go, String buildingName, String componentName, JObject jobj)
         {
-            Debug.Log(" === [BuildingModifier] ProcessComponent === " + go.PrefabID().Name);
+            Debug.Log(" === [BuildingModifier] ProcessObject === " + go.PrefabID().Name);
 
             // For every component in the building
             foreach (JProperty x in (JToken)jobj)
@@ -158,7 +175,7 @@ namespace BuildingModifierMod
                     // Tries to find the component
                     MethodInfo method = typeof(GameObject).GetMethod("GetComponent", new Type[] { typeof(Type) });
 					//Debug.Log("method: " + method);
-                    var component = method.Invoke(go, new object[] { Type.GetType(componentName + ", Assembly-CSharp") });
+                    Component component = (Component) method.Invoke(go, new object[] { Type.GetType(componentName + ", Assembly-CSharp") });
 					//Debug.Log("component: " + component);
 					FieldInfo fi = AccessTools.Field(Type.GetType(componentName + ", Assembly-CSharp"), name);
 					//Debug.Log("fi: " + fi);
@@ -176,14 +193,17 @@ namespace BuildingModifierMod
                             break;
                         case JTokenType.String:
                             //fi.SetValue(component, (string)value);
-                            Debug.Log(" === [BuildingModifier] Warning: Not implemented. +"+ buildingName + "_" + componentName + "_" + name+": "+(string)value);
+                            Debug.Log(" === [BuildingModifier] Warning: JTokenType.String Not implemented. " + buildingName + "_" + componentName + "_" + name+": "+(string)value);
                             break;
                         case JTokenType.Object:
-                            //fi.SetValue(component, (string)value);
-                            Debug.Log(" === [BuildingModifier] Warning: Not implemented. +" + buildingName + "_" + componentName + "_" + name + ": " + value);
-                            break;
-                        default:
-                            break;
+							//fi.SetValue(component, (string)value);
+							//Debug.Log(" === [BuildingModifier] Warning: JTokenType.Object Not implemented. " + buildingName + "_" + componentName + "_" + name + ": " + value);
+							//continue;							
+							ProcessComponent(ref component, buildingName, componentName, name, (JObject) value);
+							break;
+						default:
+							Debug.Log(" === [BuildingModifier] Warning: "+ value.Type+" Not implemented. " + buildingName + "_" + componentName + "_" + name + ": " + value);
+							continue;
                     }
                     Debug.Log(" === [BuildingModifier] Found: " + buildingName + "_" + componentName + "_" + name);
                     ModifiersFound.Add(buildingName + "_" + componentName + "_" + name);
@@ -198,7 +218,73 @@ namespace BuildingModifierMod
 
         }
 
-        public static void Log(string txt)
+		public static void ProcessComponent(ref Component component, String buildingName, String componentName, String fieldName, JObject jobj)
+		{
+			Debug.Log(" === [BuildingModifier] ProcessComponent === " + componentName);
+
+			// For every component in the building
+			foreach (JProperty x in (JToken)jobj)
+			{
+				string name = x.Name;
+				JToken value = x.Value;
+				try
+				{
+					//Debug.Log(componentName + ", " + name + ": " + value.ToString());
+
+					if (ModifiersFound.Contains(buildingName + "_" + componentName + "_" + fieldName + "_" + name))
+						continue;
+
+					ModifiersAll.Add(buildingName + "_" + componentName + "_" + fieldName + "_" + name);
+
+					// Tries to find the component
+					
+					//Debug.Log("method: " + method);
+					//Component component = (Component)method.Invoke(go, new object[] { Type.GetType(componentName + ", Assembly-CSharp") });
+					//Debug.Log("component: " + component);
+					FieldInfo comp = AccessTools.Field(Type.GetType(componentName + ", Assembly-CSharp"), fieldName);
+					Helper.Log(" === [BuildingModifier] comp: " + comp);
+
+					FieldInfo field = AccessTools.Field(comp.FieldType, name);
+					Helper.Log(" === [BuildingModifier] field: " + field);
+					switch (value.Type)
+					{
+						case JTokenType.Integer:
+							field.SetValue(comp.GetValue(component), (int)value);
+							break;
+						case JTokenType.Float:
+							field.SetValue(comp.GetValue(component), (float)value);
+							break;
+						case JTokenType.Boolean:
+							field.SetValue(comp.GetValue(component), (bool)value);
+							break;
+						case JTokenType.String:
+							//fi.SetValue(component, (string)value);
+							Debug.Log(" === [BuildingModifier] Warning: JTokenType.String Not implemented. " + buildingName + "_" + componentName + "_" + name + ": " + (string)value);
+							break;
+						case JTokenType.Object:
+							//fi.SetValue(component, (string)value);
+							Debug.Log(" === [BuildingModifier] Warning: JTokenType.Object Not implemented. " + buildingName + "_" + componentName + "_" + name + ": " + value);
+							continue;														
+						default:
+							Debug.Log(" === [BuildingModifier] Warning: " + value.Type + " Not implemented. " + buildingName + "_" + componentName + "_" + name + ": " + value);
+							continue;
+					}
+					
+
+					Debug.Log(" === [BuildingModifier] Found: " + buildingName + "_" + componentName + "_" + fieldName + "_" + name);
+					ModifiersFound.Add(buildingName + "_" + componentName + "_" + fieldName + "_" + name);
+				}
+				catch (Exception ex)
+				{
+					Debug.LogError(ex);
+					Debug.Log(" === [BuildingModifier] Warning: " + buildingName + "_" + componentName + "_" + fieldName + "_" + name);
+					throw ex;
+				}
+			}
+
+		}
+
+		public static void Log(string txt)
         {
             if (BuildingModifierState.StateManager.State.Debug)
                 Debug.Log(txt);

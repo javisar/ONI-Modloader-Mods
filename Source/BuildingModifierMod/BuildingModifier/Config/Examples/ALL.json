@@ -226,7 +226,7 @@
             "Storage": {
                 "capacityKg": 1000.0
             },
-            "Fabricator": {
+            "MicrobeMusher": {
                 "inStorage": {
                     "capacityKg": 500.0
                 },

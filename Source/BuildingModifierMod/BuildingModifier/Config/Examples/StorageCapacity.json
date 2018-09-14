@@ -4,105 +4,18 @@
 
     "Modifiers": {
 
-        "Battery": {
-            "ExhaustKilowattsWhenActive": 0.25,
-            "SelfHeatKilowattsWhenActive": 1.0,
-            "BaseMeltingPoint": 800.0,
-            "Battery": {
-                "capacity": 100000,
-                "joulesLostPerSecond": 1.66666 // capacity * 0.1 / 600;
-            }
-        },
-
-        "BatteryMedium": {
-            "ExhaustKilowattsWhenActive": 0.25,
-            "SelfHeatKilowattsWhenActive": 1.0,
-            "BaseMeltingPoint": 800.0,
-            "Battery": {
-                "capacity": 400000,
-                "joulesLostPerSecond": 0.66666 // capacity * 0.05 / 600;
-            }
-        },
-
-        "BatterySmart": {
-            "ExhaustKilowattsWhenActive": 0.0,
-            "SelfHeatKilowattsWhenActive": 0.5,
-            "BaseMeltingPoint": 800.0,
-            "Battery": {
-                "capacity": 200000,
-                "joulesLostPerSecond": 3.33333 // capacity * 0.02 / 600;
-            }
-        },
-
-
-        "Generator": {
-            "GeneratorWattageRating": 6000.0,
-            "GeneratorBaseCapacity": 20000.0,
-            "ExhaustKilowattsWhenActive": 8.0,
-            "SelfHeatKilowattsWhenActive": 1.0,
-            "BaseMeltingPoint": 2400.0,
-            "Storage": {
-                "capacityKg": 1200
-            },
-            "ManualDeliveryKG": {
-                "capacity": 1200,
-                "refillMass": 200.0
-            }
-        },
-
-        "PressureDoor": {
-            "RequiresPowerInput": false,
-            "EnergyConsumptionWhenActive": 0,
-            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
-            "ViewMode": "SimViewMode.None"
-        },
-
-
-        "LogicPressureSensorGas": {
-            "LogicPressureSensor": {
-                "rangeMax": 25.0
-            }
-        },
-        "LogicPressureSensorLiquid": {
-            "LogicPressureSensor": {
-                "rangeMax": 10000.0
-            }
-        },
-        "LogicTemperatureSensor": {
-            "LogicTemperatureSensor": {
-                "maxTemp": 1573.15
-            }
-        },
-
-        "GasVent": {
-            "Vent": {
-                "overpressureMass": 10000.0
-            }
-        },
-        "GasVentHighPressure": {
-            "Vent": {
-                "overpressureMass": 10000.0
-            }
-        },
-
-        "StorageLocker": {
-            "BuildLocationRule": "BuildLocationRule.Tile",
-            "ContinuouslyCheckFoundation": false,
-            "PermittedRotations": "PermittedRotations.R360",
+        "StorageLocker": {           
             "Storage": {
                 "capacityKg": 40000.0
             }
         },
 
         "StorageLockerSmart": {
-            "BuildLocationRule": "BuildLocationRule.Tile",
-            "ContinuouslyCheckFoundation": false,
-            "PermittedRotations": "PermittedRotations.R360",
             "Storage": {
                 "capacityKg": 40000.0
             }
         },
-      
+
         "AlgaeHabitat": {
             "Storage": {
                 "capacityKg": 1000.0
@@ -226,7 +139,7 @@
             "Storage": {
                 "capacityKg": 1000.0
             },
-            "Fabricator": {
+            "MicrobeMusher": {
                 "inStorage": {
                     "capacityKg": 500.0
                 },
