@@ -1,0 +1,10 @@
+{
+  "Enabled": true,
+  "DisableAllDamage": false,
+
+  "NoBuildingDamage": true,
+  "NoCircuitOverload": true,
+  "NoBuildingOverheat": true,
+  "NoConduitContentsBoiling": true,
+  "NoConduitContentsFrozen": true
+}
