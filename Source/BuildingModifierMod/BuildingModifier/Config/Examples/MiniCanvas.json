@@ -1,0 +1,12 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+
+      "Canvas": {
+        "WidthInCells": 1,
+        "HeightInCells": 1
+      }
+  }
+}

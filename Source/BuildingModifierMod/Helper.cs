@@ -13,6 +13,7 @@ namespace BuildingModifierMod
     {       
         public static HashSet<string> ModifiersAll = new HashSet<string>();
         public static HashSet<string> ModifiersFound = new HashSet<string>();
+        public static BuildingModifierState Config = BuildingModifierState.StateManager.State;
 
         // Applies mod config to building attributes
         public static void Process(BuildingDef def, GameObject go)
@@ -26,7 +27,7 @@ namespace BuildingModifierMod
             if (ModifiersFound.Contains(def.PrefabID)) return;
 
             // Get building mod modifiers
-            Dictionary<string, object> entry = BuildingModifierState.StateManager.State.Modifiers[def.PrefabID];
+            Dictionary<string, object> entry = Config.Modifiers[def.PrefabID];
 
             try
             {
@@ -84,10 +85,13 @@ namespace BuildingModifierMod
 							if (fi.FieldType.Equals(typeof(Single))) {
 								fi.SetValue(def, (int)Convert.ToSingle(modifier.Value));
 							}
-							else if (value.Equals(typeof(Int64)))
+							else if (value.Equals(typeof(Int64)) || value.Equals(typeof(Int32)))
 							{
-								fi.SetValue(def, (int)modifier.Value);
-							}
+                                if (fi.FieldType.Equals(typeof(Int32)))
+								    fi.SetValue(def, Convert.ToInt32(modifier.Value));
+                                else if (fi.FieldType.Equals(typeof(Int64)))
+                                    fi.SetValue(def, (int)modifier.Value);
+                            }
 							else if (value.Equals(typeof(Double)))
 							{
 								fi.SetValue(def, (double)modifier.Value);
@@ -96,7 +100,12 @@ namespace BuildingModifierMod
 							{
 								fi.SetValue(def, (bool)modifier.Value);
 							}
-							Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
+                            else
+                            {
+                                Debug.Log(" === [BuildingModifier] Type Warning: " + value +" "+ def.PrefabID + "_" + modifier.Key);
+
+                            }
+                            Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
                             ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
                         }                        
                         else if (value.Equals(typeof(String)))
@@ -286,13 +295,13 @@ namespace BuildingModifierMod
 
 		public static void Log(string txt)
         {
-            if (BuildingModifierState.StateManager.State.Debug)
+            if (Config.Debug)
                 Debug.Log(txt);
         }
 
 
         /*
-		public static void PostProcessOld(ref GameObject go)
+		public static void PostProcess(ref GameObject go)
 		{
 			Debug.Log(" === PostProcess === " + go.PrefabID().Name);
 			//Storage storage = go.AddOrGet<Storage>();

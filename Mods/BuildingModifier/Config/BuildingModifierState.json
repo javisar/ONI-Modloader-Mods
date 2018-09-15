@@ -1,336 +1,133 @@
 {
-    "Enabled": true,
-    "Debug": false,
+  "Enabled": true,
+  "Debug": false,
 
-    "Modifiers": {
+  "Modifiers": {
 
-        "Battery": {
-            "ExhaustKilowattsWhenActive": 0.25,
-            "SelfHeatKilowattsWhenActive": 1.0,
-            "BaseMeltingPoint": 800.0,
-            "Battery": {
-                "capacity": 100000,
-                "joulesLostPerSecond": 1.66666 // capacity * 0.1 / 600;
-            }
-        },
+    "Battery": {
+      "ExhaustKilowattsWhenActive": 0.25,
+      "SelfHeatKilowattsWhenActive": 1.0,
+      "BaseMeltingPoint": 800.0,
+      "Battery": {
+        "capacity": 20000,
+        "joulesLostPerSecond": 3.33333 // capacity * 0.1 / 600;
+      }
+    },
 
-        "BatteryMedium": {
-            "ExhaustKilowattsWhenActive": 0.25,
-            "SelfHeatKilowattsWhenActive": 1.0,
-            "BaseMeltingPoint": 800.0,
-            "Battery": {
-                "capacity": 400000,
-                "joulesLostPerSecond": 0.66666 // capacity * 0.05 / 600;
-            }
-        },
+    "BatteryMedium": {
+      "ExhaustKilowattsWhenActive": 0.25,
+      "SelfHeatKilowattsWhenActive": 1.0,
+      "BaseMeltingPoint": 800.0,
+      "Battery": {
+        "capacity": 80000,
+        "joulesLostPerSecond": 6.66666 // capacity * 0.05 / 600;
+      }
+    },
 
-        "BatterySmart": {
-            "ExhaustKilowattsWhenActive": 0.0,
-            "SelfHeatKilowattsWhenActive": 0.5,
-            "BaseMeltingPoint": 800.0,
-            "Battery": {
-                "capacity": 200000,
-                "joulesLostPerSecond": 3.33333 // capacity * 0.02 / 600;
-            }
-        },
-
-
-        "Generator": {
-            "GeneratorWattageRating": 6000.0,
-            "GeneratorBaseCapacity": 20000.0,
-            "ExhaustKilowattsWhenActive": 8.0,
-            "SelfHeatKilowattsWhenActive": 1.0,
-            "BaseMeltingPoint": 2400.0,
-            "Storage": {
-                "capacityKg": 1200
-            },
-            "ManualDeliveryKG": {
-                "capacity": 1200,
-                "refillMass": 200.0
-            }
-        },
-
-        "PressureDoor": {
-            "RequiresPowerInput": false,
-            "EnergyConsumptionWhenActive": 0,
-            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
-            "ViewMode": "SimViewMode.None"
-        },
+    "BatterySmart": {
+      "ExhaustKilowattsWhenActive": 0.0,
+      "SelfHeatKilowattsWhenActive": 0.5,
+      "BaseMeltingPoint": 800.0,
+      "Battery": {
+        "capacity": 40000,
+        "joulesLostPerSecond": 1.33333 // capacity * 0.02 / 600;
+      }
+    },
 
 
-        "LogicPressureSensorGas": {
-            "LogicPressureSensor": {
-                "rangeMax": 25.0
-            }
-        },
-        "LogicPressureSensorLiquid": {
-            "LogicPressureSensor": {
-                "rangeMax": 10000.0
-            }
-        },
-        "LogicTemperatureSensor": {
-            "LogicTemperatureSensor": {
-                "maxTemp": 1573.15
-            }
-        },
+    "Generator": {
+      "GeneratorWattageRating": 6000.0,
+      "GeneratorBaseCapacity": 20000.0,
+      "ExhaustKilowattsWhenActive": 8.0,
+      "SelfHeatKilowattsWhenActive": 1.0,
+      "BaseMeltingPoint": 2400.0,
+      "Storage": {
+        "capacityKg": 1200
+      },
+      "ManualDeliveryKG": {
+        "capacity": 1200,
+        "refillMass": 200.0
+      }
+    },
 
-        "GasVent": {
-            "Vent": {
-                "overpressureMass": 10000.0
-            }
-        },
-        "GasVentHighPressure": {
-            "Vent": {
-                "overpressureMass": 10000.0
-            }
-        },
-
-        "StorageLocker": {
-            "BuildLocationRule": "BuildLocationRule.Tile",
-            "ContinuouslyCheckFoundation": false,
-            "PermittedRotations": "PermittedRotations.R360",
-            "Storage": {
-                "capacityKg": 40000.0
-            }
-        },
-
-        "StorageLockerSmart": {
-            "BuildLocationRule": "BuildLocationRule.Tile",
-            "ContinuouslyCheckFoundation": false,
-            "PermittedRotations": "PermittedRotations.R360",
-            "Storage": {
-                "capacityKg": 40000.0
-            }
-        },
-      
-        "AlgaeHabitat": {
-            "Storage": {
-                "capacityKg": 1000.0
-            },
-            "ManualDeliveryKG": {
-                "capacity": 90.0, // Algae?
-                "refillMass": 18.0
-            }
-            /*
-            "ManualDeliveryKG": {
-                "capacity": 360.0, // Water
-                "refillMass": 72.0
-            }
-            */
-        },
-
-        "GasReservoir": {
-            "Storage": {
-                "capacityKg": 10000.0
-            },
-            "ConduitConsumer": {
-                "capacityKG": 10000.0 // Required
-            }
-        },
-
-        "LiquidReservoir": {
-            "Storage": {
-                "capacityKg": 10000.0
-            },
-            "ConduitConsumer": {
-                "capacityKG": 10000.0 // Required
-            }
-        },
-
-        "LiquidPumpingStation": { // ???    Pitcher Pump
-            "Storage": {
-                "capacityKg": 10000.0
-            }
-        },
-
-        "BottleEmptier": {
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "GasBottler": { // ???
-            "Storage": {
-                "capacityKg": 100.0
-            },
-            "ConduitConsumer": {
-                "capacityKG": 100.0
-            }
-        },
-
-        "BottleEmptierGas": {
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "FarmTile": {
-            "Storage": {
-                "capacityKg": 20000.0
-            }
-        },
-
-        "HydroponicFarm": {
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "PlanterBox": {
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "Refrigerator": {
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "RationBox": {
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "FishFeeder": { // has two storages?
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "CreatureFeeder": {
-            "Storage": {
-                "capacityKg": 10000.0
-            }
-        },
-
-        "SolidConduitOutbox": { // Conveyor Receptacle
-            "Storage": {
-                "capacityKg": 1000.0
-            }
-        },
-
-        "WaterPurifier": {
-            "Storage": {
-                "capacityKg": 10000.0
-            },
-            "ManualDeliveryKG": {
-                "capacity": 1200.0,
-                "refillMass": 300.0
-            }
-        },
-
-        "MicrobeMusher": {
-            "Storage": {
-                "capacityKg": 1000.0
-            },
-            "Fabricator": {
-                "inStorage": {
-                    "capacityKg": 500.0
-                },
-                "buildStorage": {
-                    "capacityKg": 500.0
-                },
-                "outStorage": {
-                    "capacityKg": 500.0
-                }
-            }
-        },
+    "PressureDoor": {
+      "RequiresPowerInput": false,
+      "EnergyConsumptionWhenActive": 0,
+      "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+      "ViewMode": "SimViewMode.None"
+    },
 
 
-        "CookingStation": {
-            "Storage": {
-                "capacityKg": 1000.0
-            },
-            "CookingStation": {
-                "inStorage": {
-                    "capacityKg": 500.0
-                },
-                "buildStorage": {
-                    "capacityKg": 500.0
-                },
-                "outStorage": {
-                    "capacityKg": 500.0
-                }
-            }
-        },
+    "LogicPressureSensorGas": {
+      "LogicPressureSensor": {
+        "rangeMax": 25.0
+      }
+    },
+    "LogicPressureSensorLiquid": {
+      "LogicPressureSensor": {
+        "rangeMax": 10000.0
+      }
+    },
+    "LogicTemperatureSensor": {
+      "LogicTemperatureSensor": {
+        "maxTemp": 1573.15
+      }
+    },
+
+    "GasVent": {
+      "Vent": {
+        "overpressureMass": 10.0
+      }
+    },
+    "GasVentHighPressure": {
+      "Vent": {
+        "overpressureMass": 4000.0
+      }
+    },
+
+    "StorageLocker": {
+      "BuildLocationRule": "BuildLocationRule.Tile",
+      "ContinuouslyCheckFoundation": false,
+      "PermittedRotations": "PermittedRotations.R360",
+      "Storage": {
+        "capacityKg": 40000.0
+      }
+    },
+
+    "StorageLockerSmart": {
+      "BuildLocationRule": "BuildLocationRule.Tile",
+      "ContinuouslyCheckFoundation": false,
+      "PermittedRotations": "PermittedRotations.R360",
+      "Storage": {
+        "capacityKg": 40000.0
+      }
+    },
 
 
-        "GlassForge": {
-            "Storage": {
-                "capacityKg": 10000.0
-            },
-            "GlassForge": {
-                "inStorage": {
-                    "capacityKg": 40000.0
-                },
-                "buildStorage": {
-                    "capacityKg": 40000.0
-                },
-                "outStorage": {
-                    "capacityKg": 40000.0
-                }
-            }
-        },
+    "GasReservoir": {
+      "Storage": {
+        "capacityKg": 1000.0
+      },
+      "ConduitConsumer": {
+        "capacityKG": 1000.0 // Required
+      }
+    },
+
+    "LiquidReservoir": {
+      "Storage": {
+        "capacityKg": 35000.0
+      },
+      "ConduitConsumer": {
+        "capacityKG": 35000.0 // Required
+      }
+    },
 
 
-        "MetalRefinery": {
-            "Storage": {
-                "capacityKg": 10000.0
-            },
-            "LiquidCooledRefinery": {
-                "inStorage": {
-                    "capacityKg": 40000.0
-                },
-                "buildStorage": {
-                    "capacityKg": 40000.0
-                },
-                "outStorage": {
-                    "capacityKg": 40000.0
-                }
-            }
-        },
-
-        "OxyliteRefinery": {
-            "Storage": {
-                "capacityKg": 100.0
-            },
-            "ManualDeliveryKG": {
-                "capacity": 14.4
-            }
-        },
-
-        "ResearchCenter": {
-            "Storage": {
-                "capacityKg": 10000.0
-            },
-            "ManualDeliveryKG": {
-                "capacity": 750.0,
-                "refillMass": 150.0
-            }
-        },
-
-        "AdvancedResearchCenter": {
-            "Storage": {
-                "capacityKg": 10000.0
-            },
-            "ManualDeliveryKG": {
-                "capacity": 750.0,
-                "refillMass": 150.0
-            }
-        },
-
-        "Telescope": {
-            "Storage": {
-                "capacityKg": 1000.0
-            },
-            "ManualDeliveryKG": {
-                "capacity": 30.0,
-                "refillMass": 6.0
-            }
-        }
-
+    "Canvas": {
+      "WidthInCells": 1,
+      "HeightInCells": 1
     }
+
+
+  }
 }

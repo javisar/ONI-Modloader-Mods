@@ -21,14 +21,15 @@ namespace BuildingModifierMod
 
         private static bool Prefix(BuildingConfigManager __instance, IBuildingConfig config)
 		{
-			if (!BuildingModifierState.StateManager.State.Enabled)
+            //Debug.Log(config.CreateBuildingDef().PrefabID);
+			if (!Helper.Config.Enabled)
                 return true;
-
+            
             Helper.Log(" === [BuildingModifier] BuildingModifierMod_BuildingConfigManager_RegisterBuilding Prefix === ");
 
             // Check if there is a config for the current building
 			BuildingDef buildingDef = config.CreateBuildingDef();
-            if (!BuildingModifierState.StateManager.State.Modifiers.ContainsKey(buildingDef.PrefabID) )
+            if (!Helper.Config.Modifiers.ContainsKey(buildingDef.PrefabID) )
             {
                 Helper.Log(" === [BuildingModifier] Ignoring: " + buildingDef.PrefabID);
 				return true;
@@ -38,11 +39,12 @@ namespace BuildingModifierMod
 
             Helper.Log(" === [BuildingModifier] CreateBuildingDef === ");
             Helper.Process(buildingDef, null);
-            
+            buildingDef.GenerateOffsets();  // Remake the offsets
+
 
             // Create gameobject
-			//configTable[config] = buildingDef;
-			((Dictionary < IBuildingConfig, BuildingDef > )configTableF.GetValue(__instance))[config] = buildingDef;
+            //configTable[config] = buildingDef;
+            ((Dictionary < IBuildingConfig, BuildingDef > )configTableF.GetValue(__instance))[config] = buildingDef;
 			//GameObject gameObject = Object.Instantiate(baseTemplate);
 			GameObject gameObject = UnityEngine.Object.Instantiate((GameObject)baseTemplateF.GetValue(__instance));
 			UnityEngine.Object.DontDestroyOnLoad(gameObject);
@@ -114,7 +116,7 @@ namespace BuildingModifierMod
 
         private static void Postfix(BuildingConfigManager __instance)
 		{
-			if (!BuildingModifierState.StateManager.State.Enabled)
+			if (!Helper.Config.Enabled)
                 return;
 
             Helper.Log(" === [BuildingModifier] BuildingModifierMod_BuildingConfigManager_ConfigurePost Postfix === ");
@@ -124,7 +126,7 @@ namespace BuildingModifierMod
             foreach (KeyValuePair<IBuildingConfig, BuildingDef> item in (Dictionary <IBuildingConfig, BuildingDef>)configTableF.GetValue(__instance))
 			{
                 // Check if building has a mod config
-                if (!BuildingModifierState.StateManager.State.Modifiers.ContainsKey(item.Value.PrefabID))
+                if (!Helper.Config.Modifiers.ContainsKey(item.Value.PrefabID))
                     continue;
 
                 Helper.Log(" === [BuildingModifier] ConfigurePost === ");

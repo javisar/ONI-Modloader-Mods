@@ -4,7 +4,7 @@
 
     "Modifiers": {
 
-        "BUILDING_PREFAB_ID": {
+        "BUILDING_PREFAB_ID": {     // Check _BUILDING_ID_LIST.txt
             "EnergyConsumptionWhenActive": 0.0,
             "GeneratorWattageRating": 0.0,
             "GeneratorBaseCapacity": 0.0,

@@ -77,13 +77,16 @@
     <None Include="BuildingModifier\Config\Examples\Batteries.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\ALL.json">
+    <Content Include="BuildingModifier\Config\Examples\_BUILDING_ID_LIST.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="BuildingModifier\Config\Examples\_ALL.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="BuildingModifier\Config\Examples\StorageCapacity.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\TEMPLATE.json">
+    <None Include="BuildingModifier\Config\Examples\_TEMPLATE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="BuildingModifier\Config\Examples\Generators.json">
