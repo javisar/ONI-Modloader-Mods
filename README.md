@@ -33,6 +33,7 @@ Examples
   * **InverseElectrolyzerMod**: Combines hydrogen and oxygen into steam. Uses oxygen from the environment. Made by [@javisar](https://github.com/javisar).
   * **InverseElectrolyzerAltMod**: Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. Made by [@javisar](https://github.com/javisar).
   * **SculpturesReloadedMod**: Adds a new sculpture building that allows more materials. Made by [@javisar](https://github.com/javisar).
+  * **ZeroPointModuleMod**: A battery that gets unlimited energy from the vacuum. Made by [@javisar](https://github.com/javisar).
 
 * **AllBuildingsDestroyable**: Allows to construct on top of Gravitas furniture. Made by [@javisar](https://github.com/javisar).
 * **AlternateOrdersMod**: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
@@ -50,7 +51,6 @@ Examples
 * **SpeedControlMod**: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
 * **StorageLockerMod**: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
 * **SuperMinerMod**: Digging drops the complete mass of the cell. Made by [@javisar](https://github.com/javisar).
-* **ZeroPointModuleMod**: A battery that gets unlimited energy from the vacuum. Made by [@javisar](https://github.com/javisar).
 * **ONI-Common**: Common code. Provides config load/save functionality, logger, help tools. **Required by these mods**:
   * **ImprovedGasColourMod**: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)), maintained by [@javisar](https://github.com/javisar).
   * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)), maintained by [@javisar](https://github.com/javisar).
