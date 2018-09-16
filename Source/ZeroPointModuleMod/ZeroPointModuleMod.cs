@@ -53,7 +53,7 @@ namespace ZeroPointModuleMod
     {
         private static bool Prefix(Battery __instance)
         {
-            Debug.Log(" ===ZeroPointModuleMod_Battery_ConsumeEnergy loaded === ");
+            //Debug.Log(" ===ZeroPointModuleMod_Battery_ConsumeEnergy loaded === ");
             if (__instance.gameObject.GetComponent<KPrefabID>().PrefabTag == ZeroPointModuleConfig.ID)
             {
                 return false;
