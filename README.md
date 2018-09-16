@@ -22,7 +22,7 @@ This project uses source code of and is based on:
 * https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
 
 
-**NOTE**: Compiled for **RU-284634** and ONI-Modloader v0.4.7
+**NOTE**: Compiled for **RU-285450** and ONI-Modloader v0.4.8
 
 
 Examples
@@ -49,6 +49,7 @@ Examples
 * **SpeedControlMod**: Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. Made by [@javisar](https://github.com/javisar).
 * **StorageLockerMod**: Storage lockers won't need a foundation to be built. Made by [@Killface1980](https://github.com/Killface1980).
 * **SuperMinerMod**: Digging drops the complete mass of the cell. Made by [@javisar](https://github.com/javisar).
+* **ZeroPointModuleMod**: A battery that gets unlimited energy from the vacuum. Made by [@javisar](https://github.com/javisar).
 * **ONI-Common**: Common code. Provides config load/save functionality, logger, help tools. **Required by these mods**:
   * **ImprovedGasColourMod**: Replaces the oxygen overlay with gas overlay. Also visualizes the density (Made by [@fistak](https://github.com/fistak) and [@Killface1980](https://github.com/Killface1980)), maintained by [@javisar](https://github.com/javisar).
   * **MaterialColor**: Adds an overlay option to visualize what a building is made of (Made by [@fistak](https://github.com/fistak), adapted by [@Killface1980](https://github.com/Killface1980)), maintained by [@javisar](https://github.com/javisar).
