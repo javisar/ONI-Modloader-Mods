@@ -18,7 +18,9 @@ namespace CustomWorldMod
                                                                                new SettingLevel("Active",
                                                                                                 "Name02",
                                                                                                 "Default 384"),
-                                                                               "Disabled");
+                                                                               "Disabled",
+																			   "Disabled",
+																				false);
             public const string UseCustomWorldSize = "UseCustomWorldSize";
             public const string WorldsizeX         = "WorldSizeX";
             public const string WorldsizeY         = "WorldSizeY";
@@ -50,10 +52,10 @@ namespace CustomWorldMod
                 }
 
                 WorldgenSeedX =  new ListSettingConfig(WorldsizeX, "Custom World Width ", "Use a custom size.",
-                                                        worldListX, "256");
+                                                        worldListX, "256", "256", false);
 
                 WorldgenSeedY = new ListSettingConfig(WorldsizeY, "Custom World Height", "Use a custom size.",
-                                                      worldListY, "384");
+                                                      worldListY, "384", "384", false);
 
                 List<SettingConfig> settings = new List<SettingConfig> { UseCustomWorld, WorldgenSeedX, WorldgenSeedY };
                 

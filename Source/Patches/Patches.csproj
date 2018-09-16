@@ -78,9 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ElectrolyzerMod.cs" />
+    <Compile Include="UncompressedSaveMod.cs" />
     <Compile Include="FallingWaterMod.cs" />
     <None Include="HydrogenGeneratorMod.cs" />
     <Compile Include="LogicWireBridgeMod.cs" />
+    <Compile Include="MiniCanvasMod.cs" />
     <Compile Include="OxygenBreatherMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

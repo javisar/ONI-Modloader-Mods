@@ -260,7 +260,7 @@ public class GasTank : StateMachineComponent<GasTank.StatesInstance>, IEffectDes
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		this.meter = new MeterController(base.GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Behind, "meter_target", "meter_waterbody", "meter_waterlevel");
+		this.meter = new MeterController(base.GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Behind, Grid.SceneLayer.NoLayer, "meter_target", "meter_waterbody", "meter_waterlevel");
 		base.GetComponent<ElementConsumer>().EnableConsumption(true);
 		//base.smi.StartSM();
 		//base.smi.master.waterConsumptionAccumulator = Game.Instance.accumulators.Add("waterConsumptionAccumulator", this);
