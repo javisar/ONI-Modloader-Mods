@@ -1,12 +1,10 @@
 # ONI-Modloader Mods
+Javisar's ONI mods for ONI-Modloader
 
-To use with ONI-Modloader. More info:
-https://github.com/javisar/ONI-Modloader
+[**To use with ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
 
-Forums in Klei:
-https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/
+[**Forums in Klei**](https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/)
 
-If you want to **contribute**, there are a list of ideas and requested mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
 
 Disclaimers
 ----------
@@ -24,6 +22,10 @@ This project uses source code of and is based on:
 
 **NOTE**: Compiled for **RU-285450** and ONI-Modloader v0.4.8
 
+**Report Bugs/Request features** for Mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
+
+**Contribute**: There are a list of ideas and requested mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
+
 
 Examples
 --------
@@ -34,7 +36,7 @@ Examples
   * **InverseElectrolyzerAltMod**: Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. Made by [@javisar](https://github.com/javisar).
   * **SculpturesReloadedMod**: Adds a new sculpture building that allows more materials. Made by [@javisar](https://github.com/javisar).
   * **ZeroPointModuleMod**: A battery that gets unlimited energy from the vacuum. Made by [@javisar](https://github.com/javisar).
-
+  
 * **AllBuildingsDestroyable**: Allows to construct on top of Gravitas furniture. Made by [@javisar](https://github.com/javisar).
 * **AlternateOrdersMod**: The Fabricators and Refineries will alternate between infinity orders. Made by [@javisar](https://github.com/javisar).
 * **CameraControllerMod**: Enable further zoom-outs in play and dev mode (taken from [@Moonkis](https://github.com/Moonkis) Onion patcher, adapted by [@Killface1980](https://github.com/Killface1980)).
@@ -68,6 +70,33 @@ Outdated mods:
 * **Patches** (Do not use): Some incomplete tests and snippets.
 * **OnionPatches**: Custom world seeds. DebugHandler hook. Requires ONI-Common. Made by [@Moonkis](https://github.com/Moonkis), adapted by [@Killface1980](https://github.com/Killface1980)
 
+
+Mods Installation
+-----------------
+Prerequisites:
+* Make SURE you're using the latest version from Github main branch.
+* ONI-Modloader must be installed
+* Make sure you deleted all previous mod files and its config:
+  * \OxygenNotIncluded\Mods\
+  * \OxygenNotIncluded\Managed\
+
+0. Select the mod you want to install.
+1. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
+2. Copy the mod **dll file** from "Mods" to the folder to:
+   * \OxygenNotIncluded\Mods\
+3. Copy the **mod configs files** from "Mods" to the folder to (**WITH THE SAME FOLDER STRUCTURE**):
+   * \OxygenNotIncluded\Mods\[MOD_NAME]\Config\[MOD_NAME]State.json
+4. **Copy ONI-Common** (and configs) if the mod require it.
+5. Run the game.
+6. Check for error logs in:
+   * \OxygenNotIncluded\Mods\Mod_Log.txt
+   * \OxygenNotIncluded\Mods\_Logs\
+   * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\output_log.txt
+   * Linux: $home/.config/unity3d/Klei/Oxygen Not Included/player.log (not sure)
+
+[Example of Mod folder structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modsfolder.png)
+
+[Example of Mod config structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modconfig.png)
 
 
 Downloads
