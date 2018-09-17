@@ -79,21 +79,6 @@ Mods - New Mechanics
 
 
 
-Outdated Mods
--------------
-Don't use
-| Name  | Description | ONI-Common | Creator |
-| ----- | ----------- | ---------- | ------- |
-| CritterNumberSensor | Sensor for the critter number in a room (original from R9MX4). | N | [@Cairath](https://github.com/Cairath) |
-| DraggablePanelMod | Makes panels draggable. | N | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) |
-| GasTankMod | Storage for gases. | N | [@javisar](https://github.com/javisar) |
-| InsulatedDoorsMod | Adds a new element Insulated Pressure Door. | N | [@javisar](https://github.com/javisar) |
-| LiquidTankMod | Storage for liquids. | N | [@javisar](https://github.com/javisar) |
-| NoOverloadedWiresMod | Avoid overloaded wires. Check NoDamageMod. | N | [@javisar](https://github.com/javisar) |
-| Patches | (Do not use): Some incomplete tests and snippets. | N | [@javisar](https://github.com/javisar) |
-| OnionPatches | Custom world seeds. DebugHandler hook. | N | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) |
-
-
 Mods Installation
 -----------------
 0. Prerequisites:
@@ -117,10 +102,24 @@ Mods Installation
    * Linux: $home/.config/unity3d/Klei/Oxygen Not Included/**player.log** (not sure)
 
 
+Outdated Mods
+-------------
+| Name  | Description | ONI-Common | Creator |
+| ----- | ----------- | ---------- | ------- |
+| CritterNumberSensor | Sensor for the critter number in a room (original from R9MX4). | N | [@Cairath](https://github.com/Cairath) |
+| DraggablePanelMod | Makes panels draggable. | N | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) |
+| GasTankMod | Storage for gases. | N | [@javisar](https://github.com/javisar) |
+| InsulatedDoorsMod | Adds a new element Insulated Pressure Door. | N | [@javisar](https://github.com/javisar) |
+| LiquidTankMod | Storage for liquids. | N | [@javisar](https://github.com/javisar) |
+| NoOverloadedWiresMod | Avoid overloaded wires. Check NoDamageMod. | N | [@javisar](https://github.com/javisar) |
+| Patches | (Do not use): Some incomplete tests and snippets. | N | [@javisar](https://github.com/javisar) |
+| OnionPatches | Custom world seeds. DebugHandler hook. | N | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) |
+
+
 Downloads
 ---------
 * Choose 'Download or Clone'.
 * Put the desired dlls into the Mods folder "OxygenNotIncluded\Mods".
-* BE SURE to also copy ALL required config and icons folders.
+* BE SURE to also copy **ALL** required config and icons folders.
 
 
