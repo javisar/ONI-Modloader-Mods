@@ -74,6 +74,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="BuildingModifier\Config\Examples\AquaTuner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="BuildingModifier\Config\Examples\MoreMaterials.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
