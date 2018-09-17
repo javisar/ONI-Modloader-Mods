@@ -1,0 +1,25 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+
+        "LiquidConditioner": {
+            "EnergyConsumptionWhenActive": 1200.0,
+            "SelfHeatKilowattsWhenActive": 0.0,
+            "BaseMeltingPoint": 1600.0,
+            "OverheatTemperature": 398.15,
+            "AirConditioner": {
+                "temperatureDelta": -14.0,
+                "maxEnvironmentDelta": -50.0
+            },
+            "ConduitConsumer": {
+                "consumptionRate": 10.0
+            },
+            "Storage": {
+                "capacityKg": 2.0
+            }
+        }
+
+    }
+}
