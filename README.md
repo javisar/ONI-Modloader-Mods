@@ -64,7 +64,7 @@ Mods - New Mechanics
 | AllBuildingsDestroyable | Allows to construct on top of Gravitas furniture. | N | [@javisar](https://github.com/javisar) |
 | AlternateOrdersMod | The Fabricators and Refineries will alternate between infinity orders. | N | [@javisar](https://github.com/javisar) |
 | FastModeMod | Duplicants will build and dig very fast. | N | [@javisar](https://github.com/javisar) |
-| FluidPhysicsMod | Overwrite some fluids molar mass to make them equal, this produces more mixing. Very Experimental. (Oxygen,Hydrogen,ChlorineGas,ContaminatedOxygen,Propane,Helium,Methane,CarbonDioxide,Water,DirtyWater,CrudeOil,Petroleum). | N | [@javisar](https://github.com/javisar) |
+| FluidPhysicsMod | Overwrite some fluids molar mass to make them equal, this produces more mixing. Very Experimental. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | N | [@javisar](https://github.com/javisar) |
 | InstantResearchMod | Forces instant research without Debug mode. | N | [@javisar](https://github.com/javisar) |
 | MoreMaterialsMod | Allows the construction of some buildings with any material (Doors, filters, bed, canvas, tables, wall fire pole, sculptures, shower, toilets, wash basins, bridges, conduits/wires, ladder, pumps, valves, ventS, tiles, lockers, sensors and gates). | N | [@javisar](https://github.com/javisar) |
 | NaphthaViscosityMod | Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. | N | [@javisar](https://github.com/javisar) |
@@ -79,7 +79,7 @@ Mods - New Mechanics
 
 
 
-OutdatedMods
+Outdated Mods
 ------------
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
