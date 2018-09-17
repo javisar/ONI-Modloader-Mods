@@ -27,8 +27,9 @@ namespace BuildingModifierMod
             
             Helper.Log(" === [BuildingModifier] BuildingModifierMod_BuildingConfigManager_RegisterBuilding Prefix === ");
 
+            //CreateBuildingDef            
+            BuildingDef buildingDef = config.CreateBuildingDef();
             // Check if there is a config for the current building
-			BuildingDef buildingDef = config.CreateBuildingDef();
             if (!Helper.Config.Modifiers.ContainsKey(buildingDef.PrefabID) )
             {
                 Helper.Log(" === [BuildingModifier] Ignoring: " + buildingDef.PrefabID);
@@ -39,7 +40,7 @@ namespace BuildingModifierMod
 
             Helper.Log(" === [BuildingModifier] CreateBuildingDef === ");
             Helper.Process(buildingDef, null);
-            buildingDef.GenerateOffsets();  // Remake the offsets
+            buildingDef.GenerateOffsets();  // Remake the offsets after modification
 
 
             // Create gameobject
@@ -57,11 +58,13 @@ namespace BuildingModifierMod
 				gameObject.GetComponent<KPrefabID>().AddTag(GameTags.DeprecatedContent);
 			}
 
-			config.ConfigureBuildingTemplate(gameObject, buildingDef.Tag);
+            //ConfigureBuildingTemplate
+            config.ConfigureBuildingTemplate(gameObject, buildingDef.Tag);
             Helper.Log(" === [BuildingModifier] ConfigureBuildingTemplate === ");
             Helper.Process(buildingDef, gameObject);
 
-			buildingDef.BuildingComplete = BuildingLoader.Instance.CreateBuildingComplete(gameObject, buildingDef);
+            //ConfigureBuildingTemplate
+            buildingDef.BuildingComplete = BuildingLoader.Instance.CreateBuildingComplete(gameObject, buildingDef);
             Helper.Log(" === [BuildingModifier] CreateBuildingComplete === ");
             Helper.Process(buildingDef, gameObject);
 
@@ -76,20 +79,24 @@ namespace BuildingModifierMod
 					break;
 				}
 			}
+
+            // Previews
 			if (flag)
 			{
 				buildingDef.BuildingUnderConstruction = BuildingLoader.Instance.CreateBuildingUnderConstruction(buildingDef);				
 				buildingDef.BuildingUnderConstruction.name = BuildingConfigManager.GetUnderConstructionName(buildingDef.BuildingUnderConstruction.name);
 				buildingDef.BuildingPreview = BuildingLoader.Instance.CreateBuildingPreview(buildingDef);				
 				buildingDef.BuildingPreview.name += "Preview";
-			}
-			
+			}			
+
 			buildingDef.PostProcess();
 
-			config.DoPostConfigureComplete(buildingDef.BuildingComplete);
+            //DoPostConfigureComplete
+            config.DoPostConfigureComplete(buildingDef.BuildingComplete);
             Helper.Log(" === [BuildingModifier] DoPostConfigureComplete === ");
             Helper.Process(buildingDef, gameObject);
 
+            // Previews
 			if (flag)
 			{
 				config.DoPostConfigurePreview(buildingDef, buildingDef.BuildingPreview);
@@ -136,7 +143,7 @@ namespace BuildingModifierMod
             // List all config attributes not found or that throw an error
 			if (Helper.ModifiersAll.Count() != Helper.ModifiersFound.Count())
 			{
-				Debug.Log(" === [BuildingModifier] Not found modifiers:");
+				Debug.Log(" === [BuildingModifier] ERROR: Not found modifiers:");
 				foreach (string modifier in Helper.ModifiersAll)
 				{
 					if (!Helper.ModifiersFound.Contains(modifier))
