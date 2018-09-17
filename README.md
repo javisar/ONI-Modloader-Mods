@@ -73,22 +73,21 @@ Outdated mods:
 
 Mods Installation
 -----------------
-Prerequisites:
-* Make SURE you're using the latest version from Github main branch.
-* ONI-Modloader must be installed
-* Make sure you deleted all previous mod files and its config:
-  * \OxygenNotIncluded\Mods\
-  * \OxygenNotIncluded\Managed\
-
-0. Select the mod you want to install.
-1. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
-2. Copy the mod **dll file** from "Mods" to the folder to:
+0. Prerequisites:
+   * Make SURE you're using the latest version from Github main branch.
+   * ONI-Modloader must be installed
+   * Make sure you deleted all previous mod files and its config:
+     * \OxygenNotIncluded\Mods\
+     * \OxygenNotIncluded\Managed\
+1. Select the mod you want to install.
+2. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
+3. Copy the mod **dll file** from "Mods" to the folder to:
    * \OxygenNotIncluded\Mods\
-3. Copy the **mod configs files** from "Mods" to the folder to (**WITH THE SAME FOLDER STRUCTURE**):
+4. Copy the **mod configs files** from "Mods" to the folder to (**WITH THE SAME FOLDER STRUCTURE**):
    * \OxygenNotIncluded\Mods\[MOD_NAME]\Config\[MOD_NAME]State.json
-4. **Copy ONI-Common** (and configs) if the mod require it.
-5. Run the game.
-6. Check for error logs in:
+5. **Copy ONI-Common** (and configs) if the mod require it.
+6. Run the game.
+7. Check for error logs in:
    * \OxygenNotIncluded\Mods\Mod_Log.txt
    * \OxygenNotIncluded\Mods\_Logs\
    * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\output_log.txt
