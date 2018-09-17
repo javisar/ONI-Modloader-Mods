@@ -97,7 +97,7 @@ Mods Installation
 6. Run the game.
 7. Check for error logs in:
    * \OxygenNotIncluded\Mods\Mod_Log.txt
-   * \OxygenNotIncluded\Mods\_Logs\
+   * \OxygenNotIncluded\Mods\\_Logs\
    * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\**output_log.txt**
    * Linux: $home/.config/unity3d/Klei/Oxygen Not Included/**player.log** (not sure)
 
