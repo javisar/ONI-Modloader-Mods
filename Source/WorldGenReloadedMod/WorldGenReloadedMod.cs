@@ -26,7 +26,13 @@ namespace WorlGenReloadedMod
                 SubWorld subWorld = null;
                 string text = WorldGenSettings.GetSimpleName(zoneFile.name);
                 Debug.Log(text);
-                //if (text != "HotMarsh") return true;
+                if (   text.Equals("Space")             || text.Equals("Bottom")
+                    || text.Equals("Surface")           || text.Equals("Impenetrable")
+                    || text.Equals("OilField")          || text.Equals("Default")
+                    || text.Equals("StartWorld")        || text.Equals("TheVoid"))
+                {
+                    return true;
+                }
 
 
                 if (zoneFile.overrideName != null && zoneFile.overrideName.Length > 0)
@@ -41,7 +47,22 @@ namespace WorlGenReloadedMod
                     {
                         subWorld = subWorldFile.zone;
                         //
-                        subWorld.featureTemplates["feature_geyser_generic"] = 10;
+                        subWorld.featureTemplates["feature_geyser_generic"] = 0;
+                        foreach (KeyValuePair<string, string[]> poi in subWorld.pointsOfInterest)
+                        {
+                            Debug.Log("[] " + poi.Key);
+                            foreach (string po in poi.Value)
+                            {
+                                Debug.Log("[] " + po);
+                            }
+                        }
+                        /*
+                        subWorld.pointsOfInterest["geysers_a"] = new string[] { "poi_jungle_geyser_steam" };
+                        subWorld.pointsOfInterest["geysers_b"] = new string[] { "poi_jungle_geyser_steam" };
+                        subWorld.pointsOfInterest["geysers_c"] = new string[] { "poi_jungle_geyser_steam" };
+                        subWorld.pointsOfInterest["geysers_d"] = new string[] { "poi_jungle_geyser_steam" };
+                        subWorld.pointsOfInterest["geysers_e"] = new string[] { "poi_jungle_geyser_steam" };
+                        */
                         //
                         subWorld.name = text;
                         subWorld.pdWeight = zoneFile.weight;
