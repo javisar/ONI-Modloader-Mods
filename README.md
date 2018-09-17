@@ -30,7 +30,7 @@ ONI-Common
 --------------------
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
-| **ONI-Common** | Common code. Provides config load/save functionality, logger, help tools. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980)) [@javisar](https://github.com/javisar) |
+| **ONI-Common** | Common code. Provides config load/save functionality, logger, help tools. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 
 
 Mods - New Buildings
