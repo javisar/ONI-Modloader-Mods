@@ -1,8 +1,13 @@
 {
-  "Enabled": true,
-  "MinimumGasColorIntensity": 0.25,
-  "GasPressureStart": 0.1,
-  "GasPressureEnd": 2.5,
-  "ShowEarDrumPopMarker": true,
-  "AdvancedGasOverlayDebugging": false
+    "Enabled": true,
+    "MinimumGasColorIntensity": 0.25,
+    "GasPressureStart": 0.1,
+    "GasPressureEnd": 2.5,
+    "ShowEarDrumPopMarker": true,
+    "AdvancedGasOverlayDebugging": false,
+
+
+    // By default, FactorValueHSVGases = 1/FactorValueHSVCarbonDioxide
+    "FactorValueHSVGases": 0.5,
+    "FactorValueHSVCarbonDioxide": 2.0
 }

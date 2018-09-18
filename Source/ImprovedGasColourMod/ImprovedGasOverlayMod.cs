@@ -69,13 +69,15 @@ namespace ImprovedGasColourMod
             {
                 if (elementID == SimHashes.CarbonDioxide)
                 {
-                    color.V *= (1 - fraction) * 2;
-                }
+					//color.V *= (1 - fraction) * 2;
+					color.V *= (1 - fraction) * ImprovedGasOverlayState.State.FactorValueHSVCarbonDioxide;
+				}
                 else
                 {
                     color.S *= fraction * 1.25f;
-                    color.V -= (1 - fraction) / 2;
-                }
+					//color.V -= (1 - fraction) / 2;
+					color.V -= (1 - fraction) * ImprovedGasOverlayState.State.FactorValueHSVGases;
+				}
 
                 return color;
             }
