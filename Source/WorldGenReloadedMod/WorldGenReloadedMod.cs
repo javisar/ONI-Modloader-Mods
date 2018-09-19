@@ -2,6 +2,7 @@
 using Klei;
 using ProcGen;
 using ProcGen.Noise;
+using ProcGenGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,37 @@ using System.Text;
 
 namespace WorlGenReloadedMod
 {
-    [HarmonyPatch(typeof(ProcGen.World), "LoadZones")]
+	[HarmonyPatch(typeof(WorldGen), "PlaceTemplateSpawners")]
+	internal class WorlGenReloadedMod_WorldGen_PlaceTemplateSpawners
+	{
+
+		private static void Postfix(Vector2I position, TemplateContainer template)
+		{
+			Debug.Log(" === WorlGenReloadedMod_WorldGen_PlaceTemplateSpawners Postfix === ");
+			Debug.Log(position);
+			Debug.Log(template.name);
+			if (template.otherEntities != null)
+				Debug.Log(template.otherEntities.Count);
+			if (template.info != null && template.info.tags != null && template.info.tags.Length > 0)
+				Debug.Log(template.info.tags[0]);
+		}
+	}
+
+	[HarmonyPatch(typeof(TemplateCache), "CollectBaseTemplateAssets")]
+	internal class WorlGenReloadedMod_TemplateCache_CollectBaseTemplateAssets
+	{
+
+		private static void Postfix(List<TemplateContainer> __result)
+		{
+			Debug.Log(" === WorlGenReloadedMod_TemplateCache_CollectBaseTemplateAssets Postfix === ");
+			foreach (TemplateContainer template in __result)
+			{
+				Debug.Log(template.name);
+			}
+		}
+	}
+
+	[HarmonyPatch(typeof(ProcGen.World), "LoadZones")]
     internal class WorlGenReloadedMod_World_LoadZones
     {
         //private static FieldInfo ZonesF = AccessTools.Field(typeof(ProcGen.World), "Zones");
@@ -26,13 +57,8 @@ namespace WorlGenReloadedMod
                 SubWorld subWorld = null;
                 string text = WorldGenSettings.GetSimpleName(zoneFile.name);
                 Debug.Log(text);
-                if (   text.Equals("Space")             || text.Equals("Bottom")
-                    || text.Equals("Surface")           || text.Equals("Impenetrable")
-                    || text.Equals("OilField")          || text.Equals("Default")
-                    || text.Equals("StartWorld")        || text.Equals("TheVoid"))
-                {
-                    return true;
-                }
+                
+
 
 
                 if (zoneFile.overrideName != null && zoneFile.overrideName.Length > 0)
@@ -46,25 +72,45 @@ namespace WorlGenReloadedMod
                     if (subWorldFile != null)
                     {
                         subWorld = subWorldFile.zone;
-                        //
-                        subWorld.featureTemplates["feature_geyser_generic"] = 0;
-                        foreach (KeyValuePair<string, string[]> poi in subWorld.pointsOfInterest)
-                        {
-                            Debug.Log("[] " + poi.Key);
-                            foreach (string po in poi.Value)
-                            {
-                                Debug.Log("[] " + po);
-                            }
-                        }
-                        /*
-                        subWorld.pointsOfInterest["geysers_a"] = new string[] { "poi_jungle_geyser_steam" };
-                        subWorld.pointsOfInterest["geysers_b"] = new string[] { "poi_jungle_geyser_steam" };
-                        subWorld.pointsOfInterest["geysers_c"] = new string[] { "poi_jungle_geyser_steam" };
-                        subWorld.pointsOfInterest["geysers_d"] = new string[] { "poi_jungle_geyser_steam" };
-                        subWorld.pointsOfInterest["geysers_e"] = new string[] { "poi_jungle_geyser_steam" };
-                        */
-                        //
-                        subWorld.name = text;
+						//
+						if (text.Equals("Space") || text.Equals("Bottom")
+							|| text.Equals("Surface") || text.Equals("Impenetrable")
+							|| text.Equals("OilField") || text.Equals("Default")
+							|| text.Equals("StartWorld") || text.Equals("TheVoid"))
+						{
+						}
+						else
+						{
+							subWorld.featureTemplates["feature_geyser_generic"] = 3;
+
+							KeyValuePair<string, string[]> leftOne = new KeyValuePair<string, string[]>();
+
+							foreach (KeyValuePair<string, string[]> poi in subWorld.pointsOfInterest)
+							{
+								Debug.Log("[] " + poi.Key);
+								foreach (string po in poi.Value)
+								{
+									Debug.Log("[] " + po);
+									if (!po.Contains("geyser"))
+									{
+										leftOne = poi;
+									}
+
+								}
+							}
+
+							subWorld.pointsOfInterest.Clear();
+							//subWorld.pointsOfInterest.Add(leftOne);
+							/*
+							subWorld.pointsOfInterest["geysers_a"] = new string[] { "poi_jungle_geyser_steam" };
+							subWorld.pointsOfInterest["geysers_b"] = new string[] { "poi_jungle_geyser_steam" };
+							subWorld.pointsOfInterest["geysers_c"] = new string[] { "poi_jungle_geyser_steam" };
+							subWorld.pointsOfInterest["geysers_d"] = new string[] { "poi_jungle_geyser_steam" };
+							subWorld.pointsOfInterest["geysers_e"] = new string[] { "poi_jungle_geyser_steam" };
+							*/
+						}
+						//
+						subWorld.name = text;
                         subWorld.pdWeight = zoneFile.weight;
                         //ZoneLookupTable[text] = subWorld;
                         ((Dictionary<string, SubWorld>)ZoneLookupTableF.GetValue(__instance))[text] = subWorld;

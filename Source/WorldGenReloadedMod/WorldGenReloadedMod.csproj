@@ -54,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WorldGenReloadedState.cs" />
     <Compile Include="WorldGenReloadedMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
