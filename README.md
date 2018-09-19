@@ -57,7 +57,7 @@ Mods - GUI
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
 
 
-Mods - New Mechanics
+Mods - Mechanics
 --------------------
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
