@@ -1,8 +1,10 @@
-Place one providing input fluid, and another one with an output pipe. (Do not plug both (input/output) pipes in the same gate).
 
-Use the Channel slider in the Stargate Menu to tune both to the same channel.
 
-(The fluid is stored in a dimension with unlimited storage. This storage is deleted where you exit the game.)
+- Place one providing input fluid, and another one with an output pipe. (Do not plug both (input/output) pipes in the same gate).
 
-You can place two stargates with one input each and one stargate with one output pipe then as example:
+- Use the Channel slider in the Stargate Menu to tune both to the same channel.
+
+- Right now the fluid is lost if it does not exit on the other side make sure you have a storage (Expected behaviour: The fluid is stored in a dimension with unlimited storage. This storage is deleted where you exit the game.)
+
+- You can place two stargates with one input each and one stargate with one output pipe then as example:
 two inputs send two packets of 1kg and 2kg, then the ouput will put in the pipe two packets of 1kg and 2kg sequentially. 
