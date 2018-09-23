@@ -3,13 +3,12 @@
 
   "Geysers": {
 
-    // To not spawn a geyser, delete geyser config block in this file. Default: min=max=1
-    // Possible SubWorlds: StartWorld, HotMarsh, Jungle, Frozen, Impenetrable, Bottom, OilField, OilPockets, Space, Surface
+    // Possible SubWorlds: StartWorld, HotMarsh, Jungle, Frozen, Bottom, OilField, OilPockets, Space, Surface (Names from \StreamingAssets\worldgen\subworlds\)
     "steam": {
       "minimum": 1,
       "maximum": 2,
       "probability": 0.2, // NOT IMPLEMENTED
-      "subworlds": [ "Jungle", "HotMarsh", "Surface" ], // Names from \StreamingAssets\worldgen\subworlds\
+      "subworlds": [ "Jungle", "HotMarsh", "Surface" ], // Allowed biomes for this kind of geyser
       "properties": {
         "temperature": 383.15,
         "minRatePerCycle": 200.0,
