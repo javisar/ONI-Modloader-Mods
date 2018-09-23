@@ -19,7 +19,34 @@ namespace BuildingModifierMod
         private static FieldInfo baseTemplateF = AccessTools.Field(typeof(BuildingConfigManager), "baseTemplate");
         private static FieldInfo NonBuildableBuildingsF = AccessTools.Field(typeof(BuildingConfigManager), "NonBuildableBuildings");
 
+        private static bool Hooked = false;
+
         private static bool Prefix(BuildingConfigManager __instance, IBuildingConfig config)
+        {
+            bool result = false;
+            if (Hooked) return true;
+
+            //CreateBuildingDef
+            BuildingDef buildingDef = config.CreateBuildingDef();
+            Hooked = true;
+            try
+            {
+                
+                result = RegisterBuilding(__instance, config, buildingDef);
+              
+            }
+            catch (Exception e) {          
+                Debug.Log(" === [BuildingModifier] ERROR registering building ["+ buildingDef.PrefabID+ "]. Incompatible building config.");
+                Debug.Log(e.StackTrace);
+                // __instance.RegisterBuilding(config);         
+                //throw e;
+                Application.Quit();
+            }
+            Hooked = false;
+            return result;
+        }
+
+        private static bool RegisterBuilding(BuildingConfigManager __instance, IBuildingConfig config, BuildingDef buildingDef)
 		{
             //Debug.Log(config.CreateBuildingDef().PrefabID);
 			if (!Helper.Config.Enabled)
@@ -27,8 +54,8 @@ namespace BuildingModifierMod
             
             Helper.Log(" === [BuildingModifier] BuildingModifierMod_BuildingConfigManager_RegisterBuilding Prefix === ");
 
-            //CreateBuildingDef            
-            BuildingDef buildingDef = config.CreateBuildingDef();
+            //CreateBuildingDef
+            //BuildingDef buildingDef = config.CreateBuildingDef();
             // Check if there is a config for the current building
             if (!Helper.Config.Modifiers.ContainsKey(buildingDef.PrefabID) )
             {
@@ -90,6 +117,12 @@ namespace BuildingModifierMod
 			}			
 
 			buildingDef.PostProcess();
+
+            // Try to avoid errors if the gameobject doesn't have RequiereInputs
+            /*
+            if (gameObject.GetComponent<RequireInputs>() == null)
+                gameObject.AddOrGet<RequireInputs>();
+            */
 
             //DoPostConfigureComplete
             config.DoPostConfigureComplete(buildingDef.BuildingComplete);
