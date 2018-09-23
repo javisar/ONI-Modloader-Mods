@@ -21,9 +21,9 @@ namespace GasWarpMod
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.DESC", "Gas Stargates provides an easy way to transport gases from one place to another.");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
 
-            List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[10].data);
+            List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[6].data);
             ls.Add(GasWarpConfig.ID);
-            TUNING.BUILDINGS.PLANORDER[10].data = (string[])ls.ToArray();
+            TUNING.BUILDINGS.PLANORDER[6].data = (string[])ls.ToArray();
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(GasWarpConfig.ID);
 
