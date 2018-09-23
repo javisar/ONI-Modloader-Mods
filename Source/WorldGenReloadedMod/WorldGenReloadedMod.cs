@@ -224,6 +224,7 @@ namespace WorlGenReloadedMod
             ProcessGeysers(__instance, ref list, myRandom);
             ////
 
+            // Generation of geyser Overwrited in the previous line
             /*
             List<TemplateContainer> list6 = TemplateCache.CollectBaseTemplateAssets("features/");
             foreach (SubWorld subWorld2 in WorldGen.Settings.GetSubWorldList())
@@ -325,11 +326,10 @@ namespace WorlGenReloadedMod
             return false;
         }
 
-        private static TemplateContainer GetGeyserTemplate(List<TemplateContainer> templates, string geyserId)
+        private static TemplateContainer GetGeyserTemplate(TemplateContainer template, string geyserId)
         {
             
-            TemplateContainer geyserTemplate = templates.First();
-            foreach (TemplateClasses.Prefab pref in geyserTemplate.otherEntities)
+            foreach (TemplateClasses.Prefab pref in template.otherEntities)
             {
                 if (pref.id.Contains("GeyserGeneric"))
                 {
@@ -338,7 +338,7 @@ namespace WorlGenReloadedMod
                     pref.location_y = 0;
                 }
             }
-            return geyserTemplate;
+            return template;
         }
 
         private static void ProcessGeysers(WorldGen __instance, ref List<KeyValuePair<Vector2I, TemplateContainer>> templateList, SeededRandom myRandom)
@@ -383,7 +383,10 @@ namespace WorlGenReloadedMod
                                     num2++;
                                 }
                                 */
-                                templateContainer = GetGeyserTemplate(featuresList, item6.Key);
+
+                                // Constructs a template using the already existing feature generic geyser. first() cause there is only one feature in the folder. TODO
+                                templateContainer = GetGeyserTemplate(featuresList.First(), item6.Key);
+
                                 Debug.Log("Adding geyser: " + templateContainer.name + " [" + item6.Key + "]");
                                 if (templateContainer != null)
                                 {
