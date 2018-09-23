@@ -42,6 +42,10 @@
       <HintPath>..\lib\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
@@ -54,6 +58,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="WorldGenReloadedMod.cs.bak.1" />
+    <None Include="WorldGenReloadedMod.cs.bak.2" />
+    <None Include="WorldGenReloadedMod.cs.bak.3" />
+    <Compile Include="WorldGenReloadedData.cs" />
     <Compile Include="WorldGenReloadedState.cs" />
     <Compile Include="WorldGenReloadedMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +71,12 @@
       <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
       <Name>ONI-Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="WorldGenReloaded\Config\WorldGenReloadedState.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

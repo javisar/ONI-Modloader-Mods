@@ -7,12 +7,29 @@ namespace WorldGenReloadedMod
 	{
         public bool Enabled { get; set; } = true;
 
-        public int SteamGeysers { get; set; } = 512;
-
-       // public Dictionary<string, int> MaximumRoomSizes { get; set; } = new Dictionary<string,int>();
+        public Dictionary<string, Dictionary<string, object>> Geysers { get; set; } = new Dictionary<string, Dictionary<string, object>>();
 
 
-		public static BaseStateManager<WorldGenReloadedState> StateManager
-			= new BaseStateManager<WorldGenReloadedState>("WorldGenReloaded");
-	}
+        public static BaseStateManager<WorldGenReloadedState> StateManager
+                                = new BaseStateManager<WorldGenReloadedState>("WorldGenReloaded");
+    }
+
+    public class GeyserState
+    {
+        public string Id = null;
+        public int Minimum { get; set; } = 1;
+        public int Maximum { get; set; } = 1;
+        public float Probability { get; set; } = 0.2f;
+        public string[] SubWorlds { get; set; } = new string[] { };
+        public int TotalSpawned { get; set; } = 0;
+
+        public GeyserState()
+        {
+        }
+
+        public GeyserState(string id)
+        {
+            this.Id = id;
+        }
+    }
 }
