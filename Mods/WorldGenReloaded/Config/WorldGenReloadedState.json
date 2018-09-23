@@ -3,7 +3,8 @@
 
   "Geysers": {
 
-    // To not spawn a geyser, delete geyser config block. Default: min=max=1
+    // To not spawn a geyser, delete geyser config block in this file. Default: min=max=1
+    // Possible SubWorlds: StartWorld, HotMarsh, Jungle, Frozen, Impenetrable, Bottom, OilField, OilPockets, Space, Surface
     "steam": {
       "minimum": 1,
       "maximum": 2,
@@ -24,6 +25,14 @@
         "maxYearPercent": 0.8
       }
     },
+    "methane": {
+      "minimum": 1,
+      "maximum": 2,
+      "probability": 0.2, // NOT IMPLEMENTED
+      "subworlds": [ "Jungle", "HotMarsh", "Surface" ], // Names from \StreamingAssets\worldgen\subworlds\
+      "properties": {
+      }
+    }
     /*
     "hot_steam": {
     },
@@ -49,16 +58,6 @@
     },
     "chlorine_gas": {
     },
-    */
-    "methane": {
-      "minimum": 1,
-      "maximum": 2,
-      "probability": 0.2, // NOT IMPLEMENTED
-      "subworlds": [ "Jungle", "HotMarsh", "Surface" ], // Names from \StreamingAssets\worldgen\subworlds\
-      "properties": {       
-      }
-    },
-    /*
     "molten_copper": {
     },
     "molten_iron": {
