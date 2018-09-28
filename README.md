@@ -62,7 +62,7 @@ Mods - New Buildings
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
 | BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | N | [@javisar](https://github.com/javisar) |
-| FluidWarp | Teleports liquids and gases between places. | N | [@javisar](https://github.com/javisar) |
+| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzer | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzerAlt | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | SculpturesReloaded | Adds a new sculpture building that allows more materials. | N | [@javisar](https://github.com/javisar) |

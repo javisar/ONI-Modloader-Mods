@@ -20,6 +20,10 @@ namespace LiquidWarpMod
             Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.DESC", "Liquid Stargates provides an easy way to transport liquids from one place to another.");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
 
+            List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[4].data);
+            ls.Add(LiquidWarpConfig.ID);
+            TUNING.BUILDINGS.PLANORDER[4].data = (string[])ls.ToArray();
+          
             List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[5].data);
             ls.Add(LiquidWarpConfig.ID);
             TUNING.BUILDINGS.PLANORDER[5].data = (string[])ls.ToArray();
