@@ -1,7 +1,7 @@
 # ONI-Modloader Mods
 Javisar's ONI mods for ONI-Modloader
 
-[**To use with ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
+[**For use with ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
 
 [**Forums in Klei**](https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/)
 
