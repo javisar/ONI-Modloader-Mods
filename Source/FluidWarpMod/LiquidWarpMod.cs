@@ -22,11 +22,7 @@ namespace LiquidWarpMod
 
             List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[4].data);
             ls.Add(LiquidWarpConfig.ID);
-            TUNING.BUILDINGS.PLANORDER[4].data = (string[])ls.ToArray();
-          
-            List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[5].data);
-            ls.Add(LiquidWarpConfig.ID);
-            TUNING.BUILDINGS.PLANORDER[5].data = (string[])ls.ToArray();
+            TUNING.BUILDINGS.PLANORDER[4].data = (string[])ls.ToArray();          
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(LiquidWarpConfig.ID);
 
