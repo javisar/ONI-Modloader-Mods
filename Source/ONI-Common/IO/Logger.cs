@@ -22,6 +22,7 @@
             {
                 DateTime now = System.DateTime.Now;
 
+                Debug.Log($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}");   // Also dump to main log
                 writer.WriteLine($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}\r\n");
                 writer.Close();
             }
