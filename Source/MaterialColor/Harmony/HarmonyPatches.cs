@@ -191,17 +191,6 @@
             _initialized = true;
         }
 
-        private static void LogTemperatureThresholds()
-        {
-            for (int i = 0; i < SimDebugView.Instance.temperatureThresholds.Length; i++)
-            {
-                string  message = SimDebugView.Instance.temperatureThresholds[i].value.ToString();
-                Color32 color   = SimDebugView.Instance.temperatureThresholds[i].color;
-
-                State.Logger.Log("Temperature Color " + i + " at " + message + " K: " + color);
-            }
-        }
-
         private static void OnBuildingsCompletesAdd(BuildingComplete building) => UpdateBuildingColor(building);
 
         private static void OnElementColorsInfosChanged(object sender, FileSystemEventArgs e)
@@ -391,22 +380,37 @@
             }
         }
 
+        private static void LogTemperatureThresholds()
+        {
+            for (int i = 0; i < SimDebugView.Instance.temperatureThresholds.Length; i++)
+            {
+                string message = SimDebugView.Instance.temperatureThresholds[i].value.ToString();
+                Color32 color = SimDebugView.Instance.temperatureThresholds[i].color;
+
+                State.Logger.Log("Temperature Color " + i + " at " + message + " K: " + color);
+            }
+        }
+
         private static void UpdateTemperatureThresholds()
         {
             List<float> newTemperatures = State.TemperatureOverlayState.CustomRangesEnabled
                                           ? State.TemperatureOverlayState.Temperatures
                                           : State.DefaultTemperatures;
 
-            List<Color> newColors = State.TemperatureOverlayState.CustomRangesEnabled
+            List<Color32> newColors = State.TemperatureOverlayState.CustomRangesEnabled
                                     ? State.TemperatureOverlayState.Colors
                                     : State.DefaultTemperatureColors;
 
+            //State.Logger.Log("CustomRangesEnabled " + State.TemperatureOverlayState.CustomRangesEnabled);
             for (int i = 0; i < newTemperatures.Count; i++)
             {
+                //State.Logger.Log("newTemperatures[i] " + newTemperatures[i]);
                 if (SimDebugView.Instance.temperatureThresholds != null)
                 {
+                    //State.Logger.Log("SimDebugView.Instance.temperatureThresholds[i] " + SimDebugView.Instance.temperatureThresholds[i].value);
                     SimDebugView.Instance.temperatureThresholds[i] =
                     new SimDebugView.ColorThreshold { color = newColors[i], value = newTemperatures[i] };
+                    //State.Logger.Log("SimDebugView.Instance.temperatureThresholds[i] " + SimDebugView.Instance.temperatureThresholds[i].value);
                 }
             }
 
@@ -729,13 +733,24 @@
                     try
                     {
                         SaveTemperatureThresholdsAsDefault();
-
+                        State.Logger.Log("Before: ");
                         if (State.TemperatureOverlayState.LogThresholds)
                         {
                             LogTemperatureThresholds();
                         }
-
+                        /*
+                        if (!State.TryReloadTemperatureState())
+                        {
+                            State.Logger.Log("Error loading temperatures config file. ");
+                        }
+                        */
                         UpdateTemperatureThresholds();
+
+                        State.Logger.Log("After: ");                       
+                        if (State.TemperatureOverlayState.LogThresholds)
+                        {
+                            LogTemperatureThresholds();
+                        }
                     }
                     catch (Exception e)
                     {

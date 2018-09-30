@@ -15,7 +15,7 @@
         private static readonly JsonFileLoader JsonLoader = new JsonFileLoader(new JsonManager(), Logger);
 
         [NotNull]
-        public static readonly List<Color> DefaultTemperatureColors = new List<Color>();
+        public static readonly List<Color32> DefaultTemperatureColors = new List<Color32>();
 
         [NotNull]
         public static readonly List<float> DefaultTemperatures = new List<float>();

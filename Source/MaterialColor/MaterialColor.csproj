@@ -70,6 +70,7 @@
     <Compile Include="Data\ColorMode.cs" />
     <Compile Include="Data\ElementColorInfo.cs" />
     <Compile Include="Data\MaterialColorState.cs" />
+    <None Include="Data\TemperatureOverlayState.cs.bak" />
     <Compile Include="Data\TemperatureOverlayState.cs" />
     <None Include="Helpers\InjectorOnion.cs.deprecated" />
     <None Include="Helpers\ColorHelperONI.cs" />
