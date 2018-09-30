@@ -88,7 +88,7 @@
 		}
 
         [NotNull]
-        public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger(Paths.MaterialColorLogFileName));
+        public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger(Paths.ModsDirectory+ System.IO.Path.DirectorySeparatorChar + "_Logs" + System.IO.Path.DirectorySeparatorChar + Paths.MaterialColorLogFileName));
 
         [NotNull]
         public static TemperatureOverlayState TemperatureOverlayState

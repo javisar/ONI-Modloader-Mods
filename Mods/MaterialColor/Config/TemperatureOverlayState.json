@@ -13,7 +13,7 @@
     1873.15 // Molten
   ],
 
-  "Colors": [
+  "Colors": [				// In the same order than Temperatures
     {
       "r": 25,
       "g": 102,
