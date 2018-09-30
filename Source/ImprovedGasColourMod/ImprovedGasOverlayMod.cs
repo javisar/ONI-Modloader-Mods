@@ -1,11 +1,16 @@
 ﻿using Harmony;
-using MaterialColor.Extensions;
+using ONI_Common.Json;
 using UnityEngine;
 
 namespace ImprovedGasColourMod
 {
+   
     public static class HarmonyPatches
     {
+        public static BaseStateManager<ImprovedGasOverlayState> ImprovedGasOverlayState
+            = new BaseStateManager<ImprovedGasOverlayState>("ImprovedGasOverlay");
+
+
         private static readonly Color NotGasColor = new Color(0.6f, 0.6f, 0.6f);
 
         [HarmonyPatch(typeof(SimDebugView), "GetOxygenMapColour")]
@@ -16,7 +21,8 @@ namespace ImprovedGasColourMod
             public static bool Prefix(int cell, ref Color __result)
             {
                 //  ModSettings settings = ONI_Common.ModdyMcModscreen
-                float maxMass = ONI_Common.State.ConfiguratorState.GasPressureEnd;
+                //float maxMass = StateManager.ConfiguratorState.GasPressureEnd;
+                float maxMass = ImprovedGasOverlayState.State.GasPressureEnd;
 
                 Element element = Grid.Element[cell];
 
@@ -42,12 +48,14 @@ namespace ImprovedGasColourMod
 
                 colorHSV = ScaleColorToPressure(colorHSV, pressureFraction, elementID);
 
-                if (ONI_Common.State.ConfiguratorState.ShowEarDrumPopMarker)
+                //if (StateManager.ConfiguratorState.ShowEarDrumPopMarker)
+                if (ImprovedGasOverlayState.State.ShowEarDrumPopMarker)
                 {
                     colorHSV = MarkEarDrumPopPressure(colorHSV, mass, elementID);
                 }
 
-                if (ONI_Common.State.ConfiguratorState.AdvancedGasOverlayDebugging)
+                //if (StateManager.ConfiguratorState.AdvancedGasOverlayDebugging)
+                if (ImprovedGasOverlayState.State.AdvancedGasOverlayDebugging)
                 {
                     colorHSV.CheckAndLogOverflow(elementID, pressureFraction);
                 }
@@ -61,13 +69,15 @@ namespace ImprovedGasColourMod
             {
                 if (elementID == SimHashes.CarbonDioxide)
                 {
-                    color.V *= (1 - fraction) * 2;
-                }
+					//color.V *= (1 - fraction) * 2;
+					color.V *= (1 - fraction) * ImprovedGasOverlayState.State.FactorValueHSVCarbonDioxide;
+				}
                 else
                 {
                     color.S *= fraction * 1.25f;
-                    color.V -= (1 - fraction) / 2;
-                }
+					//color.V -= (1 - fraction) / 2;
+					color.V -= (1 - fraction) * ImprovedGasOverlayState.State.FactorValueHSVGases;
+				}
 
                 return color;
             }
@@ -86,7 +96,8 @@ namespace ImprovedGasColourMod
 
             private static float GetPressureFraction(float mass, float maxMass)
             {
-                float minFraction = ONI_Common.State.ConfiguratorState.MinimumGasColorIntensity;
+                //float minFraction = StateManager.ConfiguratorState.MinimumGasColorIntensity;
+                float minFraction = ImprovedGasOverlayState.State.MinimumGasColorIntensity;
 
                 float fraction = mass / maxMass;
 

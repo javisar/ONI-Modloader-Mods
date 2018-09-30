@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Harmony;
-using ONI_Common.OnionHooks;
 using ProcGenGame;
 
 namespace OnionPatches
@@ -29,8 +28,9 @@ namespace OnionPatches
 		}
 		*/
 
+
 		[HarmonyPatch(typeof(DebugHandler))]
-		public static class DebugHandlerMod
+        public static class DebugHandlerMod
 		{
 			public static void Postfix(DebugHandler __instance)
 			{
@@ -43,7 +43,7 @@ namespace OnionPatches
 		[HarmonyPatch(typeof(WorldGen), "InitRandom", new Type[] { typeof(int), typeof(int), typeof(int), typeof(int) })]
 		public static class WorldGenMod
 		{
-			public static void Postfix(WorldGen __instance, ref int worldSeed, ref int layoutSeed, ref int terrainSeed, ref int noiseSeed)
+			public static void Prefix(WorldGen __instance, ref int worldSeed, ref int layoutSeed, ref int terrainSeed, ref int noiseSeed)
 			{
 				Debug.Log(" === WorldGenMod INI === ");
 				Hooks.OnInitRandom(ref worldSeed, ref layoutSeed, ref terrainSeed, ref noiseSeed);

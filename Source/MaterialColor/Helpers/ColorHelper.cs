@@ -41,13 +41,13 @@
         public static bool TryGetTypeStandardColor(string typeName, out Color32 standardColor)
         {
             Color32 typeStandardColor;
-            if (ONI_Common.State.TypeColorOffsets.TryGetValue(typeName, out typeStandardColor))
+            if (State.TypeColorOffsets.TryGetValue(typeName, out typeStandardColor))
             {
                 standardColor = typeStandardColor;
                 return true;
             }
 
-            standardColor = ONI_Common.State.ConfiguratorState.ShowMissingTypeColorOffsets
+            standardColor = State.ConfiguratorState.ShowMissingTypeColorOffsets
                             ? MissingDebugColor
                             : NoOffset;
 
@@ -58,7 +58,7 @@
         {
             for (int i = 0; i <= 20; i++)
             {
-                ONI_Common.State.Logger.Log("Starting object from grid component breakdown, index: " + cellIndex);
+                State.Logger.Log("Starting object from grid component breakdown, index: " + cellIndex);
 
                 try
                 {
@@ -66,13 +66,13 @@
 
                     foreach (Component comp in comps)
                     {
-                        ONI_Common.State.Logger.Log($"Object Layer: {i}, Name: {comp.name}, Type: {comp.GetType()}");
+                        State.Logger.Log($"Object Layer: {i}, Name: {comp.name}, Type: {comp.GetType()}");
                     }
                 }
                 catch (IndexOutOfRangeException e)
                 {
-                    ONI_Common.State.Logger.Log($"Cell Index: {cellIndex}, Layer: {i}");
-                    ONI_Common.State.Logger.Log(e);
+                    State.Logger.Log($"Cell Index: {cellIndex}, Layer: {i}");
+                    State.Logger.Log(e);
                 }
 
                 // catch { }

@@ -11,6 +11,7 @@
     <AssemblyName>ImprovedGasColourMod</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,26 +53,38 @@
       <HintPath>..\lib\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\lib\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HSVExtensions.cs" />
+    <Compile Include="ColorHSV.cs" />
     <Compile Include="ImprovedGasOverlayMod.cs" />
+    <Compile Include="ImprovedGasOverlayState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ONI-Common\ONI-Common.csproj">
       <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
       <Name>ONI-Common</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ImprovedGasOverlay\Config\ImprovedGasOverlayState.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)$(TargetFileName)" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods" /Y
 xcopy "$(TargetDir)$(TargetFileName)" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods" /Y</PostBuildEvent>
   </PropertyGroup>
+  <ProjectExtensions />
 </Project>

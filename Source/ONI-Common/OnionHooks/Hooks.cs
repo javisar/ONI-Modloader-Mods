@@ -8,11 +8,13 @@
 
     public static class Hooks
     {
-        private static readonly Logger _logger = new IO.Logger(Paths.OnionLogFileName);
+        private static readonly Logger _logger = new IO.Logger(Paths.GetLogFileName("ONI-Common"));
 
         private static OnionState _config;
 
-        private static ConfiguratorStateManager _stateManager;
+        //private static ConfiguratorStateManager _stateManager;
+        public static BaseStateManager<OnionState> ONICommonState
+               = new BaseStateManager<OnionState>("ONI-Common");
 
         public static OnionState Config
         {
@@ -25,7 +27,7 @@
 
                 try
                 {
-                    _stateManager = _stateManager ?? new ConfiguratorStateManager(new JsonManager());
+                    //_stateManager = _stateManager ?? new ConfiguratorStateManager(new JsonManager());
 
                     TryLoadConfig();
                     StartConfigFileWatcher();
@@ -45,7 +47,7 @@
                 _config = value;
             }
         }
-
+        /*
         public static void OnDebugHandlerCtor()
         {
             try
@@ -58,7 +60,7 @@
                 _logger.Log(e);
             }
         }
-
+        
         public static void OnDoOfflineWorldGen()
         {
             if (Config.Enabled && Config.CustomWorldSize)
@@ -82,6 +84,7 @@
                 ResetGridSettingsChunks(defaultConfig.Width, defaultConfig.Height);
             }
         }
+        
 
         public static void OnInitRandom(ref int worldSeed, ref int layoutSeed, ref int terrainSeed, ref int noiseSeed)
         {
@@ -106,7 +109,9 @@
 
             _logger.Log(message);
         }
+        */
 
+        /*
         public static void UpdateDebugHandler()
         {
 #if !Patch
@@ -116,23 +121,26 @@
 
             // DebugHandler.FreeCameraMode = Config.Enabled && Config.FreeCamera;
         }
+        */
 
         private static void OnConfigChanged(object sender, FileSystemEventArgs e)
         {
             _logger.Log("Config changed");
 
             TryLoadConfig();
-            UpdateDebugHandler();
+            //UpdateDebugHandler();
         }
 
+        /*
         private static void ResetGridSettingsChunks(int width, int height)
         {
             GridSettings.Reset(width * 32, height * 32);
         }
+        */
 
         private static void StartConfigFileWatcher()
         {
-            FileChangeNotifier.StartFileWatch(Paths.OnionStateFileName, Paths.OnionConfigPath, OnConfigChanged);
+            FileChangeNotifier.StartFileWatch(Paths.GetStateFileName("ONI-Common"), Paths.GetStatePath("ONI-Common"), OnConfigChanged);
 
             _logger.Log("Config file watcher started");
         }
@@ -141,9 +149,10 @@
         {
             try
             {
-                Config = _stateManager.LoadOnionState();
+                //Config = _stateManager.LoadOnionState();
+                Config = ONICommonState.State;
 
-                _logger.Log("OnionState.json loaded");
+                _logger.Log(Paths.GetStateFileName("ONI-Common")+" loaded");
 
                 return true;
             }
@@ -151,7 +160,7 @@
             {
                 Config = new OnionState();
 
-                const string Message = "OnionState.json loading failed";
+                string Message = Paths.GetStateFileName("ONI-Common")+" loading failed";
 
                 _logger.Log(Message);
                 Debug.LogError(Message);

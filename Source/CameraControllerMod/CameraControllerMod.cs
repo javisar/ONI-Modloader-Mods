@@ -10,11 +10,12 @@
             Debug.Log(" === CameraControllerMod INI === ");
 
             AccessTools.Field(typeof(CameraController), "maxOrthographicSize").SetValue(__instance, 100f);
-            AccessTools.Field(typeof(CameraController), "maxOrthographicSizeDebug").SetValue(__instance, 300f);
+			//AccessTools.Field(typeof(CameraController), "maxOrthographicSizeDebug").SetValue(__instance, 300f);
+			TuningData<CameraController.Tuning>.Get().maxOrthographicSizeDebug = 300f;
 
-            // Traverse.Create<CameraController>().Property("maxOrthographicSize").SetValue(100.0);
-            // Traverse.Create<CameraController>().Property("maxOrthographicSizeDebug").SetValue(200.0);
-            Debug.Log(" === CameraControllerMod END === ");
+			// Traverse.Create<CameraController>().Property("maxOrthographicSize").SetValue(100.0);
+			// Traverse.Create<CameraController>().Property("maxOrthographicSizeDebug").SetValue(200.0);
+			Debug.Log(" === CameraControllerMod END === ");
         }
     }
     /// <summary>

@@ -1,14 +1,16 @@
 
-Source/.vs/ModLoader/v15/
+Source/.vs/
 Source/lib/Assembly-CSharp-firstpass.dll
 Source/lib/Assembly-CSharp.dll
 Source/lib/Assembly-UnityScript-firstpass.dll
 Source/lib/UnityEngine.dll
-Source/lib/UnityEngine.UI.dll
+Source/lib/UnityEngine.*.dll
+Mods/UnityEngine.*.dll
 *.FileListAbsolute.txt
 *.CopyComplete
 *.cache
 *.pdb
 *.zip
+!TemplateMod.zip
 Source/**/obj
 Source/**/bin

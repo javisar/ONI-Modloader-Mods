@@ -5,23 +5,21 @@
 
     public class Logger
     {
-        private readonly string _fileName;
+        private readonly string _filePath;
 
-        public Logger(string fileName)
+        public Logger(string filePath)
         {
-            this._fileName = fileName;
+            this._filePath = filePath;
         }
 
         public void Log(string message)
-        {
-            IOHelper.EnsureDirectoryExists(Paths.LogsPath);
-
-            string path = Paths.LogsPath + Path.DirectorySeparatorChar + this._fileName;
-
-            using (StreamWriter writer = new StreamWriter(path, true))
+        {            
+            
+            using (StreamWriter writer = new StreamWriter(this._filePath, true))
             {
                 DateTime now = System.DateTime.Now;
 
+                Debug.Log($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}");   // Also dump to main log
                 writer.WriteLine($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}\r\n");
                 writer.Close();
             }

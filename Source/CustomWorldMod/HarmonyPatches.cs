@@ -18,7 +18,9 @@ namespace CustomWorldMod
                                                                                new SettingLevel("Active",
                                                                                                 "Name02",
                                                                                                 "Default 384"),
-                                                                               "Disabled");
+                                                                               "Disabled",
+																			   "Disabled",
+																				false);
             public const string UseCustomWorldSize = "UseCustomWorldSize";
             public const string WorldsizeX         = "WorldSizeX";
             public const string WorldsizeY         = "WorldSizeY";
@@ -39,31 +41,35 @@ namespace CustomWorldMod
                 }
 
                 var worldListX = new List<SettingLevel>();
-                for (int i = 256; i <= 1024; i+=32)
+                for (int i = 64; i <= 1024; i+=32)
                 {
                     worldListX.Add(new SettingLevel(i.ToString(), i.ToString(), "Default: 256"));
                 }
                 var worldListY = new List<SettingLevel>();
-                for (int i = 384; i <= 1024; i += 32)
+                for (int i = 64; i <= 1024; i += 32)
                 {
                     worldListY.Add(new SettingLevel(i.ToString(), i.ToString(), "Default: 384"));
                 }
 
                 WorldgenSeedX =  new ListSettingConfig(WorldsizeX, "Custom World Width ", "Use a custom size.",
-                                                        worldListX, "256");
+                                                        worldListX, "256", "256", false);
 
                 WorldgenSeedY = new ListSettingConfig(WorldsizeY, "Custom World Height", "Use a custom size.",
-                                                      worldListY, "384");
+                                                      worldListY, "384", "384", false);
 
                 List<SettingConfig> settings = new List<SettingConfig> { UseCustomWorld, WorldgenSeedX, WorldgenSeedY };
+                
                 foreach (SettingConfig settingConfig in settings)
                 {
-                    __instance.QualitySettings.Add(settingConfig.id, settingConfig);
-                    if (!__instance.CurrentQualityLevelsBySetting.ContainsKey(settingConfig.id) || string.IsNullOrEmpty(__instance.CurrentQualityLevelsBySetting[settingConfig.id]))
-                    {
-                        __instance.CurrentQualityLevelsBySetting[settingConfig.id] = settingConfig.default_level_id;
-                    }
+                /*
+                __instance.QualitySettings.Add(settingConfig.id, settingConfig);
+                if (!__instance.CurrentQualityLevelsBySetting.ContainsKey(settingConfig.id) || string.IsNullOrEmpty(__instance.CurrentQualityLevelsBySetting[settingConfig.id]))
+                {
+                    __instance.CurrentQualityLevelsBySetting[settingConfig.id] = settingConfig.default_level_id;
                 }
+                */
+                __instance.AddSettingConfig(settingConfig);
+            }
             }
         }
 
