@@ -47,7 +47,8 @@ Mods Installation
    * \OxygenNotIncluded\Mods\Mod_Log.txt
    * \OxygenNotIncluded\Mods\\_Logs\
    * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\\**output_log.txt** 
-   * Linux: $home/.config/unity3d/Klei/Oxygen Not Included/**player.log** (not sure)
+   * Linux: ~/.config/unity3d/Klei/Oxygen Not Included/**Player.log**
+   * MacOS: ~/Library/Logs/Unity/**Player.log**
 
 
 ONI-Common
