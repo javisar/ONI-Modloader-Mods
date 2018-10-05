@@ -146,18 +146,21 @@ namespace WorlGenReloadedMod
             {
                 if (subWorld.pointsOfInterest != null)
                 {
-                    ////
-                    Dictionary<string, string[]> finalPois = new Dictionary<string, string[]>(subWorld.pointsOfInterest);
-                    foreach (string poi in subWorld.pointsOfInterest.Keys)
+                    //// Disable default POI geysers
+                    if (WorldGenReloadedData.Config.DisableDefaultPoiGeysers)
                     {
-
-                        Debug.Log("[] " + poi.ToLower());
-                        if (poi.ToLower().Contains("geyser"))
+                        Dictionary<string, string[]> finalPois = new Dictionary<string, string[]>(subWorld.pointsOfInterest);
+                        foreach (string poi in subWorld.pointsOfInterest.Keys)
                         {
-                            finalPois.Remove(poi);
+
+                            Debug.Log("[] " + poi.ToLower());
+                            if (poi.ToLower().Contains("geyser"))
+                            {
+                                finalPois.Remove(poi);
+                            }
                         }
+                        AccessTools.Property(typeof(SubWorld), "pointsOfInterest").SetValue(subWorld, finalPois, null);
                     }
-                    AccessTools.Property(typeof(SubWorld), "pointsOfInterest").SetValue(subWorld, finalPois, null);
                     ////
                     foreach (KeyValuePair<string, string[]> item6 in subWorld.pointsOfInterest)
                     {

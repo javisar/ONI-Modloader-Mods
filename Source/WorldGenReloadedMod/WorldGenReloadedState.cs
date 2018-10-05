@@ -7,6 +7,8 @@ namespace WorldGenReloadedMod
 	{
         public bool Enabled { get; set; } = true;
 
+        public bool DisableDefaultPoiGeysers { get; set; } = false;
+
         public Dictionary<string, Dictionary<string, object>> Geysers { get; set; } = new Dictionary<string, Dictionary<string, object>>();
 
 
