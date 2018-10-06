@@ -29,7 +29,10 @@
         public bool AdvancedGasOverlayDebugging { get; set; } = false;
 
         public bool ShowEarDrumPopMarker { get; set; } = true;
-     
-        
-    }
+
+		public float FactorValueHSVGases { get; set; } = 0.5f;
+
+		public float FactorValueHSVCarbonDioxide { get; set; } = 2f;
+		
+	}
 }

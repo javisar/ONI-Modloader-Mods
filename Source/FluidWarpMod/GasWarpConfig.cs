@@ -30,7 +30,10 @@ public class GasWarpConfig : IBuildingConfig
 		buildingDef.PermittedRotations = PermittedRotations.R360;
 		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
 		buildingDef.UtilityOutputOffset = new CellOffset(0, 1);
-		return buildingDef;
+        buildingDef.RequiresPowerInput = true;
+        buildingDef.PowerInputOffset = new CellOffset(0, 1);
+        buildingDef.EnergyConsumptionWhenActive = 480f;
+        return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

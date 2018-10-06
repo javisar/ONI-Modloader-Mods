@@ -34,7 +34,7 @@
                 this._logger.Log(ex);
                 this._logger.Log(Message);
 
-                Debug.LogError(Message);
+                //Debug.LogError(Message);
 
                 state = (T)Activator.CreateInstance(typeof(T));
 
@@ -56,7 +56,7 @@
                 this._logger.Log(ex);
                 this._logger.Log(Message);
 
-                Debug.LogError(Message);
+                //Debug.LogError(Message);
                 
                 return false;
             }

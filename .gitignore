@@ -11,5 +11,6 @@ Mods/UnityEngine.*.dll
 *.cache
 *.pdb
 *.zip
+!TemplateMod.zip
 Source/**/obj
 Source/**/bin

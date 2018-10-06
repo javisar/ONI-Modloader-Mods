@@ -1,0 +1,5 @@
+The two main configs files are:
+- \Mods\MaterialColor\Config\MaterialColorState.json
+
+- \Mods\MaterialColor\Config\TemperatureOverlayState.json
+
