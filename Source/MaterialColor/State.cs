@@ -15,7 +15,7 @@
         private static readonly JsonFileLoader JsonLoader = new JsonFileLoader(new JsonManager(), Logger);
 
         [NotNull]
-        public static readonly List<Color> DefaultTemperatureColors = new List<Color>();
+        public static readonly List<Color32> DefaultTemperatureColors = new List<Color32>();
 
         [NotNull]
         public static readonly List<float> DefaultTemperatures = new List<float>();
@@ -88,7 +88,7 @@
 		}
 
         [NotNull]
-        public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger(Paths.MaterialColorLogFileName));
+        public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger(Paths.ModsDirectory+ System.IO.Path.DirectorySeparatorChar + "_Logs" + System.IO.Path.DirectorySeparatorChar + Paths.MaterialColorLogFileName));
 
         [NotNull]
         public static TemperatureOverlayState TemperatureOverlayState

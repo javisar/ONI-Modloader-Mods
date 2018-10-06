@@ -6,7 +6,7 @@
     public class JsonManager
     {
         public JsonSerializer Serializer =
-        JsonSerializer.CreateDefault(new JsonSerializerSettings { Formatting = Formatting.Indented });
+        JsonSerializer.CreateDefault(new JsonSerializerSettings { Formatting = Formatting.Indented, ObjectCreationHandling = ObjectCreationHandling.Replace });
 
         public T Deserialize<T>(string path)
         {
