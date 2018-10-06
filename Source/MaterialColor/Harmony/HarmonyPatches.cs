@@ -733,9 +733,9 @@
                     try
                     {
                         SaveTemperatureThresholdsAsDefault();
-                        State.Logger.Log("Before: ");
                         if (State.TemperatureOverlayState.LogThresholds)
                         {
+                            State.Logger.Log("Before: ");
                             LogTemperatureThresholds();
                         }
                         /*
@@ -746,9 +746,9 @@
                         */
                         UpdateTemperatureThresholds();
 
-                        State.Logger.Log("After: ");                       
                         if (State.TemperatureOverlayState.LogThresholds)
                         {
+                            State.Logger.Log("After: ");
                             LogTemperatureThresholds();
                         }
                     }

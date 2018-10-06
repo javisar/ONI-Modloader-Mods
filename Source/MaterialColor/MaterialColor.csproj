@@ -105,6 +105,9 @@
     <None Include="MaterialColor\Config\MaterialColorState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="MaterialColor\Config\TemperatureOverlayState.json.default">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="MaterialColor\Config\TemperatureOverlayState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
