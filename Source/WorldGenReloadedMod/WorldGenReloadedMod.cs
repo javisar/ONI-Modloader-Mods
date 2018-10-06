@@ -27,6 +27,12 @@ namespace WorlGenReloadedMod
             Debug.Log(" === WorldGenReloadedMod_GeyserGenericConfig_GenerateConfigs Prefix === ");
             WorldGenReloadedData.GeyserPrefabParams = new List<GeyserPrefabParams>(__result);
 
+            if (WorldGenReloadedData.Config.LogGeysersDefaultConfig)
+            {
+                WorldGenReloadedData.LogGeysersDefaults(__result);
+
+            }
+
             //__result.Clear();
 
             List<GeyserPrefabParams> list = new List<GeyserPrefabParams>();
@@ -44,9 +50,9 @@ namespace WorlGenReloadedMod
                 // foreach config attribute
                 foreach (KeyValuePair<string, object> attribute in geyserData)
                 {
-                    Debug.Log(attribute.Key.ToLower());
-                    Debug.Log(attribute.Value.GetType());
-                    Debug.Log(attribute.Value);
+                    //Debug.Log(attribute.Key.ToLower());
+                    //Debug.Log(attribute.Value.GetType());
+                    //Debug.Log(attribute.Value);
 
 
                     switch (attribute.Key.ToLower())
@@ -57,12 +63,12 @@ namespace WorlGenReloadedMod
 
                             // Set geyser basic properties
                             foreach (JProperty property in (JToken)attribute.Value)
-                            {
-                                Debug.Log(property.Name);
+                            {                                
+                                //Debug.Log(property.Name);
                                 FieldInfo fi = AccessTools.Field(typeof(GeyserConfigurator.GeyserType), property.Name);
-                                Debug.Log(fi);
+                                //Debug.Log(fi);
                                 fi.SetValue(((GeyserPrefabParams)geyserPrefab).geyserType, (float)property.Value);
-                                Debug.Log(property.Name);
+                                //Debug.Log(property.Name);
                             }
                             break;
 
@@ -91,7 +97,7 @@ namespace WorlGenReloadedMod
             __result = WorldGenReloadedData.GeyserPrefabParams;
 
         }
-
+        
     }    
 
 
@@ -149,17 +155,9 @@ namespace WorlGenReloadedMod
                     //// Disable default POI geysers
                     if (WorldGenReloadedData.Config.DisableDefaultPoiGeysers)
                     {
-                        Dictionary<string, string[]> finalPois = new Dictionary<string, string[]>(subWorld.pointsOfInterest);
-                        foreach (string poi in subWorld.pointsOfInterest.Keys)
-                        {
-
-                            Debug.Log("[] " + poi.ToLower());
-                            if (poi.ToLower().Contains("geyser"))
-                            {
-                                finalPois.Remove(poi);
-                            }
-                        }
-                        AccessTools.Property(typeof(SubWorld), "pointsOfInterest").SetValue(subWorld, finalPois, null);
+                        SubWorld _subWorld = subWorld;
+                        DisableDefaultPoiGeysers(ref _subWorld);
+                        
                     }
                     ////
                     foreach (KeyValuePair<string, string[]> item6 in subWorld.pointsOfInterest)
@@ -327,6 +325,21 @@ namespace WorlGenReloadedMod
             runningF.SetValue(null, false);
             __result = cells;
             return false;
+        }
+
+        private static void DisableDefaultPoiGeysers(ref SubWorld subWorld)
+        {
+            Dictionary<string, string[]> finalPois = new Dictionary<string, string[]>(subWorld.pointsOfInterest);
+            foreach (string poi in subWorld.pointsOfInterest.Keys)
+            {
+
+                Debug.Log("[] " + poi.ToLower());
+                if (poi.ToLower().Contains("geyser"))
+                {
+                    finalPois.Remove(poi);
+                }
+            }
+            AccessTools.Property(typeof(SubWorld), "pointsOfInterest").SetValue(subWorld, finalPois, null);
         }
 
         private static TemplateContainer GetGeyserTemplate(TemplateContainer template, string geyserId)

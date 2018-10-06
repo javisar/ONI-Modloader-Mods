@@ -1,5 +1,6 @@
 {
   "Enabled": true,
+  "LogGeysersDefaultConfig": true,
 
   "DisableDefaultPoiGeysers": false,
 

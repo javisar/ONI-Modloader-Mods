@@ -77,5 +77,27 @@ namespace WorldGenReloadedMod
             }
             WorldGenReloadedData.CalculatedGeysers = calculatedGeysers;
         }
+
+        public static void LogGeysersDefaults(List<GeyserPrefabParams> geyserList)
+        {
+            Debug.Log(" === WorldGenReloadedMod_LogGeysersDefaults Prefix === ");
+            foreach (GeyserPrefabParams geyser in geyserList)
+            {
+                GeyserConfigurator.GeyserType type = geyser.geyserType;
+                Debug.Log("Geyser id: " + type.id);
+                Debug.Log("\t temperature: " + type.temperature);
+                Debug.Log("\t minRatePerCycle: " + type.minRatePerCycle);
+                Debug.Log("\t maxRatePerCycle: " + type.maxRatePerCycle);
+                Debug.Log("\t maxPressure: " + type.maxPressure);
+                Debug.Log("\t minIterationLength: " + type.minIterationLength);
+                Debug.Log("\t maxIterationLength: " + type.maxIterationLength);
+                Debug.Log("\t minIterationPercent: " + type.minIterationPercent);
+                Debug.Log("\t maxIterationPercent: " + type.maxIterationPercent);
+                Debug.Log("\t minYearLength: " + type.minYearLength);
+                Debug.Log("\t maxYearLength: " + type.maxYearLength);
+                Debug.Log("\t minYearPercent: " + type.minYearPercent);
+                Debug.Log("\t minYearPercent: " + type.maxYearPercent);
+            }
+        }
     }
 }
