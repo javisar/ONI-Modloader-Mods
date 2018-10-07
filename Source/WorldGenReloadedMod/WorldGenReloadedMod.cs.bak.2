@@ -1,0 +1,495 @@
+﻿using Harmony;
+using Klei;
+using Newtonsoft.Json.Linq;
+using ProcGen;
+using ProcGen.Noise;
+using ProcGenGame;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using UnityEngine;
+using WorldGenReloadedMod;
+using static GeyserGenericConfig;
+
+namespace WorlGenReloadedMod
+{
+	
+
+    internal class WorldGenReloadedData
+    {
+        public static List<GeyserPrefabParams> GeyserPrefabParams = new List<GeyserPrefabParams>();
+        public static WorldGenReloadedState Config = WorldGenReloadedState.StateManager.State;
+        public static ProcGen.World World = null;
+        public static List<GeyserPrefabParams> Configs = null;
+        public static Dictionary<string,GeyserState> GeyserConfig = new Dictionary<string, GeyserState>();
+        public static int GeyserCount = 0;
+
+        public static Dictionary<string, Dictionary<string, int>> CalculatedGeysers = new Dictionary<string, Dictionary<string, int>>();
+
+        public static GeyserPrefabParams? FindGeyserPrefab(string key)
+        {
+            foreach (GeyserPrefabParams prefab in GeyserPrefabParams)
+            {
+                if (prefab.geyserType.id.Equals(key))
+                    return prefab;
+            }
+            return null;
+        }
+
+
+        public static SubWorld GetSubWorldFromType(SubWorld.ZoneType type)
+        {
+            if (World.Zones == null) return null;
+            foreach (var sub in World.Zones)
+            {
+                if (sub.Value.zoneType.Equals(type))
+                    return sub.Value;
+            }
+            return null;
+        }
+    }
+
+    [HarmonyPatch(typeof(GeyserGenericConfig), "GenerateConfigs")]
+    internal class WorldGenReloadedMod_GeyserGenericConfig_GenerateConfigs
+    {
+
+        private static void Postfix(ref List<GeyserPrefabParams> __result)
+        {
+            Debug.Log(" === WorldGenReloadedMod_GeyserGenericConfig_GenerateConfigs Prefix === ");
+            WorldGenReloadedData.GeyserPrefabParams = new List<GeyserPrefabParams>(__result);
+           
+            //__result.Clear();
+
+            List<GeyserPrefabParams> list = new List<GeyserPrefabParams>();
+
+            // foreach config geyser
+            foreach (KeyValuePair<string, Dictionary<string, object>> geyser in WorldGenReloadedData.Config.Geysers)
+            {
+                Dictionary<string, object> geyserData = geyser.Value;
+                GeyserPrefabParams? geyserPrefab = WorldGenReloadedData.FindGeyserPrefab(geyser.Key);
+                //int min = 1, max = 1;
+                //float probability = 0;
+                //string[] subworlds = null;
+                GeyserState geyserConfig = new GeyserState(geyser.Key);
+
+                // foreach config attribute
+                foreach (KeyValuePair<string, object> attribute in geyserData)
+                {
+                    Debug.Log(attribute.Key.ToLower());
+                    Debug.Log(attribute.Value.GetType());
+                    Debug.Log(attribute.Value);
+
+
+                    switch (attribute.Key.ToLower())
+                    {
+                        case "properties":
+                            //Debug.Log(attribute.Value.GetType());
+                            //Debug.Log("attribute.Value: "+attribute.Value);
+
+                            // Set geyser basic properties
+                            foreach (JProperty property in (JToken)attribute.Value)
+                            {
+                                Debug.Log(property.Name);
+                                FieldInfo fi = AccessTools.Field(typeof(GeyserConfigurator.GeyserType), property.Name);
+                                Debug.Log(fi);
+                                fi.SetValue(((GeyserPrefabParams)geyserPrefab).geyserType, (float)property.Value);
+                                Debug.Log(property.Name);
+                            }
+                            break;
+
+                        case "minimum":
+                            geyserConfig.Minimum = Convert.ToInt32(attribute.Value);
+                            break;
+                        case "maximum":
+                            geyserConfig.Maximum = Convert.ToInt32(attribute.Value);
+                            break;
+                        case "probability":
+                            geyserConfig.Probability = (float)Convert.ToDouble(attribute.Value);
+                            break;
+                        case "subworlds":
+                            geyserConfig.SubWorlds = ((JArray)attribute.Value).ToObject<string[]>();
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                }
+                WorldGenReloadedData.GeyserConfig.Add(geyser.Key, geyserConfig);
+                
+            }
+           
+            __result = WorldGenReloadedData.GeyserPrefabParams;
+
+            CalculateGeysers();
+
+        }
+
+        public static void CalculateGeysers()
+        {
+            Dictionary<string, Dictionary<string, int>> calculatedGeysers = new Dictionary<string, Dictionary<string, int>>();
+            foreach (KeyValuePair<string, GeyserState> data in WorldGenReloadedData.GeyserConfig)
+            {
+                System.Random rnd = new System.Random(42);
+                int geyserCount = rnd.Next(data.Value.Minimum, data.Value.Maximum + 1);
+
+                string[] subworlds = data.Value.SubWorlds;
+                subworlds.ShuffleSeeded(rnd);
+
+                for (int i = 0; i < geyserCount; i++)
+                {
+                    string subworld = subworlds[i % subworlds.Length];
+
+                    if (!calculatedGeysers.ContainsKey(subworld))
+                        calculatedGeysers[subworld] = new Dictionary<string, int>();
+                    if (!calculatedGeysers[subworld].ContainsKey(data.Key))
+                    {
+                        calculatedGeysers[subworld][data.Key] = 0;
+                    }
+                    calculatedGeysers[subworld][data.Key]++;
+                }
+
+            }
+
+            Debug.Log("Calculated Geysers: ");
+            foreach (KeyValuePair<string, Dictionary<string, int>> subworld in calculatedGeysers)
+            {
+                Debug.Log(subworld.Key);
+                foreach (KeyValuePair<string, int> geyser in subworld.Value)
+                {
+                    Debug.Log(geyser.Key + " = " + geyser.Value);
+                }
+            }
+            WorldGenReloadedData.CalculatedGeysers = calculatedGeysers;
+        }
+    }
+
+   
+
+    [HarmonyPatch(typeof(GeyserGenericConfig), "CreatePrefabs")]
+    internal class WorldGenReloadedMod_GeyserGenericConfig_CreatePrefabs
+    {
+       
+
+        private static bool Prefix(ref GeyserGenericConfig __instance, ref List<GameObject> __result)
+        {
+            Debug.Log(" === WorldGenReloadedMod_GeyserGenericConfig_CreatePrefabs Postfix === ");
+            
+            return true;
+        }
+    }
+    /*
+    [HarmonyPatch(typeof(WorldGenSettings), "GetSubWorldList")]
+    internal class WorldGenReloadedMod_WorldGenSettings_GetSubWorldList
+    {
+       
+        private static void Postfix(WorldGenSettings __instance, ref List<SubWorld> __result)
+        {
+            Debug.Log(" === WorldGenReloadedMod_WorldGenSettings_GetSubWorldList Prefix === ");
+            List<SubWorld> result = new List<SubWorld>(__result);
+
+            foreach (SubWorld subworld in result)
+            {
+                if (!subworld.name.Equals("HotMarsh")) continue;
+                subworld.pointsOfInterest.Add("geysers_a",new string[] { "feature_geyser_generic" });
+            }
+
+            __result = result;
+        }
+    }
+    */
+    
+    [HarmonyPatch(typeof(TemplateCache), "CollectBaseTemplateAssets")]
+    internal class WorldGenReloadedMod_TemplateCache_CollectBaseTemplateAssets
+    {
+        private struct ParseTemplateWorkItem : IWorkItem<object>
+        {
+            public string path;
+
+            public TemplateContainer template;
+
+            public void Run(object shared_data)
+            {
+                template = YamlIO<TemplateContainer>.LoadFile(path);
+            }
+        }
+
+        public static List<TemplateContainer> CollectBaseTemplateAssets(string folder = "bases/")
+        {
+            List<TemplateContainer> list = new List<TemplateContainer>();
+            string path = System.IO.Path.Combine((string)AccessTools.Field(typeof(TemplateCache),"baseTemplatePath").GetValue(null), folder);
+            string[] files = System.IO.Directory.GetFiles(path, "*.yaml");
+            WorkItemCollection<ParseTemplateWorkItem, object> workItemCollection = new WorkItemCollection<ParseTemplateWorkItem, object>();
+            workItemCollection.Reset(null);
+            string[] array = files;
+            foreach (string path2 in array)
+            {
+                workItemCollection.Add(new ParseTemplateWorkItem
+                {
+                    path = path2
+                });
+            }
+            GlobalJobManager.Run(workItemCollection);
+            for (int j = 0; j < workItemCollection.Count; j++)
+            {
+                ParseTemplateWorkItem workItem = workItemCollection.GetWorkItem(j);
+                if (workItem.template != null)
+                {
+                    List<TemplateContainer> list2 = list;
+                    ParseTemplateWorkItem workItem2 = workItemCollection.GetWorkItem(j);
+                    list2.Add(workItem2.template);
+                }
+            }
+            list.Sort(delegate (TemplateContainer x, TemplateContainer y)
+            {
+                if (y.priority - x.priority == 0)
+                {
+                    return x.name.CompareTo(y.name);
+                }
+                return y.priority - x.priority;
+            });
+            return list;
+        }
+
+
+        private static bool Prefix(ref List<TemplateContainer> __result, string folder)
+        {
+            Debug.Log(" === WorldGenReloadedMod_TemplateCache_CollectBaseTemplateAssets Prefix === ");
+
+            List<TemplateContainer> list1 = CollectBaseTemplateAssets(folder);
+            List<TemplateContainer> list2 = CollectBaseTemplateAssets("features/");
+            foreach (TemplateClasses.Prefab pref in list2.First().otherEntities)
+            {
+                if (pref.id.Contains("GeyserGeneric"))
+                {
+                    pref.id = "GeyserGeneric_steam";
+                    pref.location_x = 0;
+                    pref.location_y = 0;
+                }
+            }
+            __result = list1.Concat(list2).Concat(list2).Concat(list2).ToList();
+            foreach (TemplateContainer temp in __result)
+                Debug.Log(temp.name);
+            return false;
+        }
+
+        private static void Postfix(ref List<TemplateContainer> __result, string folder)
+        {
+            
+            Debug.Log(" === WorldGenReloadedMod_TemplateCache_CollectBaseTemplateAssets Postfix === ");        
+    }
+}
+    
+    [HarmonyPatch(typeof(ProcGen.World), "LoadZones")]
+    internal class WorldGenReloadedMod_World_LoadZones
+    {
+        //private static FieldInfo ZonesF = AccessTools.Field(typeof(ProcGen.World), "Zones");
+        //private static FieldInfo ZoneFilesF = AccessTools.Field(typeof(ProcGen.World), "ZoneFiles");
+        private static  FieldInfo ZoneLookupTableF = AccessTools.Field(typeof(ProcGen.World), "ZoneLookupTable");
+        
+
+        private static bool Prefix(ProcGen.World __instance, NoiseTreeFiles noise, string path) {
+            Debug.Log(" === WorldGenReloadedMod_World_LoadZones Prefix === ");
+            Debug.Log(path);
+            WorldGenReloadedData.World = __instance;
+
+
+            foreach (WeightedName zoneFile in __instance.ZoneFiles)
+            {
+                SubWorld subWorld = null;
+                string text = WorldGenSettings.GetSimpleName(zoneFile.name);
+                //Debug.Log(text);
+                
+
+
+
+                if (zoneFile.overrideName != null && zoneFile.overrideName.Length > 0)
+                {
+                    text = zoneFile.overrideName;
+                }
+                //if (!ZoneLookupTable.ContainsKey(text))
+                if (!((Dictionary < string, SubWorld > )ZoneLookupTableF.GetValue(__instance)).ContainsKey(text))
+                {
+                    SubWorldFile subWorldFile = YamlIO<SubWorldFile>.LoadFile(path + zoneFile.name + ".yaml");
+                    if (subWorldFile != null)
+                    {
+                        subWorld = subWorldFile.zone;
+ 
+                        Debug.Log("Zone: " + text);
+                        
+                        subWorld.featureTemplates["feature_geyser_generic"] = 0;
+
+                        //Debug.Log("Total geysers for subworld: " + subWorld.featureTemplates["feature_geyser_generic"]);
+                        //KeyValuePair<string, string[]> leftOne = new KeyValuePair<string, string[]>();
+                        if (subWorld.pointsOfInterest != null)
+                        {
+                            Dictionary<string, string[]> finalPois = new Dictionary<string, string[]>();
+                            foreach (KeyValuePair<string, string[]> poi in subWorld.pointsOfInterest)
+                            {
+                                /*
+                                Debug.Log("[] " + poi.Key);
+                                foreach (string po in poi.Value)
+                                {
+                                    Debug.Log("[] " + po);
+                                    if (!po.ToLower().Contains("geyser"))
+                                    {
+                                        //leftOne = poi;
+                                        finalPois.Add(poi);
+
+                                    }
+                                }
+                                */
+                                Debug.Log("[] " + poi.Key.ToLower());
+                                if (!poi.Key.ToLower().Contains("geyser"))
+                                {
+                                    //leftOne = poi;
+                                    //Debug.Log("hhhh: "+poi);
+                                    finalPois.Add(poi.Key,poi.Value);
+
+                                }
+                            }
+
+
+                            Dictionary<string, int> geysersForSubworld = WorldGenReloadedData.CalculatedGeysers[text];
+
+                            foreach (KeyValuePair<string, int> geyser in geysersForSubworld)
+                            {
+                                for (int i=0; i<geyser.Value; i++)
+                                {
+                                    finalPois.Add("geysers_"+i, new string[] { "feature_geyser_generic" });
+                                }
+                            }
+
+                           
+                            //finalPois.Add("geysers_a",new string[] { });
+                            /*
+                            Debug.Log("Final pois 1:");
+                            foreach (KeyValuePair<string, string[]> poi in finalPois)
+                            {
+                                Debug.Log(poi.Key);
+                            }
+                            */
+                            //subWorld.pointsOfInterest.Clear();
+                            PropertyInfo pi = AccessTools.Property(typeof(SubWorld), "pointsOfInterest");
+                            pi.SetValue(subWorld, finalPois, null);
+                            //foreach (KeyValuePair<string, string[]> poi in finalPois)
+                            //    subWorld.pointsOfInterest.Remove(poi.Key);
+                            //subWorld.pointsOfInterest = finalPois;
+                            //subWorld.pointsOfInterest.Add(leftOne);
+                            Debug.Log("Final pois 2:");
+                            foreach (KeyValuePair<string, string[]> poi in subWorld.pointsOfInterest)
+                            {
+                                Debug.Log(poi.Key);
+                            }
+                        }
+						//
+
+						subWorld.name = text;
+                        subWorld.pdWeight = zoneFile.weight;
+                        //ZoneLookupTable[text] = subWorld;
+                        ((Dictionary<string, SubWorld>)ZoneLookupTableF.GetValue(__instance))[text] = subWorld;
+                        noise.LoadTree(subWorld.biomeNoise, path);
+                        noise.LoadTree(subWorld.densityNoise, path);
+                        noise.LoadTree(subWorld.overrideNoise, path);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("WorldGen: Attempting to load zone: " + zoneFile.name + " failed");
+                    }
+                }
+                else
+                {
+                    subWorld = ((Dictionary<string, SubWorld>)ZoneLookupTableF.GetValue(__instance))[text];
+                }
+                __instance.Zones[text] = subWorld;
+            }
+            return false;
+        }
+
+    }
+
+    // Hooking for logs
+    
+    [HarmonyPatch(typeof(WorldGen), "PlaceTemplateSpawners")]
+    internal class WorldGenReloadedMod_WorldGen_PlaceTemplateSpawners
+    {
+
+        private static void Postfix(Vector2I position, TemplateContainer template)
+        {
+            Debug.Log(" === WorldGenReloadedMod_WorldGen_PlaceTemplateSpawners Postfix === ");
+
+            Debug.Log(position + " at " + template.name);
+
+            if (template.buildings != null && template.buildings != null && template.buildings.Count > 0)
+            {
+                Debug.Log("otherEntities: " + template.buildings.Count);
+                //foreach (TemplateClasses.Prefab pre in template.buildings)
+                //    Debug.Log(pre.id + " " + pre.type + " " + pre.element.ToString());
+            }
+
+            if (template.elementalOres != null && template.elementalOres != null && template.elementalOres.Count > 0)
+            {
+                Debug.Log("otherEntities: " + template.elementalOres.Count);
+                //foreach (TemplateClasses.Prefab pre in template.elementalOres)
+                //    Debug.Log(pre.id + " " + pre.type + " " + pre.element.ToString());
+            }
+
+            if (template.otherEntities != null && template.otherEntities != null && template.otherEntities.Count > 0)
+            {
+                Debug.Log("otherEntities: " + template.otherEntities.Count);
+                //foreach (TemplateClasses.Prefab pre in template.otherEntities)
+                //    Debug.Log(pre.id+" "+pre.type+" "+pre.element.ToString());
+            }
+            //if (template.info != null && template.info.tags != null && template.info.tags.Length > 0)
+            //	Debug.Log(template.info.tags[0]);
+
+        }
+    }
+
+
+    [HarmonyPatch(typeof(GeyserGenericConfig), "CreateGeyser")]
+    internal class WorldGenReloadedMod_GeyserGenericConfig_CreateGeyser
+    {
+
+        private static void Postfix(GameObject __result, string id, string anim, int width, int height, string name, string desc, HashedString presetType)
+        {
+            Debug.Log(" === WorldGenReloadedMod_GeyserGenericConfig_CreateGeyser Postfix === ");
+            Debug.Log(id + ", " + anim + ", " + width + ", " + height + ", " + name + ", " + desc + ", " + presetType);
+        }
+    }
+
+    
+
+    /*
+    list.Add(new GeyserPrefabParams("geyser_gas_steam_kanim", 2, 4, new GeyserConfigurator.GeyserType("steam", SimHashes.Steam, 383.15f, 200f, 2500f, 5f)));            
+    list.Add(new GeyserPrefabParams("geyser_gas_steam_hot_kanim", 2, 4, new GeyserConfigurator.GeyserType("hot_steam", SimHashes.Steam, 773.15f, 10f, 100f, 15f)));
+    list.Add(new GeyserPrefabParams("geyser_liquid_water_hot_kanim", 4, 2, new GeyserConfigurator.GeyserType("hot_water", SimHashes.Water, 368.15f, 500f, 5000f, 500f)));
+    list.Add(new GeyserPrefabParams("geyser_liquid_water_slush_kanim", 4, 2, new GeyserConfigurator.GeyserType("slush_water", SimHashes.DirtyWater, 263.15f, 500f, 5000f, 500f)));
+    list.Add(new GeyserPrefabParams("geyser_liquid_water_filthy_kanim", 4, 2, new GeyserConfigurator.GeyserType("filthy_water", SimHashes.DirtyWater, 303.15f, 500f, 5000f, 500f).AddDisease(new SimUtil.DiseaseInfo
+    {
+        idx = Db.Get().Diseases.GetIndex("FoodPoisoning"),
+        count = 20000
+    })));
+    list.Add(new GeyserPrefabParams("geyser_molten_volcano_small_kanim", 3, 3, new GeyserConfigurator.GeyserType("small_volcano", SimHashes.Magma, 2000f, 100f, 1000f, 150f, 6000f, 12000f, 0.005f, 0.01f)));
+    list.Add(new GeyserPrefabParams("geyser_molten_volcano_big_kanim", 3, 3, new GeyserConfigurator.GeyserType("big_volcano", SimHashes.Magma, 2000f, 200f, 2000f, 150f, 6000f, 12000f, 0.005f, 0.01f)));
+    list.Add(new GeyserPrefabParams("geyser_liquid_co2_kanim", 4, 2, new GeyserConfigurator.GeyserType("liquid_co2", SimHashes.LiquidCarbonDioxide, 218f, 3f, 30f, 50f)));
+    list.Add(new GeyserPrefabParams("geyser_gas_co2_hot_kanim", 2, 4, new GeyserConfigurator.GeyserType("hot_co2", SimHashes.CarbonDioxide, 773.15f, 5f, 50f, 5f)));
+    list.Add(new GeyserPrefabParams("geyser_gas_hydrogen_hot_kanim", 2, 4, new GeyserConfigurator.GeyserType("hot_hydrogen", SimHashes.Hydrogen, 773.15f, 5f, 50f, 5f)));
+    list.Add(new GeyserPrefabParams("geyser_gas_po2_hot_kanim", 2, 4, new GeyserConfigurator.GeyserType("hot_po2", SimHashes.ContaminatedOxygen, 773.15f, 15f, 180f, 5f)));
+    list.Add(new GeyserPrefabParams("geyser_gas_po2_slimy_kanim", 2, 4, new GeyserConfigurator.GeyserType("slimy_po2", SimHashes.ContaminatedOxygen, 333.15f, 15f, 180f, 5f).AddDisease(new SimUtil.DiseaseInfo
+    {
+        idx = Db.Get().Diseases.GetIndex("SlimeLung"),
+        count = 5000
+    })));
+    list.Add(new GeyserPrefabParams("geyser_gas_chlorine_kanim", 2, 4, new GeyserConfigurator.GeyserType("chlorine_gas", SimHashes.ChlorineGas, 333.15f, 15f, 180f, 5f)));
+    list.Add(new GeyserPrefabParams("geyser_gas_methane_kanim", 2, 4, new GeyserConfigurator.GeyserType("methane", SimHashes.Methane, 423.15f, 15f, 180f, 5f)));
+    list.Add(new GeyserPrefabParams("geyser_molten_copper_kanim", 3, 3, new GeyserConfigurator.GeyserType("molten_copper", SimHashes.MoltenCopper, 2500f, 50f, 500f, 150f, 480f, 1080f, 0.0166666675f, 0.1f)));
+    list.Add(new GeyserPrefabParams("geyser_molten_iron_kanim", 3, 3, new GeyserConfigurator.GeyserType("molten_iron", SimHashes.MoltenIron, 2800f, 50f, 500f, 150f, 480f, 1080f, 0.0166666675f, 0.1f)));
+    list.Add(new GeyserPrefabParams("geyser_molten_gold_kanim", 3, 3, new GeyserConfigurator.GeyserType("molten_gold", SimHashes.MoltenGold, 2900f, 50f, 500f, 150f, 480f, 1080f, 0.0166666675f, 0.1f)));
+    list.Add(new GeyserPrefabParams("geyser_liquid_oil_kanim", 4, 2, new GeyserConfigurator.GeyserType("oil_drip", SimHashes.CrudeOil, 600f, 1f, 250f, 50f, 600f, 600f, 1f, 1f, 100f, 500f)));
+    */
+
+
+}

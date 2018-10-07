@@ -90,7 +90,7 @@ Mods - Mechanics
 | AlternateOrders | The Fabricators and Refineries will alternate between infinity orders. | N | [@javisar](https://github.com/javisar) |
 | BuildingModifierMod | Allows to modify building attributes. | S | [@javisar](https://github.com/javisar) |
 | FastMode | Duplicants will build and dig very fast. | N | [@javisar](https://github.com/javisar) |
-| FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. Very Experimental. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | N | [@javisar](https://github.com/javisar) |
+| FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | N | [@javisar](https://github.com/javisar) |
 | InstantResearch | Forces instant research without Debug mode. | N | [@javisar](https://github.com/javisar) |
 | MoreMaterials | Allows the construction of some buildings with any material (Doors, filters, bed, canvas, tables, wall fire pole, sculptures, shower, toilets, wash basins, bridges, conduits/wires, ladder, pumps, valves, ventS, tiles, lockers, sensors and gates). | N | [@javisar](https://github.com/javisar) |
 | NaphthaViscosity | Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. | N | [@javisar](https://github.com/javisar) |
@@ -102,6 +102,7 @@ Mods - Mechanics
 | StorageLocker | Storage lockers won't need a foundation to be built. | N | [@Killface1980](https://github.com/Killface1980) |
 | SuperMiner | Digging drops the complete mass of the cell. | N | [@javisar](https://github.com/javisar) |
 | VentPressure | Allows to change the vents maximum pressure. | Y | [@javisar](https://github.com/javisar) |
+| WorldGenReloaded | Changes geysers properties, frequency and allowed zones. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/WorldGenReloaded/WorldGenReloadedHowto.txt) | Y | [@javisar](https://github.com/javisar) |
 
 
 Outdated Mods
