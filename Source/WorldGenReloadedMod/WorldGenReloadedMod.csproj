@@ -74,12 +74,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="WorldGenReloaded\Config\WorldGenReloadedState.json.default">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="WorldGenReloaded\Config\WorldGenReloadedState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WorldGenReloaded\WorldGenReloadedHowto.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

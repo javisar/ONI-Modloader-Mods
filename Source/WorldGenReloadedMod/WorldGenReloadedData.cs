@@ -69,10 +69,10 @@ namespace WorldGenReloadedMod
             Debug.Log("Calculated Geysers: ");
             foreach (KeyValuePair<string, Dictionary<string, int>> subworld in calculatedGeysers)
             {
-                Debug.Log(subworld.Key);
+                Debug.Log("Subworld: "+subworld.Key);
                 foreach (KeyValuePair<string, int> geyser in subworld.Value)
                 {
-                    Debug.Log(geyser.Key + " = " + geyser.Value);
+                    Debug.Log("\t"+geyser.Key + " = " + geyser.Value);
                 }
             }
             WorldGenReloadedData.CalculatedGeysers = calculatedGeysers;
