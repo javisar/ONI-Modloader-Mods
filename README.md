@@ -45,11 +45,11 @@ Mods Installation
 5. **Copy ONI-Common** (and configs) if the mod require it.
 6. Run the game.
 7. Check for error logs in:
-   * \OxygenNotIncluded\Mods\Mod_Log.txt
-   * \OxygenNotIncluded\Mods\\_Logs\
    * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\\**output_log.txt** 
    * Linux: ~/.config/unity3d/Klei/Oxygen Not Included/**Player.log**
    * MacOS: ~/Library/Logs/Unity/**Player.log**
+   * \OxygenNotIncluded\Mods\Mod_Log.txt
+   * \OxygenNotIncluded\Mods\\_Logs\
 
 
 ONI-Common
