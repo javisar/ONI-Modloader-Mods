@@ -1,7 +1,7 @@
 # ONI-Modloader Mods
 Javisar's ONI mods for ONI-Modloader
 
-[**To use with ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
+[**For use with ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
 
 [**Forums in Klei**](https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/)
 
@@ -26,6 +26,31 @@ This project uses source code of and is based on:
 
 **Contribute**: There are a list of ideas and requested mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
 
+
+Mods Installation
+-----------------
+0. Prerequisites:
+   * Make SURE you're using the latest version from Github main branch.
+   * [ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed
+   * Make sure you deleted all previous mod files and its config:
+     * \OxygenNotIncluded\Mods\
+     * \OxygenNotIncluded\OxygenNotIncluded_Data\Managed\
+1. Select the mod you want to install.
+2. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
+3. Copy the mod **dll file** from "Mods" to the folder to ([Example of Mod folder structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modsfolder.png)):
+   * \OxygenNotIncluded\Mods\
+4. Copy the **mod configs files WITH THE SAME FOLDER STRUCTURE** from "Mods" to the folder to ([Example of Mod config structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modconfig.png)):
+   * \OxygenNotIncluded\Mods\\[MOD_NAME]\Config\\[MOD_NAME]State.json
+5. **Copy ONI-Common** (and configs) if the mod require it.
+6. Run the game.
+7. Check for error logs in:
+   * \OxygenNotIncluded\Mods\Mod_Log.txt
+   * \OxygenNotIncluded\Mods\\_Logs\
+   * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\\**output_log.txt** 
+   * Linux: ~/.config/unity3d/Klei/Oxygen Not Included/**Player.log**
+   * MacOS: ~/Library/Logs/Unity/**Player.log**
+
+
 ONI-Common
 --------------------
 | Name  | Description | ONI-Common | Creator |
@@ -38,7 +63,7 @@ Mods - New Buildings
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
 | BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | N | [@javisar](https://github.com/javisar) |
-| FluidWarp | Teleports liquids and gases between places. | N | [@javisar](https://github.com/javisar) |
+| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Docs/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzer | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzerAlt | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | SculpturesReloaded | Adds a new sculpture building that allows more materials. | N | [@javisar](https://github.com/javisar) |
@@ -53,11 +78,11 @@ Mods - GUI
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
 | DisplayDraggedBoxSize | Shows selected rectangle dimensions using any tool. | N | [@fistak](https://github.com/fistak) |
 | ImprovedGasColour | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
-| MaterialColor | Adds an overlay option to visualize what a building is made of. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
+| MaterialColor | Adds an overlay option to visualize what a building is made of. Modifies temperature overlay ranges and colors.  More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Docs/MaterialColorHowto.txt) | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
 
 
-Mods - New Mechanics
+Mods - Mechanics
 --------------------
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
@@ -77,29 +102,6 @@ Mods - New Mechanics
 | StorageLocker | Storage lockers won't need a foundation to be built. | N | [@Killface1980](https://github.com/Killface1980) |
 | SuperMiner | Digging drops the complete mass of the cell. | N | [@javisar](https://github.com/javisar) |
 | VentPressure | Allows to change the vents maximum pressure. | Y | [@javisar](https://github.com/javisar) |
-
-
-Mods Installation
------------------
-0. Prerequisites:
-   * Make SURE you're using the latest version from Github main branch.
-   * [ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed
-   * Make sure you deleted all previous mod files and its config:
-     * \OxygenNotIncluded\Mods\
-     * \OxygenNotIncluded\OxygenNotIncluded_Data\Managed\
-1. Select the mod you want to install.
-2. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
-3. Copy the mod **dll file** from "Mods" to the folder to ([Example of Mod folder structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modsfolder.png)):
-   * \OxygenNotIncluded\Mods\
-4. Copy the **mod configs files WITH THE SAME FOLDER STRUCTURE** from "Mods" to the folder to ([Example of Mod config structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modconfig.png)):
-   * \OxygenNotIncluded\Mods\[MOD_NAME]\Config\[MOD_NAME]State.json
-5. **Copy ONI-Common** (and configs) if the mod require it.
-6. Run the game.
-7. Check for error logs in:
-   * \OxygenNotIncluded\Mods\Mod_Log.txt
-   * \OxygenNotIncluded\Mods\\_Logs\
-   * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\**output_log.txt**
-   * Linux: $home/.config/unity3d/Klei/Oxygen Not Included/**player.log** (not sure)
 
 
 Outdated Mods

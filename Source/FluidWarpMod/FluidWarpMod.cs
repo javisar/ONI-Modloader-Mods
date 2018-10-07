@@ -69,22 +69,26 @@ namespace LiquidWarpMod
 
                     if (__instance.conduitType == (ConduitType)100)
                     {
-                        LiquidWarpData.LiquidPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+                        if (GetTotalStoredMass(LiquidWarpData.LiquidPackets) < 100.0f)
+                        {
+                            LiquidWarpData.LiquidPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+                            flowManager.RemoveElement((int)fi1.GetValue(__instance), num);
+                        }
                     }
                     else if (__instance.conduitType == (ConduitType)101)
                     {
-                        GasWarpData.GasPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+                        if (GetTotalStoredMass(GasWarpData.GasPackets) < 5.0f)
+                        {
+                            GasWarpData.GasPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+                            flowManager.RemoveElement((int)fi1.GetValue(__instance), num);
+                        }
                     }
 
 					//float num3 = flowManager.AddElement(this.outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
 					//Game.Instance.accumulators.Accumulate(this.flowAccumulator, num3);				
 
 					//float num3 = Mathf.Min(num, 10f - contents.mass);
-					float num3 = num;
-					if (num3 > 0f)
-					{
-						flowManager.RemoveElement((int)fi1.GetValue(__instance), num3);
-					}
+	
 				}
 				__instance.UpdateAnim();
 				return false;
@@ -98,19 +102,22 @@ namespace LiquidWarpMod
 
 				PacketData toRemove = null;
 
-				foreach (PacketData packet in LiquidWarpData.LiquidPackets)
-				{
-					//Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
-					if ((float)fi.GetValue(__instance) == packet.current_flow
-						&& (int)__instance.conduitType == packet.content_type)
-					{
-						float num3 = flowManager.AddElement((int)fi2.GetValue(__instance), packet.element, packet.mass, packet.temperature, packet.disease_idx, packet.disease_count);
-						//Debug.Log("Adding Element to pipe: " + packet.mass + "," + num3);
-						Game.Instance.accumulators.Accumulate((HandleVector<int>.Handle)fi3.GetValue(__instance), num3);
-						toRemove = packet;
-						break;
-					}
-				}
+                if (conduitO.GetContents(flowManager).mass <= 0)
+                {
+                    foreach (PacketData packet in LiquidWarpData.LiquidPackets)
+                    {
+                        //Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
+                        if ((float)fi.GetValue(__instance) == packet.current_flow
+                            && (int)__instance.conduitType == packet.content_type)
+                        {
+                            float num3 = flowManager.AddElement((int)fi2.GetValue(__instance), packet.element, packet.mass, packet.temperature, packet.disease_idx, packet.disease_count);
+                            //Debug.Log("Adding Element to pipe: " + packet.mass + "," + num3);
+                            Game.Instance.accumulators.Accumulate((HandleVector<int>.Handle)fi3.GetValue(__instance), num3);
+                            toRemove = packet;
+                            break;
+                        }
+                    }
+                }
 
 				if (toRemove != null)
 				{
@@ -144,7 +151,17 @@ namespace LiquidWarpMod
 
 			return false;
 		}
-	}
+
+        private static float GetTotalStoredMass(List<PacketData> packets)
+        {
+            float total = 0;
+            foreach (PacketData packet in packets)
+            {
+                total += packet.mass;
+            }
+            return total;
+        }
+    }
 
 	[HarmonyPatch(typeof(ValveSideScreen), "OnSpawn")]
     internal class FluidWarpMod_ValveSideScreen_OnSpawn
@@ -157,7 +174,7 @@ namespace LiquidWarpMod
 			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);			
 			if (type == (ConduitType)100 || type == (ConduitType)101)
 			{
-				((LocText)fi0.GetValue(__instance)).text = "Ch.";
+				((LocText)fi0.GetValue(__instance)).text = "Channel";
 			}
 		
 		}
@@ -201,8 +218,8 @@ namespace LiquidWarpMod
 			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
 			if (type == (ConduitType)100 || type == (ConduitType)101)
 			{
-				((LocText)fi3.GetValue(__instance)).text = "Ch.";
-				((LocText)fi4.GetValue(__instance)).text = "Ch.";
+				((LocText)fi3.GetValue(__instance)).text = "Channel";
+				((LocText)fi4.GetValue(__instance)).text = "Channel";
 			}
 
 		}

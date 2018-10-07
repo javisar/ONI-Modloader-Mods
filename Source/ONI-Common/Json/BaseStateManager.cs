@@ -1,5 +1,9 @@
 ﻿
 
+using ONI_Common.IO;
+using System;
+using System.IO;
+
 namespace ONI_Common.Json
 {
 
@@ -22,10 +26,16 @@ namespace ONI_Common.Json
                 {
                     return _state;
                 }
-				Debug.Log("Loading: " +this.StateFilePath);
+                Logger.Log("Loading: " +this.StateFilePath);
 
-				JsonLoader.TryLoadConfiguration(this.StateFilePath, out _state);
-
+                if (!File.Exists(this.StateFilePath))
+                {
+                    Logger.Log(this.StateFilePath+" not found. Creating a default config file...");
+                    IOHelper.EnsureDirectoryExists(new FileInfo(this.StateFilePath).Directory.FullName);
+                   
+                    JsonLoader.TrySaveConfiguration(this.StateFilePath, (T)Activator.CreateInstance(typeof(T)));
+                }
+                JsonLoader.TryLoadConfiguration(this.StateFilePath, out _state);
                 return _state;
             }
 
@@ -55,7 +65,17 @@ namespace ONI_Common.Json
         public BaseStateManager(string name)
         {
             this.StateFilePath = ONI_Common.Paths.GetStateFilePath(name);
-			this.Logger = new ONI_Common.IO.Logger(name+"Log.txt");
+            IOHelper.EnsureDirectoryExists(Paths.GetLogsPath());
+            this.Logger = new ONI_Common.IO.Logger(Paths.GetLogsPath() + System.IO.Path.DirectorySeparatorChar + name + "Log.txt");
+			this.JsonLoader = new JsonFileManager(new JsonManager(), Logger);
+        }
+        //
+          //  
+
+        public BaseStateManager(string configFileName, string logFilePath)
+        {
+            this.StateFilePath = configFileName;
+			this.Logger = new ONI_Common.IO.Logger(logFilePath);
 			this.JsonLoader = new JsonFileManager(new JsonManager(), Logger);
         }
     }
