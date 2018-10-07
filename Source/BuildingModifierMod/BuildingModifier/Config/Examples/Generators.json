@@ -1,0 +1,30 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+
+        "Generator": {
+            "GeneratorWattageRating": 600.0,
+            "GeneratorBaseCapacity": 20000.0,
+            "ExhaustKilowattsWhenActive": 8.0,
+            "SelfHeatKilowattsWhenActive": 1.0,
+            "BaseMeltingPoint": 2400.0,
+            "Storage": {
+                "capacityKg": 600
+            },
+            "ManualDeliveryKG": {
+                "capacity": 600,
+                "refillMass": 100.0
+            }
+        },
+
+        "HydrogenGenerator": {
+        },
+        "MethaneGenerator": {
+        },
+        "PetroleumGenerator": {
+        }
+
+    }
+}

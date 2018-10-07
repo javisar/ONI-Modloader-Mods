@@ -1,0 +1,249 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+
+        "StorageLocker": {           
+            "Storage": {
+                "capacityKg": 40000.0
+            }
+        },
+
+        "StorageLockerSmart": {
+            "Storage": {
+                "capacityKg": 40000.0
+            }
+        },
+
+        "AlgaeHabitat": {
+            "Storage": {
+                "capacityKg": 1000.0
+            },
+            "ManualDeliveryKG": {
+                "capacity": 90.0, // Algae?
+                "refillMass": 18.0
+            }
+            /*
+            "ManualDeliveryKG": {
+                "capacity": 360.0, // Water
+                "refillMass": 72.0
+            }
+            */
+        },
+
+        "GasReservoir": {
+            "Storage": {
+                "capacityKg": 10000.0
+            },
+            "ConduitConsumer": {
+                "capacityKG": 10000.0 // Required
+            }
+        },
+
+        "LiquidReservoir": {
+            "Storage": {
+                "capacityKg": 10000.0
+            },
+            "ConduitConsumer": {
+                "capacityKG": 10000.0 // Required
+            }
+        },
+
+        "LiquidPumpingStation": { // ???    Pitcher Pump
+            "Storage": {
+                "capacityKg": 10000.0
+            }
+        },
+
+        "BottleEmptier": {
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "GasBottler": { // ???
+            "Storage": {
+                "capacityKg": 100.0
+            },
+            "ConduitConsumer": {
+                "capacityKG": 100.0
+            }
+        },
+
+        "BottleEmptierGas": {
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "FarmTile": {
+            "Storage": {
+                "capacityKg": 20000.0
+            }
+        },
+
+        "HydroponicFarm": {
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "PlanterBox": {
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "Refrigerator": {
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "RationBox": {
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "FishFeeder": { // has two storages?
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "CreatureFeeder": {
+            "Storage": {
+                "capacityKg": 10000.0
+            }
+        },
+
+        "SolidConduitOutbox": { // Conveyor Receptacle
+            "Storage": {
+                "capacityKg": 1000.0
+            }
+        },
+
+        "WaterPurifier": {
+            "Storage": {
+                "capacityKg": 10000.0
+            },
+            "ManualDeliveryKG": {
+                "capacity": 1200.0,
+                "refillMass": 300.0
+            }
+        },
+
+        "MicrobeMusher": {
+            "Storage": {
+                "capacityKg": 1000.0
+            },
+            "MicrobeMusher": {
+                "inStorage": {
+                    "capacityKg": 500.0
+                },
+                "buildStorage": {
+                    "capacityKg": 500.0
+                },
+                "outStorage": {
+                    "capacityKg": 500.0
+                }
+            }
+        },
+
+
+        "CookingStation": {
+            "Storage": {
+                "capacityKg": 1000.0
+            },
+            "CookingStation": {
+                "inStorage": {
+                    "capacityKg": 500.0
+                },
+                "buildStorage": {
+                    "capacityKg": 500.0
+                },
+                "outStorage": {
+                    "capacityKg": 500.0
+                }
+            }
+        },
+
+
+        "GlassForge": {
+            "Storage": {
+                "capacityKg": 10000.0
+            },
+            "GlassForge": {
+                "inStorage": {
+                    "capacityKg": 40000.0
+                },
+                "buildStorage": {
+                    "capacityKg": 40000.0
+                },
+                "outStorage": {
+                    "capacityKg": 40000.0
+                }
+            }
+        },
+
+
+        "MetalRefinery": {
+            "Storage": {
+                "capacityKg": 10000.0
+            },
+            "LiquidCooledRefinery": {
+                "inStorage": {
+                    "capacityKg": 40000.0
+                },
+                "buildStorage": {
+                    "capacityKg": 40000.0
+                },
+                "outStorage": {
+                    "capacityKg": 40000.0
+                }
+            }
+        },
+
+        "OxyliteRefinery": {
+            "Storage": {
+                "capacityKg": 100.0
+            },
+            "ManualDeliveryKG": {
+                "capacity": 14.4
+            }
+        },
+
+        "ResearchCenter": {
+            "Storage": {
+                "capacityKg": 10000.0
+            },
+            "ManualDeliveryKG": {
+                "capacity": 750.0,
+                "refillMass": 150.0
+            }
+        },
+
+        "AdvancedResearchCenter": {
+            "Storage": {
+                "capacityKg": 10000.0
+            },
+            "ManualDeliveryKG": {
+                "capacity": 750.0,
+                "refillMass": 150.0
+            }
+        },
+
+        "Telescope": {
+            "Storage": {
+                "capacityKg": 1000.0
+            },
+            "ManualDeliveryKG": {
+                "capacity": 30.0,
+                "refillMass": 6.0
+            }
+        }
+
+    }
+}

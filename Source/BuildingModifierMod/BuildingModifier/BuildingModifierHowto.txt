@@ -1,0 +1,61 @@
+How it works:
+This mod overrides the building registering fuction at the loading of ONI (BuildingConfigManager.RegisterBuilding)
+This function is in charge of creating all the buildings templates and properties they will have.
+This mod changes basic fields of all buildings and fields of unity components belonging to the buildings.
+
+WARNING: Experimental. Very ONI version dependant.
+WARNING: To modify this mod config REQUIRES a fair knowledge of the inner code of ONI and how to decompile it.
+DON'T TRY if you don't know what you're doing. Ask in the forums or discord.
+WARNING: Not all the fields modifications will work and this is a mod limitation tied to the game.
+
+The config file is in JSON format and must be in:
+- \Mods\BuildingModifier\Config\BuildingModifierState.json
+Use this file always as a template.
+
+The default config includes:
+- Double capacity for all bateries
+- Double Wattage generator
+- Removes the energy need for the mechanized pressure door and makes it buildable from all material. Old PressureDoor mod.
+- Increased ranges in automation sensors. Old Sensors mod.
+- Increases the vents maximum pressure. Old VentPressure mod.
+- Storage lockers won't need a foundation to be built. Old StorageLocker mod.
+- Increased gas and liquid reservoirs capacities.
+- Canvas only takes 1x1 space.
+
+The basic structure is a list of buildings configs inside a "Modifiers" element:
+{
+  "Enabled": true,
+  "Debug": false,
+
+  "Modifiers": {
+		...
+		"LogicPressureSensorLiquid": {
+		  "BaseMeltingPoint": 2400.0,
+		  "LogicPressureSensor": {
+			"rangeMax": 10000.0
+		  }
+		},
+		...
+	}
+}
+- Zero level is the building id. eg: LogicPressureSensorLiquid
+- First level fields with basic types (float, int, string...) are fields of all the buildings. eg: BaseMeltingPoint
+- First level fields that are an object {...}, are components of the unity building prefab. eg. LogicPressureSensor is a component of LogicPressureSensorLiquid
+   - Second level basic fields are fields of the building component. eg: rangeMax is a field of the component LogicPressureSensor 
+
+
+BEWARE where you put COMMAs in the config file. You can check if you JSON is a valid one in:
+https://jsonlint.com/
+BUT be aware that the comments // and /*...*/ are not JSON valid and you must remove them to use these validators.
+
+List of examples: Config/Examples/
+Copy the desired pieces of config in the main config file.
+
+_TEMPLATE.json contains a list of fields for all buildings.
+_BUILDING_ID_LIST.txt contains a non exhaustive list of building ids.
+
+Check the ONI log file for errors.
+
+
+Known Limitations:
+- Power consumption in Transit Tubes.
