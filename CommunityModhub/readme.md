@@ -20,4 +20,6 @@
 
     - **https://github.com/Sijko/ONI-Mods/**.   
 
-For **modwishes to the Community** use https://github.com/javisar/ONI-Modloader-Mods/issues we will label it accordingly.
+For **modwishes to the Community** post them at https://github.com/javisar/ONI-Modloader-Mods/issues we will label it accordingly.
+
+Any Mod will need to have the Modloader installed: https://github.com/javisar/ONI-Modloader
