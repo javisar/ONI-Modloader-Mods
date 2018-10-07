@@ -78,6 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ElectrolyzerMod.cs" />
+    <Compile Include="ReachabilityRangeMod.cs" />
+    <Compile Include="SimTestMod.cs" />
     <Compile Include="UncompressedSaveMod.cs" />
     <Compile Include="FallingWaterMod.cs" />
     <None Include="HydrogenGeneratorMod.cs" />
