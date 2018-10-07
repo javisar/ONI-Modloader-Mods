@@ -31,6 +31,7 @@ There are a list of ideas and requested mods here: https://github.com/javisar/O
 Mods Installation
 -----------------
 0. Prerequisites:
+   * This mod installation guide ONLY applies to these mods.
    * Make SURE you're using the latest version from Github main branch.
    * [ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed
    * Make sure you deleted all previous mod files and its config:
@@ -65,7 +66,7 @@ Mods - New Buildings
 | ----- | ----------- | ---------- | ------- |
 | BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | N | [@javisar](https://github.com/javisar) |
 | FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) |
-| InverseElectrolyzer | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
+| InverseElectrolyzer | Combines hydrogen and oxygen into steam. Gets oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzerAlt | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | SculpturesReloaded | Adds a new sculpture building that allows more materials. | N | [@javisar](https://github.com/javisar) |
 | ZeroPointModule | A battery that gets unlimited energy from the vacuum. | N | [@javisar](https://github.com/javisar) |
