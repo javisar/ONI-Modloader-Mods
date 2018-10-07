@@ -96,12 +96,8 @@ Mods - Mechanics
 | NaphthaViscosity | Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. | N | [@javisar](https://github.com/javisar) |
 | NoDamage | Disables various damages in game. Overload, Overheat, boiling, cold, buildings. | Y | [@javisar](https://github.com/javisar) |
 | NoFixedTemps | The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). | N | [@javisar](https://github.com/javisar) |
-| PressureDoor | Removes the energy need for the mechanized pressure door and makes it buildable from all material. | N | [@Killface1980](https://github.com/Killface1980) |
 | RoomSize | Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. | Y | [@javisar](https://github.com/javisar) |
-| Sensors | Allows for increased ranges in automation sensors. | N | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) |
-| StorageLocker | Storage lockers won't need a foundation to be built. | N | [@Killface1980](https://github.com/Killface1980) |
 | SuperMiner | Digging drops the complete mass of the cell. | N | [@javisar](https://github.com/javisar) |
-| VentPressure | Allows to change the vents maximum pressure. | Y | [@javisar](https://github.com/javisar) |
 | WorldGenReloaded | Changes geysers properties, frequency and allowed zones. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/WorldGenReloaded/WorldGenReloadedHowto.txt) | Y | [@javisar](https://github.com/javisar) |
 
 
@@ -116,7 +112,11 @@ Outdated Mods
 | LiquidTankMod | Storage for liquids. | N | [@javisar](https://github.com/javisar) |
 | NoOverloadedWiresMod | Avoid overloaded wires. Check NoDamageMod. | N | [@javisar](https://github.com/javisar) |
 | Patches | (Do not use): Some incomplete tests and snippets. | N | [@javisar](https://github.com/javisar) |
+| PressureDoor | Removes the energy need for the mechanized pressure door and makes it buildable from all material. | N | [@Killface1980](https://github.com/Killface1980) |
+| Sensors | Allows for increased ranges in automation sensors. | N | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) |
+| StorageLocker | Storage lockers won't need a foundation to be built. | N | [@Killface1980](https://github.com/Killface1980) |
 | OnionPatches | Custom world seeds. DebugHandler hook. | N | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) |
+| VentPressure | Allows to change the vents maximum pressure. | Y | [@javisar](https://github.com/javisar) |
 
 
 Downloads

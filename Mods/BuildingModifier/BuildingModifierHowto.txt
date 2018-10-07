@@ -28,7 +28,6 @@ The basic structure is a list of buildings configs inside a "Modifiers" element:
   "Debug": false,
 
   "Modifiers": {
-
 		...
 		"LogicPressureSensorLiquid": {
 		  "BaseMeltingPoint": 2400.0,
@@ -55,6 +54,7 @@ Copy the desired pieces of config in the main config file.
 _TEMPLATE.json contains a list of fields for all buildings.
 _BUILDING_ID_LIST.txt contains a non exhaustive list of building ids.
 
+Check the ONI log file for errors.
 
 
 Known Limitations:
