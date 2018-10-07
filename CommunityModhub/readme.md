@@ -19,3 +19,5 @@
 - **Sijkos Mods**
 
     - **https://github.com/Sijko/ONI-Mods/**.   
+
+For **modwishes to the Community** use https://github.com/javisar/ONI-Modloader-Mods/issues we will label it accordingly.
