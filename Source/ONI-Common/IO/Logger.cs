@@ -6,22 +6,26 @@
     public class Logger
     {
         private readonly string _filePath;
+        private StreamWriter writer;
 
         public Logger(string filePath)
         {
             this._filePath = filePath;
+            this.writer = new StreamWriter(this._filePath, true);
         }
 
         public void Log(string message)
-        {            
-            
-            using (StreamWriter writer = new StreamWriter(this._filePath, true))
+        {
+            //FileStream fileStream = new FileStream(this._filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+
+            //using (StreamWriter writer = new StreamWriter(this._filePath, true))
             {
                 DateTime now = System.DateTime.Now;
 
                 Debug.Log($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}");   // Also dump to main log
                 writer.WriteLine($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}\r\n");
-                writer.Close();
+                //writer.Close();
+                writer.Flush();
             }
         }
 
