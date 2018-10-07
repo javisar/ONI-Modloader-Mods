@@ -88,7 +88,7 @@ Mods - Mechanics
 | ----- | ----------- | ---------- | ------- |
 | AllBuildingsDestroyable | Allows to construct on top of Gravitas furniture. | N | [@javisar](https://github.com/javisar) |
 | AlternateOrders | The Fabricators and Refineries will alternate between infinity orders. | N | [@javisar](https://github.com/javisar) |
-| BuildingModifierMod | Allows to modify building attributes. | S | [@javisar](https://github.com/javisar) |
+| BuildingModifierMod | Allows to modify building attributes. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/BuildingModifier/BuildingModifierHowto.txt) | Y | [@javisar](https://github.com/javisar) |
 | FastMode | Duplicants will build and dig very fast. | N | [@javisar](https://github.com/javisar) |
 | FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | N | [@javisar](https://github.com/javisar) |
 | InstantResearch | Forces instant research without Debug mode. | N | [@javisar](https://github.com/javisar) |

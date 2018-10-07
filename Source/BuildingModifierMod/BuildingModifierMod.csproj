@@ -75,6 +75,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="BuildingModifier\BuildingModifierHowto.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="BuildingModifier\Config\Examples\AquaTuner.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

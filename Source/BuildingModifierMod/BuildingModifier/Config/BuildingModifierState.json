@@ -36,7 +36,7 @@
 
 
     "Generator": {
-      "GeneratorWattageRating": 6000.0,
+      "GeneratorWattageRating": 1200.0,
       "GeneratorBaseCapacity": 20000.0,
       "ExhaustKilowattsWhenActive": 8.0,
       "SelfHeatKilowattsWhenActive": 1.0,
