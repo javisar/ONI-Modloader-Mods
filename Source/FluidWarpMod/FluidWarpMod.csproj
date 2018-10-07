@@ -69,6 +69,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="ValveWarpBase.cs.bak" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="FluidWarp\FluidWarpModHowto.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)$(TargetFileName)" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods" /Y

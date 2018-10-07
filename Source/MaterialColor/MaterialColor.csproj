@@ -154,6 +154,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="MaterialColor\MaterialColorHowto.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MaterialColor\Sprites\overlay_materialColor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
