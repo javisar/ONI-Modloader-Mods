@@ -20,7 +20,7 @@ This project uses source code of and is based on:
 * https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
 
 
-**NOTE**: Compiled for **RU-285450** and ONI-Modloader v0.5.0
+**NOTE**: Compiled for **SU-290148** and ONI-Modloader v0.5.1
 
 **Report Bugs/Request features** for Mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
 
@@ -36,14 +36,13 @@ Mods Installation
    * [ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed
    * Make sure you deleted all previous mod files and its config:
      * \OxygenNotIncluded\Mods\
-     * \OxygenNotIncluded\OxygenNotIncluded_Data\Managed\
 1. Select the mod you want to install.
 2. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
 3. Copy the mod **dll file** from "Mods" to the folder to ([Example of Mod folder structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modsfolder.png)):
    * \OxygenNotIncluded\Mods\
 4. Copy the **mod configs files WITH THE SAME FOLDER STRUCTURE** from "Mods" to the folder to ([Example of Mod config structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modconfig.png)):
    * \OxygenNotIncluded\Mods\\[MOD_NAME]\Config\\[MOD_NAME]State.json
-5. **Copy ONI-Common** (and configs) if the mod require it.
+5. **Copy ONI-Common and Mono.Cecil** (and configs) if the mod require it.
 6. Run the game.
 7. Check for error logs in:
    * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\\**output_log.txt** 
@@ -57,7 +56,7 @@ ONI-Common
 --------------------
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
-| **ONI-Common** | Common code. Provides config load/save functionality, logger, help tools. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
+| **ONI-Common** | **Requieres Mono.Cecil.dll** Common code. Provides config load/save functionality, logger, help tools. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 
 
 Mods - New Buildings
