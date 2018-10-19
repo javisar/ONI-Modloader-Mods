@@ -26,6 +26,8 @@
                                                         {
                                                         "Tile",
                                                         "MeshTile",
+                                                        "GlassTile",
+                                                        "BunkerTile",
                                                         "InsulationTile",
                                                         "GasPermeableMembrane",
                                                         "TilePOI",
