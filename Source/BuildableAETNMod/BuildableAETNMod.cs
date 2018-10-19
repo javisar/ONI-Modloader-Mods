@@ -19,13 +19,15 @@ namespace BuildableAETNMod
             Strings.Add("STRINGS.BUILDINGS.PREFABS.MASSIVEHEATSINK.DESC", "");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.MASSIVEHEATSINK.EFFECT", "");
             */
+            /*
             List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[10].data);
             ls.Add(MassiveHeatSinkConfig.ID);
             TUNING.BUILDINGS.PLANORDER[10].data = (string[])ls.ToArray();
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(MassiveHeatSinkConfig.ID);
-
-
+            */
+            List<string> category = (List<string>) TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.Utilities).data;
+            category.Add(MassiveHeatSinkConfig.ID);
         }
         /*
         private static void Postfix()

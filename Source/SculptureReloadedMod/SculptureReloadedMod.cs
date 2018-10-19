@@ -18,15 +18,18 @@ namespace SculptureReloadedMod
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.SCULPTURERELOADED.NAME", "Sculpture");
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.SCULPTURERELOADED.DESC", "");
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.SCULPTURERELOADED.EFFECT", "");
-
+            /*
 			List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[8].data);
 			ls.Add(SculptureReloadedConfig.ID);
 			TUNING.BUILDINGS.PLANORDER[8].data = (string[])ls.ToArray();
 
 			TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(SculptureReloadedConfig.ID);
+            */
+            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.Furniture).data;
+            category.Add(SculptureReloadedConfig.ID);
 
-
-		}
+        }
+        /*
 		private static void Postfix()
 		{
 
@@ -34,6 +37,7 @@ namespace SculptureReloadedMod
 			object obj = Activator.CreateInstance(typeof(SculptureReloadedConfig));
 			BuildingConfigManager.Instance.RegisterBuilding(obj as IBuildingConfig);
 		}
+        */
 	}
 
 	[HarmonyPatch(typeof(Db), "Initialize")]

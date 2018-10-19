@@ -20,7 +20,7 @@ This project uses source code of and is based on:
 * https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
 
 
-**NOTE**: Compiled for **SU-290148** and ONI-Modloader v0.5.1
+**NOTE**: Compiled for **SU-290261** and ONI-Modloader v0.5.1
 
 **Report Bugs/Request features** for Mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
 

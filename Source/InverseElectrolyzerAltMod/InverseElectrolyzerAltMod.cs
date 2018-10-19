@@ -1,7 +1,7 @@
 ﻿using Harmony;
-using STRINGS;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace InverseElectrolyzerAltMod
@@ -16,15 +16,18 @@ namespace InverseElectrolyzerAltMod
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZERALT.NAME", "Combustioneer");
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZERALT.DESC", "");
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZERALT.EFFECT", "");
-
+            /*
 			List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[10].data);
 			ls.Add(InverseElectrolyzerAltConfig.ID);
 			TUNING.BUILDINGS.PLANORDER[10].data = (string[])ls.ToArray();
 
 			TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(InverseElectrolyzerAltConfig.ID);
+            */
+            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.Utilities).data;
+            category.Add(InverseElectrolyzerAltConfig.ID);
 
-
-		}
+        }
+        /*
 		private static void Postfix()
 		{
 
@@ -32,6 +35,7 @@ namespace InverseElectrolyzerAltMod
 			object obj = Activator.CreateInstance(typeof(InverseElectrolyzerAltConfig));
 			BuildingConfigManager.Instance.RegisterBuilding(obj as IBuildingConfig);
 		}
+        */
 	}
 
 	[HarmonyPatch(typeof(Db), "Initialize")]

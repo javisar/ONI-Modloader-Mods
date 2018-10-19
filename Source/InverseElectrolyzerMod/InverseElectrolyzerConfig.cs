@@ -178,11 +178,14 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 		BuildingTemplates.DoPostConfigure(go);
 		GeneratedBuildings.RegisterLogicPorts(go, InverseElectrolyzerConfig.INPUT_PORTS);
 		go.AddOrGet<LogicOperationalController>();
+        /*
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate (GameObject game_object)
 		{
 			PoweredActiveController.Instance instance = new PoweredActiveController.Instance(game_object.GetComponent<KPrefabID>());
 			instance.StartSM();
 		};
-	}
+        */
+        go.AddOrGetDef<PoweredActiveController.Def>();
+    }
 }
 
