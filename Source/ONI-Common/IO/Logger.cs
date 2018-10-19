@@ -11,6 +11,11 @@
         public Logger(string filePath)
         {
             this._filePath = filePath;
+
+            FileInfo fileInfo = new FileInfo(this._filePath);
+            if (!fileInfo.Exists)
+                Directory.CreateDirectory(fileInfo.Directory.FullName);
+
             this.writer = new StreamWriter(this._filePath, true);
         }
 
