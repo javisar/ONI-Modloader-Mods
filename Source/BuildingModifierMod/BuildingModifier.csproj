@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Mods\</OutputPath>
+    <OutputPath>..\..\Mods\BuildingModifier\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,60 +71,64 @@
     <ProjectReference Include="..\ONI-Common\ONI-Common.csproj">
       <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
       <Name>ONI-Common</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="BuildingModifier\BuildingModifierHowto.txt">
+    <Content Include="BuildingModifierHowto.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="BuildingModifier\Config\Examples\AquaTuner.json">
+    <None Include="Config\Examples\AquaTuner.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\MoreMaterials.json">
+    <None Include="Config\Examples\MoreMaterials.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\Batteries.json">
+    <None Include="Config\Examples\Batteries.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="BuildingModifier\Config\Examples\_BUILDING_ID_LIST.txt">
+    <Content Include="Config\Examples\_BUILDING_ID_LIST.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="BuildingModifier\Config\Examples\_ALL.json">
+    <None Include="Config\Examples\_ALL.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\StorageCapacity.json">
+    <None Include="Config\Examples\StorageCapacity.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\_TEMPLATE.json">
+    <None Include="Config\Examples\_TEMPLATE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\Generators.json">
+    <None Include="Config\Examples\Generators.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\VentPressure.json">
+    <None Include="Config\Examples\VentPressure.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\StorageLockers.json">
+    <None Include="Config\Examples\StorageLockers.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\SensorsRange.json">
+    <None Include="Config\Examples\SensorsRange.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\PressureDoor.json">
+    <None Include="Config\Examples\PressureDoor.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\Examples\ReservoirStorage.json">
+    <None Include="Config\Examples\ReservoirStorage.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="BuildingModifier\Config\BuildingModifierState.json">
+    <None Include="Config\BuildingModifierState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(TargetFileName)" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods" /Y
-xcopy "$(TargetDir)$(TargetFileName)" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods" /Y</PostBuildEvent>
+    <PostBuildEvent>
+xcopy "$(TargetDir.TrimEnd('\'))" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+
+xcopy "$(TargetDir.TrimEnd('\'))" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

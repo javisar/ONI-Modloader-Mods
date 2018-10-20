@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Mods\</OutputPath>
+    <OutputPath>..\..\Mods\MaterialColor\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -90,58 +90,58 @@
     <Compile Include="Extensions\SimHashesExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IDs.cs" />
-    <None Include="MaterialColor\Config\ElementColorInfos\00-solid.json">
+    <None Include="Config\ElementColorInfos\00-solid.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\ElementColorInfos\01-liquid.json">
+    <None Include="Config\ElementColorInfos\01-liquid.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\ElementColorInfos\02-gas.json">
+    <None Include="Config\ElementColorInfos\02-gas.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\ElementColorInfos\03-special.json">
+    <None Include="Config\ElementColorInfos\03-special.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\MaterialColorState.json">
+    <None Include="Config\MaterialColorState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TemperatureOverlayState.json.default">
+    <None Include="Config\TemperatureOverlayState.json.default">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TemperatureOverlayState.json">
+    <None Include="Config\TemperatureOverlayState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\00-machine.json">
+    <None Include="Config\TypeColorOffsets\00-machine.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\01-door.json">
+    <None Include="Config\TypeColorOffsets\01-door.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\02-liquid.json">
+    <None Include="Config\TypeColorOffsets\02-liquid.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\03-gas.json">
+    <None Include="Config\TypeColorOffsets\03-gas.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\04-power.json">
+    <None Include="Config\TypeColorOffsets\04-power.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\05-other.json">
+    <None Include="Config\TypeColorOffsets\05-other.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\06-creature.json">
+    <None Include="Config\TypeColorOffsets\06-creature.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\07-exosuit.json">
+    <None Include="Config\TypeColorOffsets\07-exosuit.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\08-automation.json">
+    <None Include="Config\TypeColorOffsets\08-automation.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\09-tiles.json">
+    <None Include="Config\TypeColorOffsets\09-tiles.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MaterialColor\Config\TypeColorOffsets\10-tubular.json">
+    <None Include="Config\TypeColorOffsets\10-tubular.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -154,17 +154,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="MaterialColor\MaterialColorHowto.txt">
+    <Content Include="MaterialColorHowto.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MaterialColor\Sprites\overlay_materialColor.png">
+    <Content Include="Sprites\overlay_materialColor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(TargetFileName)" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods" /Y
+    <PostBuildEvent>
+xcopy "$(TargetDir.TrimEnd('\'))" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
 
-xcopy "$(TargetDir)$(TargetFileName)" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods" /Y</PostBuildEvent>
+xcopy "$(TargetDir.TrimEnd('\'))" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomWorldMod", "CustomWor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DraggablePanelMod", "DraggablePanelMod\DraggablePanelMod.csproj", "{93CDE770-6E29-4B01-B0DD-A3B586FBB111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImprovedGasColourMod", "ImprovedGasColourMod\ImprovedGasColourMod.csproj", "{4475E088-4830-4BB4-BC97-FC8ACC18AFCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImprovedGasOverlay", "ImprovedGasColourMod\ImprovedGasOverlay.csproj", "{4475E088-4830-4BB4-BC97-FC8ACC18AFCB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraControllerMod", "CameraControllerMod\CameraControllerMod.csproj", "{2F67E9DC-1B57-4CD3-8043-0A59DDF81F06}"
 EndProject
@@ -60,7 +60,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluidWarpMod", "FluidWarpMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SculptureReloadedMod", "SculptureReloadedMod\SculptureReloadedMod.csproj", "{48F9B0FE-7617-42E7-86EB-EE0FC7D361C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomSizeMod", "RoomSizeMod\RoomSizeMod.csproj", "{7D13E2D1-D400-4A50-8AFA-147EAF5375C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomSize", "RoomSizeMod\RoomSize.csproj", "{7D13E2D1-D400-4A50-8AFA-147EAF5375C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaphthaViscosityMod", "NaphthaViscosityMod\NaphthaViscosityMod.csproj", "{81FEA4EE-6DC0-4D24-9725-BBB998FC73A6}"
 EndProject
@@ -80,13 +80,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoOverloadedWiresMod", "NoO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMinerMod", "SuperMinerMod\SuperMinerMod.csproj", "{4BF8EC3F-EB0C-4FC7-B2F5-458E91F63E96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingModifierMod", "BuildingModifierMod\BuildingModifierMod.csproj", "{AE64BD07-9B27-4E16-9767-DD7894F70806}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingModifier", "BuildingModifierMod\BuildingModifier.csproj", "{AE64BD07-9B27-4E16-9767-DD7894F70806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoDamageMod", "NoDamageMod\NoDamageMod.csproj", "{480FFA2E-7673-4A3E-994A-DC401B812D95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoDamage", "NoDamageMod\NoDamage.csproj", "{480FFA2E-7673-4A3E-994A-DC401B812D95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroPointModuleMod", "ZeroPointModuleMod\ZeroPointModuleMod.csproj", "{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldGenReloadedMod", "WorldGenReloadedMod\WorldGenReloadedMod.csproj", "{F648211E-4AFE-44B3-8A5E-B89D57CF34A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldGenReloaded", "WorldGenReloadedMod\WorldGenReloaded.csproj", "{F648211E-4AFE-44B3-8A5E-B89D57CF34A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Mods\</OutputPath>
+    <OutputPath>..\..\Mods\WorldGenReloaded\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -70,22 +70,26 @@
     <ProjectReference Include="..\ONI-Common\ONI-Common.csproj">
       <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
       <Name>ONI-Common</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="WorldGenReloaded\Config\WorldGenReloadedState.json">
+    <None Include="Config\WorldGenReloadedState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WorldGenReloaded\WorldGenReloadedHowto.txt">
+    <Content Include="WorldGenReloadedHowto.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(TargetFileName)" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods" /Y
-xcopy "$(TargetDir)$(TargetFileName)" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods" /Y</PostBuildEvent>
+    <PostBuildEvent>
+xcopy "$(TargetDir.TrimEnd('\'))" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+
+xcopy "$(TargetDir.TrimEnd('\'))" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
