@@ -4,8 +4,8 @@
 
   "Temperatures": [
     0.0, // AbsoluteZero,
-    0.15, // Cold,
-    1.15, // Chilled,
+    200.15, // Cold,
+    253.15, // Chilled,
     273.15, // Temperate,
     293.15, // Warm,
     323.15, // Hot,

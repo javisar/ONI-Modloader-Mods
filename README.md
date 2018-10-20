@@ -1,13 +1,11 @@
 # ONI-Modloader Mods
-Javisar's ONI mods for ONI-Modloader
-
-[**For use with ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
+Javisar's Oxygen Not Included Mods for [**ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
 
 [**Forums in Klei**](https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/)
 
 
 Disclaimers
-----------
+-----------
 * Please DON'T REPORT BUGS you encounter to Klei while mods are active.
 * BE AWARE that many of the mods are still a WIP and may fail. If you are having problems use a clean ONI installation and try to test the mods one by one to narrow the error. Then post a issue in github.
 * We do not take any responsibility for broken saves or any other damage. Use this software at your own risk.
@@ -20,7 +18,7 @@ This project uses source code of and is based on:
 * https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
 
 
-**NOTE**: Compiled for **SU-290261** and ONI-Modloader v0.5.1
+**NOTE**: Compiled for **SU-290532** and ONI-Modloader v0.5.1
 
 **Report Bugs/Request features** for Mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
 
@@ -31,18 +29,18 @@ There are a list of ideas and requested mods here: https://github.com/javisar/O
 Mods Installation
 -----------------
 0. Prerequisites:
-   * This mod installation guide ONLY applies to these mods.
+   * This mod installation guide ONLY applies to the mods below.
    * Make SURE you're using the latest version from Github main branch.
-   * [ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed
+   * **[ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed**
    * Make sure you deleted all previous mod files and its config:
      * \OxygenNotIncluded\Mods\
-1. Select the mod you want to install.
+1. Select the mod you want to install from [HERE](https://github.com/javisar/ONI-Modloader-Mods/tree/master/Mods).
 2. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
-3. Copy the mod **dll file** from "Mods" to the folder to ([Example of Mod folder structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modsfolder.png)):
+3. Copy the desired **mod dll file OR mod folder WITH THE SAME FOLDER STRUCTURE** into the folder:
    * \OxygenNotIncluded\Mods\
-4. Copy the **mod configs files WITH THE SAME FOLDER STRUCTURE** from "Mods" to the folder to ([Example of Mod config structure](https://github.com/javisar/ONI-Modloader/blob/master/.github/modconfig.png)):
+4. The main mod config files must be located in:
    * \OxygenNotIncluded\Mods\\[MOD_NAME]\Config\\[MOD_NAME]State.json
-5. **Copy ONI-Common and Mono.Cecil** (and configs) if the mod require it.
+5. **Copy also ONI-Common folder** since many mods use it as a support library.
 6. Run the game.
 7. Check for error logs in:
    * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\\**output_log.txt** 
@@ -123,7 +121,7 @@ Outdated Mods
 Downloads
 ---------
 * Choose 'Download or Clone'.
-* Put the desired dlls into the Mods folder "OxygenNotIncluded\Mods".
+* Put the desired mods into the Mods folder "OxygenNotIncluded\Mods".
 * BE SURE to also copy **ALL** required config and icons folders.
 
 
