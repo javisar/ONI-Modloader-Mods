@@ -7,6 +7,6 @@
 * [**MooreDavid's Mods**](https://github.com/MooreDavid/ONI-MOD-)
 * [**Sijko's Mods**](https://github.com/Sijko/ONI-Mods/)
 
-For **modwishes to the Community** post them in [Klei Forums](https://forums.kleientertainment.com/forums/topic/88186-mod05-oni-modloader/) or in [GitHub](https://github.com/javisar/ONI-Modloader-Mods/issues we will label it accordingly).
+For **modwishes to the Community** post them in [Klei Forums](https://forums.kleientertainment.com/forums/topic/88186-mod05-oni-modloader/).
 
 Any Mod will need to have the Modloader installed: https://github.com/javisar/ONI-Modloader
