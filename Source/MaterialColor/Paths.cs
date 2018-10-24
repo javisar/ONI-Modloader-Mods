@@ -1,9 +1,10 @@
 ﻿namespace MaterialColor
 {
     using System.IO;
+	using UnityEngine;
 
-    // TODO: refactor, split
-    public static class Paths
+	// TODO: refactor, split
+	public static class Paths
     {
         //public const string CommonLogFileName = "CommonLog.txt";
 
@@ -28,7 +29,7 @@
 
         public const string MaterialColorStateFileName = "MaterialColorState.json";
 
-        public const string ModsDirectory = "Mods";
+		public static string ModsDirectory = Paths.GetModsDirectory();
 
         public const string OnionLogFileName = "OnionLog.txt";
 
@@ -81,5 +82,30 @@
 
         public static readonly string MaterialColorOverlayIconPath =
         SpritesPath + Path.DirectorySeparatorChar + MaterialColorOverlayIconFileName;
-    }
+
+
+		public static string GetModsDirectory()
+		{
+			DirectoryInfo dataDir = new DirectoryInfo(Application.dataPath);
+			Debug.Log("Data dir: " + dataDir.FullName);
+			Debug.Log("RuntimePlatform: " + Application.platform);
+
+			DirectoryInfo oniBaseDirectory;
+			if (Application.platform == RuntimePlatform.OSXPlayer)
+			{
+				oniBaseDirectory = new DirectoryInfo(Path.Combine(dataDir.FullName, "Resources"));
+			}
+			else if (Application.platform == RuntimePlatform.LinuxPlayer)
+			{
+				oniBaseDirectory = dataDir.Parent;
+			}
+			else
+			{
+				oniBaseDirectory = dataDir.Parent;
+			}
+
+			Debug.Log("Path to mods is: " + Path.Combine(oniBaseDirectory?.FullName, "Mods"));
+			return Path.Combine(oniBaseDirectory?.FullName, "Mods");
+		}
+	}
 }
