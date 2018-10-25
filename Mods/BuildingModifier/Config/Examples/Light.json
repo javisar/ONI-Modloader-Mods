@@ -1,0 +1,24 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+
+        "CeilingLight": { // CeilingLight, FloorLamp
+            "EnergyConsumptionWhenActive": 10.0,
+            "SelfHeatKilowattsWhenActive": 0.5,
+            "LightShapePreview": {
+                "lux": 1800,
+                "radius": 8.0,
+                "shape": "LightShape.Cone" // Circle, Cone
+            },
+            "Light2D": {
+                "Lux": 1800,
+                "Range": 8.0,
+                "Angle": 2.6,
+                "shape": "LightShape.Cone"
+            }
+        }
+
+    }
+}

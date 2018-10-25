@@ -62,6 +62,9 @@
     <Compile Include="BuildingModifierMod.cs" />
     <None Include="BuildingModifierMod.cs.bak.1" />
     <None Include="BuildingModifierMod.cs.bak.2" />
+    <None Include="Config\Examples\Light.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Helper.cs.bak.1" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

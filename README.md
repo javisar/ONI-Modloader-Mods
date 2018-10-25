@@ -20,10 +20,10 @@ This project uses source code of and is based on:
 
 **NOTE**: Compiled for **SU-290532** and ONI-Modloader v0.5.1
 
-**Report Bugs/Request features** for Mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
+**Report Mod Bugs** [here](https://github.com/javisar/ONI-Modloader-Mods/issues/new/choose).
 
 **Contribute**: ANY PULL REQUEST IS WELCOME.
-There are a list of ideas and requested mods here: https://github.com/javisar/ONI-Modloader-Mods/issues
+There are a list of ideas and requested mods here: https://github.com/javisar/ONI-Modloader/issues
 
 
 Mods Installation

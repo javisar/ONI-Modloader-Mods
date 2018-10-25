@@ -1,6 +1,6 @@
 ---
-name: Feature/Mod request
-about: Suggest an idea for this project
+name: Feature
+about: Suggest an enhancement for a Mod
 
 ---
 
@@ -8,6 +8,7 @@ about: Suggest an idea for this project
 
 <!-- Please answer the following questions for yourself before submitting an issue. YOU MAY DELETE THE PREREQUISITES SECTION. -->
 
+- [ ] For Mod Requests, head to https://github.com/javisar/ONI-Modloader/issues/new?template=feature_request.md
 - [ ] I checked the documentation and forums and found no answer
 - [ ] I checked to make sure that this feature has not already been filed
 - [ ] I'm reporting the issue to the correct repository (for multi-repository projects)
