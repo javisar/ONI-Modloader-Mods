@@ -1,0 +1,13 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+
+        "Wire": {               // Wire, HighWattageWire, WireRefined, WireRefinedHighWattage
+            "Wire": {
+                "MaxWattageRating": "Wire.WattageRating.Max1000"   //    Max500, Max1000, Max2000, Max20000, Max50000
+            }
+        }
+    }
+}

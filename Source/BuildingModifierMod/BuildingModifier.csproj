@@ -62,6 +62,9 @@
     <Compile Include="BuildingModifierMod.cs" />
     <None Include="BuildingModifierMod.cs.bak.1" />
     <None Include="BuildingModifierMod.cs.bak.2" />
+    <None Include="Config\Examples\Wires.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Config\Examples\Light.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -94,9 +97,6 @@
     <Content Include="Config\Examples\_BUILDING_ID_LIST.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Config\Examples\_ALL.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Config\Examples\StorageCapacity.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
