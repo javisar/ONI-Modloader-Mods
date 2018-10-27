@@ -176,8 +176,7 @@
                             }
                             else
                             {
-                                Debug.LogError(
-                                                           $"Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
+                                Debug.Log($"MaterialColor: Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
                             }
                         }
                     }
