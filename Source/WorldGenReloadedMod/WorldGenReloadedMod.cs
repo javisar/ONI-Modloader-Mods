@@ -50,16 +50,16 @@ namespace WorlGenReloadedMod
                 // foreach config attribute
                 foreach (KeyValuePair<string, object> attribute in geyserData)
                 {
-                    Debug.Log(attribute.Key.ToLower());
-                    Debug.Log(attribute.Value.GetType());
-                    Debug.Log(attribute.Value);
+                    //Debug.Log(attribute.Key.ToLower());
+                    //Debug.Log(attribute.Value.GetType());
+                    //Debug.Log(attribute.Value);
 
 
                     switch (attribute.Key.ToLower())
                     {
                         case "properties":
-                            Debug.Log(attribute.Value.GetType());
-                            Debug.Log("attribute.Value: "+attribute.Value);
+                            //Debug.Log(attribute.Value.GetType());
+                            //Debug.Log("attribute.Value: "+attribute.Value);
 
                             // Set geyser basic properties
                             foreach (JProperty property in (JToken)attribute.Value)
