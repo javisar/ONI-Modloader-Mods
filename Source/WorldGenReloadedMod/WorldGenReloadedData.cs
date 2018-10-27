@@ -1,4 +1,5 @@
 ﻿using ProcGen;
+using ProcGenGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,16 +41,41 @@ namespace WorldGenReloadedMod
             return null;
         }
 
-        public static void CalculateGeysers(SeededRandom rnd)
+
+        public static void CalculateGeysers(SeededRandom rnd, WorldGen worldgen)
         {
             Dictionary<string, Dictionary<string, int>> calculatedGeysers = new Dictionary<string, Dictionary<string, int>>();
             foreach (KeyValuePair<string, GeyserState> data in WorldGenReloadedData.GeyserConfig)
             {
 
                 int geyserCount = rnd.RandomRange(data.Value.Minimum, data.Value.Maximum + 1);
+                Debug.Log("geyserCount ["+ data.Key +"] = " + geyserCount);
+                if (geyserCount <= 0) continue;
+                List<string> _subworlds = new List<string>(data.Value.SubWorlds);
 
-                string[] subworlds = data.Value.SubWorlds;
-                subworlds.ShuffleSeeded(rnd.RandomSource());
+                // Remove invalid subworlds
+                for (int i = _subworlds.Count - 1; i >= 0; i--)
+                {
+                    List<TerrainCell> terrainCellsForTag2 = WorldGen.GetTerrainCellsForTag(_subworlds[i]);
+                    
+                    for (int num = terrainCellsForTag2.Count - 1; num >= 0; num--)
+                    {
+                        if (!worldgen.IsSafeToSpawnPOI(terrainCellsForTag2[num]))
+                        {
+                            terrainCellsForTag2.RemoveAt(num);
+                        }                      
+                    }
+                    Debug.Log("Available cells ["+ _subworlds[i] + "] = " + terrainCellsForTag2.Count);
+                    if (terrainCellsForTag2.Count <= 0 || terrainCellsForTag2.Count / geyserCount < 3)
+                    {
+                        Debug.Log("Invalid subworld: " + _subworlds[i]);
+                        _subworlds.RemoveAt(i);
+                    }
+                }
+               
+                _subworlds.ShuffleSeeded(rnd.RandomSource());
+                string[] subworlds = _subworlds.ToArray();                
+
 
                 for (int i = 0; i < geyserCount; i++)
                 {
@@ -61,6 +87,7 @@ namespace WorldGenReloadedMod
                     {
                         calculatedGeysers[subworld][data.Key] = 0;
                     }
+
                     calculatedGeysers[subworld][data.Key]++;
                 }
 
@@ -78,6 +105,7 @@ namespace WorldGenReloadedMod
             WorldGenReloadedData.CalculatedGeysers = calculatedGeysers;
         }
 
+       
         public static void LogGeysersDefaults(List<GeyserPrefabParams> geyserList)
         {
             Debug.Log(" === WorldGenReloadedMod_LogGeysersDefaults Prefix === ");
@@ -99,5 +127,6 @@ namespace WorldGenReloadedMod
                 Debug.Log("\t minYearPercent: " + type.maxYearPercent);
             }
         }
+        
     }
 }

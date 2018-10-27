@@ -2,6 +2,7 @@ How it works:
 This mod overrides the world generation function in ONI. It maintais all the default behaviour except geyser generation.
 
 WARNING: Experimental. Very ONI version dependant.
+WARNING: If the world is small some geysers won't be spawned. Check the logs.
 
 The config file must be in:
 - \Mods\WorldGenReloaded\Config\WorldGenReloadedState.json

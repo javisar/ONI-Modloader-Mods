@@ -50,16 +50,16 @@ namespace WorlGenReloadedMod
                 // foreach config attribute
                 foreach (KeyValuePair<string, object> attribute in geyserData)
                 {
-                    //Debug.Log(attribute.Key.ToLower());
-                    //Debug.Log(attribute.Value.GetType());
-                    //Debug.Log(attribute.Value);
+                    Debug.Log(attribute.Key.ToLower());
+                    Debug.Log(attribute.Value.GetType());
+                    Debug.Log(attribute.Value);
 
 
                     switch (attribute.Key.ToLower())
                     {
                         case "properties":
-                            //Debug.Log(attribute.Value.GetType());
-                            //Debug.Log("attribute.Value: "+attribute.Value);
+                            Debug.Log(attribute.Value.GetType());
+                            Debug.Log("attribute.Value: "+attribute.Value);
 
                             // Set geyser basic properties
                             foreach (JProperty property in (JToken)attribute.Value)
@@ -114,6 +114,7 @@ namespace WorlGenReloadedMod
 
         private static bool Prefix(WorldGen __instance, ref Sim.Cell[] __result, bool doSettle, ref Sim.DiseaseCell[] dc)
         {
+            Debug.Log(" === WorldGenReloadedMod_WorldGen_RenderOffline ===");
             WorldGen.OfflineCallbackFunction successCallbackFn = ((WorldGen.OfflineCallbackFunction)successCallbackFnF.GetValue(__instance));
             SeededRandom myRandom = ((SeededRandom)myRandomF.GetValue(__instance));
             Data data = ((Data)dataF.GetValue(null));
@@ -329,22 +330,36 @@ namespace WorlGenReloadedMod
 
         private static void DisableDefaultPoiGeysers(ref SubWorld subWorld)
         {
+            Debug.Log("Point of Interest: " + subWorld.name);
             Dictionary<string, string[]> finalPois = new Dictionary<string, string[]>(subWorld.pointsOfInterest);
             foreach (string poi in subWorld.pointsOfInterest.Keys)
             {
-
-                Debug.Log("[] " + poi.ToLower());
+                
                 if (poi.ToLower().Contains("geyser"))
                 {
                     finalPois.Remove(poi);
+                    Debug.Log("[" + poi.ToLower()+ "] disabled");
+                }
+                else
+                {
+                    Debug.Log("[" + poi.ToLower()+"]");
                 }
             }
             AccessTools.Property(typeof(SubWorld), "pointsOfInterest").SetValue(subWorld, finalPois, null);
         }
 
-        private static TemplateContainer GetGeyserTemplate(TemplateContainer template, string geyserId)
+        private static TemplateContainer GetGeyserTemplate(TemplateContainer _template, string geyserId)
         {
-            
+
+            TemplateContainer template = Newtonsoft.Json.JsonConvert.DeserializeObject<TemplateContainer>(
+                    Newtonsoft.Json.JsonConvert.SerializeObject(_template)
+                    /*
+                    ,new Newtonsoft.Json.JsonSerializerSettings {
+                        ObjectCreationHandling = Newtonsoft.Json.ObjectCreationHandling.Replace
+                    }
+                    */
+            );
+
             foreach (TemplateClasses.Prefab pref in template.otherEntities)
             {
                 if (pref.id.Contains("GeyserGeneric"))
@@ -359,7 +374,7 @@ namespace WorlGenReloadedMod
 
         private static void ProcessGeysers(WorldGen __instance, ref List<KeyValuePair<Vector2I, TemplateContainer>> templateList, SeededRandom myRandom)
         {
-            WorldGenReloadedData.CalculateGeysers(myRandom);
+            WorldGenReloadedData.CalculateGeysers(myRandom, __instance);
             List<TemplateContainer> featuresList = TemplateCache.CollectBaseTemplateAssets("features/");
             foreach (SubWorld subWorld in WorldGen.Settings.GetSubWorldList())
             {
@@ -386,6 +401,14 @@ namespace WorlGenReloadedMod
                                     terrainCellsForTag2.Remove(terrainCellsForTag2[num]);
                                 }
                             }
+                            /*
+                            if (terrainCellsForTag2.Count <= 0 && WorldGenReloadedData.Config.ForceSpawnGeyserUnsafePlace)
+                            {
+                                terrainCellsForTag2 = WorldGen.GetTerrainCellsForTag(subWorld.name.ToTag());
+                            }
+                            */
+                            Debug.Log("Available cells = " + terrainCellsForTag2.Count);
+                           
                             if (terrainCellsForTag2.Count > 0)
                             {
                                 string template = null;
@@ -407,6 +430,7 @@ namespace WorlGenReloadedMod
                                 if (templateContainer != null)
                                 {
                                     //list3.Remove(templateContainer);
+                                    bool geyserPlaced = false;
                                     for (int i = 0; i < terrainCellsForTag2.Count; i++)
                                     {
                                         TerrainCell terrainCell = terrainCellsForTag2[myRandom.RandomRange(0, terrainCellsForTag2.Count)];
@@ -421,6 +445,7 @@ namespace WorlGenReloadedMod
                                                 list4.Add(new KeyValuePair<Vector2I, TemplateContainer>(new Vector2I(a2, (int)vector4.y), templateContainer));
                                                 terrainCell.node.tags.Add(template.ToTag());
                                                 terrainCell.node.tags.Add(WorldGenTags.POI);
+                                                geyserPlaced = true;
                                                 break;
                                             }
                                             float num3 = templateContainer.info.size.Y - (terrainCell.poly.MaxY - terrainCell.poly.MinY);
@@ -434,11 +459,28 @@ namespace WorlGenReloadedMod
                                                 list5.Add(new KeyValuePair<Vector2I, TemplateContainer>(new Vector2I(a3, (int)vector6.y), templateContainer));
                                                 terrainCell.node.tags.Add(template.ToTag());
                                                 terrainCell.node.tags.Add(WorldGenTags.POI);
+                                                geyserPlaced = true;
                                                 break;
                                             }
                                         }
+                                        else
+                                        {
+                                            Debug.Log("Cannot find a place for geyser. POI in the way: " + item6.Key);
+                                        }
+                                    }
+                                    if (!geyserPlaced)
+                                    {
+                                        Debug.Log("Cannot find a place for geyser. Not enought space: " + item6.Key);
                                     }
                                 }
+                                else
+                                {
+                                    Debug.Log("Cannot build geyser template: " + item6.Key);
+                                }
+                            }
+                            else
+                            {
+                                Debug.Log("Cannot find a place for geyser. Empty space: " + item6.Key);
                             }
                         }
                     }

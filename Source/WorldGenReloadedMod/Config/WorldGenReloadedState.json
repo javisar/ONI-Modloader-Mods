@@ -2,13 +2,14 @@
   "Enabled": true,
   "LogGeysersDefaultConfig": true,
 
-  "DisableDefaultPoiGeysers": false,
+  "DisableDefaultPoiGeysers": true,
+  "ForceSpawnGeyserUnsafePlace": false,   // WIP. Don't use
 
   "Geysers": {
 
     // Possible SubWorlds: StartWorld, HotMarsh, Jungle, Frozen, Bottom, OilField, OilPockets, Space, Surface (Names from \StreamingAssets\worldgen\subworlds\)
     "steam": {
-      "minimum": 0,
+      "minimum": 1,
       "maximum": 1,
       "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ], // Allowed biomes for this kind of geyser.
 
@@ -145,6 +146,6 @@
       "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
       "properties": {
       }
-    }   
+    }
   }
 }
