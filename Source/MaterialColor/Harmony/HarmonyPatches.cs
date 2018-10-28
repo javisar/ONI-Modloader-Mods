@@ -547,6 +547,22 @@
         {
             public static void Postfix(ref BindingEntry[] __result)
             {
+
+                if (State.ConfiguratorState.LogElementsData)
+                {
+                    State.Logger.Log("Element List:");
+                    var values = Enum.GetNames(typeof(SimHashes));
+                    Array.Sort(values);
+                    string elementsLog = "";
+                    foreach (var name in values)
+                    {
+                        elementsLog += Environment.NewLine+name;
+                        //ElementLoader.GetElementIndex(i);
+                        //ElementLoader.FindElementByName(i);
+                    }
+                    State.Logger.Log(elementsLog);
+                }
+
                 try
                 {
                     List<BindingEntry> bind = __result.ToList();
@@ -566,6 +582,7 @@
                     State.Logger.Log("Keybindings failed:\n" + e);
                     throw;
                 }
+
             }
         }
 
@@ -706,57 +723,57 @@
             [HarmonyPostfix]
             private static void Postfix()
             {
+               
+                try
                 {
-                    try
+                    Components.BuildingCompletes.OnAdd += OnBuildingsCompletesAdd;
+
+                    if (!_initialized)
                     {
-                        Components.BuildingCompletes.OnAdd += OnBuildingsCompletesAdd;
-
-                        if (!_initialized)
-                        {
-                            Initialize();
-                        }
-
-                        _elementColorInfosChanged = _typeColorOffsetsChanged = _configuratorStateChanged = true;
-                    }
-                    catch (Exception e)
-                    {
-                        string message = "Injection failed\n" + e.Message + '\n';
-
-                        State.Logger.Log(message);
-                        State.Logger.Log(e);
-
-                        Debug.LogError(message);
+                        Initialize();
                     }
 
-                    // Temp col overlay
-                    try
-                    {
-                        SaveTemperatureThresholdsAsDefault();
-                        if (State.TemperatureOverlayState.LogThresholds)
-                        {
-                            State.Logger.Log("Before: ");
-                            LogTemperatureThresholds();
-                        }
-                        /*
-                        if (!State.TryReloadTemperatureState())
-                        {
-                            State.Logger.Log("Error loading temperatures config file. ");
-                        }
-                        */
-                        UpdateTemperatureThresholds();
+                    _elementColorInfosChanged = _typeColorOffsetsChanged = _configuratorStateChanged = true;
+                }
+                catch (Exception e)
+                {
+                    string message = "Injection failed\n" + e.Message + '\n';
 
-                        if (State.TemperatureOverlayState.LogThresholds)
-                        {
-                            State.Logger.Log("After: ");
-                            LogTemperatureThresholds();
-                        }
-                    }
-                    catch (Exception e)
+                    State.Logger.Log(message);
+                    State.Logger.Log(e);
+
+                    Debug.LogError(message);
+                }
+
+                // Temp col overlay
+                try
+                {
+                    SaveTemperatureThresholdsAsDefault();
+                    if (State.TemperatureOverlayState.LogThresholds)
                     {
-                        State.Logger.Log("Custom temperature overlay init error");
-                        State.Logger.Log(e);
+                        State.Logger.Log("Before: ");
+                        LogTemperatureThresholds();
+                    }
+                    /*
+                    if (!State.TryReloadTemperatureState())
+                    {
+                        State.Logger.Log("Error loading temperatures config file. ");
+                    }
+                    */
+                    UpdateTemperatureThresholds();
+
+                    if (State.TemperatureOverlayState.LogThresholds)
+                    {
+                        State.Logger.Log("After: ");
+                        LogTemperatureThresholds();
                     }
                 }
+                catch (Exception e)
+                {
+                    State.Logger.Log("Custom temperature overlay init error");
+                    State.Logger.Log(e);
+                }
+                
             }
         }
     }

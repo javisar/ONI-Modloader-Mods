@@ -4,9 +4,12 @@
     {
         //private float _gasPressureEnd = 2.5f;
 
+        public bool Enabled { get; set; } = true;
+
+        public bool LogElementsData { get; set; } = true;
+
         public ColorMode ColorMode { get; set; } = ColorMode.Json;
 
-        public bool Enabled { get; set; } = true;
         /*
         public float GasPressureEnd
         {
