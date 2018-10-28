@@ -13,6 +13,7 @@ The config file is in JSON format and must be in:
 Use this file always as a template.
 
 The default config includes:
+- Allows the construction of buildings with any material . Doesn't work for all elements or buildings.
 - Double capacity for all bateries
 - Double Wattage generator
 - Removes the energy need for the mechanized pressure door and makes it buildable from all material. Old PressureDoor mod.

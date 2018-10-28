@@ -189,9 +189,32 @@ namespace BuildingModifierMod
         }
 	}
 
+    [HarmonyPatch(typeof(GeneratedBuildings), "LoadGeneratedBuildings")]
+    internal class BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings
+    {
+        private static FieldInfo configTableF = AccessTools.Field(typeof(BuildingConfigManager), "configTable");
 
+        private static void Postfix()
+        {
+            if (!Helper.Config.Enabled)
+                return;
 
-	/*
+            Helper.Log(" === [BuildingModifier] BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings Postfix === ");
+            Helper.Log(" === [BuildingModifier] Building ID List === ");
+            Comparison<BuildingDef> comparison = (x, y) => x.PrefabID.CompareTo(y.PrefabID);
+            BuildingDef[] list = (BuildingDef[])Assets.BuildingDefs.Clone();
+            Array.Sort(list, delegate (BuildingDef x, BuildingDef y) {
+                return x.PrefabID.CompareTo(y.PrefabID);
+            });
+            foreach (BuildingDef building in list)
+            {
+                Helper.Log(building.PrefabID);
+            }
+
+        }
+    }
+
+    /*
     [HarmonyPatch(typeof(BuildingDef), "PostProcess")]
     internal class BuildingModifierMod_BuildingDef_PostProcess
     {
@@ -228,7 +251,7 @@ namespace BuildingModifierMod
     }
 	*/
 
-	/*
+    /*
 	[HarmonyPatch(typeof(IBuildingConfig), "CreateBuildingDef")]
 	internal class BuildingModifierMod_IBuildingConfig_CreateBuildingDef
 	{
@@ -291,7 +314,7 @@ namespace BuildingModifierMod
 	}
 	*/
 
-	/*
+    /*
 	[HarmonyPatch(typeof(GasReservoirConfig), "ConfigureBuildingTemplate")]
 	internal class BuildingModifierMod_GasReservoirConfig_ConfigureBuildingTemplate
 	{

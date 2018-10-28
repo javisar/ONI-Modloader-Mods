@@ -7,6 +7,7 @@ AlgaeHabitat
 Apothecary
 ArcadeMachine
 AstronautTrainingCenter
+AutoMiner
 Battery
 BatteryMedium
 BatterySmart
@@ -31,6 +32,7 @@ LiquidConduitElementSensor
 GasConduitTemperatureSensor
 LiquidConduitTemperatureSensor
 CookingStation
+CosmicResearchCenter
 CreatureDeliveryPoint
 CreatureFeeder
 CreatureTrap
@@ -78,12 +80,16 @@ GlassTile
 Grave
 HandSanitizer
 Headquarters
+HydrogenEngine
 HydrogenGenerator
 HydroponicFarm
 IceSculpture
 InsulatedGasConduit
 InsulatedLiquidConduit
 InsulationTile
+ItemPedestal
+JetSuitLocker
+JetSuitMarker
 KeroseneEngine
 Kiln
 Ladder
@@ -129,7 +135,10 @@ MachineShop
 ManualGenerator
 ManualPressureDoor
 MassageTable
+ === MassiveHeatSinkConfig.CreateBuildingDef loaded === MassiveHeatSink
 MassiveHeatSink
+ === MassiveHeatSinkConfig.CreateBuildingDef loaded === MassiveHeatSink
+ === MassiveHeatSinkConfig.DoPostConfigureComplete loaded === MassiveHeatSink
 MedicalBed
 MedicalCot
 MeshTile
@@ -142,6 +151,7 @@ OilRefinery
 OilWellCap
 OreScrubber
 Outhouse
+OxidizerTank
 OxyliteRefinery
 PetroleumGenerator
 Phonobox
@@ -161,6 +171,7 @@ RanchStation
 RationBox
 Refrigerator
 ResearchCenter
+ResearchModule
 RockCrusher
 RoleStation
 Sculpture
@@ -168,6 +179,7 @@ SeedSplicer
 ShearingStation
 Shower
 SolarPanel
+SolidBooster
 SolidConduitBridge
 SolidConduit
 SolidConduitInbox
@@ -182,12 +194,14 @@ StorageLockerSmart
 SuitFabricator
 SuitLocker
 SuitMarker
+SupermaterialRefinery
 Switch
 Telescope
 TemperatureControlledSwitch
 ThermalBlock
 Tile
 TilePOI
+TouristModule
 TravelTube
 TravelTubeEntrance
 TravelTubeWallBridge
