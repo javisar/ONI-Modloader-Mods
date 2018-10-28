@@ -51,7 +51,7 @@ namespace InverseElectrolyzerAltMod
 			//Database.Techs.TECH_GROUPING["TemperatureModulation"].Add("InsulatedPressureDoor");
 		}
 	}
-
+    /*
 	[HarmonyPatch(typeof(KSerialization.Manager), "GetType", new Type[] { typeof(string) })]
 	public static class GasTankMod_Manager_GetType
 	{
@@ -64,6 +64,6 @@ namespace InverseElectrolyzerAltMod
 			}
 		}
 	}
-	
+	*/
 
 }
