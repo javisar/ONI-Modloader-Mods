@@ -15,8 +15,17 @@ namespace BuildingModifierMod
         public static HashSet<string> ModifiersFound = new HashSet<string>();
         public static BuildingModifierState Config = BuildingModifierState.StateManager.State;
 
+		public enum BuildingType
+		{
+			None = 0,
+			Building = 1,
+			BuildingComplete = 2,
+			BuildingPreview = 3,
+			BuildingUnderConstruction = 4
+		};
+
         // Applies mod config to building attributes
-        public static void Process(BuildingDef def, GameObject go)
+        public static void Process(BuildingDef def, GameObject go, BuildingType type = BuildingType.None)
         {
             Helper.Log(" === [BuildingModifier] Process === " + def.PrefabID);
             bool error = false;
@@ -48,20 +57,26 @@ namespace BuildingModifierMod
 						{       // Is a Component of the building
 							try
 							{
-								GameObject buildingComplete = def.BuildingComplete;
+								GameObject building = null;
 
-								if (buildingComplete == null)
-									buildingComplete = go;
+								if (type == BuildingType.Building)
+									building = go;
+								else if (type == BuildingType.BuildingComplete)
+									building = def.BuildingComplete;
+								else if (type == BuildingType.BuildingPreview)
+									building = def.BuildingPreview;
+								else if(type == BuildingType.BuildingUnderConstruction)
+									building = def.BuildingUnderConstruction;
 
-								if (buildingComplete != null)
+								if (building != null)
 								{
-                                    UnityEngine.Object _buildingComplete = buildingComplete;
-                                    ProcessObject(ref _buildingComplete, def, modifier.Key, modifier);
+                                    UnityEngine.Object _building = building;
+                                    ProcessObject(ref _building, def, modifier.Key, modifier);
 
 									Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
 									ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
 								}
-								else // def.BuildingComplete still not present
+								else // def.Building
 								{
 									error = true;
 								}
@@ -173,8 +188,12 @@ namespace BuildingModifierMod
                     }
                     else
                     {
-                        bool found = SetValue(component, x, Type.GetType(componentName + ", Assembly-CSharp"));
-                    }
+						//Debug.Log("component: " + component);
+						//Debug.Log("x: " + x);
+						//Debug.Log("getType: " + Type.GetType(componentName + ", Assembly-CSharp"));
+						bool found = SetValue(component, x, Type.GetType(componentName + ", Assembly-CSharp"));
+						//Debug.Log("found: " + found);
+					}
                     
                     Debug.Log(" === [BuildingModifier] Found: " + buildingDef.PrefabID + "_" + componentName + "_" + name);
                     ModifiersFound.Add(buildingDef.PrefabID + "_" + componentName + "_" + name);
@@ -210,13 +229,14 @@ namespace BuildingModifierMod
                     fi.SetValue(component, (bool)value);
                     break;
                 case JTokenType.String:
-                    //fi.SetValue(component, (string)value);
-                    //Debug.Log(" === [BuildingModifier] Warning: JTokenType.String Not implemented. " + "_" + component.name + "_" + name + ": " + (string)value);
-                    // Basic attributes in BuildingDef with complex Types
+					//fi.SetValue(component, (string)value);
+					//Debug.Log(" === [BuildingModifier] Warning: JTokenType.String Not implemented. " + "_" + component.name + "_" + name + ": " + (string)value);
+					// Basic attributes in BuildingDef with complex Types
 
-                    // Tries to find the Type
-                    FieldInfo fi1 = AccessTools.Field(typeof(BuildingDef), name);
-                    string path = (string)value;
+					// Tries to find the Type
+					//FieldInfo fi1 = AccessTools.Field(typeof(BuildingDef), name);
+					FieldInfo fi1 = AccessTools.Field(type, name);
+					string path = (string)value;
                     string className = path.Substring(0, path.LastIndexOf("."));
                     string fieldName = path.Substring(path.LastIndexOf(".") + 1);
                     //Debug.Log(className + ", " + fieldName);

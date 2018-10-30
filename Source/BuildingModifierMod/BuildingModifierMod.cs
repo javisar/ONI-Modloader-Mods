@@ -88,12 +88,12 @@ namespace BuildingModifierMod
             //ConfigureBuildingTemplate
             config.ConfigureBuildingTemplate(gameObject, buildingDef.Tag);
             Helper.Log(" === [BuildingModifier] ConfigureBuildingTemplate === ");
-            Helper.Process(buildingDef, gameObject);
+            Helper.Process(buildingDef, gameObject, Helper.BuildingType.Building);
 
             //ConfigureBuildingTemplate
             buildingDef.BuildingComplete = BuildingLoader.Instance.CreateBuildingComplete(gameObject, buildingDef);
             Helper.Log(" === [BuildingModifier] CreateBuildingComplete === ");
-            Helper.Process(buildingDef, gameObject);
+            Helper.Process(buildingDef, gameObject, Helper.BuildingType.Building);
 
             bool flag = true;
 			//for (int i = 0; i < NonBuildableBuildings.Length; i++)
@@ -127,18 +127,18 @@ namespace BuildingModifierMod
             //DoPostConfigureComplete
             config.DoPostConfigureComplete(buildingDef.BuildingComplete);
             Helper.Log(" === [BuildingModifier] DoPostConfigureComplete === ");
-            Helper.Process(buildingDef, gameObject);
+            Helper.Process(buildingDef, gameObject, Helper.BuildingType.BuildingComplete);
 
             // Previews
 			if (flag)
 			{
 				config.DoPostConfigurePreview(buildingDef, buildingDef.BuildingPreview);
-                Helper.Log(" === [BuildingModifier] CreateBuildingUnderConstruction === ");
-                Helper.Process(buildingDef, gameObject);
+                Helper.Log(" === [BuildingModifier] DoPostConfigurePreview === ");
+                Helper.Process(buildingDef, gameObject, Helper.BuildingType.BuildingPreview);
 
 				config.DoPostConfigureUnderConstruction(buildingDef.BuildingUnderConstruction);
-                Helper.Log(" === [BuildingModifier] CreateBuildingPreview === ");
-                Helper.Process(buildingDef, gameObject);
+                Helper.Log(" === [BuildingModifier] DoPostConfigureUnderConstruction === ");
+                Helper.Process(buildingDef, gameObject, Helper.BuildingType.BuildingUnderConstruction);
 			}
 
 			Assets.AddBuildingDef(buildingDef);
