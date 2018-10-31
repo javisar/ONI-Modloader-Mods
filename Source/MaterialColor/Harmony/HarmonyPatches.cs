@@ -176,8 +176,7 @@
                             }
                             else
                             {
-                                Debug.LogError(
-                                                           $"Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
+                                Debug.Log($"MaterialColor: Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
                             }
                         }
                     }
@@ -189,17 +188,6 @@
         {
             SubscribeToFileChangeNotifier();
             _initialized = true;
-        }
-
-        private static void LogTemperatureThresholds()
-        {
-            for (int i = 0; i < SimDebugView.Instance.temperatureThresholds.Length; i++)
-            {
-                string  message = SimDebugView.Instance.temperatureThresholds[i].value.ToString();
-                Color32 color   = SimDebugView.Instance.temperatureThresholds[i].color;
-
-                State.Logger.Log("Temperature Color " + i + " at " + message + " K: " + color);
-            }
         }
 
         private static void OnBuildingsCompletesAdd(BuildingComplete building) => UpdateBuildingColor(building);
@@ -391,22 +379,37 @@
             }
         }
 
+        private static void LogTemperatureThresholds()
+        {
+            for (int i = 0; i < SimDebugView.Instance.temperatureThresholds.Length; i++)
+            {
+                string message = SimDebugView.Instance.temperatureThresholds[i].value.ToString();
+                Color32 color = SimDebugView.Instance.temperatureThresholds[i].color;
+
+                State.Logger.Log("Temperature Color " + i + " at " + message + " K: " + color);
+            }
+        }
+
         private static void UpdateTemperatureThresholds()
         {
             List<float> newTemperatures = State.TemperatureOverlayState.CustomRangesEnabled
                                           ? State.TemperatureOverlayState.Temperatures
                                           : State.DefaultTemperatures;
 
-            List<Color> newColors = State.TemperatureOverlayState.CustomRangesEnabled
+            List<Color32> newColors = State.TemperatureOverlayState.CustomRangesEnabled
                                     ? State.TemperatureOverlayState.Colors
                                     : State.DefaultTemperatureColors;
 
+            //State.Logger.Log("CustomRangesEnabled " + State.TemperatureOverlayState.CustomRangesEnabled);
             for (int i = 0; i < newTemperatures.Count; i++)
             {
+                //State.Logger.Log("newTemperatures[i] " + newTemperatures[i]);
                 if (SimDebugView.Instance.temperatureThresholds != null)
                 {
+                    //State.Logger.Log("SimDebugView.Instance.temperatureThresholds[i] " + SimDebugView.Instance.temperatureThresholds[i].value);
                     SimDebugView.Instance.temperatureThresholds[i] =
                     new SimDebugView.ColorThreshold { color = newColors[i], value = newTemperatures[i] };
+                    //State.Logger.Log("SimDebugView.Instance.temperatureThresholds[i] " + SimDebugView.Instance.temperatureThresholds[i].value);
                 }
             }
 
@@ -544,6 +547,22 @@
         {
             public static void Postfix(ref BindingEntry[] __result)
             {
+
+                if (State.ConfiguratorState.LogElementsData)
+                {
+                    State.Logger.Log("Element List:");
+                    var values = Enum.GetNames(typeof(SimHashes));
+                    Array.Sort(values);
+                    string elementsLog = "";
+                    foreach (var name in values)
+                    {
+                        elementsLog += Environment.NewLine+name;
+                        //ElementLoader.GetElementIndex(i);
+                        //ElementLoader.FindElementByName(i);
+                    }
+                    State.Logger.Log(elementsLog);
+                }
+
                 try
                 {
                     List<BindingEntry> bind = __result.ToList();
@@ -563,6 +582,7 @@
                     State.Logger.Log("Keybindings failed:\n" + e);
                     throw;
                 }
+
             }
         }
 
@@ -634,7 +654,7 @@
             }
         }
 
-		[HarmonyPatch(typeof(KeyDef))]
+		[HarmonyPatch(typeof(KeyDef), MethodType.Constructor)]
 		[HarmonyPatch(new Type[] {typeof(KKeyCode), typeof(Modifier) })]
 		public static class KeyDef_Constructor
 		{
@@ -647,7 +667,7 @@
 			}
 		}
 
-		[HarmonyPatch(typeof(KInputController))]
+		[HarmonyPatch(typeof(KInputController), MethodType.Constructor)]
 		[HarmonyPatch(new Type[] { typeof(bool) })]
 		public static class KInputController_Constructor
 		{
@@ -703,46 +723,57 @@
             [HarmonyPostfix]
             private static void Postfix()
             {
+               
+                try
                 {
-                    try
+                    Components.BuildingCompletes.OnAdd += OnBuildingsCompletesAdd;
+
+                    if (!_initialized)
                     {
-                        Components.BuildingCompletes.OnAdd += OnBuildingsCompletesAdd;
-
-                        if (!_initialized)
-                        {
-                            Initialize();
-                        }
-
-                        _elementColorInfosChanged = _typeColorOffsetsChanged = _configuratorStateChanged = true;
-                    }
-                    catch (Exception e)
-                    {
-                        string message = "Injection failed\n" + e.Message + '\n';
-
-                        State.Logger.Log(message);
-                        State.Logger.Log(e);
-
-                        Debug.LogError(message);
+                        Initialize();
                     }
 
-                    // Temp col overlay
-                    try
+                    _elementColorInfosChanged = _typeColorOffsetsChanged = _configuratorStateChanged = true;
+                }
+                catch (Exception e)
+                {
+                    string message = "Injection failed\n" + e.Message + '\n';
+
+                    State.Logger.Log(message);
+                    State.Logger.Log(e);
+
+                    Debug.LogError(message);
+                }
+
+                // Temp col overlay
+                try
+                {
+                    SaveTemperatureThresholdsAsDefault();
+                    if (State.TemperatureOverlayState.LogThresholds)
                     {
-                        SaveTemperatureThresholdsAsDefault();
-
-                        if (State.TemperatureOverlayState.LogThresholds)
-                        {
-                            LogTemperatureThresholds();
-                        }
-
-                        UpdateTemperatureThresholds();
+                        State.Logger.Log("Before: ");
+                        LogTemperatureThresholds();
                     }
-                    catch (Exception e)
+                    /*
+                    if (!State.TryReloadTemperatureState())
                     {
-                        State.Logger.Log("Custom temperature overlay init error");
-                        State.Logger.Log(e);
+                        State.Logger.Log("Error loading temperatures config file. ");
+                    }
+                    */
+                    UpdateTemperatureThresholds();
+
+                    if (State.TemperatureOverlayState.LogThresholds)
+                    {
+                        State.Logger.Log("After: ");
+                        LogTemperatureThresholds();
                     }
                 }
+                catch (Exception e)
+                {
+                    State.Logger.Log("Custom temperature overlay init error");
+                    State.Logger.Log(e);
+                }
+                
             }
         }
     }

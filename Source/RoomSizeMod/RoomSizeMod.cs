@@ -20,7 +20,7 @@ namespace RoomSizeMod
     }
 
 
-    [HarmonyPatch(typeof(RoomProber))]
+    [HarmonyPatch(typeof(RoomProber),MethodType.Constructor)]
     internal class RoomSizeMod_RoomProber
     {
 
@@ -28,11 +28,12 @@ namespace RoomSizeMod
         {
             //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
             //RoomProber.MaxRoomSize = 1024;
-            RoomProber.MaxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
+            //RoomProber.MaxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
+            TuningData<RoomProber.Tuning>.Get().maxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
         }
     }
 
-	[HarmonyPatch(typeof(Database.RoomTypes))]
+	[HarmonyPatch(typeof(Database.RoomTypes), MethodType.Constructor)]
 	[HarmonyPatch(new Type[] { typeof(ResourceSet)})]
 	internal class RoomSizeMod_RoomTypes
 	{

@@ -5,25 +5,32 @@
 
     public class Logger
     {
-        private readonly string _fileName;
+        private readonly string _filePath;
+        private StreamWriter writer;
 
-        public Logger(string fileName)
+        public Logger(string filePath)
         {
-            this._fileName = fileName;
+            this._filePath = filePath;
+
+            FileInfo fileInfo = new FileInfo(this._filePath);
+            if (!fileInfo.Exists)
+                Directory.CreateDirectory(fileInfo.Directory.FullName);
+
+            this.writer = new StreamWriter(this._filePath, true);
         }
 
         public void Log(string message)
         {
-            IOHelper.EnsureDirectoryExists(Paths.GetLogsPath());
+            //FileStream fileStream = new FileStream(this._filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
 
-            string path = Paths.GetLogsPath() + Path.DirectorySeparatorChar + this._fileName;
-
-            using (StreamWriter writer = new StreamWriter(path, true))
+            //using (StreamWriter writer = new StreamWriter(this._filePath, true))
             {
                 DateTime now = System.DateTime.Now;
 
+                Debug.Log($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}");   // Also dump to main log
                 writer.WriteLine($"[{now.ToShortDateString()}, {now.TimeOfDay}] {message}\r\n");
-                writer.Close();
+                //writer.Close();
+                writer.Flush();
             }
         }
 

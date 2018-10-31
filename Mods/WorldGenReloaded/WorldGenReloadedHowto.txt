@@ -1,0 +1,17 @@
+How it works:
+This mod overrides the world generation function in ONI. It maintais all the default behaviour except geyser generation.
+
+WARNING: Experimental. Very ONI version dependant.
+WARNING: If the world is small some geysers won't be spawned. Check the logs.
+
+The config file must be in:
+- \Mods\WorldGenReloaded\Config\WorldGenReloadedState.json
+
+Use as a template the 'steam' geyser.
+
+Set in the config LogGeysersDefaultConfig to true to see default geyser properties in the output_log.txt file.
+
+There are two kinds of geysers. Buried and templated (with open spaces). The mod only overrides the buried geysers.
+DisableDefaultPoiGeysers config disables the POI templated non buried ONI generated geysers.
+
+The properties affects to all geysers in the map.

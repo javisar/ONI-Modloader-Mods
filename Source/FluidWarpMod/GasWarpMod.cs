@@ -20,15 +20,19 @@ namespace GasWarpMod
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.NAME", "Gas Stargate");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.DESC", "Gas Stargates provides an easy way to transport gases from one place to another.");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
-
+            /*
             List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[5].data);
             ls.Add(GasWarpConfig.ID);
             TUNING.BUILDINGS.PLANORDER[5].data = (string[])ls.ToArray();
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(GasWarpConfig.ID);
+            */
+            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.HVAC).data;
+            category.Add(GasWarpConfig.ID);
 
 
         }
+        /*
         private static void Postfix()
         {
 
@@ -36,6 +40,7 @@ namespace GasWarpMod
             object obj = Activator.CreateInstance(typeof(GasWarpConfig));
             BuildingConfigManager.Instance.RegisterBuilding(obj as IBuildingConfig);
         }
+        */
     }
 
     [HarmonyPatch(typeof(Db), "Initialize")]

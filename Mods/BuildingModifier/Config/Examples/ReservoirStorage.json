@@ -1,0 +1,23 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+        "GasReservoir": {
+            "Storage": {
+                "capacityKg": 10000
+            },
+            "ConduitConsumer": {        
+                "capacityKG": 10000     // Required
+            }
+        },
+        "LiquidReservoir": {
+            "Storage": {
+                "capacityKg": 10000
+            },
+            "ConduitConsumer": {
+                "capacityKG": 10000     // Required
+            }
+        }
+    }
+}

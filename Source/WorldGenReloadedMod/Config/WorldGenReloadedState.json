@@ -1,0 +1,151 @@
+{
+  "Enabled": true,
+  "LogGeysersDefaultConfig": true,
+
+  "DisableDefaultPoiGeysers": true,
+  "ForceSpawnGeyserUnsafePlace": false,   // WIP. Don't use
+
+  "Geysers": {
+
+    // Possible SubWorlds: StartWorld, HotMarsh, Jungle, Frozen, Bottom, OilField, OilPockets, Space, Surface (Names from \StreamingAssets\worldgen\subworlds\)
+    "steam": {
+      "minimum": 1,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ], // Allowed biomes for this kind of geyser.
+
+      "properties": {
+        "temperature": 383.15,
+        "minRatePerCycle": 200.0,
+        "maxRatePerCycle": 2500.0,
+        "maxPressure": 5.0,
+        "minIterationLength": 60.0,
+        "maxIterationLength": 1140.0,
+        "minIterationPercent": 0.1,
+        "maxIterationPercent": 0.9,
+        "minYearLength": 15000.0,
+        "maxYearLength": 135000.0,
+        "minYearPercent": 0.4,
+        "maxYearPercent": 0.8
+      }
+    },
+    "methane": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "oil_drip": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "hot_steam": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "hot_water": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "slush_water": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "filthy_water": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "small_volcano": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "big_volcano": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "liquid_co2": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "hot_co2": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "hot_hydrogen": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "hot_po2": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "slimy_po2": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "chlorine_gas": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "molten_copper": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "molten_iron": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    },
+    "molten_gold": {
+      "minimum": 0,
+      "maximum": 1,
+      "subworlds": [ "HotMarsh", "Jungle", "OilPockets", "Frozen" ],
+      "properties": {
+      }
+    }
+  }
+}

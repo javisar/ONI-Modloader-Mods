@@ -1,0 +1,26 @@
+{
+    "Enabled": true,
+    "Debug": false,
+
+    "Modifiers": {
+
+        "StorageLocker": {
+            "BuildLocationRule": "BuildLocationRule.Tile",
+            "ContinuouslyCheckFoundation": false,
+            "PermittedRotations": "PermittedRotations.R360",
+            "Storage": {
+                "capacityKg": 40000
+            }
+        },
+
+        "StorageLockerSmart": {
+            "BuildLocationRule": "BuildLocationRule.Tile",
+            "ContinuouslyCheckFoundation": false,
+            "PermittedRotations": "PermittedRotations.R360",
+            "Storage": {
+                "capacityKg": 40000
+            }
+        }
+
+    }
+}
