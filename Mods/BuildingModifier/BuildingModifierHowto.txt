@@ -44,6 +44,16 @@ The basic structure is a list of buildings configs inside a "Modifiers" element:
 - First level fields that are an object {...}, are components of the unity building prefab. eg. LogicPressureSensor is a component of LogicPressureSensorLiquid
    - Second level basic fields are fields of the building component. eg: rangeMax is a field of the component LogicPressureSensor 
 
+Enums or classes can be assigned to attributes.
+Example 1: WattageRating enum is inside Wire class.
+	"MaxWattageRating": "Wire+WattageRating.Max50000" 	
+Example 2: In namespace TUNING, there is a class MATERIALS with a field ANY_BUILDABLE
+	"MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE"
+Example 3: BuildLocationRule is an enum, and Tile is one of its values
+	"BuildLocationRule": "BuildLocationRule.Tile",
+More syntax info: https://docs.microsoft.com/en-us/dotnet/api/system.type.gettype?view=netframework-3.5
+
+
 
 BEWARE where you put COMMAs in the config file. You can check if you JSON is a valid one in:
 https://jsonlint.com/
