@@ -1,54 +1,113 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace WarpMod
+namespace FluidWarpMod
 {
     public static class WarpPackageManager
     {
-        private static Dictionary<ConduitType, List<PacketData>> availablePackets = new Dictionary<ConduitType, List<PacketData>>();
+        //private static Dictionary<ConduitType, List<PacketData>> availablePackets = new Dictionary<ConduitType, List<PacketData>>();
+        private static List<PacketData> liquidPackets = new List<PacketData>();
+
+        private static List<PacketData> gasPackets = new List<PacketData>();
+
+        private static float[] channelMass = new float[10000];
+
         public static List<PacketData> getAvailablePackages(ConduitType conduitType)
         {
-            List<PacketData> result;
-            if (!availablePackets.TryGetValue(conduitType, out result))
+            switch (conduitType)
             {
-                result = new List<PacketData>();
-                availablePackets.Add(conduitType, result);
+                case LiquidWarpConfig.CONDUIT_TYPE:
+                case ConduitType.Liquid:
+                    return liquidPackets;
+                case GasWarpConfig.CONDUIT_TYPE:
+                case ConduitType.Gas:
+                    return gasPackets;
+                default:
+                    return null; // muahahaha!!!
             }
-            return result;
         }
-
+/*
         public static void addPackage(PacketData packetData, ConduitType conduitType)
         {
             List<PacketData> pd = getAvailablePackages(conduitType);
             pd.Add(packetData);
         }
-
+*/
         public static float getTotalStoredMass(ConduitType conduitType, int channelNo)
         {
+            return channelMass[channelNo];
+/*
             float result = 0.0f;
             foreach (PacketData packetData in getAvailablePackages(conduitType))
             {
-                if (channelNo == packetData.channel_no)
+                if (channelNo == packetData.channelNo)
                 {
-                    result = result + packetData.mass;
+                    result = result + packetData.contents.mass;
                 }
             }
             return result;
-        }
+*/
+    }
 
-        internal static float getMaxContent(ConduitType conduitType)
+        internal static float getMaxAllowedMass(ConduitType conduitType)
         {
-            switch ((int)conduitType)
+            switch (conduitType)
             {
-                case 100:
-                    return 20.0f;
-                case 101:
-                    return 2.0f;
+                case LiquidWarpConfig.CONDUIT_TYPE:
+                case ConduitType.Liquid:
+                    return 100.0f;
+                case GasWarpConfig.CONDUIT_TYPE:
+                case ConduitType.Gas:
+                    return 50.0f;
                 default:
                     return 0.0f;
             }
         }
+
+        internal static void ProvideConduitContents(ConduitFlow flowManager, ConduitType conduitType, int fromCell, int channelNo, float mass)
+        {
+            if (getTotalStoredMass(conduitType, channelNo) < WarpPackageManager.getMaxAllowedMass(conduitType))
+            {
+                List<PacketData> availablePackets = getAvailablePackages(conduitType);
+                ConduitFlow.ConduitContents removedContents = flowManager.RemoveElement(fromCell, mass);
+                if (removedContents.mass > 0f)
+                {
+                    Logger.LogFormat("Adding Element to WarpSpace, mass={0}", mass);
+                    availablePackets.Add(new PacketData(channelNo, conduitType, removedContents));
+                    channelMass[channelNo] += mass;
+                    Logger.LogFormat("Total available mass for channel {0} = {1}", channelNo, channelMass[channelNo]);
+                }
+            }
+        }
+
+        public static float RequestElementFromChannel(ConduitFlow flowManager, ConduitType conduitType, int toCell, int channelNo)
+        {
+            List<PacketData> availablePackets = getAvailablePackages(conduitType);
+            float result = 0f;
+            if (!flowManager.IsConduitFull(toCell))
+            {
+                foreach (PacketData packet in availablePackets)
+                {
+                    if (channelNo == packet.channelNo
+                        && conduitType == packet.conduitType)
+                    {
+                        float num3 = flowManager.AddElement(toCell, packet.contents.element, packet.contents.mass, packet.contents.temperature, packet.contents.diseaseIdx, packet.contents.diseaseCount);
+                        Logger.LogFormat("Adding Element to pipe: packet mass={0}, actually added mass={1}, element type={2}", packet.contents.mass, num3, packet.contents.element);
+                        result += num3;
+                        packet.contents.mass -= num3;
+                        break;
+                    }
+                }
+            }
+
+            if (result > 0)
+            {
+                int removed = availablePackets.RemoveAll(_ => _.contents.mass <= 0);
+                channelMass[channelNo] -= result;
+                Logger.LogFormat("Packets removed: {0}, total channel {1} mass left: {2}", removed, channelNo, channelMass[channelNo]);
+            }
+            return result;
+        }
+
+
     }
 }

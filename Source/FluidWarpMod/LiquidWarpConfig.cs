@@ -5,8 +5,7 @@ public class LiquidWarpConfig : IBuildingConfig
 {
 	public const string ID = "LiquidWarp";
 
-    private const ConduitType CONDUIT_TYPE = ConduitType.Liquid;
-
+    public const ConduitType CONDUIT_TYPE = (ConduitType)100;
     
     public override BuildingDef CreateBuildingDef()
 	{
@@ -41,10 +40,9 @@ public class LiquidWarpConfig : IBuildingConfig
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
-		valveBase.conduitType = (ConduitType) 100;
+		valveBase.conduitType = CONDUIT_TYPE;
         
 		valveBase.maxFlow = 10f;
-        valveBase.CurrentFlow = 0f;
 		valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
 		{
 			new ValveBase.AnimRangeInfo(3f, "lo"),
