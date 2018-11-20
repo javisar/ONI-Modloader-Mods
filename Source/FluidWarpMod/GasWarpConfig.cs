@@ -41,10 +41,10 @@ public class GasWarpConfig : IBuildingConfig
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
-		//valveBase.conduitType = ConduitType.Liquid;
 		valveBase.conduitType = (ConduitType) 101;
 		valveBase.maxFlow = 10f;
-		valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
+        valveBase.CurrentFlow = 0f;
+        valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
 		{
 			new ValveBase.AnimRangeInfo(3f, "lo"),
 			new ValveBase.AnimRangeInfo(7f, "med"),

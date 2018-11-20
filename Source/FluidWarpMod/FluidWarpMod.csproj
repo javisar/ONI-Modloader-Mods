@@ -67,6 +67,7 @@
     <Compile Include="LiquidWarpConfig.cs" />
     <Compile Include="PacketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarpPackageManager.cs" />
     <None Include="ValveWarpBase.cs.bak" />
   </ItemGroup>
   <ItemGroup>

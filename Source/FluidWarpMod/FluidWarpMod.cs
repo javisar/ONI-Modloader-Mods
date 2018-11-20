@@ -1,15 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Reflection;
-using System.Text;
 using Harmony;
 using UnityEngine;
 using WarpMod;
 
 namespace LiquidWarpMod
 {
-	internal class FluidWarpMod_Utils
+    static class Logger
+    {
+        sealed class FileLogHandler : ILogHandler
+        {
+            private FileStream fileStream;
+            private StreamWriter streamWriter;
+
+            public FileLogHandler(string LogFileName)
+            {
+                fileStream = new FileStream(LogFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                streamWriter = new StreamWriter(fileStream);
+            }
+
+            public void LogException(Exception exception, UnityEngine.Object context)
+            {
+                streamWriter.WriteLine("Exception: {0}", exception.Message);
+                streamWriter.WriteLine("Stacktrace: {0}", exception.StackTrace);
+                streamWriter.Flush();
+            }
+
+            public void LogFormat(LogType logType, UnityEngine.Object context, string format, params object[] args)
+            {
+                streamWriter.WriteLine(format, args);
+            }
+        }
+
+        static Logger()
+        {
+#if DEBUG
+            UnityEngine.Debug.unityLogger.logHandler = new FileLogHandler("Mods" + System.IO.Path.DirectorySeparatorChar + "Logs" + System.IO.Path.DirectorySeparatorChar + "FluidWarpMod.txt");
+            UnityEngine.Debug.unityLogger.logEnabled = true;
+#endif
+        }
+    }
+    
+    internal class FluidWarpMod_Utils
 	{
 		public static ConduitType GetConduitType(ValveSideScreen __instance) {			
 			FieldInfo fi1 = AccessTools.Field(typeof(ValveSideScreen), "targetValve");
@@ -23,17 +57,23 @@ namespace LiquidWarpMod
 	[HarmonyPatch(typeof(ValveBase), "ConduitUpdate")]
 	internal class FluidWarpMod_ValveBase_ConduitUpdate
 	{
-		private static bool Prefix(ValveBase __instance, float dt)
-		{
-			//Debug.Log(" === ValveBase.ConduitUpdate(" + dt + ") Prefix " + __instance.conduitType);
-			if (__instance.conduitType != (ConduitType)100 && __instance.conduitType != (ConduitType)101) return true;
 
-			FieldInfo fi1 = AccessTools.Field(typeof(ValveBase), "inputCell");
-			FieldInfo fi2 = AccessTools.Field(typeof(ValveBase), "outputCell");
-			FieldInfo fi3 = AccessTools.Field(typeof(ValveBase), "flowAccumulator");
+        private static bool Prefix(ValveBase __instance, float dt, int ___inputCell, int ___outputCell)
+		{
+            if (__instance.conduitType != (ConduitType)100 && __instance.conduitType != (ConduitType)101)
+            {
+                return true;
+            }
+            int channelNo = (int)(__instance.CurrentFlow * 1000.0f);
+            Debug.LogFormat(" === ValveBase.ConduitUpdate({0}) Prefix conduitType={1}, inputCell={2}, outputCell={3}, channelNo={4}", dt, __instance.conduitType, ___inputCell, ___outputCell, channelNo);
+
+            if (channelNo == 0)
+            {
+                // Cannel number is set to 0, WarpGate disabled
+                return false;
+            }
 
             ConduitFlow flowManager = null;
-            //Debug.Log("ConduitUpdate " + dt);
             if (__instance.conduitType == (ConduitType)100)
             {
                 flowManager = Conduit.GetFlowManager(ConduitType.Liquid);
@@ -42,125 +82,64 @@ namespace LiquidWarpMod
             {
                 flowManager = Conduit.GetFlowManager(ConduitType.Gas);
             }
-            
-			ConduitFlow.Conduit conduit = flowManager.GetConduit((int)fi1.GetValue(__instance));
 
-			if (!flowManager.HasConduit((int)fi1.GetValue(__instance)) || !flowManager.HasConduit((int)fi2.GetValue(__instance)))
+			if (!flowManager.HasConduit(___inputCell) || !flowManager.HasConduit(___outputCell))
 			{
-				__instance.UpdateAnim();
+                __instance.UpdateAnim();
 			}
 
-			if ((int)fi1.GetValue(__instance) > 0 && flowManager.HasConduit((int)fi1.GetValue(__instance)) &&
-				((int)fi2.GetValue(__instance) > 0 && !flowManager.HasConduit((int)fi2.GetValue(__instance))))
+            List<PacketData> availablePackets = WarpPackageManager.getAvailablePackages(__instance.conduitType);
+            if (flowManager.HasConduit(___inputCell))
 			{
-				ConduitFlow.ConduitContents contents = conduit.GetContents(flowManager);
-				//float num = Mathf.Min(contents.mass, this.currentFlow * dt);
-				FieldInfo fi = AccessTools.Field(typeof(ValveBase), "currentFlow");
-				//float num = Mathf.Min(contents.mass, (float)fi.GetValue(this) * dt);
+                ConduitFlow.Conduit inputConduit = flowManager.GetConduit(___inputCell);
+                ConduitFlow.ConduitContents contents = inputConduit.GetContents(flowManager);
 				float num = Mathf.Min(contents.mass, 10f * dt);
-				//Debug.Log("ConduitUpdate " + num);
 				if (num > 0f)
 				{
 
 					float num2 = num / contents.mass;
 					int disease_count = (int)(num2 * (float)contents.diseaseCount);
 
-                    //Debug.Log("List " + num);
-
-                    if (__instance.conduitType == (ConduitType)100)
+                    if (WarpPackageManager.getTotalStoredMass(__instance.conduitType, channelNo) < WarpPackageManager.getMaxContent(__instance.conduitType))
                     {
-                        if (GetTotalStoredMass(LiquidWarpData.LiquidPackets) < 100.0f)
-                        {
-                            LiquidWarpData.LiquidPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
-                            flowManager.RemoveElement((int)fi1.GetValue(__instance), num);
-                        }
+                        availablePackets.Add(new PacketData((int)__instance.conduitType, channelNo, ___outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
+                        flowManager.RemoveElement(___inputCell, num);
+                        Debug.LogFormat("Adding Element to WarpSpace, mass={0}", num);
                     }
-                    else if (__instance.conduitType == (ConduitType)101)
-                    {
-                        if (GetTotalStoredMass(GasWarpData.GasPackets) < 5.0f)
-                        {
-                            GasWarpData.GasPackets.Add(new PacketData((int)__instance.conduitType, (float)fi.GetValue(__instance), (int)fi2.GetValue(__instance), contents.element, num, contents.temperature, contents.diseaseIdx, disease_count));
-                            flowManager.RemoveElement((int)fi1.GetValue(__instance), num);
-                        }
-                    }
-
-					//float num3 = flowManager.AddElement(this.outputCell, contents.element, num, contents.temperature, contents.diseaseIdx, disease_count);
-					//Game.Instance.accumulators.Accumulate(this.flowAccumulator, num3);				
-
-					//float num3 = Mathf.Min(num, 10f - contents.mass);
-	
 				}
 				__instance.UpdateAnim();
 				return false;
 			}
 
 
-			if ((int)fi2.GetValue(__instance) > 0 && flowManager.HasConduit((int)fi2.GetValue(__instance)))
+			if (flowManager.HasConduit(___outputCell))
 			{
-				ConduitFlow.Conduit conduitO = flowManager.GetConduit((int)fi2.GetValue(__instance));
-				FieldInfo fi = AccessTools.Field(typeof(ValveBase), "currentFlow");
-
-				PacketData toRemove = null;
-
-                if (conduitO.GetContents(flowManager).mass <= 0)
+				ConduitFlow.Conduit conduitO = flowManager.GetConduit(___outputCell);
+				
+                if (!flowManager.IsConduitFull(___outputCell))
                 {
-                    foreach (PacketData packet in LiquidWarpData.LiquidPackets)
+                    foreach (PacketData packet in availablePackets)
                     {
-                        //Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
-                        if ((float)fi.GetValue(__instance) == packet.current_flow
+                        if (channelNo == packet.channel_no
                             && (int)__instance.conduitType == packet.content_type)
                         {
-                            float num3 = flowManager.AddElement((int)fi2.GetValue(__instance), packet.element, packet.mass, packet.temperature, packet.disease_idx, packet.disease_count);
-                            //Debug.Log("Adding Element to pipe: " + packet.mass + "," + num3);
-                            Game.Instance.accumulators.Accumulate((HandleVector<int>.Handle)fi3.GetValue(__instance), num3);
-                            toRemove = packet;
+                            float num3 = flowManager.AddElement(___outputCell, packet.element, packet.mass, packet.temperature, packet.disease_idx, packet.disease_count);
+                            Debug.LogFormat("Adding Element to pipe: packet mass={0}, actually added mass={1}", packet.mass, num3);
+                            Game.Instance.accumulators.Accumulate(__instance.AccumulatorHandle, num3);
+                            packet.mass -= num3;
                             break;
                         }
                     }
                 }
 
-				if (toRemove != null)
-				{
-					LiquidWarpData.LiquidPackets.Remove(toRemove);
-					toRemove = null;
-				}
-
-                foreach (PacketData packet in GasWarpData.GasPackets)
-                {
-                    //Debug.Log("currentFlow = " + (float)fi.GetValue(__instance) + ", packet.currentFlow = " + packet.current_flow);
-                    if ((float)fi.GetValue(__instance) == packet.current_flow
-                        && (int)__instance.conduitType == packet.content_type)
-                    {
-                        float num3 = flowManager.AddElement((int)fi2.GetValue(__instance), packet.element, packet.mass, packet.temperature, packet.disease_idx, packet.disease_count);
-                        //Debug.Log("Adding Element to pipe: " + packet.mass + "," + num3);
-                        Game.Instance.accumulators.Accumulate((HandleVector<int>.Handle)fi3.GetValue(__instance), num3);
-                        toRemove = packet;
-                        break;
-                    }
-                }
-
-                if (toRemove != null)
-                {
-                    GasWarpData.GasPackets.Remove(toRemove);
-                    toRemove = null;
-                }
-
+                int removed = availablePackets.RemoveAll(_ => _.mass <= 0);
+                Debug.LogFormat("Packets removed: {0}", removed);
                 __instance.UpdateAnim();
 				return false;
 			}
 
 			return false;
 		}
-
-        private static float GetTotalStoredMass(List<PacketData> packets)
-        {
-            float total = 0;
-            foreach (PacketData packet in packets)
-            {
-                total += packet.mass;
-            }
-            return total;
-        }
     }
 
 	[HarmonyPatch(typeof(ValveSideScreen), "OnSpawn")]
@@ -168,13 +147,13 @@ namespace LiquidWarpMod
 	{
         private static void Postfix(ValveSideScreen __instance)
         {
-            Debug.Log(" === FluidWarpMod_ValveSideScreen_OnSpawn Postfix === ");
+            Debug.LogFormat(" === FluidWarpMod_ValveSideScreen_OnSpawn Postfix === ");
 
 			FieldInfo fi0 = AccessTools.Field(typeof(ValveSideScreen), "unitsLabel");
 			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);			
 			if (type == (ConduitType)100 || type == (ConduitType)101)
 			{
-				((LocText)fi0.GetValue(__instance)).text = "Channel";
+				((LocText)fi0.GetValue(__instance)).text = "Ch.";
 			}
 		
 		}
@@ -186,7 +165,7 @@ namespace LiquidWarpMod
 	{
 		private static bool Prefix(SideScreenContent __instance, ref string __result)
 		{
-			Debug.Log(" === FluidWarpMod_SideScreenContent_GetTitle Postfix === ");
+            Debug.LogFormat(" === FluidWarpMod_SideScreenContent_GetTitle Postfix === ");
 
 			if (!(__instance is ValveSideScreen)) return true;
 
@@ -210,7 +189,7 @@ namespace LiquidWarpMod
 	{
 		private static void Postfix(ValveSideScreen __instance)
 		{
-			Debug.Log(" === FluidWarpMod_ValveSideScreen_SetTarget Postfix === ");
+            Debug.LogFormat(" === FluidWarpMod_ValveSideScreen_SetTarget Postfix === ");
 
 			FieldInfo fi3 = AccessTools.Field(typeof(ValveSideScreen), "minFlowLabel");
 			FieldInfo fi4 = AccessTools.Field(typeof(ValveSideScreen), "maxFlowLabel");
