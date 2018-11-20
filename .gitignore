@@ -14,3 +14,4 @@ Mods/UnityEngine.*.dll
 !TemplateMod.zip
 Source/**/obj
 Source/**/bin
+*.user
