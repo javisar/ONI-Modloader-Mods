@@ -32,7 +32,7 @@ namespace FluidWarpMod
             int channelNo = Mathf.RoundToInt(__instance.CurrentFlow * 1000.0f); // simple cast to int sometimes gives invalid result
             Logger.LogFormat(" === ValveBase.ConduitUpdate({0}) Prefix conduitType={1}, inputCell={2}, outputCell={3}, channelNo={4}", dt, __instance.conduitType, ___inputCell, ___outputCell, channelNo);
 
-            if (channelNo == __instance.MaxFlow)
+            if (channelNo == 10000)
             {
                 // Channel number is set to MaxFlow (10k), which means WarpGate is disabled
                 return false;

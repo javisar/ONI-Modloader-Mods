@@ -4,12 +4,13 @@ namespace FluidWarpMod
 {
     public static class WarpPackageManager
     {
-        //private static Dictionary<ConduitType, List<PacketData>> availablePackets = new Dictionary<ConduitType, List<PacketData>>();
         private static List<PacketData> liquidPackets = new List<PacketData>();
 
         private static List<PacketData> gasPackets = new List<PacketData>();
 
-        private static float[] channelMass = new float[10000];
+        private static float[] gasChannelMass = new float[10000];
+
+        private static float[] liquidChannelMass = new float[10000];
 
         public static List<PacketData> getAvailablePackages(ConduitType conduitType)
         {
@@ -25,27 +26,17 @@ namespace FluidWarpMod
                     return null; // muahahaha!!!
             }
         }
-/*
-        public static void addPackage(PacketData packetData, ConduitType conduitType)
-        {
-            List<PacketData> pd = getAvailablePackages(conduitType);
-            pd.Add(packetData);
-        }
-*/
+
         public static float getTotalStoredMass(ConduitType conduitType, int channelNo)
         {
-            return channelMass[channelNo];
-/*
-            float result = 0.0f;
-            foreach (PacketData packetData in getAvailablePackages(conduitType))
+            if (conduitType == LiquidWarpConfig.CONDUIT_TYPE)
             {
-                if (channelNo == packetData.channelNo)
-                {
-                    result = result + packetData.contents.mass;
-                }
+                return liquidChannelMass[channelNo];
             }
-            return result;
-*/
+            else
+            {
+                return gasChannelMass[channelNo];
+            }
     }
 
         internal static float getMaxAllowedMass(ConduitType conduitType)
@@ -73,8 +64,16 @@ namespace FluidWarpMod
                 {
                     Logger.LogFormat("Adding Element to WarpSpace, mass={0}", mass);
                     availablePackets.Add(new PacketData(channelNo, conduitType, removedContents));
-                    channelMass[channelNo] += mass;
-                    Logger.LogFormat("Total available mass for channel {0} = {1}", channelNo, channelMass[channelNo]);
+                    if (conduitType == LiquidWarpConfig.CONDUIT_TYPE)
+                    {
+                        liquidChannelMass[channelNo] += mass;
+                        Logger.LogFormat("Total available liquid mass for channel {0} = {1}", channelNo, liquidChannelMass[channelNo]);
+                    }
+                    else
+                    {
+                        gasChannelMass[channelNo] += mass;
+                        Logger.LogFormat("Total available gas mass for channel {0} = {1}", channelNo, gasChannelMass[channelNo]);
+                    }
                 }
             }
         }
@@ -102,8 +101,16 @@ namespace FluidWarpMod
             if (result > 0)
             {
                 int removed = availablePackets.RemoveAll(_ => _.contents.mass <= 0);
-                channelMass[channelNo] -= result;
-                Logger.LogFormat("Packets removed: {0}, total channel {1} mass left: {2}", removed, channelNo, channelMass[channelNo]);
+                if (conduitType == LiquidWarpConfig.CONDUIT_TYPE)
+                {
+                    liquidChannelMass[channelNo] -= result;
+                    Logger.LogFormat("Packets removed: {0}, total channel {1} mass left: {2}", removed, channelNo, liquidChannelMass[channelNo]);
+                }
+                else
+                {
+                    gasChannelMass[channelNo] -= result;
+                    Logger.LogFormat("Packets removed: {0}, total channel {1} mass left: {2}", removed, channelNo, gasChannelMass[channelNo]);
+                }
             }
             return result;
         }
