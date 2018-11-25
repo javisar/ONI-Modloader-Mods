@@ -5,8 +5,7 @@ public class GasWarpConfig : IBuildingConfig
 {
 	public const string ID = "GasWarp";
 
-	private const ConduitType CONDUIT_TYPE = ConduitType.Gas;
-
+	public const ConduitType CONDUIT_TYPE = (ConduitType)101;
     
     public override BuildingDef CreateBuildingDef()
 	{
@@ -16,12 +15,12 @@ public class GasWarpConfig : IBuildingConfig
 		string anim = "valvegas_kanim";
 		int hitpoints = 30;
 		float construction_time = 10f;
-		float[] tIER = BUILDINGS.CONSTRUCTION_MASS_KG.TIER1;
-		string[] rAW_METALS = MATERIALS.RAW_METALS;
+		float[] Tier = BUILDINGS.CONSTRUCTION_MASS_KG.TIER1;
+		string[] Raw_Metals = MATERIALS.RAW_METALS;
 		float melting_point = 1600f;
 		BuildLocationRule build_location_rule = BuildLocationRule.Anywhere;
-		EffectorValues tIER2 = NOISE_POLLUTION.NOISY.TIER1;
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, width, height, anim, hitpoints, construction_time, tIER, rAW_METALS, melting_point, build_location_rule, BUILDINGS.DECOR.PENALTY.TIER0, tIER2, 0.2f);
+		EffectorValues Tier2 = NOISE_POLLUTION.NOISY.TIER1;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, width, height, anim, hitpoints, construction_time, Tier, Raw_Metals, melting_point, build_location_rule, BUILDINGS.DECOR.PENALTY.TIER0, Tier2, 0.2f);
 		buildingDef.InputConduitType = ConduitType.Gas;
 		buildingDef.OutputConduitType = ConduitType.Gas;
 		buildingDef.Floodable = false;
@@ -41,10 +40,9 @@ public class GasWarpConfig : IBuildingConfig
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
-		//valveBase.conduitType = ConduitType.Liquid;
-		valveBase.conduitType = (ConduitType) 101;
+		valveBase.conduitType = CONDUIT_TYPE;
 		valveBase.maxFlow = 10f;
-		valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
+        valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
 		{
 			new ValveBase.AnimRangeInfo(3f, "lo"),
 			new ValveBase.AnimRangeInfo(7f, "med"),

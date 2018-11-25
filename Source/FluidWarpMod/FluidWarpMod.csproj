@@ -65,9 +65,10 @@
     <Compile Include="FluidWarpMod.cs" />
     <Compile Include="LiquidWarpMod.cs" />
     <Compile Include="LiquidWarpConfig.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="PacketData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="ValveWarpBase.cs.bak" />
+    <Compile Include="WarpPackageManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FluidWarp\FluidWarpModHowto.txt">
