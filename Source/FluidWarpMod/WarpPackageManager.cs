@@ -48,7 +48,7 @@ namespace FluidWarpMod
                     return 100.0f;
                 case GasWarpConfig.CONDUIT_TYPE:
                 case ConduitType.Gas:
-                    return 50.0f;
+                    return 10.0f;
                 default:
                     return 0.0f;
             }
