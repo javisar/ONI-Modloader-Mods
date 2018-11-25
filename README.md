@@ -64,7 +64,7 @@ Mods - New Buildings
 | Name  | Description | ONI-Common | Creator |
 | ----- | ----------- | ---------- | ------- |
 | BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | N | [@javisar](https://github.com/javisar) |
-| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) |
+| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) |
 | InverseElectrolyzer | Combines hydrogen and oxygen into steam. Gets oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzerAlt | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | SculpturesReloaded | Adds a new sculpture building that allows more materials. | N | [@javisar](https://github.com/javisar) |
@@ -78,7 +78,7 @@ Mods - GUI
 | CameraController | Enable further zoom-outs in play and dev mode. | N | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) |
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
 | DisplayDraggedBoxSize | Shows selected rectangle dimensions using any tool. | N | [@fistak](https://github.com/fistak) |
-| ImprovedGasColour | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
+| ImprovedGasOverlay | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | MaterialColor | Adds an overlay option to visualize what a building is made of. Modifies temperature overlay ranges and colors.  More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/MaterialColor/MaterialColorHowto.txt) | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
 
