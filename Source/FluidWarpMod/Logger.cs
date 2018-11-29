@@ -6,7 +6,7 @@ namespace FluidWarpMod
 {
     static class Logger
     {
-        internal sealed class FileLogHandler : ILogHandler
+        internal sealed class FileLogHandler : ILogHandler, IDisposable
         {
             private FileStream fileStream;
             private StreamWriter streamWriter;
@@ -15,6 +15,11 @@ namespace FluidWarpMod
             {
                 fileStream = new FileStream(LogFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
                 streamWriter = new StreamWriter(fileStream);
+            }
+
+            public void Dispose()
+            {
+                fileStream.Dispose();
             }
 
             public void LogException(Exception exception, UnityEngine.Object context)

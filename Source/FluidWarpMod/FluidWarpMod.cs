@@ -15,7 +15,18 @@ namespace FluidWarpMod
 		}
 	}
 
-	[HarmonyPatch(typeof(ValveBase), "ConduitUpdate")]
+
+    [HarmonyPatch(typeof(ValveBase), "CurrentFlow", MethodType.Setter )]
+    internal class FluidWarpMod_ValveBase_CurrentFlow
+    {
+        private static bool Prefix(ValveBase __instance, float value)
+        {
+            Logger.LogFormat("Vavle id {0}, CurrentFlow changed from {1} to {2}", __instance.GetInstanceID(), __instance.CurrentFlow, value);
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(ValveBase), "ConduitUpdate")]
 	internal class FluidWarpMod_ValveBase_ConduitUpdate
 	{
         public FluidWarpMod_ValveBase_ConduitUpdate()
