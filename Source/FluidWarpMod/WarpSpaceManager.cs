@@ -154,6 +154,7 @@ namespace FluidWarpMod
                     {
                         ConduitFlow.ConduitContents providerContents = flowManager.GetContents(fromCell);
                         float addedMass = flowManager.AddElement(toCell, providerContents.element, providerContents.mass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
+                        Game.Instance.accumulators.Accumulate(provider.AccumulatorHandle, addedMass);
                         if (addedMass > 0f)
                         {
                             Logger.LogFormat("Adding Element to cell: requestor={0}  actually added mass={1}, element type={2}", requestor.GetInstanceID(), addedMass, providerContents.element);

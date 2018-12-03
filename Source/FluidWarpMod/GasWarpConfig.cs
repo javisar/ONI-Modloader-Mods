@@ -42,12 +42,6 @@ public class GasWarpConfig : IBuildingConfig
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
 		valveBase.conduitType = CONDUIT_TYPE;
 		valveBase.maxFlow = 10f;
-        valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
-		{
-			new ValveBase.AnimRangeInfo(3f, "lo"),
-			new ValveBase.AnimRangeInfo(7f, "med"),
-			new ValveBase.AnimRangeInfo(10f, "hi")
-		};
 
 		go.AddOrGet<Valve>();
 		Workable workable = go.AddOrGet<Workable>();

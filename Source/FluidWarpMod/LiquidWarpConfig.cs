@@ -40,15 +40,8 @@ public class LiquidWarpConfig : IBuildingConfig
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
-		valveBase.conduitType = CONDUIT_TYPE;
-        
+		valveBase.conduitType = CONDUIT_TYPE;       
 		valveBase.maxFlow = 10f;
-		valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
-		{
-			new ValveBase.AnimRangeInfo(3f, "lo"),
-			new ValveBase.AnimRangeInfo(7f, "med"),
-			new ValveBase.AnimRangeInfo(10f, "hi")
-		};
 
 		go.AddOrGet<Valve>();
 	}
