@@ -157,13 +157,17 @@ namespace FluidWarpMod
                         Game.Instance.accumulators.Accumulate(provider.AccumulatorHandle, addedMass);
                         if (addedMass > 0f)
                         {
-                            Logger.LogFormat("Adding Element to cell: requestor={0}  actually added mass={1}, element type={2}", requestor.GetInstanceID(), addedMass, providerContents.element);
+                            Logger.LogFormat("Adding Element to cell: requestor={0} provider={1} actually added mass={2}, element type={3}", requestor.GetInstanceID(), provider.GetInstanceID(), addedMass, providerContents.element);
                             flowManager.RemoveElement(fromCell, addedMass);
                             Game.Instance.accumulators.Accumulate(requestor.AccumulatorHandle, addedMass);
                         }
                     }
+                    if (flowManager.IsConduitFull(toCell))
+                    {
+                        break;
+                    }
                     provider = providers.getNext();
-                } while (provider != start && !flowManager.IsConduitFull(toCell));
+                } while (provider != start);
             }
             catch(Exception ex)
             {
