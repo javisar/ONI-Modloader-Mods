@@ -56,7 +56,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldGenReloaded", "WorldGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patches", "Patches\Patches.csproj", "{0A8D7289-BF9D-4110-B512-7DD528DC7EDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedFluidDistribution", "AdvancedFluidDistribution\AdvancedFluidDistribution.csproj", "{FFE062DA-A0D8-4165-9E90-CF9C71FC59D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluidPressureSensor", "AdvancedFluidDistribution\FluidPressureSensor.csproj", "{FFE062DA-A0D8-4165-9E90-CF9C71FC59D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

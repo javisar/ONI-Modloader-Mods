@@ -4,39 +4,38 @@ using UnityEngine;
 
 namespace FluidPressureSensor
 {
-    public class GasConduitPressureConfig : ConduitSensorConfig
+    public class LiquidConduitPressureConfig : ConduitSensorConfig
     {
-        public static string ID = "GasConduitPressureSensor";
+        public static string ID = "LiquidConduitPressureSensor";
 
         protected override ConduitType ConduitType
         {
             get
             {
-                return ConduitType.Gas;
+                return ConduitType.Liquid;
             }
         }
 
-        static GasConduitPressureConfig()
+        static LiquidConduitPressureConfig()
         {
-
         }
 
-        public GasConduitPressureConfig()
+        public LiquidConduitPressureConfig()
         {
         }
 
         public override BuildingDef CreateBuildingDef()
         {
-            return base.CreateBuildingDef(GasConduitPressureConfig.ID, "gas_germs_sensor_kanim", BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.REFINED_METALS);
+            return base.CreateBuildingDef(LiquidConduitPressureConfig.ID, "liquid_germs_sensor_kanim", BUILDINGS.CONSTRUCTION_MASS_KG.TIER0, MATERIALS.REFINED_METALS);
         }
 
         public override void DoPostConfigureComplete(GameObject go)
         {
-            Logger.Log(" ===GasConduitPressureConfig.DoPostConfigureComplete");
+            Logger.Log(" ===LiquidConduitPressureConfig.DoPostConfigureComplete");
             base.DoPostConfigureComplete(go);
             var conduitType = go.AddComponent<ConduitPressureSensor>();
             conduitType.conduitType = this.ConduitType;
-            conduitType.RangeMax = 1000f;
+            conduitType.RangeMax = 10000f;
             conduitType.RangeMin = 0f;
             conduitType.Threshold = 0f;
             conduitType.ActivateAboveThreshold = true;

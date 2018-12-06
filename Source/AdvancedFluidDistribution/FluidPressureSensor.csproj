@@ -7,8 +7,8 @@
     <ProjectGuid>{FFE062DA-A0D8-4165-9E90-CF9C71FC59D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AdvancedFluidDistribution</RootNamespace>
-    <AssemblyName>AdvFluidDistr</AssemblyName>
+    <RootNamespace>FluidPressureSensor</RootNamespace>
+    <AssemblyName>FluidPressureSensor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -55,10 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdvFluidDistrState.cs" />
-    <Compile Include="AdvFluidDistrMod.cs" />
+    <Compile Include="FluidPressureSensorMod.cs" />
     <Compile Include="ConduitPressureSensor.cs" />
     <Compile Include="GasConduitPressureSensorConfig.cs" />
+    <Compile Include="LiquidConduitPressureSensorConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,11 +66,6 @@
       <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
       <Name>ONI-Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="AdvFluidDistr\Config\AdvFluidDistrState.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

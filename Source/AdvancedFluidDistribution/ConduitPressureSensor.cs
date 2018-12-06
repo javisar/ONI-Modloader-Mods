@@ -1,7 +1,7 @@
 ﻿using KSerialization;
 using UnityEngine;
 
-namespace AdvancedFluidDistribution
+namespace FluidPressureSensor
 {
     [SerializationConfig(MemberSerialization.OptIn)]
     public class ConduitPressureSensor : ConduitThresholdSensor, IThresholdSwitch
