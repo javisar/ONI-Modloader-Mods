@@ -45,9 +45,6 @@ namespace MaterialColor.Data
 
         public bool ShowMissingTypeColorOffsets { get; set; }
 
-        public TypeFilter TypeFilter { get; set; } = new TypeFilter(rules: new List<string>
-        {
-            "MassageTable"
-        });
+        public TypeFilter TypeFilter { get; set; } = new TypeFilter();
     }
 }

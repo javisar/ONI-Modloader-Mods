@@ -9,25 +9,23 @@ namespace MaterialColor.Data
     /// <summary>
     /// Provides filtering method and rules. Used to find matching types to apply color.
     /// </summary>
-    public struct TypeFilter
+    public class TypeFilter
     {
         /// <param name="methodID">
         /// 0 = Exclusive, 1 = Inclusive, 2 = RegexAny, 3 = RegexAll
         /// </param>
-        public TypeFilter(List<string> rules = null, int methodID = 0)
+        public TypeFilter(IEnumerable<string> rules = null, int methodID = 0)
         {
             this.MethodID = methodID;
+            this.Rules = new List<string>();
 
-            if (rules == null)
+            if (rules != null)
             {
-                this.Rules = new List<string>();
-            }
-            else
-            {
-                this.Rules = rules;
+                this.Rules.AddRange(rules);
             }
         }
 
+        // TODO: change to method string?
         /// <summary>
         /// 0 = Exclusive, 1 = Inclusive, 2 = RegexAny, 3 = RegexAll
         /// </summary>
@@ -48,14 +46,14 @@ namespace MaterialColor.Data
                 case 3: // RegexAll
                     return this.AllMatchRegex(name);
                 default:// InvalidMethodID
-                    throw new Exception("Invalid method ID");
+                    throw new Exception("Invalid method ID: " + this.MethodID);
             }
         }
 
         // TODO: ? use contains instead of == ?
         private bool AnyMatch(string name)
         {
-            return this.Rules.Any(rule => rule.ToUpper() == name.ToUpper());
+            return this.Rules.Any(rule => name.ToUpper().Contains(rule.ToUpper()));
         }
 
         private bool AnyMatchRegex(string name)
