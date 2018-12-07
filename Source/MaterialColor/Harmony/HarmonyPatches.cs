@@ -74,6 +74,12 @@
         public static void UpdateBuildingColor(BuildingComplete building)
         {
             string    buildingName = building.name.Replace("Complete", string.Empty);
+
+            if (!State.ConfiguratorState.TypeFilter.IsAllowed(buildingName))
+            {
+                return;
+            }
+
             SimHashes material     = MaterialHelper.ExtractMaterial(building);
 
             Color32 color;

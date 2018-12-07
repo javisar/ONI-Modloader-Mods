@@ -5,5 +5,11 @@
   "ShowMissingElementColorInfos": false,
   "ShowMissingTypeColorOffsets": false,
   "ShowBuildingsAsWhite": false,
-  "LegacyTileColorHandling": false
+  "LegacyTileColorHandling": false,
+  "TypeFilter": {
+    "MethodID": 5,
+    "Rules": [
+      "MassageTable"
+    ]
+  }
 }
