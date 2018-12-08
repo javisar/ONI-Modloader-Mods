@@ -78,6 +78,7 @@ Mods - GUI
 | CameraController | Enable further zoom-outs in play and dev mode. | N | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) |
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
 | DisplayDraggedBoxSize | Shows selected rectangle dimensions using any tool. | N | [@fistak](https://github.com/fistak) |
+| FreeCamera | Allows camera to be moved out of world boundaries without debug mode. | N | [@fistak](https://github.com/fistak) [@Moonkis](https://github.com/Moonkis) |
 | ImprovedGasOverlay | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | MaterialColor | Adds an overlay option to visualize what a building is made of. Modifies temperature overlay ranges and colors.  More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/MaterialColor/MaterialColorHowto.txt) | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
