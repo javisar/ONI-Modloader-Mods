@@ -75,9 +75,17 @@
         {
             string    buildingName = building.name.Replace("Complete", string.Empty);
 
-            if (!State.ConfiguratorState.TypeFilter.IsAllowed(buildingName))
+            try
             {
-                return;
+                if (!State.TypeFilter.Check(buildingName))
+                {
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                State.Logger.Log("Error while filtering buildings");
+                State.Logger.Log(e);
             }
 
             SimHashes material     = MaterialHelper.ExtractMaterial(building);

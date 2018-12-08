@@ -6,10 +6,8 @@
   "ShowMissingTypeColorOffsets": false,
   "ShowBuildingsAsWhite": false,
   "LegacyTileColorHandling": false,
-  "TypeFilter": {
-    "MethodID": 5,
-    "Rules": [
-      "MassageTable"
-    ]
+  "TypeFilterInfo": {
+    "Inclusive": false,
+    "Rules": []
   }
 }

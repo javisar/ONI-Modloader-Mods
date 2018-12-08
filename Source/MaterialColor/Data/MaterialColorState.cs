@@ -45,6 +45,6 @@ namespace MaterialColor.Data
 
         public bool ShowMissingTypeColorOffsets { get; set; }
 
-        public TypeFilter TypeFilter { get; set; } = new TypeFilter();
+        public FilterInfo TypeFilterInfo { get; set; } = new FilterInfo();
     }
 }
