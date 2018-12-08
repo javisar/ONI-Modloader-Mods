@@ -32,23 +32,18 @@ namespace MaterialColor
         /// <summary>
         /// Checks if value passes through the filter's ruleset.
         /// </summary>
-        public readonly Func<string, bool> Check;
+        public Func<string, bool> Check;
 
         private readonly List<string> Rules;
 
         private bool InclusiveCheck(string value)
         {
-            return this.ContainsAny(value);
+            return this.Rules.Any(rule => value.Contains(rule));
         }
 
         private bool ExclusiveCheck(string value)
         {
-            return !this.ContainsAny(value);
-        }
-
-        private bool ContainsAny(string value)
-        {
-            return this.Rules.Any(rule => value.ToUpperInvariant().Contains(rule.ToUpperInvariant()));
+            return !this.Rules.Any(rule => value.Contains(rule));
         }
     }
 }
