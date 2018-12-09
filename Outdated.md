@@ -1,7 +1,7 @@
 
 Outdated Mods
 -------------
-| Name  | Description | ONI-Common | Creator |
+| Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
 | CritterNumberSensor | Sensor for the critter number in a room (original from R9MX4). | N | [@Cairath](https://github.com/Cairath) |
 | DraggablePanelMod | Makes panels draggable. | N | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) |

@@ -54,14 +54,14 @@ Mods Installation
 
 ONI-Common
 --------------------
-| Name  | Description | ONI-Common | Creator |
+| Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
 | **ONI-Common** | **Requieres Mono.Cecil.dll** Common code. Provides config load/save functionality, logger, help tools. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 
 
 Mods - New Buildings
 --------------------
-| Name  | Description | ONI-Common | Creator |
+| Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
 | BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | N | [@javisar](https://github.com/javisar) |
 | FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) |
@@ -73,12 +73,11 @@ Mods - New Buildings
 
 Mods - GUI
 --------------------
-| Name  | Description | ONI-Common | Creator |
+| Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
-| CameraController | Enable further zoom-outs in play and dev mode. | N | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) |
+| CameraController | Enable further zoom-outs in play and dev mode. Allows camera to be moved out of world boundaries. | N | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) [@fistak](https://github.com/fistak) [@javisar](https://github.com/javisar)|
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
 | DisplayDraggedBoxSize | Shows selected rectangle dimensions using any tool. | N | [@fistak](https://github.com/fistak) |
-| FreeCamera | Allows camera to be moved out of world boundaries without debug mode. | N | [@fistak](https://github.com/fistak) [@Moonkis](https://github.com/Moonkis) |
 | ImprovedGasOverlay | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | MaterialColor | Adds an overlay option to visualize what a building is made of. Modifies temperature overlay ranges and colors.  More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/MaterialColor/MaterialColorHowto.txt) | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
@@ -86,7 +85,7 @@ Mods - GUI
 
 Mods - Mechanics
 --------------------
-| Name  | Description | ONI-Common | Creator |
+| Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
 | AllBuildingsDestroyable | Allows to construct on top of Gravitas furniture. | N | [@javisar](https://github.com/javisar) |
 | AlternateOrders | The Fabricators and Refineries will alternate between infinity orders. | N | [@javisar](https://github.com/javisar) |
