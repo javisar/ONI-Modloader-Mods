@@ -18,6 +18,7 @@ namespace MaterialColor
         public TextFilter(FilterInfo info)
         {
             this.Rules = info.Rules;
+            this.MatchId = info.MatchBuildingIds;
 
             if (info.Inclusive)
             {
@@ -34,16 +35,24 @@ namespace MaterialColor
         /// </summary>
         public Func<string, bool> Check;
 
+        private readonly bool MatchId;
+
         private readonly List<string> Rules;
 
         private bool InclusiveCheck(string value)
         {
-            return this.Rules.Any(rule => value.Contains(rule));
+            //return this.Rules.Any(rule => value.Contains(rule));
+            return this.Rules.Any(rule =>
+                (this.MatchId ? 
+                    value.Equals(rule) : value.Contains(rule)));
         }
 
         private bool ExclusiveCheck(string value)
         {
-            return !this.Rules.Any(rule => value.Contains(rule));
+            //return !this.Rules.Any(rule => value.Contains(rule));
+            return !this.Rules.Any(rule =>
+                (this.MatchId ?
+                    value.Equals(rule) : value.Contains(rule)));
         }
     }
 }
