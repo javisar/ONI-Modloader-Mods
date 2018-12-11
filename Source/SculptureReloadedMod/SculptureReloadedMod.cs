@@ -25,7 +25,7 @@ namespace SculptureReloadedMod
 
 			TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(SculptureReloadedConfig.ID);
             */
-            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.Furniture).data;
+            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => ((HashedString) "Furniture").Equals(po.category)).data;
             category.Add(SculptureReloadedConfig.ID);
 
         }

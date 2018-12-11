@@ -42,8 +42,8 @@
             // Hotkey
             // attachablePosition
             "CanMove": false,
-            "ViewMode": "SimViewMode.None",
-            "SelectMode": "SimViewMode.None",
+            "ViewMode": "OverlayModes+None.ID",
+            "SelectMode": "OverlayModes+None.ID",
             "BuildLocationRule": "BuildLocationRule.Tile",
             // ObjectLayer
             // TileLayer
