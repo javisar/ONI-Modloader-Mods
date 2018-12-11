@@ -39,6 +39,10 @@ namespace FluidPressureSensor
     {
         private static void Prefix()
         {
+            Strings.Add("STRINGS.BUILDINGS.CONDUITPRESSURESENSOR.MASS", "Mass");
+            Strings.Add("STRINGS.BUILDINGS.MASS_THRESHOLD", "Mass Threshold");
+            Strings.Add("STRINGS.BUILDINGS.GRAMMS", "g.");
+
             Logger.Log("Entry AdvFluidDistrMod_GeneratedBuildings_LoadGeneratedBuildings.Prefix ");
             Strings.Add("STRINGS.BUILDINGS.PREFABS." + GasConduitPressureConfig.ID.ToUpper() + ".NAME", "Gas Pipe Pressure Sensor");
             Strings.Add("STRINGS.BUILDINGS.PREFABS." + GasConduitPressureConfig.ID.ToUpper() + ".DESC", "Gas Pipe Pressure Sensor can disable buildings when contents reach a certain mass.");
@@ -58,12 +62,16 @@ namespace FluidPressureSensor
         private static void Prefix(Db __instance)
         {
             Logger.Log("Entry AdvFluidDistrMod_Db_Initialize.Prefix");
-            List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["ImprovedGasPiping"]);
+            List<string> ls = new List<string>(Database.Techs.TECH_GROUPING["HVAC"]);
             ls.Add(GasConduitPressureConfig.ID);
+            Database.Techs.TECH_GROUPING["HVAC"] = (string[])ls.ToArray();
+
+            ls = new List<string>(Database.Techs.TECH_GROUPING["LiquidTemperature"]);
             ls.Add(LiquidConduitPressureConfig.ID);
-            Database.Techs.TECH_GROUPING["ImprovedGasPiping"] = (string[])ls.ToArray();
+            Database.Techs.TECH_GROUPING["LiquidTemperature"] = (string[])ls.ToArray();
             Logger.Log("Exit AdvFluidDistrMod_Db_Initialize.Prefix");
         }
+
     }
 
 }

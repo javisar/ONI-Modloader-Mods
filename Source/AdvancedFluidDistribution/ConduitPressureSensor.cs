@@ -6,6 +6,9 @@ namespace FluidPressureSensor
     [SerializationConfig(MemberSerialization.OptIn)]
     public class ConduitPressureSensor : ConduitThresholdSensor, IThresholdSwitch
     {
+        private static LocString MASS = new LocString("Mass", "STRINGS.BUILDINGS.CONDUITPRESSURESENSOR.MASS");
+        private static LocString MASS_THRESHOLD = new LocString("Mass Threshold", "STRINGS.BUILDINGS.MASS_THRESHOLD");
+        private static LocString GRAMMS = new LocString("g.", "STRINGS.BUILDINGS.GRAMMS");
         private float rangeMin = 0f;
 
         private float rangeMax = 1000f;
@@ -34,8 +37,7 @@ namespace FluidPressureSensor
             {
                 int cell = Grid.PosToCell(this);
                 ConduitFlow flowManager = Conduit.GetFlowManager(this.conduitType);
-//                Logger.LogFormat(" Pressure Sensor {0} current value {1}", GetInstanceID(), flowManager.GetContents(cell).mass);
-                return (float)flowManager.GetContents(cell).mass;
+                return (float)flowManager.GetContents(cell).mass * 1000f;
             }
         }
 
@@ -55,7 +57,7 @@ namespace FluidPressureSensor
         {
             get
             {
-                return "Mass";
+                return MASS;
             }
         }
 
@@ -63,9 +65,13 @@ namespace FluidPressureSensor
         {
             get
             {
-                return "Mass Threshold";
+                return MASS_THRESHOLD;
             }
         }
+
+        public ThresholdScreenLayoutType LayoutType { get { return ThresholdScreenLayoutType.SliderBar; } }
+
+        public int IncrementScale { get { return 1; } }
 
         static ConduitPressureSensor()
         {
@@ -103,7 +109,7 @@ namespace FluidPressureSensor
 
         public LocString ThresholdValueUnits()
         {
-            return "g.";
+            return GRAMMS;;
         }
 
         protected override void UpdateVisualState(bool force = false)
