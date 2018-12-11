@@ -35,8 +35,8 @@ namespace FluidPressureSensor
             base.DoPostConfigureComplete(go);
             var conduitType = go.AddComponent<ConduitPressureSensor>();
             conduitType.conduitType = this.ConduitType;
-            conduitType.RangeMax = 10000f;
-            conduitType.RangeMin = 0f;
+            conduitType.rangeMax = 10000f;
+            conduitType.rangeMin = 0f;
             conduitType.Threshold = 0f;
             conduitType.ActivateAboveThreshold = true;
             conduitType.manuallyControlled = false;

@@ -9,11 +9,10 @@ namespace FluidPressureSensor
         private static LocString MASS = new LocString("Mass", "STRINGS.BUILDINGS.CONDUITPRESSURESENSOR.MASS");
         private static LocString MASS_THRESHOLD = new LocString("Mass Threshold", "STRINGS.BUILDINGS.MASS_THRESHOLD");
         private static LocString GRAMMS = new LocString("g.", "STRINGS.BUILDINGS.GRAMMS");
-        private float rangeMin = 0f;
-
-        private float rangeMax = 1000f;
-
         private readonly static HashedString TINT_SYMBOL;
+
+        public float rangeMax;
+        public float rangeMin;
 
         public string AboveToolTip
         {
@@ -41,17 +40,9 @@ namespace FluidPressureSensor
             }
         }
 
-        public float RangeMax
-        {
-            get { return this.rangeMax; }
-            set { this.rangeMax = value; }
-        }
+        public float RangeMax { get { return rangeMax; } }
 
-        public float RangeMin
-        {
-            get { return this.rangeMin; }
-            set { this.rangeMin = value; }
-        }
+        public float RangeMin { get {return rangeMin; } }
 
         public LocString ThresholdValueName
         {
@@ -72,6 +63,8 @@ namespace FluidPressureSensor
         public ThresholdScreenLayoutType LayoutType { get { return ThresholdScreenLayoutType.SliderBar; } }
 
         public int IncrementScale { get { return 1; } }
+
+        public NonLinearSlider.Range[] GetRanges { get { return NonLinearSlider.GetDefaultRange(this.RangeMax); } }
 
         static ConduitPressureSensor()
         {
@@ -109,7 +102,7 @@ namespace FluidPressureSensor
 
         public LocString ThresholdValueUnits()
         {
-            return GRAMMS;;
+            return GRAMMS;
         }
 
         protected override void UpdateVisualState(bool force = false)
