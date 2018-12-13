@@ -1,4 +1,4 @@
-﻿namespace ModLoader
+﻿namespace CameraControllerMod
 {
     using Harmony;
 
@@ -7,11 +7,15 @@
     {
         public static void Prefix(CameraController __instance)
         {
+            if (!CameraControllerState.StateManager.State.Enabled 
+                || !CameraControllerState.StateManager.State.maxOrthographicSizeEnabled) return;
+
             Debug.Log(" === CameraControllerMod INI === ");
 
-            AccessTools.Field(typeof(CameraController), "maxOrthographicSize").SetValue(__instance, 100f);
+
+            AccessTools.Field(typeof(CameraController), "maxOrthographicSize").SetValue(__instance, CameraControllerState.StateManager.State.maxOrthographicSize);
 			//AccessTools.Field(typeof(CameraController), "maxOrthographicSizeDebug").SetValue(__instance, 300f);
-			TuningData<CameraController.Tuning>.Get().maxOrthographicSizeDebug = 300f;
+			TuningData<CameraController.Tuning>.Get().maxOrthographicSizeDebug = CameraControllerState.StateManager.State.maxOrthographicSizeDebug;
 
 			// Traverse.Create<CameraController>().Property("maxOrthographicSize").SetValue(100.0);
 			// Traverse.Create<CameraController>().Property("maxOrthographicSizeDebug").SetValue(200.0);
@@ -26,7 +30,25 @@
     {
         public static void Prefix(CameraController __instance, ref float size)
         {
-            size = 100f;
+            if (!CameraControllerState.StateManager.State.Enabled
+                || !CameraControllerState.StateManager.State.maxOrthographicSizeEnabled) return;
+
+            size = CameraControllerState.StateManager.State.maxOrthographicSize;
+        }
+    }
+
+    /// <summary>
+    /// Stop constraining camera to the world.
+    /// </summary>
+    [HarmonyPatch(typeof(CameraController), "ConstrainToWorld")]
+    public static class FreeCameraMod
+    {
+        public static bool Prefix()
+        {
+            if (!CameraControllerState.StateManager.State.Enabled
+                || !CameraControllerState.StateManager.State.ConstrainToWorld) return true;
+
+            return false;
         }
     }
 }

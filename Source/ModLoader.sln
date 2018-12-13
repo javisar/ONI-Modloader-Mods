@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomWorldMod", "CustomWor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImprovedGasOverlay", "ImprovedGasColourMod\ImprovedGasOverlay.csproj", "{4475E088-4830-4BB4-BC97-FC8ACC18AFCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraControllerMod", "CameraControllerMod\CameraControllerMod.csproj", "{2F67E9DC-1B57-4CD3-8043-0A59DDF81F06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraController", "CameraControllerMod\CameraController.csproj", "{2F67E9DC-1B57-4CD3-8043-0A59DDF81F06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlternateOrdersMod", "AlternateOrdersMod\AlternateOrdersMod.csproj", "{9C74ECCA-976C-4DA2-869E-BDBBF59158C5}"
 EndProject

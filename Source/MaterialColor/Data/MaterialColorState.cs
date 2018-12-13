@@ -1,4 +1,6 @@
-﻿namespace MaterialColor.Data
+﻿using System.Collections.Generic;
+
+namespace MaterialColor.Data
 {
     public class MaterialColorState
     {
@@ -42,5 +44,7 @@
         public bool ShowMissingElementColorInfos { get; set; }
 
         public bool ShowMissingTypeColorOffsets { get; set; }
+
+        public FilterInfo TypeFilterInfo { get; set; } = new FilterInfo();
     }
 }
