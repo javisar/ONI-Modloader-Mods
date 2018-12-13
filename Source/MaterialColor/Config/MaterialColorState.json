@@ -5,5 +5,12 @@
   "ShowMissingElementColorInfos": false,
   "ShowMissingTypeColorOffsets": false,
   "ShowBuildingsAsWhite": false,
-  "LegacyTileColorHandling": false
+  "LegacyTileColorHandling": false,
+  "TypeFilterInfo": {
+    "Inclusive": false,				// false to exclude buildings
+	"MatchBuildingIds": false,		// true to match to exact bulding id
+    "Rules": [
+		// "Battery"
+	]
+  }
 }
