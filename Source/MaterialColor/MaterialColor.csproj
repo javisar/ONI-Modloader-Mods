@@ -74,7 +74,9 @@
     <Compile Include="Data\TemperatureOverlayState.cs" />
     <None Include="Helpers\InjectorOnion.cs.deprecated" />
     <None Include="Helpers\ColorHelperONI.cs" />
+    <Compile Include="Data\FilterInfo.cs" />
     <Compile Include="Extensions\Color32Extensions.cs" />
+    <Compile Include="TextFilter.cs" />
     <Compile Include="Json\BaseManager.cs" />
     <Compile Include="Json\ConfiguratorStateManager.cs" />
     <Compile Include="Json\ElementColorInfosManager.cs" />
