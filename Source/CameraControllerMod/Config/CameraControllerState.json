@@ -6,6 +6,6 @@
   "maxOrthographicSize": 100.0,
   "maxOrthographicSizeDebug": 300.0,
 
-  "ConstrainToWorld": true
+  "ConstrainToWorld": true          // Allows to pan over the world edges
 
 }
