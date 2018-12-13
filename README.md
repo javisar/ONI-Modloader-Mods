@@ -1,7 +1,7 @@
 # ONI-Modloader Mods
 Javisar's Oxygen Not Included Mods for [**ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
 
-[**Forums in Klei**](https://forums.kleientertainment.com/topic/88186-mod01-oni-modloader/)
+[**Forums in Klei**](https://forums.kleientertainment.com/forums/topic/97444-mods-trevices-mods-lair/)
 
 
 Disclaimers
@@ -18,7 +18,7 @@ This project uses source code of and is based on:
 * https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
 
 
-**NOTE**: Compiled for **SU-299745** and ONI-Modloader v0.5.1
+**NOTE**: Compiled for **Q1-299745** and ONI-Modloader v0.5.1
 
 **[Report Mod Bugs](https://github.com/javisar/ONI-Modloader-Mods/issues/new/choose)**
 
