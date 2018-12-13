@@ -133,7 +133,6 @@ namespace TemperatureFilterMod
         protected override void OnSpawn()
         {
             base.OnSpawn();
-            Debug.Log("=== TemperatureFilter.building is " + (building != null ? "NOT" : "") + " null");
             this.inputCell = this.building.GetUtilityInputCell();
             this.outputCell = this.building.GetUtilityOutputCell();
             this.filteredCell = Grid.OffsetCell(Grid.PosToCell(this.transform.GetPosition()), this.building.GetRotatedOffset(this.portInfo.offset));
@@ -179,14 +178,16 @@ namespace TemperatureFilterMod
                 int num = -1;
                 if (activateAboveThreshold)
                 {
-                    num = contents1.temperature > this.threshold ? this.outputCell : this.filteredCell;
+                    num = contents1.temperature < this.threshold ? this.outputCell : this.filteredCell;
                 }
                 else
                 {
                     num = contents1.temperature > this.threshold ? this.outputCell : this.filteredCell;
                 }
                 ConduitFlow.ConduitContents contents2 = flowManager.GetContents(num);
-                if ((double)contents1.mass > 0.0 && (double)contents2.mass <= 0.0)
+                if ((double)contents1.mass > 0.0 && 
+                    ((double)contents2.mass <= 0.0 || contents2.element.Equals(contents1.element) )
+                   ) 
                 {
                     flag = true;
                     float delta = flowManager.AddElement(num, contents1.element, contents1.mass, contents1.temperature, contents1.diseaseIdx, contents1.diseaseCount);
@@ -229,14 +230,6 @@ namespace TemperatureFilterMod
             if (flag1 != flag2)
                 return;
             this.conduitBlockedStatusItemGuid = this.selectable.ToggleStatusItem(blockedMultiples, this.conduitBlockedStatusItemGuid, !flag1, (object)null);
-        }
-
-        [OnDeserialized]
-        private void OnDeserialized()
-        {
-//            if (ElementLoader.GetElement(this.filteredTag) == null)
-//                return;
-//            this.filterable.SelectedTag = this.filteredTag;
         }
 
         private bool ShowInUtilityOverlay(HashedString mode, object data)

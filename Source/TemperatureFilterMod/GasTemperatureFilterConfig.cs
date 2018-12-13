@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace TemperatureFilterMod
 {
-    public class LiquidTemperatureFilterConfig : IBuildingConfig
+    public class GasTemperatureFilterConfig : IBuildingConfig
     {
-        private ConduitPortInfo secondaryPort = new ConduitPortInfo(ConduitType.Liquid, new CellOffset(0, 0));
-        public const string ID = "LiquidTemperatureFilter";
-        private const ConduitType CONDUIT_TYPE = ConduitType.Liquid;
+        private ConduitPortInfo secondaryPort = new ConduitPortInfo(ConduitType.Gas, new CellOffset(0, 0));
+        public const string ID = "GasTemperatureFilter";
+        private const ConduitType CONDUIT_TYPE = ConduitType.Gas;
 
         public override BuildingDef CreateBuildingDef()
         {
             string id = ID;
             int width = 3;
             int height = 1;
-            string anim = "filter_liquid_kanim";
+            string anim = "filter_gas_kanim";
             int hitpoints = 30;
             float construction_time = 10f;
             float[] tieR3 = BUILDINGS.CONSTRUCTION_MASS_KG.TIER3;
@@ -28,10 +28,10 @@ namespace TemperatureFilterMod
             buildingDef.EnergyConsumptionWhenActive = 120f;
             buildingDef.SelfHeatKilowattsWhenActive = 0.0f;
             buildingDef.ExhaustKilowattsWhenActive = 0.0f;
-            buildingDef.InputConduitType = ConduitType.Liquid;
-            buildingDef.OutputConduitType = ConduitType.Liquid;
+            buildingDef.InputConduitType = ConduitType.Gas;
+            buildingDef.OutputConduitType = ConduitType.Gas;
             buildingDef.Floodable = false;
-            buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
+            buildingDef.ViewMode = OverlayModes.GasConduits.ID;
             buildingDef.AudioCategory = "Metal";
             buildingDef.UtilityInputOffset = new CellOffset(-1, 0);
             buildingDef.UtilityOutputOffset = new CellOffset(1, 0);

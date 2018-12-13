@@ -54,13 +54,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GasTemperatureFilterConfig.cs" />
     <Compile Include="LiquidTemperatureFilterConfig.cs" />
     <Compile Include="TemperatureFilter.cs" />
     <Compile Include="TemperatureFilterMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
