@@ -202,7 +202,7 @@ namespace BuildingModifierMod
             Helper.Log(" === [BuildingModifier] BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings Postfix === ");
             Helper.Log(" === [BuildingModifier] Building ID List === ");
             Comparison<BuildingDef> comparison = (x, y) => x.PrefabID.CompareTo(y.PrefabID);
-            BuildingDef[] list = (BuildingDef[])Assets.BuildingDefs.Clone();
+            BuildingDef[] list = (BuildingDef[])Assets.BuildingDefs.ToArray();
             Array.Sort(list, delegate (BuildingDef x, BuildingDef y) {
                 return x.PrefabID.CompareTo(y.PrefabID);
             });
