@@ -42,7 +42,7 @@ public class InverseElectrolyzerAltConfig : IBuildingConfig
 		buildingDef.SelfHeatKilowattsWhenActive = 4f;
 		buildingDef.InputConduitType = ConduitType.Gas;
 		buildingDef.OutputConduitType = ConduitType.Gas;
-		buildingDef.ViewMode = SimViewMode.GasVentMap;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
 		buildingDef.MaterialCategory = MATERIALS.ALL_METALS;
 		buildingDef.AudioCategory = "HollowMetal";
 		buildingDef.PowerInputOffset = new CellOffset(2, 0);

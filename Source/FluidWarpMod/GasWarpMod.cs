@@ -13,7 +13,7 @@ namespace FluidWarpMod
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.NAME", "Gas Stargate");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.DESC", "Gas Stargates provides an easy way to transport gases from one place to another.");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
-            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.HVAC).data;
+            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == new HashedString("HVAC")).data;
             category.Add(GasWarpConfig.ID);
 
 

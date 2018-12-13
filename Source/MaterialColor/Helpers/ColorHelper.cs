@@ -24,7 +24,7 @@
             Element   element   = Grid.Element[cellIndex];
             Substance substance = element.substance;
 
-            Color32 debugColor = substance.debugColour;
+            Color32 debugColor = substance.uiColour;
 
             debugColor.a = byte.MaxValue;
 

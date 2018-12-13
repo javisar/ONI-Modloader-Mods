@@ -58,7 +58,7 @@
       "RequiresPowerInput": false,
       "EnergyConsumptionWhenActive": 0,
       "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
-      "ViewMode": "SimViewMode.None"
+      "ViewMode": "OverlayModes+None.ID"
     },
 
 

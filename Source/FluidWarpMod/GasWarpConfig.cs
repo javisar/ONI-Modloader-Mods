@@ -24,7 +24,7 @@ public class GasWarpConfig : IBuildingConfig
 		buildingDef.InputConduitType = ConduitType.Gas;
 		buildingDef.OutputConduitType = ConduitType.Gas;
 		buildingDef.Floodable = false;
-		buildingDef.ViewMode = SimViewMode.GasVentMap;
+		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.PermittedRotations = PermittedRotations.R360;
 		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
@@ -42,12 +42,6 @@ public class GasWarpConfig : IBuildingConfig
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
 		valveBase.conduitType = CONDUIT_TYPE;
 		valveBase.maxFlow = 10f;
-        valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
-		{
-			new ValveBase.AnimRangeInfo(3f, "lo"),
-			new ValveBase.AnimRangeInfo(7f, "med"),
-			new ValveBase.AnimRangeInfo(10f, "hi")
-		};
 
 		go.AddOrGet<Valve>();
 		Workable workable = go.AddOrGet<Workable>();
