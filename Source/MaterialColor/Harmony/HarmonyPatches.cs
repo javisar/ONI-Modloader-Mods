@@ -3,7 +3,6 @@
     using Harmony;
     using Extensions;
     using Helpers;
-    using TemperatureOverlay;    
     using ONI_Common.Core;
     using ONI_Common.IO;
     using Rendering;
@@ -25,45 +24,13 @@
 
         private static bool _configuratorStateChanged;
 
-        // private static void OnBuildingsCompletesAdd(BuildingComplete building)
-        // => ColorHelper.UpdateBuildingColor(building);
         private static bool _elementColorInfosChanged;
 
         private static bool _initialized;
 
         private static bool _typeColorOffsetsChanged;
 
-        public static void OnLoad()
-        {
-            // HarmonyInstance harmony = HarmonyInstance.Create("com.oni.materialcolor");
-            // harmony.PatchAll(Assembly.GetExecutingAssembly());
-
-            // try
-            // {
-            // Components.BuildingCompletes.OnAdd += OnBuildingsCompletesAdd;
-            // }
-            // catch (Exception e)
-            // {
-            // var message = "Injection failed\n" + e.Message + '\n';
-            // State.Logger.Log(message);
-            // State.Logger.Log(e);
-            // Debug.LogError(message);
-            // }
-            // try
-            // {
-            // SaveTemperatureThresholdsAsDefault();
-            // if (State.TemperatureOverlayState.LogThresholds)
-            // {
-            // LogTemperatureThresholds();
-            // }
-            // UpdateTemperatureThresholds();
-            // }
-            // catch (Exception e)
-            // {
-            // State.Logger.Log("Custom temperature overlay init error");
-            // State.Logger.Log(e);
-            // }
-        }
+        public static void OnLoad() { }
 
         public static void RefreshMaterialColor()
         {
@@ -127,7 +94,6 @@
 
             if (storageLocker != null)
             {
-				//SetFilteredStorageColors(storageLocker.filteredStorage, color, dimmedColor);
 				SetFilteredStorageColors(storageLocker, (Color)color, (Color)dimmedColor);
 
 			}
@@ -138,11 +104,8 @@
 
                 if (ownable != null)
                 {
-					//ownable.ownedTint   = color;
 					SetField(ownable, "ownedTint", (Color)color);
-					//ownable.unownedTint = dimmedColor;
 					SetField(ownable, "unownedTint", (Color)dimmedColor);
-					//ownable.UpdateTint();
 					Invoke(ownable, "UpdateTint");
                 }
                 else
@@ -152,7 +115,6 @@
 
                     if (rationBox != null)
                     {
-						//SetFilteredStorageColors(rationBox.filteredStorage, color, dimmedColor);
 						SetFilteredStorageColors(rationBox, (Color)color, (Color)dimmedColor);
 					}
                     else
@@ -162,7 +124,6 @@
 
                         if (fridge != null)
                         {
-							//SetFilteredStorageColors(fridge.filteredStorage, color, dimmedColor);
 							SetFilteredStorageColors(fridge, (Color)color, (Color)dimmedColor);
 						}
                         else
@@ -236,25 +197,6 @@
             Debug.LogError(message);
         }
 
-        // TODO: log failed reload on other eventhandlers
-        private static void OnTemperatureStateChanged(object sender, FileSystemEventArgs e)
-        {
-            string message;
-
-            if (State.TryReloadTemperatureState())
-            {
-                UpdateTemperatureThresholds();
-                message = "Temperature overlay state changed.";
-            }
-            else
-            {
-                message = "Temperature overlay state load failed.";
-            }
-
-            State.Logger.Log(message);
-            Debug.LogError(message);
-        }
-
         private static void OnTypeColorOffsetsChanged(object sender, FileSystemEventArgs e)
         {
             if (!State.TryReloadTypeColorOffsets())
@@ -299,9 +241,7 @@
         {
 			FilteredStorage storage = (FilteredStorage) GetField(_storage, "filteredStorage");
 
-			//storage.filterTint   = color;
 			SetField(storage, "filterTint", color);
-			//storage.noFilterTint = dimmedColor;
 			SetField(storage, "noFilterTint", dimmedColor);
 			storage.FilterChanged();
         }
@@ -343,14 +283,6 @@
                                                   Paths.MaterialColorStateFileName,
                                                   Paths.MaterialConfigPath,
                                                   OnMaterialStateChanged);
-
-                if (State.TemperatureOverlayState.CustomRangesEnabled)
-                {
-                    FileChangeNotifier.StartFileWatch(
-                                                      Paths.TemperatureStateFileName,
-                                                      Paths.MaterialConfigPath,
-                                                      OnTemperatureStateChanged);
-                }
             }
             catch (Exception e)
             {
@@ -390,32 +322,6 @@
             }
         }
 
-        private static void UpdateTemperatureThresholds()
-        {
-            List<float> newTemperatures = State.TemperatureOverlayState.CustomRangesEnabled
-                                          ? State.TemperatureOverlayState.Temperatures
-                                          : State.DefaultTemperatures;
-
-            List<Color32> newColors = State.TemperatureOverlayState.CustomRangesEnabled
-                                    ? State.TemperatureOverlayState.Colors
-                                    : State.DefaultTemperatureColors;
-
-            //State.Logger.Log("CustomRangesEnabled " + State.TemperatureOverlayState.CustomRangesEnabled);
-            for (int i = 0; i < newTemperatures.Count; i++)
-            {
-                //State.Logger.Log("newTemperatures[i] " + newTemperatures[i]);
-                if (SimDebugView.Instance.temperatureThresholds != null)
-                {
-                    //State.Logger.Log("SimDebugView.Instance.temperatureThresholds[i] " + SimDebugView.Instance.temperatureThresholds[i].value);
-                    SimDebugView.Instance.temperatureThresholds[i] =
-                    new SimDebugView.ColorThreshold { color = newColors[i], value = newTemperatures[i] };
-                    //State.Logger.Log("SimDebugView.Instance.temperatureThresholds[i] " + SimDebugView.Instance.temperatureThresholds[i].value);
-                }
-            }
-
-            Array.Sort(SimDebugView.Instance.temperatureThresholds, new ColorThresholdTemperatureSorter());
-        }
-
         [HarmonyPatch(typeof(BlockTileRenderer), nameof(BlockTileRenderer.GetCellColour))]
         public static class BlockTileRenderer_GetCellColour
         {
@@ -452,7 +358,6 @@
                             }
                             else
                             {
-								//if (cell == __instance.invalidPlaceCell)
 								if (cell == (int) GetField(__instance, "invalidPlaceCell"))
 								{
                                     __result = ColorHelper.InvalidCellColor;
@@ -468,14 +373,12 @@
                         tileColor = ColorHelper.DefaultCellColor;
                     }
 
-					//if (cell == __instance.selectedCell)
 					if (cell == (int) GetField(__instance, "selectedCell"))
 					{
                         __result = tileColor * 1.5f;
                         return false;
                     }
 
-					//if (cell == __instance.highlightCell)
 					if (cell == (int)GetField(__instance, "highlightCell"))
 					{
                         __result = tileColor * 1.25f;
@@ -557,8 +460,6 @@
                     foreach (var name in values)
                     {
                         elementsLog += Environment.NewLine+name;
-                        //ElementLoader.GetElementIndex(i);
-                        //ElementLoader.FindElementByName(i);
                     }
                     State.Logger.Log(elementsLog);
                 }
@@ -744,36 +645,6 @@
 
                     Debug.LogError(message);
                 }
-
-                // Temp col overlay
-                try
-                {
-                    SaveTemperatureThresholdsAsDefault();
-                    if (State.TemperatureOverlayState.LogThresholds)
-                    {
-                        State.Logger.Log("Before: ");
-                        LogTemperatureThresholds();
-                    }
-                    /*
-                    if (!State.TryReloadTemperatureState())
-                    {
-                        State.Logger.Log("Error loading temperatures config file. ");
-                    }
-                    */
-                    UpdateTemperatureThresholds();
-
-                    if (State.TemperatureOverlayState.LogThresholds)
-                    {
-                        State.Logger.Log("After: ");
-                        LogTemperatureThresholds();
-                    }
-                }
-                catch (Exception e)
-                {
-                    State.Logger.Log("Custom temperature overlay init error");
-                    State.Logger.Log(e);
-                }
-                
             }
         }
     }

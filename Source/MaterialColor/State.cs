@@ -41,8 +41,6 @@
 
         private static Logger _logger;
 
-        private static TemperatureOverlayState _temperatureOvelayState;
-
         private static Dictionary<string, Color32> _typeColorOffsets;
 
         [NotNull]
@@ -93,28 +91,6 @@
         public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger(Paths.ModsDirectory+ System.IO.Path.DirectorySeparatorChar + "_Logs" + System.IO.Path.DirectorySeparatorChar + Paths.MaterialColorLogFileName));
 
         [NotNull]
-        public static TemperatureOverlayState TemperatureOverlayState
-        {
-            get
-            {
-                if (_temperatureOvelayState != null)
-                {
-                    return _temperatureOvelayState;
-                }
-
-                JsonLoader.TryLoadTemperatureState(out _temperatureOvelayState);
-
-                return _temperatureOvelayState;
-            }
-
-			//private set => _temperatureOvelayState = value;
-			private set
-			{
-				_temperatureOvelayState = value;
-			}
-		}
-
-        [NotNull]
         public static Dictionary<string, Color32> TypeColorOffsets
         {
             get
@@ -160,20 +136,6 @@
             }
 
             ElementColorInfos = colorInfos;
-
-            return true;
-        }
-
-        public static bool TryReloadTemperatureState()
-        {
-			//if (!JsonLoader.TryLoadTemperatureState(out TemperatureOverlayState temperatureState))
-			TemperatureOverlayState temperatureState;
-			if (!JsonLoader.TryLoadTemperatureState(out temperatureState))
-			{
-                return false;
-            }
-
-            TemperatureOverlayState = temperatureState;
 
             return true;
         }

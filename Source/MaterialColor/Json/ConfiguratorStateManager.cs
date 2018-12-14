@@ -17,33 +17,9 @@
             return this._manager.Deserialize<MaterialColorState>(Paths.MaterialColorStatePath);
         }
 
-        /*
-        public OnionState LoadOnionState()
-        {
-            return this._manager.Deserialize<OnionState>(Paths.OnionStatePath);
-        }
-        */
-
-        public TemperatureOverlayState LoadTemperatureState()
-        {
-            return this._manager.Deserialize<TemperatureOverlayState>(Paths.TemperatureStatePath);
-        }
-
         public void SaveMaterialColorState(MaterialColorState state)
         {
             this._manager.Serialize(state, Paths.MaterialColorStatePath);
-        }
-
-        /*
-        public void SaveOnionState(OnionState state)
-        {
-            this._manager.Serialize(state, Paths.OnionStatePath);
-        }
-        */
-
-        public void SaveTemperatureState(TemperatureOverlayState state)
-        {
-            this._manager.Serialize(state, Paths.TemperatureStatePath);
         }
     }
 }

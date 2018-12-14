@@ -68,24 +68,6 @@
             }
         }
 
-        public bool TryLoadTemperatureState(out TemperatureOverlayState state)
-        {
-            try
-            {
-                state = this._configuratorStateManager.LoadTemperatureState();
-                return true;
-            }
-            catch (Exception e)
-            {
-                this._logger.Log(e);
-                this._logger.Log("Can't load overlay temperature state");
-
-                state = new TemperatureOverlayState();
-
-                return false;
-            }
-        }
-
         public bool TryLoadTypeColorOffsets(out Dictionary<string, Color32> typeColorOffsets)
         {
             try

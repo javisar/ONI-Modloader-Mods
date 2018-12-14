@@ -70,9 +70,6 @@
     <Compile Include="Data\ColorMode.cs" />
     <Compile Include="Data\ElementColorInfo.cs" />
     <Compile Include="Data\MaterialColorState.cs" />
-    <None Include="Data\TemperatureOverlayState.cs.bak" />
-    <Compile Include="Data\TemperatureOverlayState.cs" />
-    <None Include="Helpers\InjectorOnion.cs.deprecated" />
     <None Include="Helpers\ColorHelperONI.cs" />
     <Compile Include="Extensions\Color32Extensions.cs" />
     <Compile Include="Json\BaseManager.cs" />
@@ -82,9 +79,7 @@
     <Compile Include="Json\TypeColorOffsetsManager.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="State.cs" />
-    <Compile Include="TemperatureOverlay\ColorThresholdTemperatureSorter.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
-    <None Include="ColorHelper_Patched.cs" />
     <Compile Include="Harmony\HarmonyPatches.cs" />
     <Compile Include="Helpers\MaterialHelper.cs" />
     <Compile Include="Extensions\SimHashesExtensions.cs" />
@@ -103,45 +98,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Config\MaterialColorState.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TemperatureOverlayState.json.default">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TemperatureOverlayState.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\00-machine.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\01-door.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\02-liquid.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\03-gas.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\04-power.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\05-other.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\06-creature.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\07-exosuit.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\08-automation.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\09-tiles.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\TypeColorOffsets\10-tubular.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
