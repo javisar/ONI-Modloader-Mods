@@ -40,7 +40,7 @@ namespace ONI_Common.Json
 			foreach (string file in Directory.GetFiles(toadd)) {
 				if (!file.EndsWith(".json")) continue;
 				if (file.Contains(filename)) continue;
-				if (duplicatepurge.Contains(System.IO.Path.GetFileName(filename))) continue;
+				if (duplicatepurge.Contains(System.IO.Path.GetFileName(file))) continue;
 				if (file.Contains("Opening.json")) continue;
 				if (file.Contains("Closing.json")) continue;
 				filetext += File.ReadAllText(file) + System.Environment.NewLine;
