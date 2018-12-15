@@ -6,11 +6,6 @@ namespace ONI_Common.Json
 {
 	public class JsonAggregator
 	{
-		public bool Enabled { get; set; } = true;
-
-		public bool Debug { get; set; } = false;
-
-		public Dictionary<string, Dictionary<string, object>> Modifiers { get; set; } = new Dictionary<string, Dictionary<string, object>>();
 		string filetext = "";
 		List<string> directorys = new List<string>();
 		string basepath;// = ONI_Common.Paths.GetStatePath("BuildingModifierMod");
