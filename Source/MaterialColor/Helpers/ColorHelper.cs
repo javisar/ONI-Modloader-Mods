@@ -37,11 +37,12 @@
             return material.ToCellMaterialColor();
         }
 
+        // TODO: MOVE
         private static void BreakdownGridObjectsComponents(int cellIndex)
         {
             for (int i = 0; i <= 20; i++)
             {
-                State.Logger.Log("Starting object from grid component breakdown, index: " + cellIndex);
+                Debug.Log("Starting object from grid component breakdown, index: " + cellIndex);
 
                 try
                 {
@@ -49,13 +50,13 @@
 
                     foreach (Component comp in comps)
                     {
-                        State.Logger.Log($"Object Layer: {i}, Name: {comp.name}, Type: {comp.GetType()}");
+                        Debug.Log($"Object Layer: {i}, Name: {comp.name}, Type: {comp.GetType()}");
                     }
                 }
                 catch (IndexOutOfRangeException e)
                 {
-                    State.Logger.Log($"Cell Index: {cellIndex}, Layer: {i}");
-                    State.Logger.Log(e);
+                    Debug.Log($"Cell Index: {cellIndex}, Layer: {i}");
+                    Debug.Log(e);
                 }
 
                 // catch { }

@@ -10,7 +10,7 @@
 
 	public static class SimHashesExtensions
     {
-        public static Color GetMaterialColorForType(this SimHashes material, string objectTypeName)
+        public static Color ToMaterialColor(this SimHashes material)
         {
             ElementColorInfo elementColorInfo = material.GetMaterialColorInfo();
 

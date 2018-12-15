@@ -32,6 +32,7 @@
 
         public static void OnLoad() { }
 
+        // BUG doesnt refresh properly
         public static void RefreshMaterialColor()
         {
             UpdateBuildingsColors();
@@ -40,8 +41,8 @@
 
         public static void UpdateBuildingColor(BuildingComplete building)
         {
-            string    buildingName = building.name.Replace("Complete", string.Empty);
-            SimHashes material     = MaterialHelper.ExtractMaterial(building);
+            string buildingName = building.name.Replace("Complete", string.Empty);
+            SimHashes material = MaterialHelper.ExtractMaterial(building);
 
             Color color;
 
@@ -50,7 +51,7 @@
                 switch (State.ConfiguratorState.ColorMode)
                 {
                     case ColorMode.Json:
-                        color = material.GetMaterialColorForType(buildingName);
+                        color = material.ToMaterialColor();
                         break;
 
                     case ColorMode.DebugColor:
@@ -87,68 +88,30 @@
                 }
             }
 
-            // TODO reimplement
-            Color dimmedColor = new Color(1, 1, 1); //color.SetBrightness(color.GetBrightness() / 2);
+            Color dimmedColor = DimmColor(color);
 
-            // storagelocker
-            StorageLocker storageLocker = building.GetComponent<StorageLocker>();
+            IUserControlledCapacity userControlledCapacity = building.GetComponent<IUserControlledCapacity>();
 
-            //////////////
-
-            if (storageLocker != null)
+            if (userControlledCapacity == null)
             {
-				SetFilteredStorageColors(storageLocker, (Color)color, (Color)dimmedColor);
-			}
-            else
-            {
-                // ownable
-                Ownable ownable = building.GetComponent<Ownable>();
+                KAnimControllerBase kAnimControllerBase = building.GetComponent<KAnimControllerBase>();
 
-                if (ownable != null)
+                if (kAnimControllerBase != null)
                 {
-					SetField(ownable, "ownedTint", (Color)color);
-					SetField(ownable, "unownedTint", (Color)dimmedColor);
-					Invoke(ownable, "UpdateTint");
+                    SetTintColour(kAnimControllerBase, color);
                 }
                 else
                 {
-                    // rationbox
-                    RationBox rationBox = building.GetComponent<RationBox>();
-
-                    if (rationBox != null)
-                    {
-						SetFilteredStorageColors(rationBox, (Color)color, (Color)dimmedColor);
-					}
-                    else
-                    {
-                        // refrigerator
-                        Refrigerator fridge = building.GetComponent<Refrigerator>();
-
-                        if (fridge != null)
-                        {
-							SetFilteredStorageColors(fridge, (Color)color, (Color)dimmedColor);
-						}
-                        else
-                        {
-                            // anything else
-                            KAnimControllerBase kAnimControllerBase = building.GetComponent<KAnimControllerBase>();
-
-                            if (kAnimControllerBase != null)
-                            {
-
-                                KBatchedAnimInstanceData batchInstanceData = (KBatchedAnimInstanceData)AccessTools.Field(typeof(KAnimControllerBase), "batchInstanceData").GetValue(kAnimControllerBase); //GetValue instead?
-                                batchInstanceData.SetTintColour(color);
-                                //batchInstanceData.SetTintColour(new Color(0,5,5));
-                                //kAnimControllerBase.TintColour = color;
-                            }
-                            else
-                            {
-                                Debug.Log($"MaterialColor: Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
-                            }
-                        }
-                    }
+                    Debug.Log($"MaterialColor: Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
                 }
             }
+        }
+
+        private static void SetTintColour(KAnimControllerBase kAnimControllerBase, Color color)
+        {
+            FieldInfo batchInstanceDataField = AccessTools.Field(typeof(KAnimControllerBase), "batchInstanceData");
+            KBatchedAnimInstanceData batchInstanceData = (KBatchedAnimInstanceData)batchInstanceDataField.GetValue(kAnimControllerBase);
+            batchInstanceData.SetTintColour(color);
         }
 
         private static void Initialize()
@@ -228,32 +191,7 @@
             State.Logger.Log("All tiles rebuilt.");
         }
 
-        private static void SaveTemperatureThresholdsAsDefault()
-        {
-            if (SimDebugView.Instance?.temperatureThresholds != null)
-            {
-                foreach (SimDebugView.ColorThreshold threshold in SimDebugView.Instance?.temperatureThresholds)
-                {
-                    State.DefaultTemperatureColors.Add(threshold.color);
-                    State.DefaultTemperatures.Add(threshold.value);
-                }
-            }
-        }
-
-        // TODO: find a way to make it Color not Color32 here
-        private static void SetFilteredStorageColors(
-        [NotNull] object		  _storage,
-        Color32                   color,
-        Color32                   dimmedColor)
-        {
-			FilteredStorage storage = (FilteredStorage) GetField(_storage, "filteredStorage");
-
-			SetField(storage, "filterTint", color);
-			SetField(storage, "noFilterTint", dimmedColor);
-			storage.FilterChanged();
-        }
-		
-		private static object GetField(object _instance, string name)
+        private static object GetField(object _instance, string name)
 		{
 			FieldInfo fi = AccessTools.Field(_instance.GetType(), name);
 			return fi.GetValue(_instance);
@@ -318,14 +256,72 @@
             }
         }
 
-        private static void LogTemperatureThresholds()
+        [HarmonyPatch(typeof(Ownable), "UpdateTint")]
+        public static class Ownable_UpdateTint
         {
-            for (int i = 0; i < SimDebugView.Instance.temperatureThresholds.Length; i++)
+            public static void Postfix(Ownable __instance)
             {
-                string message = SimDebugView.Instance.temperatureThresholds[i].value.ToString();
-                Color32 color = SimDebugView.Instance.temperatureThresholds[i].color;
+                SimHashes material = MaterialHelper.ExtractMaterial(__instance);
+                Color color = material.ToMaterialColor();
 
-                State.Logger.Log("Temperature Color " + i + " at " + message + " K: " + color);
+                if (__instance.assignee != null)
+                {
+                    color = DimmColor(color);
+                }
+
+                KAnimControllerBase kAnimControllerBase = __instance.GetComponent<KAnimControllerBase>();
+                if (kAnimControllerBase != null && kAnimControllerBase.HasBatchInstanceData) // TODO: is second check needed?
+                {
+                    SetTintColour(kAnimControllerBase, color);
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(FilteredStorage), "OnFilterChanged")]
+        public static class FilteredStorage_OnFilterChanged
+        {
+            public static void Postfix(FilteredStorage __instance, Tag[] tags)
+            {
+                KMonoBehaviour root = (KMonoBehaviour)GetField(__instance, "root");
+
+                //////////////////
+                SimHashes material = MaterialHelper.ExtractMaterial(root.FindComponent<BuildingComplete>());
+
+                bool active = tags != null && tags.Length != 0;
+
+                Color tint = material.ToMaterialColor();
+
+                if (!active)
+                {
+                    tint = DimmColor(tint);
+                }
+
+                KAnimControllerBase animBase = root.GetComponent<KAnimControllerBase>();
+
+                if (animBase != null)
+                {
+                    SetTintColour(animBase, tint);
+                }
+            }
+        }
+
+        // TODO: move, change to extension?
+        private static Color DimmColor(Color color)
+        {
+            Color result = color / 2;
+            result.a = 1;
+
+            return result;
+        }
+
+        // TODO: move
+        public static void LogComponents(Component target)
+        {
+            Component[] comps = target.GetComponents<Component>();
+
+            foreach (Component comp in comps)
+            {
+                Debug.Log($"BREAK: Name: {comp.name}, Type: {comp.GetType()}");
             }
         }
 

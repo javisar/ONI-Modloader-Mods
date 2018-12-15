@@ -4,6 +4,7 @@ using ONI_Common.Data;
 
 namespace MaterialColor.Data
 {
+    // TODO: refactor needed
     public class ElementColorInfo
     {
         public ElementColorInfo(Color32Multiplier multiplier, float brightness = 1)
