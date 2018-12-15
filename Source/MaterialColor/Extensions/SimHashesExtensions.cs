@@ -12,37 +12,20 @@
     {
         public static Color GetMaterialColorForType(this SimHashes material, string objectTypeName)
         {
-			//if (!ColorHelper.TryGetTypeStandardColor(objectTypeName, out Color32 typeStandardColor))
-			Color32 typeStandardColor;
-			if (!ColorHelper.TryGetTypeStandardColor(objectTypeName, out typeStandardColor))
-			{
-                if (State.ConfiguratorState.ShowMissingTypeColorOffsets)
-                {
-                    Debug.LogError($"Can't find <{objectTypeName}> type color");
-                    return typeStandardColor;
-                }
-            }
-
-            Color32 colorOffsetForWhite = typeStandardColor.TintToWhite();
-
-            if (State.ConfiguratorState.ShowBuildingsAsWhite)
-            {
-                return colorOffsetForWhite;
-            }
-
             ElementColorInfo elementColorInfo = material.GetMaterialColorInfo();
 
-            // UnityEngine.Debug.Log("About to multiply - "+ objectTypeName+"-"  + material + "-" + elementColorInfo.ColorMultiplier.Red + "-"+ elementColorInfo.Brightness);
-            Color32 multiply      = colorOffsetForWhite.Multiply(elementColorInfo.ColorMultiplier);
-            Color32 materialColor = multiply.SetBrightness(elementColorInfo.Brightness);
-
-            return materialColor;
+            // TODO extract method (extension?)
+            return new Color
+            (
+                elementColorInfo.ColorMultiplier.Red,
+                elementColorInfo.ColorMultiplier.Green,
+                elementColorInfo.ColorMultiplier.Blue
+            );
         }
 
         [NotNull]
         public static ElementColorInfo GetMaterialColorInfo(this SimHashes materialHash)
         {
-			//if (State.ElementColorInfos.TryGetValue(materialHash, out ElementColorInfo elementColorInfo))
 			ElementColorInfo elementColorInfo;
 			if (State.ElementColorInfos.TryGetValue(materialHash, out elementColorInfo))
 			{

@@ -70,7 +70,6 @@
     <Compile Include="Data\ColorMode.cs" />
     <Compile Include="Data\ElementColorInfo.cs" />
     <Compile Include="Data\MaterialColorState.cs" />
-    <None Include="Helpers\ColorHelperONI.cs" />
     <Compile Include="Extensions\Color32Extensions.cs" />
     <Compile Include="Json\BaseManager.cs" />
     <Compile Include="Json\ConfiguratorStateManager.cs" />

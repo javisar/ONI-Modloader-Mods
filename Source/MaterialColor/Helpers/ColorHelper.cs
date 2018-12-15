@@ -37,23 +37,6 @@
             return material.ToCellMaterialColor();
         }
 
-
-        public static bool TryGetTypeStandardColor(string typeName, out Color32 standardColor)
-        {
-            Color32 typeStandardColor;
-            if (State.TypeColorOffsets.TryGetValue(typeName, out typeStandardColor))
-            {
-                standardColor = typeStandardColor;
-                return true;
-            }
-
-            standardColor = State.ConfiguratorState.ShowMissingTypeColorOffsets
-                            ? MissingDebugColor
-                            : NoOffset;
-
-            return false;
-        }
-
         private static void BreakdownGridObjectsComponents(int cellIndex)
         {
             for (int i = 0; i <= 20; i++)

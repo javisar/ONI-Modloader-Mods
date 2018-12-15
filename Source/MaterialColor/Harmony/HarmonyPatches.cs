@@ -43,7 +43,7 @@
             string    buildingName = building.name.Replace("Complete", string.Empty);
             SimHashes material     = MaterialHelper.ExtractMaterial(building);
 
-            Color32 color;
+            Color color;
 
             if (State.ConfiguratorState.Enabled)
             {
@@ -87,15 +87,17 @@
                 }
             }
 
-            Color32 dimmedColor = color.SetBrightness(color.GetBrightness() / 2);
+            // TODO reimplement
+            Color dimmedColor = new Color(1, 1, 1); //color.SetBrightness(color.GetBrightness() / 2);
 
             // storagelocker
             StorageLocker storageLocker = building.GetComponent<StorageLocker>();
 
+            //////////////
+
             if (storageLocker != null)
             {
 				SetFilteredStorageColors(storageLocker, (Color)color, (Color)dimmedColor);
-
 			}
             else
             {
@@ -133,7 +135,11 @@
 
                             if (kAnimControllerBase != null)
                             {
-                                kAnimControllerBase.TintColour = color;
+
+                                KBatchedAnimInstanceData batchInstanceData = (KBatchedAnimInstanceData)AccessTools.Field(typeof(KAnimControllerBase), "batchInstanceData").GetValue(kAnimControllerBase); //GetValue instead?
+                                batchInstanceData.SetTintColour(color);
+                                //batchInstanceData.SetTintColour(new Color(0,5,5));
+                                //kAnimControllerBase.TintColour = color;
                             }
                             else
                             {
@@ -234,6 +240,7 @@
             }
         }
 
+        // TODO: find a way to make it Color not Color32 here
         private static void SetFilteredStorageColors(
         [NotNull] object		  _storage,
         Color32                   color,
