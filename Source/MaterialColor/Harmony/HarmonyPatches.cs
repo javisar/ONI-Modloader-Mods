@@ -77,10 +77,7 @@
                         ColorHelper.TileColors = new Color?[Grid.CellCount];
                     }
 
-                    Color tileColor = /*new Color(1,1,1) -*/ color;
-                    tileColor.a = 1;
-
-                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = tileColor;
+                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = ToTileColor(color);
 
                     return;
                 }
@@ -106,6 +103,24 @@
                     Debug.Log($"MaterialColor: Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
                 }
             }
+        }
+
+        // TODO: move, to extension?
+        private static Color ToTileColor(Color color)
+        {
+            return new Color
+            (
+                color.r >= 0
+                    ? 1 - color.r
+                    : Mathf.Abs(color.r),
+                color.g >= 0
+                    ? 1 - color.g
+                    : Mathf.Abs(color.g),
+                color.b >= 0
+                    ? 1 - color.b
+                    : Mathf.Abs(color.b),
+                1
+            );
         }
 
         private static void SetTintColour(KAnimControllerBase kAnimControllerBase, Color color)
