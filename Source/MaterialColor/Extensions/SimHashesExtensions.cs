@@ -10,21 +10,9 @@
 
 	public static class SimHashesExtensions
     {
-        public static Color ToMaterialColor(this SimHashes material)
+        public static bool ToMaterialColor(this SimHashes material, out Color result)
         {
-			Color color;
-			if (State.ElementColorInfos.TryGetValue(material, out color))
-			{
-                return color;
-            }
-
-            if (!State.ConfiguratorState.ShowMissingElementColorInfos)
-            {
-                return Color.white;
-            }
-
-            Debug.LogError($"Can't find <{material}> color info");
-            return new Color(4, 0, 4);
+            return State.ElementColorInfos.TryGetValue(material, out result);
         }
 
         public static Color32 ToDebugColor(this SimHashes material)

@@ -39,34 +39,47 @@
             RebuildAllTiles();
         }
 
+        // TODO: move
+        public static Color ToMaterialColor(Component component)
+        {
+            PrimaryElement primaryElement = component.GetComponent<PrimaryElement>();
+
+            if (primaryElement != null)
+            {
+                if (State.ConfiguratorState.Enabled)
+                {
+                    SimHashes material = primaryElement.ElementID;
+
+                    switch (State.ConfiguratorState.ColorMode)
+                    {
+                        case ColorMode.Json:
+                            Color color;
+                            if (!material.ToMaterialColor(out color))
+                            {
+                                return primaryElement.Element.substance.overlayColour;
+                            }
+                            else if (State.ConfiguratorState.ShowMissingElementColorInfos)
+                            {
+                                Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
+                            }
+                            return color;
+
+                        case ColorMode.DebugColor:
+                            return material.ToDebugColor();
+
+                        default:
+                            return primaryElement.Element.substance.overlayColour;
+                    }
+                }
+            }
+            return ColorHelper.DefaultColor;
+        }
+
         public static void UpdateBuildingColor(BuildingComplete building)
         {
             string buildingName = building.name.Replace("Complete", string.Empty);
-            SimHashes material = MaterialHelper.ExtractMaterial(building);
 
-            Color color;
-
-            if (State.ConfiguratorState.Enabled)
-            {
-                switch (State.ConfiguratorState.ColorMode)
-                {
-                    case ColorMode.Json:
-                        color = material.ToMaterialColor();
-                        break;
-
-                    case ColorMode.DebugColor:
-                        color = material.ToDebugColor();
-                        break;
-
-                    default:
-                        color = ColorHelper.DefaultColor;
-                        break;
-                }
-            }
-            else
-            {
-                color = ColorHelper.DefaultColor;
-            }
+            Color color = ToMaterialColor(building);
 
             if (State.TileNames.Contains(buildingName))
             {
@@ -106,7 +119,8 @@
         }
 
         // TODO: move, to extension?
-        private static Color ToTileColor(Color color)
+        // FIX
+        public static Color ToTileColor(Color color)
         {
             return new Color
             (
@@ -285,18 +299,13 @@
         {
             public static void Postfix(Ownable __instance)
             {
-                SimHashes material = MaterialHelper.ExtractMaterial(__instance);
-                Color color = material.ToMaterialColor();
+                Color tint = HarmonyPatches.ToMaterialColor(__instance);
+                bool owned = __instance.assignee != null;
 
-                if (__instance.assignee != null)
+                KAnimControllerBase animBase = __instance.GetComponent<KAnimControllerBase>();
+                if (animBase != null && animBase.HasBatchInstanceData) // TODO: is second check needed?
                 {
-                    color = DimmColor(color);
-                }
-
-                KAnimControllerBase kAnimControllerBase = __instance.GetComponent<KAnimControllerBase>();
-                if (kAnimControllerBase != null && kAnimControllerBase.HasBatchInstanceData) // TODO: is second check needed?
-                {
-                    SetTintColour(kAnimControllerBase, color);
+                    SetTintColour(animBase, owned ? tint : DimmColor(tint));
                 }
             }
         }
@@ -308,22 +317,13 @@
             {
                 KMonoBehaviour root = (KMonoBehaviour)GetField(__instance, "root");
 
-                SimHashes material = MaterialHelper.ExtractMaterial(root.FindComponent<BuildingComplete>());
-
+                Color tint = ToMaterialColor(root);
                 bool active = tags != null && tags.Length != 0;
 
-                Color tint = material.ToMaterialColor();
-
-                if (!active)
-                {
-                    tint = DimmColor(tint);
-                }
-
                 KAnimControllerBase animBase = root.GetComponent<KAnimControllerBase>();
-
-                if (animBase != null)
+                if (animBase != null && animBase.HasBatchInstanceData)
                 {
-                    SetTintColour(animBase, tint);
+                    SetTintColour(animBase, active ? tint : DimmColor(tint));
                 }
             }
         }
@@ -372,7 +372,7 @@
                                     break;
 
                                 default:
-                                    tileColor = ColorHelper.DefaultCellColor;
+                                    tileColor = ColorHelper.DefaultTileColor;
                                     break;
                             }
                         }
@@ -386,17 +386,17 @@
                             {
 								if (cell == (int) GetField(__instance, "invalidPlaceCell"))
 								{
-                                    __result = ColorHelper.InvalidCellColor;
+                                    __result = ColorHelper.InvalidTileColor;
                                     return false;
                                 }
 
-                                tileColor = ColorHelper.DefaultCellColor;
+                                tileColor = ColorHelper.DefaultTileColor;
                             }
                         }
                     }
                     else
                     {
-                        tileColor = ColorHelper.DefaultCellColor;
+                        tileColor = ColorHelper.DefaultTileColor;
                     }
 
 					if (cell == (int) GetField(__instance, "selectedCell"))

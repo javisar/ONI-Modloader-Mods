@@ -6,18 +6,13 @@
 
     public static class ColorHelper
     {
-        public static readonly Color32 DefaultColor =
-        new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
+        public static readonly Color DefaultColor = new Color(1, 1, 1, 1);
+        public static readonly Color InvalidColor = new Color(1, 0, 1, 1);
 
-        public static readonly Color32 MissingDebugColor = new Color32(byte.MaxValue, 0, byte.MaxValue, byte.MaxValue);
-
-        public static readonly Color32 NoOffset = new Color32(0, 0, 0, byte.MaxValue);
+        public static readonly Color DefaultTileColor = HarmonyPatches.ToTileColor(DefaultColor);
+        public static readonly Color InvalidTileColor = HarmonyPatches.ToTileColor(InvalidColor);
 
         public static Color?[] TileColors;
-
-        public static Color DefaultCellColor => new Color(1, 1, 1);
-
-        public static Color InvalidCellColor => new Color(1, 0, 0);
 
         public static Color GetCellColorDebug(int cellIndex)
         {
@@ -33,8 +28,23 @@
 
         public static Color GetCellColorJson(int cellIndex)
         {
-            SimHashes material = MaterialHelper.GetMaterialFromCell(cellIndex);
-            return material.ToMaterialColor();
+            if (Grid.IsValidCell(cellIndex))
+            {
+                Element element;
+                if (MaterialHelper.CellIndexToElement(cellIndex, out element))
+                {
+                    Color materialColor;
+                    if (element.id.ToMaterialColor(out materialColor))
+                    {
+                        return materialColor;
+                    }
+                    else
+                    {
+                        return element.substance.overlayColour;
+                    }
+                }
+            }
+            return ColorHelper.InvalidTileColor;
         }
 
         // TODO: MOVE
