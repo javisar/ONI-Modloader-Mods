@@ -77,7 +77,10 @@
                         ColorHelper.TileColors = new Color?[Grid.CellCount];
                     }
 
-                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color;
+                    Color tileColor = /*new Color(1,1,1) -*/ color;
+                    tileColor.a = 1;
+
+                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = tileColor;
 
                     return;
                 }
@@ -87,8 +90,6 @@
                     State.Logger.Log(e);
                 }
             }
-
-            Color dimmedColor = DimmColor(color);
 
             IUserControlledCapacity userControlledCapacity = building.GetComponent<IUserControlledCapacity>();
 
@@ -111,7 +112,15 @@
         {
             FieldInfo batchInstanceDataField = AccessTools.Field(typeof(KAnimControllerBase), "batchInstanceData");
             KBatchedAnimInstanceData batchInstanceData = (KBatchedAnimInstanceData)batchInstanceDataField.GetValue(kAnimControllerBase);
-            batchInstanceData.SetTintColour(color);
+            kAnimControllerBase.TintColour = new Color(1, 1, 1);
+            if (batchInstanceData.SetTintColour(color))
+            {
+                kAnimControllerBase.SetDirty();
+
+                Traverse.Create(kAnimControllerBase).Method("SuspendUpdates", false).GetValue();
+
+                kAnimControllerBase.OnTintChanged?.Invoke(color);
+            }
         }
 
         private static void Initialize()
@@ -284,7 +293,6 @@
             {
                 KMonoBehaviour root = (KMonoBehaviour)GetField(__instance, "root");
 
-                //////////////////
                 SimHashes material = MaterialHelper.ExtractMaterial(root.FindComponent<BuildingComplete>());
 
                 bool active = tags != null && tags.Length != 0;
@@ -308,8 +316,8 @@
         // TODO: move, change to extension?
         private static Color DimmColor(Color color)
         {
-            Color result = color / 2;
-            result.a = 1;
+            Color result = color - new Color(0.3f, 0.3f, 0.3f);
+            color.a = 1;
 
             return result;
         }

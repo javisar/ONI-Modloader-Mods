@@ -68,7 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ColorMode.cs" />
-    <Compile Include="Data\ElementColorInfo.cs" />
     <Compile Include="Data\MaterialColorState.cs" />
     <Compile Include="Extensions\Color32Extensions.cs" />
     <Compile Include="Json\BaseManager.cs" />

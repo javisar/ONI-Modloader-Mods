@@ -47,7 +47,7 @@
             }
         }
 
-        public bool TryLoadElementColorInfos(out Dictionary<SimHashes, ElementColorInfo> elementColorInfos)
+        public bool TryLoadElementColorInfos(out Dictionary<SimHashes, Color> elementColorInfos)
         {
             try
             {
@@ -63,7 +63,7 @@
                 State.Logger.Log(Message);
                 State.Logger.Log(e);
 
-                elementColorInfos = new Dictionary<SimHashes, ElementColorInfo>();
+                elementColorInfos = new Dictionary<SimHashes, Color>();
                 return false;
             }
         }

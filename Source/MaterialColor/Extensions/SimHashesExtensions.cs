@@ -12,47 +12,19 @@
     {
         public static Color ToMaterialColor(this SimHashes material)
         {
-            ElementColorInfo elementColorInfo = material.GetMaterialColorInfo();
-
-            // TODO extract method (extension?)
-            return new Color
-            (
-                elementColorInfo.ColorMultiplier.Red,
-                elementColorInfo.ColorMultiplier.Green,
-                elementColorInfo.ColorMultiplier.Blue
-            );
-        }
-
-        [NotNull]
-        public static ElementColorInfo GetMaterialColorInfo(this SimHashes materialHash)
-        {
-			ElementColorInfo elementColorInfo;
-			if (State.ElementColorInfos.TryGetValue(materialHash, out elementColorInfo))
+			Color color;
+			if (State.ElementColorInfos.TryGetValue(material, out color))
 			{
-                return elementColorInfo;
+                return color;
             }
 
             if (!State.ConfiguratorState.ShowMissingElementColorInfos)
             {
-                return new ElementColorInfo(Color32Multiplier.One);
+                return Color.white;
             }
 
-            Debug.LogError($"Can't find <{materialHash}> color info");
-            return new ElementColorInfo(new Color32Multiplier(1, 0, 1));
-        }
-
-        public static Color ToCellMaterialColor(this SimHashes material)
-        {
-            ElementColorInfo colorInfo = material.GetMaterialColorInfo();
-
-            Color result = new Color(
-                                     colorInfo.ColorMultiplier.Red,
-                                     colorInfo.ColorMultiplier.Green,
-                                     colorInfo.ColorMultiplier.Blue) * colorInfo.Brightness;
-
-            result.a = byte.MaxValue;
-
-            return result;
+            Debug.LogError($"Can't find <{material}> color info");
+            return new Color(4, 0, 4);
         }
 
         public static Color32 ToDebugColor(this SimHashes material)

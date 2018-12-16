@@ -34,7 +34,7 @@
         public static Color GetCellColorJson(int cellIndex)
         {
             SimHashes material = MaterialHelper.GetMaterialFromCell(cellIndex);
-            return material.ToCellMaterialColor();
+            return material.ToMaterialColor();
         }
 
         // TODO: MOVE

@@ -7,6 +7,9 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using UnityEngine;
+
+    using Logger = ONI_Common.IO.Logger;
 
     public class ElementColorInfosManager : BaseManager
     {
@@ -19,7 +22,7 @@
         /// Loads ElementColorInfos assoctiated with material from the configuration files
         /// </summary>
         /// <returns></returns>
-        public Dictionary<SimHashes, ElementColorInfo> LoadElementColorInfosDirectory(string directoryPath = null)
+        public Dictionary<SimHashes, Color> LoadElementColorInfosDirectory(string directoryPath = null)
         {
             if (directoryPath == null)
             {
@@ -29,12 +32,12 @@
             DirectoryInfo directory = new DirectoryInfo(directoryPath);
             FileInfo[]    files     = directory.GetFiles("*.json");
 
-            Dictionary<SimHashes, ElementColorInfo> result = new Dictionary<SimHashes, ElementColorInfo>();
+            Dictionary<SimHashes, Color> result = new Dictionary<SimHashes, Color>();
 
             foreach (FileInfo file in files)
             {
                 string                                  filePath = Path.Combine(directoryPath, file.Name);
-                Dictionary<SimHashes, ElementColorInfo> resultFromCurrentFile;
+                Dictionary<SimHashes, Color> resultFromCurrentFile;
 
                 try
                 {
@@ -51,7 +54,7 @@
                     continue;
                 }
 
-                foreach (KeyValuePair<SimHashes, ElementColorInfo> entry in resultFromCurrentFile)
+                foreach (KeyValuePair<SimHashes, Color> entry in resultFromCurrentFile)
                 {
                     if (result.ContainsKey(entry.Key))
                     {
@@ -69,12 +72,12 @@
             return result;
         }
 
-        public Dictionary<SimHashes, ElementColorInfo> LoadSingleElementColorInfosFile(string filePath)
+        public Dictionary<SimHashes, Color> LoadSingleElementColorInfosFile(string filePath)
         {
-            return this._manager.Deserialize<Dictionary<SimHashes, ElementColorInfo>>(filePath);
+            return this._manager.Deserialize<Dictionary<SimHashes, Color>>(filePath);
         }
 
-        public void SaveElementsColorInfo(Dictionary<SimHashes, ElementColorInfo> dictionary, string path = null)
+        public void SaveElementsColorInfo(Dictionary<SimHashes, Color> dictionary, string path = null)
         {
             if (path == null)
             {
