@@ -6,11 +6,11 @@
 
     public static class ColorHelper
     {
-        public static readonly Color DefaultColor = new Color(1, 1, 1, 1);
-        public static readonly Color InvalidColor = new Color(1, 0, 1, 1);
+        public static readonly Color DefaultColorOffset = new Color(0, 0, 0, 0);
+        public static readonly Color InvalidColorOffset = new Color(1, 0, 1, 0);
 
-        public static readonly Color DefaultTileColor = HarmonyPatches.ToTileColor(DefaultColor);
-        public static readonly Color InvalidTileColor = HarmonyPatches.ToTileColor(InvalidColor);
+        public static readonly Color DefaultTileColor = HarmonyPatches.ToTileColor(DefaultColorOffset, true);
+        public static readonly Color InvalidTileColor = HarmonyPatches.ToTileColor(InvalidColorOffset, true);
 
         public static Color?[] TileColors;
 

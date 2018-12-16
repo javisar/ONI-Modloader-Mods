@@ -6,10 +6,6 @@
 
         public bool LogElementsData { get; set; } = true;
 
-        public ColorMode ColorMode { get; set; } = ColorMode.Json;
-
-        public bool LegacyTileColorHandling { get; set; } = false;
-
         public bool ShowBuildingsAsWhite { get; set; }
 
         public bool ShowMissingElementColorInfos { get; set; }

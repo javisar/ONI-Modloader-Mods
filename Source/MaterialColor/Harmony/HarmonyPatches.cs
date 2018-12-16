@@ -40,46 +40,45 @@
         }
 
         // TODO: move
-        public static Color ToMaterialColor(Component component)
+        /// <summary>
+        /// Tries to get material color for given component, if not possible fallsback to to substance.overlayColour, then to ColorHelper.DefaultColor
+        /// </summary>
+        /// <param name="outColor">on true outputs color offset, otherwise fallsback to substance.overlayColour, then to ColorHelper.DefaultColor</param>
+        public static bool ToMaterialColor(Component component, out Color outColor)
         {
-            PrimaryElement primaryElement = component.GetComponent<PrimaryElement>();
-
-            if (primaryElement != null)
+            if (State.ConfiguratorState.Enabled)
             {
-                if (State.ConfiguratorState.Enabled)
+                PrimaryElement primaryElement = component.GetComponent<PrimaryElement>();
+
+                if (primaryElement != null)
                 {
                     SimHashes material = primaryElement.ElementID;
 
-                    switch (State.ConfiguratorState.ColorMode)
+                    bool materialColorResult = material.ToMaterialColor(out outColor);
+
+                    if (!materialColorResult)
                     {
-                        case ColorMode.Json:
-                            Color color;
-                            if (!material.ToMaterialColor(out color))
-                            {
-                                return primaryElement.Element.substance.overlayColour;
-                            }
-                            else if (State.ConfiguratorState.ShowMissingElementColorInfos)
-                            {
-                                Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
-                            }
-                            return color;
-
-                        case ColorMode.DebugColor:
-                            return material.ToDebugColor();
-
-                        default:
-                            return primaryElement.Element.substance.overlayColour;
+                        outColor = primaryElement.Element.substance.overlayColour;
+                        if (State.ConfiguratorState.ShowMissingElementColorInfos)
+                        {
+                            Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
+                        }
                     }
+
+                    return materialColorResult;
                 }
             }
-            return ColorHelper.DefaultColor;
+
+            outColor = ColorHelper.DefaultColorOffset;
+            return false;
         }
 
         public static void UpdateBuildingColor(BuildingComplete building)
         {
             string buildingName = building.name.Replace("Complete", string.Empty);
 
-            Color color = ToMaterialColor(building);
+            Color color;
+            bool colorAsOffset = ToMaterialColor(building, out color);
 
             if (State.TileNames.Contains(buildingName))
             {
@@ -90,13 +89,13 @@
                         ColorHelper.TileColors = new Color?[Grid.CellCount];
                     }
 
-                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = ToTileColor(color);
+                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = ToTileColor(color, colorAsOffset);
 
                     return;
                 }
                 catch (Exception e)
                 {
-                    State.Logger.Log("Error while aquiring cell color");
+                    State.Logger.Log("Error while getting cell color");
                     State.Logger.Log(e);
                 }
             }
@@ -119,22 +118,34 @@
         }
 
         // TODO: move, to extension?
-        // FIX
-        public static Color ToTileColor(Color color)
+        public static Color ToTileColor(Color color, bool useColorAsOffset)
         {
-            return new Color
-            (
-                color.r >= 0
-                    ? 1 - color.r
-                    : Mathf.Abs(color.r),
-                color.g >= 0
-                    ? 1 - color.g
-                    : Mathf.Abs(color.g),
-                color.b >= 0
-                    ? 1 - color.b
-                    : Mathf.Abs(color.b),
-                1
-            );
+            if (useColorAsOffset)
+            {
+                return new Color
+                (
+                    color.r >= 0
+                        ? 1 + color.r
+                        : Mathf.Abs(color.r),
+                    color.g >= 0
+                        ? 1 + color.g
+                        : Mathf.Abs(color.g),
+                    color.b >= 0
+                        ? 1 + color.b
+                        : Mathf.Abs(color.b),
+                    1
+                );
+            }
+            else
+            {
+                return new Color
+                (
+                    color.r,
+                    color.g,
+                    color.b,
+                    1
+                );
+            }
         }
 
         private static void SetTintColour(KAnimControllerBase kAnimControllerBase, Color color)
@@ -299,7 +310,8 @@
         {
             public static void Postfix(Ownable __instance)
             {
-                Color tint = HarmonyPatches.ToMaterialColor(__instance);
+                Color tint;
+                bool colorAsOffset = HarmonyPatches.ToMaterialColor(__instance, out tint);
                 bool owned = __instance.assignee != null;
 
                 KAnimControllerBase animBase = __instance.GetComponent<KAnimControllerBase>();
@@ -317,7 +329,8 @@
             {
                 KMonoBehaviour root = (KMonoBehaviour)GetField(__instance, "root");
 
-                Color tint = ToMaterialColor(root);
+                Color tint;
+                bool colorAsOffset = HarmonyPatches.ToMaterialColor(root, out tint);
                 bool active = tags != null && tags.Length != 0;
 
                 KAnimControllerBase animBase = root.GetComponent<KAnimControllerBase>();
@@ -329,6 +342,7 @@
         }
 
         // TODO: move, change to extension?
+        // BUG: is completely wrong
         private static Color DimmColor(Color color)
         {
             Color result = color - new Color(0.3f, 0.3f, 0.3f);
@@ -359,39 +373,19 @@
 
                     if (State.ConfiguratorState.Enabled)
                     {
-                        if (State.ConfiguratorState.LegacyTileColorHandling)
+                        if (ColorHelper.TileColors.Length > cell && ColorHelper.TileColors[cell].HasValue)
                         {
-                            switch (State.ConfiguratorState.ColorMode)
-                            {
-                                case ColorMode.Json:
-                                    tileColor = ColorHelper.GetCellColorJson(cell);
-                                    break;
-
-                                case ColorMode.DebugColor:
-                                    tileColor = ColorHelper.GetCellColorDebug(cell);
-                                    break;
-
-                                default:
-                                    tileColor = ColorHelper.DefaultTileColor;
-                                    break;
-                            }
+                            tileColor = ColorHelper.TileColors[cell].Value;
                         }
                         else
                         {
-                            if (ColorHelper.TileColors.Length > cell && ColorHelper.TileColors[cell].HasValue)
+                            if (cell == (int)GetField(__instance, "invalidPlaceCell"))
                             {
-                                tileColor = ColorHelper.TileColors[cell].Value;
+                                __result = ColorHelper.InvalidTileColor;
+                                return false;
                             }
-                            else
-                            {
-								if (cell == (int) GetField(__instance, "invalidPlaceCell"))
-								{
-                                    __result = ColorHelper.InvalidTileColor;
-                                    return false;
-                                }
 
-                                tileColor = ColorHelper.DefaultTileColor;
-                            }
+                            tileColor = ColorHelper.DefaultTileColor;
                         }
                     }
                     else
