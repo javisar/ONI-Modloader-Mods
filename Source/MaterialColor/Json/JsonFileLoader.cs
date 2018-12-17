@@ -16,8 +16,6 @@
 
         private ElementColorInfosManager _elementColorInfosManager;
 
-        private TypeColorOffsetsManager _typeColorOffsetsManager;
-
         public JsonFileLoader(JsonManager jsonManager, Logger logger = null)
         {
             this._logger = logger;
@@ -68,32 +66,10 @@
             }
         }
 
-        public bool TryLoadTypeColorOffsets(out Dictionary<string, Color32> typeColorOffsets)
-        {
-            try
-            {
-                typeColorOffsets = this._typeColorOffsetsManager.LoadTypeColorOffsetsDirectory();
-                return true;
-            }
-            catch (Exception e)
-            {
-                const string Message = "Can't load TypeColorOffsets";
-
-                Debug.LogError(Message + '\n' + e.Message + '\n');
-
-                State.Logger.Log(Message);
-                State.Logger.Log(e);
-
-                typeColorOffsets = new Dictionary<string, Color32>();
-                return false;
-            }
-        }
-
         private void InitializeManagers(JsonManager manager)
         {
             this._configuratorStateManager = new ConfiguratorStateManager(manager, this._logger);
             this._elementColorInfosManager = new ElementColorInfosManager(manager, this._logger);
-            this._typeColorOffsetsManager  = new TypeColorOffsetsManager(manager, this._logger);
         }
         
     }

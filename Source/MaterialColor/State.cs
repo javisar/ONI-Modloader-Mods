@@ -90,28 +90,6 @@
         [NotNull]
         public static Logger Logger => _logger ?? (_logger = new ONI_Common.IO.Logger(Paths.ModsDirectory+ System.IO.Path.DirectorySeparatorChar + "_Logs" + System.IO.Path.DirectorySeparatorChar + Paths.MaterialColorLogFileName));
 
-        [NotNull]
-        public static Dictionary<string, Color32> TypeColorOffsets
-        {
-            get
-            {
-                if (_typeColorOffsets != null)
-                {
-                    return _typeColorOffsets;
-                }
-
-                JsonLoader.TryLoadTypeColorOffsets(out _typeColorOffsets);
-
-                return _typeColorOffsets;
-            }
-
-			//private set => _typeColorOffsets = value;
-			private set
-			{
-				_typeColorOffsets = value;
-			}
-		}
-
         public static bool TryReloadConfiguratorState()
         {
 			//if (!JsonLoader.TryLoadConfiguratorState(out MaterialColorState state))
@@ -136,20 +114,6 @@
             }
 
             ElementColorInfos = colorInfos;
-
-            return true;
-        }
-
-        public static bool TryReloadTypeColorOffsets()
-        {
-			//if (!JsonLoader.TryLoadTypeColorOffsets(out Dictionary<string, Color32> colorOffsets))
-			Dictionary<string, Color32> colorOffsets;
-			if (!JsonLoader.TryLoadTypeColorOffsets(out colorOffsets))
-			{
-                return false;
-            }
-
-            TypeColorOffsets = colorOffsets;
 
             return true;
         }

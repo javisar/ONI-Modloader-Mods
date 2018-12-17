@@ -215,21 +215,6 @@
             Debug.LogError(message);
         }
 
-        private static void OnTypeColorOffsetsChanged(object sender, FileSystemEventArgs e)
-        {
-            if (!State.TryReloadTypeColorOffsets())
-            {
-                return;
-            }
-
-            _typeColorOffsetsChanged = true;
-
-            const string message = "Type colors changed.";
-
-            State.Logger.Log(message);
-            Debug.LogError(message);
-        }
-
         private static void RebuildAllTiles()
         {
             for (int i = 0; i < Grid.CellCount; i++)
@@ -264,19 +249,19 @@
 
             try
             {
-                FileChangeNotifier.StartFileWatch(
-                                                  jsonFilter,
-                                                  Paths.ElementColorInfosDirectory,
-                                                  OnElementColorsInfosChanged);
-                FileChangeNotifier.StartFileWatch(
-                                                  jsonFilter,
-                                                  Paths.TypeColorOffsetsDirectory,
-                                                  OnTypeColorOffsetsChanged);
+                FileChangeNotifier.StartFileWatch
+                (
+                    jsonFilter,
+                    Paths.ElementColorInfosDirectory,
+                    OnElementColorsInfosChanged
+                );
 
-                FileChangeNotifier.StartFileWatch(
-                                                  Paths.MaterialColorStateFileName,
-                                                  Paths.MaterialConfigPath,
-                                                  OnMaterialStateChanged);
+                FileChangeNotifier.StartFileWatch
+                (
+                    Paths.MaterialColorStateFileName,
+                    Paths.MaterialConfigPath,
+                    OnMaterialStateChanged
+                );
             }
             catch (Exception e)
             {
@@ -344,17 +329,6 @@
                         SetTintColour(animBase, tint);
                     }
                 }
-            }
-        }
-
-        // TODO: move
-        public static void LogComponents(Component target)
-        {
-            Component[] comps = target.GetComponents<Component>();
-
-            foreach (Component comp in comps)
-            {
-                Debug.Log($"BREAK: Name: {comp.name}, Type: {comp.GetType()}");
             }
         }
 

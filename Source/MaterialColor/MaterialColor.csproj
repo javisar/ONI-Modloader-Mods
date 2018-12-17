@@ -70,11 +70,11 @@
     <Compile Include="Data\ColorMode.cs" />
     <Compile Include="Data\MaterialColorState.cs" />
     <Compile Include="Extensions\Color32Extensions.cs" />
+    <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Json\BaseManager.cs" />
     <Compile Include="Json\ConfiguratorStateManager.cs" />
     <Compile Include="Json\ElementColorInfosManager.cs" />
     <Compile Include="Json\JsonFileLoader.cs" />
-    <Compile Include="Json\TypeColorOffsetsManager.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="State.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />

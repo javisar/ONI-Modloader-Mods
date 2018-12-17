@@ -13,8 +13,6 @@
 
         public const string DefaultElementColorInfosFileName = "0-default.json";
 
-        public const string DefaultTypeColorOffsetsFileName = "0-default.json";
-
         //public const string DraggableUIStateFileName = "DraggableUI.json";
 
         //public const string InjectorLogFileName = "InjectorLog.txt";
@@ -60,14 +58,8 @@
         public static readonly string ElementColorInfosDirectory =
         MaterialConfigPath + Path.DirectorySeparatorChar + "ElementColorInfos";
 
-        public static readonly string TypeColorOffsetsDirectory =
-        MaterialConfigPath + Path.DirectorySeparatorChar + "TypeColorOffsets";
-
         public static readonly string DefaultElementColorInfosPath =
         ElementColorInfosDirectory + Path.DirectorySeparatorChar + DefaultElementColorInfosFileName;
-
-        public static readonly string DefaultTypeColorOffsetsPath =
-        TypeColorOffsetsDirectory + Path.DirectorySeparatorChar + DefaultTypeColorOffsetsFileName;
 
         public static readonly string MaterialColorStatePath =
         MaterialConfigPath + Path.DirectorySeparatorChar + MaterialColorStateFileName;
