@@ -101,8 +101,9 @@
             }
 
             IUserControlledCapacity userControlledCapacity = building.GetComponent<IUserControlledCapacity>();
+            Ownable ownable = building.GetComponent<Ownable>();
 
-            if (userControlledCapacity == null)
+            if (userControlledCapacity == null && ownable == null)
             {
                 KAnimControllerBase kAnimControllerBase = building.GetComponent<KAnimControllerBase>();
 
@@ -152,7 +153,6 @@
         {
             FieldInfo batchInstanceDataField = AccessTools.Field(typeof(KAnimControllerBase), "batchInstanceData");
             KBatchedAnimInstanceData batchInstanceData = (KBatchedAnimInstanceData)batchInstanceDataField.GetValue(kAnimControllerBase);
-            kAnimControllerBase.TintColour = new Color(1, 1, 1);
             if (batchInstanceData.SetTintColour(color))
             {
                 kAnimControllerBase.SetDirty();
@@ -314,10 +314,13 @@
                 bool colorAsOffset = HarmonyPatches.ToMaterialColor(__instance, out tint);
                 bool owned = __instance.assignee != null;
 
-                KAnimControllerBase animBase = __instance.GetComponent<KAnimControllerBase>();
-                if (animBase != null && animBase.HasBatchInstanceData) // TODO: is second check needed?
+                if (owned)
                 {
-                    SetTintColour(animBase, owned ? tint : DimmColor(tint));
+                    KAnimControllerBase animBase = __instance.GetComponent<KAnimControllerBase>();
+                    if (animBase != null && animBase.HasBatchInstanceData) // TODO: is second check needed?
+                    {
+                        SetTintColour(animBase, tint);
+                    }
                 }
             }
         }
@@ -333,22 +336,15 @@
                 bool colorAsOffset = HarmonyPatches.ToMaterialColor(root, out tint);
                 bool active = tags != null && tags.Length != 0;
 
-                KAnimControllerBase animBase = root.GetComponent<KAnimControllerBase>();
-                if (animBase != null && animBase.HasBatchInstanceData)
+                if (active)
                 {
-                    SetTintColour(animBase, active ? tint : DimmColor(tint));
+                    KAnimControllerBase animBase = root.GetComponent<KAnimControllerBase>();
+                    if (animBase != null && animBase.HasBatchInstanceData)
+                    {
+                        SetTintColour(animBase, tint);
+                    }
                 }
             }
-        }
-
-        // TODO: move, change to extension?
-        // BUG: is completely wrong
-        private static Color DimmColor(Color color)
-        {
-            Color result = color - new Color(0.3f, 0.3f, 0.3f);
-            color.a = 1;
-
-            return result;
         }
 
         // TODO: move
