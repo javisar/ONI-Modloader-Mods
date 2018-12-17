@@ -335,56 +335,25 @@
         [HarmonyPatch(typeof(BlockTileRenderer), nameof(BlockTileRenderer.GetCellColour))]
         public static class BlockTileRenderer_GetCellColour
         {
-            public static bool Prefix(int cell, SimHashes element, BlockTileRenderer __instance, ref Color __result)
+            public static void Postfix(int cell, SimHashes element, BlockTileRenderer __instance, ref Color __result)
             {
                 try
                 {
-                    Color tileColor;
-
-                    if (State.ConfiguratorState.Enabled)
+                    if
+                    (
+                        State.ConfiguratorState.Enabled &&
+                        ColorHelper.TileColors.Length > cell &&
+                        ColorHelper.TileColors[cell].HasValue
+                    )
                     {
-                        if (ColorHelper.TileColors.Length > cell && ColorHelper.TileColors[cell].HasValue)
-                        {
-                            tileColor = ColorHelper.TileColors[cell].Value;
-                        }
-                        else
-                        {
-                            if (cell == (int)GetField(__instance, "invalidPlaceCell"))
-                            {
-                                __result = ColorHelper.InvalidTileColor;
-                                return false;
-                            }
-
-                            tileColor = ColorHelper.DefaultTileColor;
-                        }
+                        __result *= ColorHelper.TileColors[cell].Value;
                     }
-                    else
-                    {
-                        tileColor = ColorHelper.DefaultTileColor;
-                    }
-
-					if (cell == (int) GetField(__instance, "selectedCell"))
-					{
-                        __result = tileColor * 1.5f;
-                        return false;
-                    }
-
-					if (cell == (int)GetField(__instance, "highlightCell"))
-					{
-                        __result = tileColor * 1.25f;
-                        return false;
-                    }
-
-                    __result = tileColor;
-                    return false;
                 }
                 catch (Exception e)
                 {
                     State.Logger.Log("EnterCell failed.");
                     State.Logger.Log(e);
                 }
-
-                return true;
             }
         }
 
