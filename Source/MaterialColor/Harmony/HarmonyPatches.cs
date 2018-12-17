@@ -147,8 +147,7 @@
 
         private static void SetTintColour(KAnimControllerBase kAnimControllerBase, Color color)
         {
-            FieldInfo batchInstanceDataField = AccessTools.Field(typeof(KAnimControllerBase), "batchInstanceData");
-            KBatchedAnimInstanceData batchInstanceData = (KBatchedAnimInstanceData)batchInstanceDataField.GetValue(kAnimControllerBase);
+            KBatchedAnimInstanceData batchInstanceData = Traverse.Create(kAnimControllerBase).Field("batchInstanceData").GetValue<KBatchedAnimInstanceData>();
             if (batchInstanceData.SetTintColour(color))
             {
                 kAnimControllerBase.SetDirty();
@@ -214,24 +213,6 @@
 
             State.Logger.Log("All tiles rebuilt.");
         }
-
-        private static object GetField(object _instance, string name)
-		{
-			FieldInfo fi = AccessTools.Field(_instance.GetType(), name);
-			return fi.GetValue(_instance);
-		}
-
-		private static void SetField(object _instance, string name, object value)
-		{
-			FieldInfo fi = AccessTools.Field(_instance.GetType(), name);
-			fi.SetValue(_instance, value);
-		}
-
-		private static object Invoke(object _instance, string name)
-		{
-			MethodInfo mi = AccessTools.Method(_instance.GetType(), name);
-			return mi.Invoke(_instance, new object[] { });
-		}
 
         private static void SubscribeToFileChangeNotifier()
         {
@@ -303,17 +284,15 @@
         [HarmonyPatch(typeof(FilteredStorage), "OnFilterChanged")]
         public static class FilteredStorage_OnFilterChanged
         {
-            public static void Postfix(FilteredStorage __instance, Tag[] tags)
+            public static void Postfix(KMonoBehaviour ___root, Tag[] tags)
             {
-                KMonoBehaviour root = (KMonoBehaviour)GetField(__instance, "root");
-
                 Color tint;
-                bool colorAsOffset = HarmonyPatches.ToMaterialColor(root, out tint);
+                bool colorAsOffset = HarmonyPatches.ToMaterialColor(___root, out tint);
                 bool active = tags != null && tags.Length != 0;
 
                 if (active)
                 {
-                    KAnimControllerBase animBase = root.GetComponent<KAnimControllerBase>();
+                    KAnimControllerBase animBase = ___root.GetComponent<KAnimControllerBase>();
                     if (animBase != null && animBase.HasBatchInstanceData)
                     {
                         SetTintColour(animBase, tint);
@@ -524,9 +503,9 @@
 			[HarmonyPostfix]
 
 			// ReSharper disable once InconsistentNaming
-			public static void KInputControllerMod(KeyDef __instance)
+			public static void KInputControllerMod(ref bool[] ___mActionState)
 			{
-				SetField(__instance, "mActionState", new bool[1000]);
+				___mActionState = new bool[1000];
 			}
 		}
 
@@ -540,8 +519,7 @@
             {
                 try
                 {
-					//bool toggleMaterialColor = ((OverlayMenu.OverlayToggleInfo)toggle_info).simView
-					bool toggleMaterialColor = (SimViewMode)GetField(toggle_info, "simView")
+					bool toggleMaterialColor = Traverse.Create(toggle_info).Field<SimViewMode>("simView").Value
 											== (SimViewMode)IDs.ToggleMaterialColorOverlayID;
 
                     if (!toggleMaterialColor)
