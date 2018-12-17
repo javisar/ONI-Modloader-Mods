@@ -16,10 +16,5 @@
         {
             return this._manager.Deserialize<MaterialColorState>(Paths.MaterialColorStatePath);
         }
-
-        public void SaveMaterialColorState(MaterialColorState state)
-        {
-            this._manager.Serialize(state, Paths.MaterialColorStatePath);
-        }
     }
 }

@@ -21,18 +21,14 @@
 
     public static class HarmonyPatches
     {
-
         private static bool _configuratorStateChanged;
-
         private static bool _elementColorInfosChanged;
 
-        private static bool _initialized;
+        public static void OnLoad()
+        {
+            SubscribeToFileChangeNotifier();
+        }
 
-        private static bool _typeColorOffsetsChanged;
-
-        public static void OnLoad() { }
-
-        // BUG doesnt refresh properly
         public static void RefreshMaterialColor()
         {
             UpdateBuildingsColors();
@@ -161,12 +157,6 @@
 
                 kAnimControllerBase.OnTintChanged?.Invoke(color);
             }
-        }
-
-        private static void Initialize()
-        {
-            SubscribeToFileChangeNotifier();
-            _initialized = true;
         }
 
         private static void OnBuildingsCompletesAdd(BuildingComplete building) => UpdateBuildingColor(building);
@@ -381,10 +371,10 @@
             {
                 try
                 {
-                    if (_elementColorInfosChanged || _typeColorOffsetsChanged || _configuratorStateChanged)
+                    if (_elementColorInfosChanged || _configuratorStateChanged)
                     {
                         RefreshMaterialColor();
-                        _elementColorInfosChanged = _typeColorOffsetsChanged = _configuratorStateChanged = false;
+                        _elementColorInfosChanged = _configuratorStateChanged = false;
                     }
                 }
                 catch (Exception e)
@@ -583,17 +573,10 @@
             [HarmonyPostfix]
             private static void Postfix()
             {
-               
                 try
                 {
                     Components.BuildingCompletes.OnAdd += OnBuildingsCompletesAdd;
-
-                    if (!_initialized)
-                    {
-                        Initialize();
-                    }
-
-                    _elementColorInfosChanged = _typeColorOffsetsChanged = _configuratorStateChanged = true;
+                    _elementColorInfosChanged = _configuratorStateChanged = true;
                 }
                 catch (Exception e)
                 {

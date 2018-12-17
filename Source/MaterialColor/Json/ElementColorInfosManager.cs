@@ -76,15 +76,5 @@
         {
             return this._manager.Deserialize<Dictionary<SimHashes, Color>>(filePath);
         }
-
-        public void SaveElementsColorInfo(Dictionary<SimHashes, Color> dictionary, string path = null)
-        {
-            if (path == null)
-            {
-                path = Paths.DefaultElementColorInfosPath;
-            }
-
-            this._manager.Serialize(dictionary, path);
-        }
     }
 }
