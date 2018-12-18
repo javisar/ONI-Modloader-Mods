@@ -82,16 +82,16 @@
     <Compile Include="Helpers\MaterialHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IDs.cs" />
-    <None Include="Config\ElementColorInfos\00-solid.json">
+    <None Include="Config\ElementColorInfos\RefinedMetal.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Config\ElementColorInfos\01-liquid.json">
+    <None Include="Config\ElementColorInfos\Other.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Config\ElementColorInfos\02-gas.json">
+    <None Include="Config\ElementColorInfos\RawMetal.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Config\ElementColorInfos\03-special.json">
+    <None Include="Config\ElementColorInfos\RawMineral.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Config\MaterialColorState.json">
