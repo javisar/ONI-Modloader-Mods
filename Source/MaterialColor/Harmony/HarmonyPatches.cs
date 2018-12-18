@@ -35,46 +35,10 @@
             RebuildAllTiles();
         }
 
-        // TODO: move
-        /// <summary>
-        /// Tries to get material color for given component, if not possible fallsback to to substance.overlayColour, then to ColorHelper.DefaultColor
-        /// </summary>
-        /// <param name="outColor">on true outputs color offset, otherwise fallsback to substance.overlayColour, then to ColorHelper.DefaultColor</param>
-        public static bool ToMaterialColor(Component component, out Color outColor)
-        {
-            if (State.ConfiguratorState.Enabled)
-            {
-                PrimaryElement primaryElement = component.GetComponent<PrimaryElement>();
-
-                if (primaryElement != null)
-                {
-                    SimHashes material = primaryElement.ElementID;
-
-                    bool materialColorResult = material.ToMaterialColor(out outColor);
-
-                    if (!materialColorResult)
-                    {
-                        outColor = primaryElement.Element.substance.overlayColour;
-                        if (State.ConfiguratorState.ShowMissingElementColorInfos)
-                        {
-                            Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
-                        }
-                    }
-
-                    return materialColorResult;
-                }
-            }
-
-            outColor = ColorHelper.DefaultColorOffset;
-            return false;
-        }
-
         public static void UpdateBuildingColor(BuildingComplete building)
         {
             string buildingName = building.name.Replace("Complete", string.Empty);
-
-            Color color;
-            bool colorAsOffset = ToMaterialColor(building, out color);
+            bool colorAsOffset = ColorHelper.GetComponentMaterialColor(building, out Color color);
 
             if (State.TileNames.Contains(buildingName))
             {
@@ -85,7 +49,7 @@
                         ColorHelper.TileColors = new Color?[Grid.CellCount];
                     }
 
-                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = ToTileColor(color, colorAsOffset);
+                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor(colorAsOffset);
 
                     return;
                 }
@@ -114,47 +78,22 @@
             }
         }
 
-        // TODO: move, to extension?
-        public static Color ToTileColor(Color color, bool useColorAsOffset)
-        {
-            if (useColorAsOffset)
-            {
-                return new Color
-                (
-                    color.r >= 0
-                        ? 1 + color.r
-                        : Mathf.Abs(color.r),
-                    color.g >= 0
-                        ? 1 + color.g
-                        : Mathf.Abs(color.g),
-                    color.b >= 0
-                        ? 1 + color.b
-                        : Mathf.Abs(color.b),
-                    1
-                );
-            }
-            else
-            {
-                return new Color
-                (
-                    color.r,
-                    color.g,
-                    color.b,
-                    1
-                );
-            }
-        }
-
         private static void SetTintColour(KAnimControllerBase kAnimControllerBase, Color color)
         {
             KBatchedAnimInstanceData batchInstanceData = Traverse.Create(kAnimControllerBase).Field("batchInstanceData").GetValue<KBatchedAnimInstanceData>();
             if (batchInstanceData.SetTintColour(color))
             {
-                kAnimControllerBase.SetDirty();
-
-                Traverse.Create(kAnimControllerBase).Method("SuspendUpdates", false).GetValue();
-
-                kAnimControllerBase.OnTintChanged?.Invoke(color);
+                try
+                {
+                    kAnimControllerBase.SetDirty();
+                    Traverse.Create(kAnimControllerBase).Method("SuspendUpdates", false).GetValue();
+                    kAnimControllerBase.OnTintChanged?.Invoke(color);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Probably not game-breaking error after batchInstanceSetTintColour(color)");
+                    Debug.LogError(e);
+                }
             }
         }
 
@@ -266,8 +205,7 @@
         {
             public static void Postfix(Ownable __instance)
             {
-                Color tint;
-                bool colorAsOffset = HarmonyPatches.ToMaterialColor(__instance, out tint);
+                bool colorAsOffset = ColorHelper.GetComponentMaterialColor(__instance, out Color tint);
                 bool owned = __instance.assignee != null;
 
                 if (owned)
@@ -286,8 +224,7 @@
         {
             public static void Postfix(KMonoBehaviour ___root, Tag[] tags)
             {
-                Color tint;
-                bool colorAsOffset = HarmonyPatches.ToMaterialColor(___root, out tint);
+                bool colorAsOffset = ColorHelper.GetComponentMaterialColor(___root, out Color tint);
                 bool active = tags != null && tags.Length != 0;
 
                 if (active)
@@ -361,15 +298,6 @@
                     State.Logger.Log("EnterEveryUpdate failed.");
                     State.Logger.Log(e);
                 }
-            }
-        }
-
-        [HarmonyPatch(typeof(Game), "Update")]
-        public static class Game_Update_EnterEveryUpdate_CoreUpdateQueueManager
-        {
-            public static void Prefix()
-            {
-                UpdateQueueManager.OnGameUpdate();
             }
         }
 
@@ -520,7 +448,7 @@
                 try
                 {
 					bool toggleMaterialColor = Traverse.Create(toggle_info).Field<SimViewMode>("simView").Value
-											== (SimViewMode)IDs.ToggleMaterialColorOverlayID;
+                                            == (SimViewMode)IDs.ToggleMaterialColorOverlayID;
 
                     if (!toggleMaterialColor)
                     {

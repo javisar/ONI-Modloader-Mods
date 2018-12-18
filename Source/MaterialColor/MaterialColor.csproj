@@ -68,6 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\MaterialColorState.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\SimHashesExtensions.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Json\BaseManager.cs" />
     <Compile Include="Json\ConfiguratorStateManager.cs" />
@@ -78,7 +80,6 @@
     <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Harmony\HarmonyPatches.cs" />
     <Compile Include="Helpers\MaterialHelper.cs" />
-    <Compile Include="Extensions\SimHashesExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IDs.cs" />
     <None Include="Config\ElementColorInfos\00-solid.json">

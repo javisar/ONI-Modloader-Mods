@@ -1,9 +1,5 @@
 {
   "Enabled": true,
   "LogElementsData": false,
-  "ColorMode": 1,
-  "ShowMissingElementColorInfos": false,
-  "ShowMissingTypeColorOffsets": false,
-  "ShowBuildingsAsWhite": false,
-  "LegacyTileColorHandling": false
+  "ShowMissingElementColorInfos": false
 }

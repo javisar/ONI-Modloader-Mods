@@ -8,9 +8,8 @@
     {
         public static bool CellIndexToElement(int cellIndex, out Element element)
         {
-            byte cell = Grid.ElementIdx[cellIndex];
+            byte cellElementIndex = Grid.ElementIdx[cellIndex];
 
-            byte cellElementIndex = cell;
             element = ElementLoader.elements?[cellElementIndex];
 
             return element != null;

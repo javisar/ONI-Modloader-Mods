@@ -14,34 +14,26 @@
         [NotNull]
         private static readonly JsonFileLoader JsonLoader = new JsonFileLoader(new JsonManager(), Logger);
 
-        [NotNull]
-        public static readonly List<Color32> DefaultTemperatureColors = new List<Color32>();
-
-        [NotNull]
-        public static readonly List<float> DefaultTemperatures = new List<float>();
-
         // TODO: load from file instead
         [NotNull]
         public static readonly List<string> TileNames = new List<string>
-                                                        {
-                                                        "Tile",
-                                                        "MeshTile",
-                                                        "GlassTile",
-                                                        "BunkerTile",
-                                                        "InsulationTile",
-                                                        "GasPermeableMembrane",
-                                                        "TilePOI",
-                                                        "PlasticTile",
-                                                        "MetalTile"
-                                                        };
+        {
+            "Tile",
+            "MeshTile",
+            "GlassTile",
+            "BunkerTile",
+            "InsulationTile",
+            "GasPermeableMembrane",
+            "TilePOI",
+            "PlasticTile",
+            "MetalTile"
+        };
 
         private static MaterialColorState _configuratorState;
 
         private static Dictionary<SimHashes, Color> _materialColors;
 
         private static Logger _logger;
-
-        private static Dictionary<string, Color32> _typeColorOffsets;
 
         [NotNull]
         public static MaterialColorState ConfiguratorState
@@ -58,9 +50,9 @@
                 return _configuratorState;
             }
 
-			//private set => _configuratorState = value;
-			private set {
-				_configuratorState = value;
+            private set
+            {
+                _configuratorState = value;
 			}
 		}
 
@@ -74,13 +66,11 @@
                     return _materialColors;
                 }
 
-                // Dictionary<SimHashes, ElementColorInfo> colorInfos;
                 JsonLoader.TryLoadElementColorInfos(out _materialColors);
 
                 return _materialColors;
             }
 
-			//private set => _elementColorInfos = value;
 			private set
 			{
 				_materialColors = value;
@@ -92,11 +82,9 @@
 
         public static bool TryReloadConfiguratorState()
         {
-			//if (!JsonLoader.TryLoadConfiguratorState(out MaterialColorState state))
-			MaterialColorState state;
-			if (!JsonLoader.TryLoadConfiguratorState(out state))
-			{
-				return false;
+            if (!JsonLoader.TryLoadConfiguratorState(out MaterialColorState state))
+            {
+                return false;
             }
 
             ConfiguratorState = state;
@@ -106,10 +94,8 @@
 
         public static bool TryReloadElementColorInfos()
         {
-			//if (!JsonLoader.TryLoadElementColorInfos(out Dictionary<SimHashes, ElementColorInfo> colorInfos))
-			Dictionary<SimHashes, Color> colorInfos;
-			if (!JsonLoader.TryLoadElementColorInfos(out colorInfos))
-			{
+            if (!JsonLoader.TryLoadElementColorInfos(out Dictionary<SimHashes, Color> colorInfos))
+            {
                 return false;
             }
 

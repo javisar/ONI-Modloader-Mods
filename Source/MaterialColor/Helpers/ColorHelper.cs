@@ -9,68 +9,53 @@
         public static readonly Color DefaultColorOffset = new Color(0, 0, 0, 0);
         public static readonly Color InvalidColorOffset = new Color(1, 0, 1, 0);
 
-        public static readonly Color DefaultTileColor = HarmonyPatches.ToTileColor(DefaultColorOffset, true);
-        public static readonly Color InvalidTileColor = HarmonyPatches.ToTileColor(InvalidColorOffset, true);
+        public static readonly Color DefaultTileColor = DefaultColorOffset.ToTileColor(true);
+        public static readonly Color InvalidTileColor = InvalidColorOffset.ToTileColor(true);
 
         public static Color?[] TileColors;
 
-        public static Color GetCellColorDebug(int cellIndex)
+        public static Color GetTileMaterialColor(int cellIndex)
         {
-            Element   element   = Grid.Element[cellIndex];
-            Substance substance = element.substance;
-
-            Color32 debugColor = substance.debugColour;
-
-            debugColor.a = byte.MaxValue;
-
-            return debugColor;
+            if (Grid.IsValidCell(cellIndex) && MaterialHelper.CellIndexToElement(cellIndex, out Element element))
+            {
+                return element.id.ToMaterialColor(out Color materialColor)
+                    ? materialColor
+                    : (Color)element.substance.overlayColour;
+            }
+            else return InvalidTileColor;
         }
 
-        public static Color GetCellColorJson(int cellIndex)
+        /// <summary>
+        /// Tries to get material color for given component, if not possible fallsback to to substance.overlayColour, then to ColorHelper.DefaultColor
+        /// </summary>
+        /// <param name="outColor">on true outputs color offset, otherwise fallsback to substance.overlayColour, then to ColorHelper.DefaultColor</param>
+        public static bool GetComponentMaterialColor(Component component, out Color outColor)
         {
-            if (Grid.IsValidCell(cellIndex))
+            if (State.ConfiguratorState.Enabled)
             {
-                Element element;
-                if (MaterialHelper.CellIndexToElement(cellIndex, out element))
+                PrimaryElement primaryElement = component.GetComponent<PrimaryElement>();
+
+                if (primaryElement != null)
                 {
-                    Color materialColor;
-                    if (element.id.ToMaterialColor(out materialColor))
+                    SimHashes material = primaryElement.ElementID;
+
+                    bool materialColorResult = material.ToMaterialColor(out outColor);
+
+                    if (!materialColorResult)
                     {
-                        return materialColor;
+                        outColor = primaryElement.Element.substance.overlayColour;
+                        if (State.ConfiguratorState.ShowMissingElementColorInfos)
+                        {
+                            Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
+                        }
                     }
-                    else
-                    {
-                        return element.substance.overlayColour;
-                    }
+
+                    return materialColorResult;
                 }
             }
-            return ColorHelper.InvalidTileColor;
-        }
 
-        // TODO: MOVE
-        private static void BreakdownGridObjectsComponents(int cellIndex)
-        {
-            for (int i = 0; i <= 20; i++)
-            {
-                Debug.Log("Starting object from grid component breakdown, index: " + cellIndex);
-
-                try
-                {
-                    Component[] comps = Grid.Objects[cellIndex, i].GetComponents<Component>();
-
-                    foreach (Component comp in comps)
-                    {
-                        Debug.Log($"Object Layer: {i}, Name: {comp.name}, Type: {comp.GetType()}");
-                    }
-                }
-                catch (IndexOutOfRangeException e)
-                {
-                    Debug.Log($"Cell Index: {cellIndex}, Layer: {i}");
-                    Debug.Log(e);
-                }
-
-                // catch { }
-            }
+            outColor = DefaultColorOffset;
+            return false;
         }
     }
 }
