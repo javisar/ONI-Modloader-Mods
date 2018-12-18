@@ -12,30 +12,28 @@ namespace MaterialColor.Extensions
         {
             if (useColorAsOffset)
             {
-                return new Color
+                color = color.ForEachColorValue
                 (
-                    color.r >= 0
-                        ? 1 + color.r
-                        : Mathf.Abs(color.r),
-                    color.g >= 0
-                        ? 1 + color.g
-                        : Mathf.Abs(color.g),
-                    color.b >= 0
-                        ? 1 + color.b
-                        : Mathf.Abs(color.b),
-                    1
+                    colorValue => colorValue >= 0
+                        ? colorValue + 1
+                        : Mathf.Abs(colorValue),
+                    false
                 );
             }
-            else
+
+            color.a = 1;
+
+            return color;
+        }
+
+        public static Color ForEachColorValue(this Color color, Func<float, float> action, bool modifyAlpha)
+        {
+            int count = modifyAlpha ? 4 : 3;
+            for (int i = 0; i < count; i++)
             {
-                return new Color
-                (
-                    color.r,
-                    color.g,
-                    color.b,
-                    1
-                );
+                color[i] = action.Invoke(color[i]);
             }
+            return color;
         }
     }
 }

@@ -1,5 +1,7 @@
 {
   "Enabled": true,
   "LogElementsData": false,
-  "ShowMissingElementColorInfos": false
+  "ShowMissingElementColorInfos": false,
+  "AdditionalBrightness": 0, // Default: 0
+  "IntensityFactor": 1 // Default: 1
 }

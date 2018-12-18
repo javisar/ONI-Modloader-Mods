@@ -7,5 +7,9 @@
         public bool LogElementsData { get; set; } = true;
 
         public bool ShowMissingElementColorInfos { get; set; }
+
+        public float AdditionalBrightness { get; set; } = 0;
+
+        public float IntensityFactor { get; set; } = 1;
     }
 }
