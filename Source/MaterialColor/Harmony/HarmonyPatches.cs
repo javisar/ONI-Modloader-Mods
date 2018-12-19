@@ -48,6 +48,12 @@
             string buildingName = building.name.Replace("Complete", string.Empty);
             bool colorAsOffset = ColorHelper.GetComponentMaterialColor(building, out Color color);
 
+            if (State.TileNames.Contains(buildingName))
+            {
+                ApplyColorToTile(building, color, colorAsOffset);
+                return;
+            }
+
             try
             {
                 if (!State.TypeFilter.Check(buildingName))
@@ -61,26 +67,25 @@
                 State.Logger.Log(e);
             }
 
-            if (State.TileNames.Contains(buildingName))
+            ApplyColorToBuilding(building, color);
+        }
+
+        private static FilteredStorage ExtractFilteredStorage(Component building)
+        {
+            foreach (Type storageType in _storageTypes)
             {
-                try
-                {
-                    if (ColorHelper.TileColors == null)
-                    {
-                        ColorHelper.TileColors = new Color?[Grid.CellCount];
-                    }
+                Component comp = building.GetComponent(storageType);
 
-                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor(colorAsOffset);
-
-                    return;
-                }
-                catch (Exception e)
+                if (comp != null)
                 {
-                    State.Logger.Log("Error while getting cell color");
-                    State.Logger.Log(e);
+                    return Traverse.Create(comp).Field<FilteredStorage>("filteredStorage").Value;
                 }
             }
+            return null;
+        }
 
+        private static void ApplyColorToBuilding(BuildingComplete building, Color color)
+        {
             TreeFilterable treeFilterable;
             Ownable ownable;
             KAnimControllerBase kAnimBase;
@@ -106,22 +111,28 @@
             }
             else
             {
-                Debug.Log($"MaterialColor: Invalid building <{buildingName}> and its not a registered tile.");
+                Debug.Log($"MaterialColor: Invalid building <{building}> and its not a registered tile.");
             }
         }
 
-        private static FilteredStorage ExtractFilteredStorage(Component building)
+        private static void ApplyColorToTile(BuildingComplete building, Color color, bool useColorAsOffset)
         {
-            foreach (Type storageType in _storageTypes)
+            try
             {
-                Component comp = building.GetComponent(storageType);
-
-                if (comp != null)
+                if (ColorHelper.TileColors == null)
                 {
-                    return Traverse.Create(comp).Field<FilteredStorage>("filteredStorage").Value;
+                    ColorHelper.TileColors = new Color?[Grid.CellCount];
                 }
+
+                ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor(useColorAsOffset);
+
+                return;
             }
-            return null;
+            catch (Exception e)
+            {
+                State.Logger.Log("Error while getting cell color");
+                State.Logger.Log(e);
+            }
         }
 
         private static void OnBuildingsCompletesAdd(BuildingComplete building) => UpdateBuildingColor(building);
