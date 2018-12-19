@@ -24,6 +24,14 @@
         private static bool _configuratorStateChanged;
         private static bool _elementColorInfosChanged;
 
+        private static readonly List<Type> _storageTypes = new List<Type>() {
+            typeof(RationBox),
+            typeof(Refrigerator),
+            typeof(SolidConduitInbox),
+            typeof(StorageLocker),
+            typeof(TinkerStation)
+        };
+
         public static void OnLoad()
         {
             SubscribeToFileChangeNotifier();
@@ -73,31 +81,47 @@
                 }
             }
 
-            FilteredStorage filteredStorage = building.GetComponent<FilteredStorage>();
-            Ownable ownable = building.GetComponent<Ownable>();
+            TreeFilterable treeFilterable;
+            Ownable ownable;
+            KAnimControllerBase kAnimBase;
 
-            if (filteredStorage != null)
-            {
-                filteredStorage.filterTint = color;
-            }
-            else if (ownable != null)
+            if ((ownable = building.GetComponent<Ownable>()) != null)
             {
                 Traverse.Create(ownable).Field("ownedTint").SetValue(color);
                 Traverse.Create(ownable).Method("UpdateTint").GetValue();
             }
-            else
+            else if ((treeFilterable = building.GetComponent<TreeFilterable>()) != null)
             {
-                KAnimControllerBase kAnimControllerBase = building.GetComponent<KAnimControllerBase>();
+                FilteredStorage filteredStorage = ExtractFilteredStorage(treeFilterable);
 
-                if (kAnimControllerBase != null)
+                if (filteredStorage != null)
                 {
-                    kAnimControllerBase.TintColour = color;
-                }
-                else
-                {
-                    Debug.Log($"MaterialColor: Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
+                    filteredStorage.filterTint = color;
+                    filteredStorage.FilterChanged();
                 }
             }
+            else if ((kAnimBase = building.GetComponent<KAnimControllerBase>()) != null)
+            {
+                kAnimBase.TintColour = color;
+            }
+            else
+            {
+                Debug.Log($"MaterialColor: Invalid building <{buildingName}> and its not a registered tile.");
+            }
+        }
+
+        private static FilteredStorage ExtractFilteredStorage(Component building)
+        {
+            foreach (Type storageType in _storageTypes)
+            {
+                Component comp = building.GetComponent(storageType);
+
+                if (comp != null)
+                {
+                    return Traverse.Create(comp).Field<FilteredStorage>("filteredStorage").Value;
+                }
+            }
+            return null;
         }
 
         private static void OnBuildingsCompletesAdd(BuildingComplete building) => UpdateBuildingColor(building);
