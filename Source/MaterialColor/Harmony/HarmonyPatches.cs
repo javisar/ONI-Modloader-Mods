@@ -40,41 +40,6 @@
             string    buildingName = building.name.Replace("Complete", string.Empty);
             bool colorAsOffset = ColorHelper.GetComponentMaterialColor(building, out Color color);
 
-            try
-            {
-                if (!State.TypeFilter.Check(buildingName))
-                {
-                    return;
-                }
-            }
-            catch (Exception e)
-            {
-                State.Logger.Log("Error while filtering buildings");
-                State.Logger.Log(e);
-            }
-
-            SimHashes material     = MaterialHelper.ExtractMaterial(building);
-
-            if (State.TileNames.Contains(buildingName))
-            {
-                try
-                {
-                    if (ColorHelper.TileColors == null)
-                    {
-                        ColorHelper.TileColors = new Color?[Grid.CellCount];
-                    }
-
-                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor(colorAsOffset);
-
-                    return;
-                }
-                catch (Exception e)
-                {
-                    State.Logger.Log("Error while getting cell color");
-                    State.Logger.Log(e);
-                }
-            }
-
             IUserControlledCapacity userControlledCapacity = building.GetComponent<IUserControlledCapacity>();
             Ownable ownable = building.GetComponent<Ownable>();
 
@@ -316,6 +281,7 @@
             }
         }
 
+        // TODO: still needs rework
         [HarmonyPatch(typeof(Global), "GenerateDefaultBindings")]
         public static class Global_GenerateDefaultBindings
         {
@@ -358,6 +324,7 @@
             }
         }
 
+        // TODO: still needs rework
         [HarmonyPatch(typeof(OverlayMenu), "InitializeToggles")]
         public static class OverlayMenu_InitializeToggles
         {
@@ -466,7 +433,7 @@
                 try
                 {
 					bool toggleMaterialColor = Traverse.Create(toggle_info).Field<HashedString>("simView").Value
-                                            == IDs.ToggleMaterialColorOverlayHS;
+                                            == IDs.MaterialColorOverlayHS;
 
                     if (!toggleMaterialColor)
                     {
