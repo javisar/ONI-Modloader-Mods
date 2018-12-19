@@ -12,7 +12,7 @@ namespace BuildingModifierMod
 		public Dictionary<string, Dictionary<string, object>> Modifiers { get; set; } = new Dictionary<string, Dictionary<string, object>>();
 
 
-		public static BaseStateManager<BuildingModifierState> StateManager
-								= new BaseStateManager<BuildingModifierState>(Aggregate(ONI_Common.Paths.GetStatePath("BuildingModifierMod")));
+		public static AggregateStateManager StateManager
+								= new AggregateStateManager("BuildingModifier");
 	}
 }

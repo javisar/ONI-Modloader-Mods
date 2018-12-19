@@ -1,0 +1,12 @@
+{
+
+  "Modifiers": {
+
+    "Canvas": {
+      "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+      "WidthInCells": 1,
+      "HeightInCells": 1
+    }
+
+  }
+}

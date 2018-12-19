@@ -1,0 +1,20 @@
+{
+
+  "Modifiers": {
+
+        "GasVent": {
+            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+            "Vent": {
+                "overpressureMass": 10.0
+            }
+        },
+
+        "GasVentHighPressure": {
+            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+            "Vent": {
+            "overpressureMass": 4000.0
+            }
+        }
+
+  }
+}
