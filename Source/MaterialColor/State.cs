@@ -5,6 +5,7 @@
     using MaterialColor.Json;
     using ONI_Common.Data;
     using ONI_Common.Json;
+    using System;
     using System.Collections.Generic;
     using UnityEngine;
     using Logger = ONI_Common.IO.Logger;
@@ -45,16 +46,31 @@
                     return _configuratorState;
                 }
 
-                JsonLoader.TryLoadConfiguratorState(out _configuratorState);
+                MaterialColorState state;
+                JsonLoader.TryLoadConfiguratorState(out state);
 
-                return _configuratorState;
+                ConfiguratorState = state;
+
+                return state;
             }
 
             private set
             {
                 _configuratorState = value;
+
+                try
+                {
+                    TypeFilter = new TextFilter(_configuratorState.TypeFilterInfo);
+                }
+                catch (Exception e)
+                {
+                    State.Logger.Log("Error while creating new TextFilter object");
+                    State.Logger.Log(e);
+                }
 			}
 		}
+
+        public static TextFilter TypeFilter { get; set; }
 
         [NotNull]
         public static Dictionary<SimHashes, Color> ElementColorInfos

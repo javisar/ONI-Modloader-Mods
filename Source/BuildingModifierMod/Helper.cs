@@ -210,9 +210,10 @@ namespace BuildingModifierMod
 
         private static bool SetValue(UnityEngine.Object component, JProperty property, Type type)
         {
-
             string name = property.Name;
             JToken value = property.Value;
+            if (value == null) Debug.Log(String.Format(" === [BuildingModifier] Warning: null value for property {0} while processing type {1}", property.Name, type.Name));
+
 
             FieldInfo fi = AccessTools.Field(type, name);
             //Debug.Log("fi: " + fi);
@@ -236,13 +237,28 @@ namespace BuildingModifierMod
 					// Tries to find the Type
 					//FieldInfo fi1 = AccessTools.Field(typeof(BuildingDef), name);
 					FieldInfo fi1 = AccessTools.Field(type, name);
-					string path = (string)value;
+                    if (null == fi1)
+                    {
+                        Debug.Log(String.Format(" === [BuildingModifier] Warning: can't find field {0}.{1}", type.Name, name));
+                        return false;
+                    }
+                    string path = (string)value;
                     string className = path.Substring(0, path.LastIndexOf("."));
                     string fieldName = path.Substring(path.LastIndexOf(".") + 1);
-                    //Debug.Log(className + ", " + fieldName);
+//                    Debug.Log(className + ", " + fieldName);
                     Type classType = Type.GetType(className + ", Assembly-CSharp");
-                    //Debug.Log("Type: " + classType);
+                    if (null == classType)
+                    {
+                        Debug.Log(String.Format(" === [BuildingModifier] Warning: can't find class {0} in Assembly-CSharp assembly", className));
+                        return false;
+                    }
+//                    Debug.Log("Type: " + classType);
                     FieldInfo fi2 = AccessTools.Field(classType, fieldName);
+                    if (null == fi2)
+                    {
+                        Debug.Log(String.Format(" === [BuildingModifier] Warning: can't find field {0}.{1}", classType.Name, fieldName));
+                        return false;
+                    }
                     //Debug.Log("FINAL: " + fi2.GetValue(null));
 
                     fi1.SetValue(component, fi2.GetValue(null));
@@ -250,11 +266,11 @@ namespace BuildingModifierMod
                     break;
 
                 case JTokenType.Object:
-                    Debug.Log(" === [BuildingModifier] Warning: JTokenType.Object Not implemented. " + component.name + "_" + name + ": " + value);
+                    Debug.Log(" === [BuildingModifier] Warning: JTokenType.Object Not implemented. " + (component ? component.name : "null") + "_" + name + ": " + value);
                     break;
 
                 default:
-                    Debug.Log(" === [BuildingModifier] Warning: " + value.Type + " Not implemented. " + "_" + component.name + "_" + name + ": " + value);
+                    Debug.Log(" === [BuildingModifier] Warning: " + value.Type + " Not implemented. " + "_" + (component ? component.name : "null") + "_" + name + ": " + value);
                     return false;
             }
             return true;

@@ -1,0 +1,11 @@
+{
+  "Enabled": true,
+  "Debug": false,
+
+  "maxOrthographicSizeEnabled": true,
+  "maxOrthographicSize": 100.0,
+  "maxOrthographicSizeDebug": 300.0,
+
+  "ConstrainToWorld": true          // =false, allows to pan over the world edges
+
+}

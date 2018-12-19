@@ -23,7 +23,7 @@ namespace ZeroPointModuleMod
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(ZeroPointModuleConfig.ID);
             */
-            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.Power).data;
+            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => ((HashedString) "Power").Equals(po.category)).data;
             category.Add(ZeroPointModuleConfig.ID);
 
         }

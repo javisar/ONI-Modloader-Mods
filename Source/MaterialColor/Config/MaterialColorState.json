@@ -4,4 +4,11 @@
   "ShowMissingElementColorInfos": false,
   "AdditionalBrightness": 0, // Default: 0
   "IntensityFactor": 1 // Default: 1
+  "TypeFilterInfo": {
+    "Inclusive": false,				// false to exclude buildings
+	"MatchBuildingIds": false,		// true to match to exact bulding id
+    "Rules": [
+		// "Battery"
+	]
+  }
 }

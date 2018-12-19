@@ -4,18 +4,54 @@ using UnityEngine;
 
 namespace FluidWarpMod
 {   
-    internal class FluidWarpMod_Utils
+    internal static class FluidWarpMod_Utils
 	{
-		public static ConduitType GetConduitType(ValveSideScreen __instance) {			
-			FieldInfo fi1 = AccessTools.Field(typeof(ValveSideScreen), "targetValve");
-			FieldInfo fi2 = AccessTools.Field(typeof(Valve), "valveBase");
+        public const string CHANNEL_LABEL = "Ch.";
 
-			ConduitType type = ((ValveBase)fi2.GetValue(fi1.GetValue(__instance))).conduitType;
+        public const string OFF_LABEL = "(off)";
+
+        private static FieldInfo valveSideScreenTargetValveFI = AccessTools.Field(typeof(ValveSideScreen), "targetValve");
+
+        private static FieldInfo valveValveBaseFI = AccessTools.Field(typeof(Valve), "valveBase");
+
+        public static ConduitType GetConduitType(ValveSideScreen __instance) {			
+			ConduitType type = ((ValveBase)valveValveBaseFI.GetValue( valveSideScreenTargetValveFI.GetValue(__instance) )).conduitType;
 			return type;
 		}
 	}
 
-	[HarmonyPatch(typeof(ValveBase), "ConduitUpdate")]
+    [HarmonyPatch(typeof(Valve), "OnSpawn")]
+    internal static class FluidWarpMod_Valve_OnSpawn
+    {
+        private static void Postfix(Valve __instance, ValveBase ___valveBase)
+        {
+            WarpSpaceManager.OnValveChannelChange(___valveBase);
+            return;
+        }
+    }
+
+    [HarmonyPatch(typeof(Valve), "OnCleanUp")]
+    internal static class FluidWarpMod_Valve_OnCleanUp
+    {
+        private static void Postfix(Valve __instance, ValveBase ___valveBase)
+        {
+            WarpSpaceManager.RemoveProviderValve(___valveBase);
+            return;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(Valve), "UpdateFlow")]
+    internal static class FluidWarpMod_Valve_UpdateFlow
+    {
+        private static void Postfix(Valve __instance, ValveBase ___valveBase)
+        {
+            WarpSpaceManager.OnValveChannelChange(___valveBase);
+            return;
+        }
+    }
+
+    [HarmonyPatch(typeof(ValveBase), "ConduitUpdate")]
 	internal class FluidWarpMod_ValveBase_ConduitUpdate
 	{
         public FluidWarpMod_ValveBase_ConduitUpdate()
@@ -53,26 +89,9 @@ namespace FluidWarpMod
                 __instance.UpdateAnim();
 			}
 
-            if (flowManager.HasConduit(___inputCell))
-			{
-                ConduitFlow.Conduit inputConduit = flowManager.GetConduit(___inputCell);
-                ConduitFlow.ConduitContents contents = inputConduit.GetContents(flowManager);
-				float num = Mathf.Min(contents.mass, (__instance.MaxFlow * dt));
-				if (num > 0f)
-				{
-                    WarpPackageManager.ProvideConduitContents(flowManager, __instance.conduitType, ___inputCell, channelNo, num);
-				}
-				__instance.UpdateAnim();
-				return false;
-			}
-
-
-			if (flowManager.HasConduit(___outputCell))
+			if (flowManager.HasConduit(___outputCell) && !flowManager.IsConduitFull(___outputCell))
             {
-                ConduitFlow.Conduit conduitO = flowManager.GetConduit(___outputCell);
-                float actuallyAdded = WarpPackageManager.RequestElementFromChannel(flowManager, __instance.conduitType, ___outputCell, channelNo);
-                Game.Instance.accumulators.Accumulate(__instance.AccumulatorHandle, actuallyAdded);
-
+                WarpSpaceManager.RequestFluidFromChannel(__instance, channelNo);
                 __instance.UpdateAnim();
                 return false;
             }
@@ -81,22 +100,51 @@ namespace FluidWarpMod
 		}
     }
 
-	[HarmonyPatch(typeof(ValveSideScreen), "OnSpawn")]
+    [HarmonyPatch(typeof(ValveBase), "UpdateAnim")]
+    internal class FluidWarpMod_ValveBase_UpdateAnim
+    {
+        private static FieldInfo controllerFI = AccessTools.Field(typeof(ValveBase), "controller");
+        public static bool Prefix(ValveBase __instance)
+        {
+            var controller = ((KBatchedAnimController)controllerFI.GetValue(__instance));
+            float averageRate = Game.Instance.accumulators.GetAverageRate(__instance.AccumulatorHandle);
+            if (averageRate <= 0f)
+            {
+                controller.Play("off", KAnim.PlayMode.Once, 1f, 0f);
+            }
+            else
+            {
+                controller.Play("hi", (averageRate > 0f ? KAnim.PlayMode.Loop : KAnim.PlayMode.Once), 1f, 0f);
+            }
+            return false;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(ValveSideScreen), "OnSpawn")]
     internal class FluidWarpMod_ValveSideScreen_OnSpawn
 	{
+        private static FieldInfo numberInputFI = AccessTools.Field(typeof(ValveSideScreen), "numberInput");
+
+        private static FieldInfo unitsLabelFI = AccessTools.Field(typeof(ValveSideScreen), "unitsLabel");
+
         private static void Postfix(ValveSideScreen __instance)
         {
             Logger.LogFormat(" === FluidWarpMod_ValveSideScreen_OnSpawn Postfix === ");
 
-			FieldInfo fi0 = AccessTools.Field(typeof(ValveSideScreen), "unitsLabel");
 			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);			
 			if (type == LiquidWarpConfig.CONDUIT_TYPE || type == GasWarpConfig.CONDUIT_TYPE)
 			{
-				((LocText)fi0.GetValue(__instance)).text = "Ch.";
-			}
-		
+                if ((float)((KNumberInputField)numberInputFI.GetValue(__instance)).currentValue == 10f)
+                {
+                    ((LocText)unitsLabelFI.GetValue(__instance)).text = FluidWarpMod_Utils.OFF_LABEL;
+                }
+                else
+                {
+                    ((LocText)unitsLabelFI.GetValue(__instance)).text = FluidWarpMod_Utils.CHANNEL_LABEL;
+                }
+            }
 		}
-        
     }
 
 	[HarmonyPatch(typeof(SideScreenContent), "GetTitle")]
@@ -124,24 +172,42 @@ namespace FluidWarpMod
 	}
 
 	[HarmonyPatch(typeof(ValveSideScreen), "SetTarget")]
-	internal class FluidWarpMod_ValveSideScreen_SetTarget
+	internal static class FluidWarpMod_ValveSideScreen_SetTarget
 	{
-		private static void Postfix(ValveSideScreen __instance)
+        private static FieldInfo minFlowLabelFI = AccessTools.Field(typeof(ValveSideScreen), "minFlowLabel");
+        private static FieldInfo maxFlowLabelFI = AccessTools.Field(typeof(ValveSideScreen), "maxFlowLabel");
+        private static void Postfix(ValveSideScreen __instance)
 		{
             Logger.LogFormat(" === FluidWarpMod_ValveSideScreen_SetTarget Postfix === ");
-
-			FieldInfo fi3 = AccessTools.Field(typeof(ValveSideScreen), "minFlowLabel");
-			FieldInfo fi4 = AccessTools.Field(typeof(ValveSideScreen), "maxFlowLabel");
-
+            
 			ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
 			if (type == LiquidWarpConfig.CONDUIT_TYPE || type == GasWarpConfig.CONDUIT_TYPE)
 			{
-				((LocText)fi3.GetValue(__instance)).text = "Channel";
-				((LocText)fi4.GetValue(__instance)).text = "Channel";
+				((LocText)minFlowLabelFI.GetValue(__instance)).text = "-Channel";
+				((LocText)maxFlowLabelFI.GetValue(__instance)).text = "+Channel";
 			}
-
 		}
-
 	}
 
+    [HarmonyPatch(typeof(ValveSideScreen), "UpdateFlowValue")]
+    internal class FluidWarpMod_ValveSideScreen_UpdateFlowValue
+    {
+        private static FieldInfo unitsLabelFI = AccessTools.Field(typeof(ValveSideScreen), "unitsLabel");
+
+        private static void Postfix(ValveSideScreen __instance, float newValue)
+        {
+            ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
+            if ((type == LiquidWarpConfig.CONDUIT_TYPE || type == GasWarpConfig.CONDUIT_TYPE))
+            {
+                if (newValue == 10f)
+                {
+                    ((LocText)unitsLabelFI.GetValue(__instance)).text = FluidWarpMod_Utils.OFF_LABEL;
+                }
+                else
+                {
+                    ((LocText)unitsLabelFI.GetValue(__instance)).text = FluidWarpMod_Utils.CHANNEL_LABEL;
+                }
+            }
+        }
+    }
 }

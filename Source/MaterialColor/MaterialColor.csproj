@@ -71,6 +71,8 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\SimHashesExtensions.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
+    <Compile Include="Data\FilterInfo.cs" />
+    <Compile Include="TextFilter.cs" />
     <Compile Include="Json\BaseManager.cs" />
     <Compile Include="Json\ConfiguratorStateManager.cs" />
     <Compile Include="Json\ElementColorInfosManager.cs" />

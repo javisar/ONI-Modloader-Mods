@@ -37,8 +37,23 @@
 
         public static void UpdateBuildingColor(BuildingComplete building)
         {
-            string buildingName = building.name.Replace("Complete", string.Empty);
+            string    buildingName = building.name.Replace("Complete", string.Empty);
             bool colorAsOffset = ColorHelper.GetComponentMaterialColor(building, out Color color);
+
+            try
+            {
+                if (!State.TypeFilter.Check(buildingName))
+                {
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                State.Logger.Log("Error while filtering buildings");
+                State.Logger.Log(e);
+            }
+
+            SimHashes material     = MaterialHelper.ExtractMaterial(building);
 
             if (State.TileNames.Contains(buildingName))
             {
@@ -347,15 +362,18 @@
         public static class OverlayMenu_InitializeToggles
         {
             // TODO: read from file instead
-            public static void Postfix(OverlayMenu __instance, ref List<KIconToggleMenu.ToggleInfo> __result)
+            public static void Postfix(OverlayMenu __instance)
             {
-				Type oti = AccessTools.Inner(typeof(OverlayMenu), "OverlayToggleInfo");
+                FieldInfo overlayToggleInfosFI = AccessTools.Field(typeof(OverlayMenu), "overlayToggleInfos");
+                var overlayToggleInfos = (List<KIconToggleMenu.ToggleInfo> )overlayToggleInfosFI.GetValue(__instance);
+
+                                Type oti = AccessTools.Inner(typeof(OverlayMenu), "OverlayToggleInfo");
 				
-				ConstructorInfo ci =  oti.GetConstructor(new Type[] { typeof(string), typeof(string), typeof(SimViewMode), typeof(string), typeof(Action), typeof(string), typeof(string) });
+				ConstructorInfo ci =  oti.GetConstructor(new Type[] { typeof(string), typeof(string), typeof(HashedString), typeof(string), typeof(Action), typeof(string), typeof(string) });
 				object ooti = ci.Invoke(new object[] {
 						"Toggle MaterialColor",
 						"overlay_materialcolor",
-						(SimViewMode)IDs.ToggleMaterialColorOverlayID,
+						IDs.MaterialColorOverlayHS,
 						string.Empty,
 						(Action)IDs.ToggleMaterialColorOverlayAction,
 						"Toggles MaterialColor overlay",
@@ -363,7 +381,7 @@
 				});
 				((KIconToggleMenu.ToggleInfo)ooti).getSpriteCB = GetUISprite;
 
-				__result.Add((KIconToggleMenu.ToggleInfo)ooti);
+                overlayToggleInfos.Add((KIconToggleMenu.ToggleInfo)ooti);
 
 				/*
 				__result.Add(
@@ -393,14 +411,14 @@
             {
                 try
                 {
-                    switch (OverlayScreen.Instance.GetMode())
-                    {
-                        case SimViewMode.PowerMap:
-                        case SimViewMode.GasVentMap:
-                        case SimViewMode.LiquidVentMap:
-                        case SimViewMode.Logic:
-                            RefreshMaterialColor();
-                            break;
+                    var currentOverlayMode = OverlayScreen.Instance.GetMode();
+                    if (OverlayModes.Power.ID.Equals(currentOverlayMode) ||
+                        OverlayModes.GasConduits.ID.Equals(currentOverlayMode) ||
+                        OverlayModes.LiquidConduits.ID.Equals(currentOverlayMode) ||
+                        OverlayModes.Logic.ID.Equals(currentOverlayMode)
+                        )
+                    { 
+                        RefreshMaterialColor();
                     }
                 }
                 catch (Exception e)
@@ -447,8 +465,8 @@
             {
                 try
                 {
-					bool toggleMaterialColor = Traverse.Create(toggle_info).Field<SimViewMode>("simView").Value
-                                            == (SimViewMode)IDs.ToggleMaterialColorOverlayID;
+					bool toggleMaterialColor = Traverse.Create(toggle_info).Field<HashedString>("simView").Value
+                                            == IDs.ToggleMaterialColorOverlayHS;
 
                     if (!toggleMaterialColor)
                     {

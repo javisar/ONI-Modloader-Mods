@@ -1,4 +1,6 @@
-﻿namespace MaterialColor.Data
+﻿using System.Collections.Generic;
+
+namespace MaterialColor.Data
 {
     public class MaterialColorState
     {
@@ -11,5 +13,7 @@
         public float AdditionalBrightness { get; set; } = 0;
 
         public float IntensityFactor { get; set; } = 1;
+
+        public FilterInfo TypeFilterInfo { get; set; } = new FilterInfo();
     }
 }

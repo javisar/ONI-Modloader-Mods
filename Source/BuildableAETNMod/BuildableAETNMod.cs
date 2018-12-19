@@ -26,7 +26,7 @@ namespace BuildableAETNMod
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(MassiveHeatSinkConfig.ID);
             */
-            List<string> category = (List<string>) TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.Utilities).data;
+            List<string> category = (List<string>) TUNING.BUILDINGS.PLANORDER.First(po => ((HashedString) "Utilities").Equals(po.category)).data;
             category.Add(MassiveHeatSinkConfig.ID);
         }
         /*
@@ -65,7 +65,7 @@ namespace BuildableAETNMod
         private static void Postfix(MassiveHeatSinkConfig __instance, ref BuildingDef __result)
         {
             Debug.Log(" === MassiveHeatSinkConfig.CreateBuildingDef loaded === " + MassiveHeatSinkConfig.ID);
-            __result.ViewMode = SimViewMode.GasVentMap;
+            __result.ViewMode = OverlayModes.GasConduits.ID;
             __result.MaterialCategory = new string[] { "RefinedMetal"};
             __result.Mass = new float[] { 20000f };
         }
