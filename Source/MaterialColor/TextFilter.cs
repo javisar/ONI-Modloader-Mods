@@ -18,7 +18,7 @@ namespace MaterialColor
         public TextFilter(FilterInfo info)
         {
             this.Rules = info.Rules;
-            this.MatchId = info.MatchBuildingIds;
+            this.MatchId = info.ExactMatch;
 
             if (info.Inclusive)
             {
