@@ -44,7 +44,7 @@
             {
                 if (!State.TypeFilter.Check(buildingName))
                 {
-                    return;
+                    color = ColorHelper.DefaultColorOffset;
                 }
             }
             catch (Exception e)
