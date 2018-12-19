@@ -41,18 +41,16 @@ namespace MaterialColor
 
         private bool InclusiveCheck(string value)
         {
-            //return this.Rules.Any(rule => value.Contains(rule));
-            return this.Rules.Any(rule =>
-                (this.MatchId ? 
-                    value.Equals(rule) : value.Contains(rule)));
+            return this.Rules.Any(rule => this.MatchId
+                ? value.Equals(rule)
+                : value.Contains(rule));
         }
 
         private bool ExclusiveCheck(string value)
         {
-            //return !this.Rules.Any(rule => value.Contains(rule));
-            return !this.Rules.Any(rule =>
-                (this.MatchId ?
-                    value.Equals(rule) : value.Contains(rule)));
+            return !this.Rules.Any(rule => this.MatchId
+                ? value.Equals(rule)
+                : value.Contains(rule));
         }
     }
 }

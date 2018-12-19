@@ -26,9 +26,11 @@
         }
 
         /// <summary>
-        /// Tries to get material color for given component, if not possible fallsback to to substance.conduitColour, then to ColorHelper.DefaultColor
+        /// Tries to get material color for given component, if not possible extracts substance.conduitColour.
+        /// 
+        /// If MaterialColor is disabled or can't get any of the above it returns a zero-offset color.
         /// </summary>
-        /// <param name="outColor">on true outputs color offset, otherwise fallsback to substance.conduitColour, then to ColorHelper.DefaultColor</param>
+        /// <param name="outColor">on true outputs color offset, otherwise uses substance.conduitColour, then to ColorHelper.DefaultColor</param>
         public static bool GetComponentMaterialColor(Component component, out Color outColor)
         {
             if (State.ConfiguratorState.Enabled)

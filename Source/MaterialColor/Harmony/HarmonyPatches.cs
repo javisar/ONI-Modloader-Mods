@@ -37,13 +37,54 @@
 
         public static void UpdateBuildingColor(BuildingComplete building)
         {
-            string    buildingName = building.name.Replace("Complete", string.Empty);
+            string buildingName = building.name.Replace("Complete", string.Empty);
             bool colorAsOffset = ColorHelper.GetComponentMaterialColor(building, out Color color);
+
+            try
+            {
+                if (!State.TypeFilter.Check(buildingName))
+                {
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                State.Logger.Log("Error while filtering buildings");
+                State.Logger.Log(e);
+            }
+
+            if (State.TileNames.Contains(buildingName))
+            {
+                try
+                {
+                    if (ColorHelper.TileColors == null)
+                    {
+                        ColorHelper.TileColors = new Color?[Grid.CellCount];
+                    }
+
+                    ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor(colorAsOffset);
+
+                    return;
+                }
+                catch (Exception e)
+                {
+                    State.Logger.Log("Error while getting cell color");
+                    State.Logger.Log(e);
+                }
+            }
 
             IUserControlledCapacity userControlledCapacity = building.GetComponent<IUserControlledCapacity>();
             Ownable ownable = building.GetComponent<Ownable>();
 
-            if (userControlledCapacity == null && ownable == null)
+            if (userControlledCapacity != null)
+            {
+                DebugHelper.LogComponents(building);
+            }
+            else if (ownable != null)
+            {
+                Traverse.Create(ownable).Method("UpdateTint").GetValue();
+            }
+            else
             {
                 KAnimControllerBase kAnimControllerBase = building.GetComponent<KAnimControllerBase>();
 
@@ -168,7 +209,7 @@
             {
                 foreach (BuildingComplete building in Components.BuildingCompletes.Items)
                 {
-                    OnBuildingsCompletesAdd(building);
+                    UpdateBuildingColor(building);
                 }
 
                 State.Logger.Log("Buildings updated successfully.");
