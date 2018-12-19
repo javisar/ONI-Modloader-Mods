@@ -73,15 +73,16 @@
                 }
             }
 
-            IUserControlledCapacity userControlledCapacity = building.GetComponent<IUserControlledCapacity>();
+            FilteredStorage filteredStorage = building.GetComponent<FilteredStorage>();
             Ownable ownable = building.GetComponent<Ownable>();
 
-            if (userControlledCapacity != null)
+            if (filteredStorage != null)
             {
-                DebugHelper.LogComponents(building);
+                filteredStorage.filterTint = color;
             }
             else if (ownable != null)
             {
+                Traverse.Create(ownable).Field("ownedTint").SetValue(color);
                 Traverse.Create(ownable).Method("UpdateTint").GetValue();
             }
             else
@@ -90,30 +91,11 @@
 
                 if (kAnimControllerBase != null)
                 {
-                    SetTintColour(kAnimControllerBase, color);
+                    kAnimControllerBase.TintColour = color;
                 }
                 else
                 {
                     Debug.Log($"MaterialColor: Can't find KAnimControllerBase component in <{buildingName}> and its not a registered tile.");
-                }
-            }
-        }
-
-        private static void SetTintColour(KAnimControllerBase kAnimControllerBase, Color color)
-        {
-            KBatchedAnimInstanceData batchInstanceData = Traverse.Create(kAnimControllerBase).Field("batchInstanceData").GetValue<KBatchedAnimInstanceData>();
-            if (batchInstanceData.SetTintColour(color))
-            {
-                try
-                {
-                    kAnimControllerBase.SetDirty();
-                    Traverse.Create(kAnimControllerBase).Method("SuspendUpdates", false).GetValue();
-                    kAnimControllerBase.OnTintChanged?.Invoke(color);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log("Probably not game-breaking error after batchInstanceSetTintColour(color)");
-                    Debug.LogError(e);
                 }
             }
         }
@@ -232,9 +214,9 @@
                 if (owned)
                 {
                     KAnimControllerBase animBase = __instance.GetComponent<KAnimControllerBase>();
-                    if (animBase != null && animBase.HasBatchInstanceData) // TODO: is second check needed?
+                    if (animBase != null)
                     {
-                        SetTintColour(animBase, tint);
+                        animBase.TintColour = tint;
                     }
                 }
             }
@@ -251,9 +233,9 @@
                 if (active)
                 {
                     KAnimControllerBase animBase = ___root.GetComponent<KAnimControllerBase>();
-                    if (animBase != null && animBase.HasBatchInstanceData)
+                    if (animBase != null)
                     {
-                        SetTintColour(animBase, tint);
+                        animBase.TintColour = tint;
                     }
                 }
             }
