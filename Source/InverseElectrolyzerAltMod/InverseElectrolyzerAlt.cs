@@ -129,17 +129,17 @@ public class InverseElectrolyzerAlt: KMonoBehaviour, ISaveLoadable, ISecondaryIn
 		this.operational.SetActive(value, false);
 	}
 
-	private bool ShowInUtilityOverlay(SimViewMode mode, object data)
+	private bool ShowInUtilityOverlay(HashedString mode, object data)
 	{
 		bool result = false;
 		ElementFilter elementFilter = (ElementFilter)data;
 		switch (elementFilter.portInfo.conduitType)
 		{
 			case ConduitType.Gas:
-				result = (mode == SimViewMode.GasVentMap);
+				result = OverlayModes.GasConduits.ID.Equals(mode);
 				break;
 			case ConduitType.Liquid:
-				result = (mode == SimViewMode.LiquidVentMap);
+				result = OverlayModes.LiquidConduits.ID.Equals(mode);
 				break;
 		}
 		return result;

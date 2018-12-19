@@ -23,7 +23,7 @@ namespace InverseElectrolyzerAltMod
 
 			TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(InverseElectrolyzerAltConfig.ID);
             */
-            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == PlanScreen.PlanCategory.Utilities).data;
+            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po =>  ((HashedString) "Utilities").Equals(po.category) ).data;
             category.Add(InverseElectrolyzerAltConfig.ID);
 
         }
@@ -51,7 +51,7 @@ namespace InverseElectrolyzerAltMod
 			//Database.Techs.TECH_GROUPING["TemperatureModulation"].Add("InsulatedPressureDoor");
 		}
 	}
-
+    /*
 	[HarmonyPatch(typeof(KSerialization.Manager), "GetType", new Type[] { typeof(string) })]
 	public static class GasTankMod_Manager_GetType
 	{
@@ -64,6 +64,6 @@ namespace InverseElectrolyzerAltMod
 			}
 		}
 	}
-	
+	*/
 
 }

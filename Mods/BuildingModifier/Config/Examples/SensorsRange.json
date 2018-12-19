@@ -18,6 +18,21 @@
             "LogicTemperatureSensor": {
                 "maxTemp": 1573.15
             }
+        },
+
+        "GasConduitTemperatureSensor": {
+            "ConduitTemperatureSensor": {
+                "Threshold": 280.0,
+                "rangeMin": 0.0,
+                "rangeMax": 573.15
+            }
+        },
+        "LiquidConduitTemperatureSensor": {
+            "ConduitTemperatureSensor": {
+                "Threshold": 280.0,
+                "rangeMin": 0.0,
+                "rangeMax": 573.15
+            }
         }
 
     }

@@ -4,7 +4,9 @@
 
 * Use the Channel slider in the Stargate Menu to tune both to the same channel.
 
-* The fluid is stored in a up to 100 kg for liquid and 10 kg for gas. This storage is deleted where you exit the game.
+* Channel 10000 has special meaning - building it disabled in this channel, to avoid waisting gas/fluid to default channel when built.
+
+* The fluid is stored in a up to 100 kg for liquid and 50 kg for gas (per channel). This storage is deleted where you exit the game.
 
 * You can place two stargates with one input each and one stargate with one output pipe then as example:
 two inputs send two packets of 1kg and 2kg, then the ouput will put in the pipe two packets of 1kg and 2kg sequentially. 

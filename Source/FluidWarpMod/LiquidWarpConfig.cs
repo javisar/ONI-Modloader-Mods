@@ -5,8 +5,7 @@ public class LiquidWarpConfig : IBuildingConfig
 {
 	public const string ID = "LiquidWarp";
 
-	private const ConduitType CONDUIT_TYPE = ConduitType.Liquid;
-
+    public const ConduitType CONDUIT_TYPE = (ConduitType)100;
     
     public override BuildingDef CreateBuildingDef()
 	{
@@ -25,7 +24,7 @@ public class LiquidWarpConfig : IBuildingConfig
 		buildingDef.InputConduitType = ConduitType.Liquid;
 		buildingDef.OutputConduitType = ConduitType.Liquid;
 		buildingDef.Floodable = false;
-		buildingDef.ViewMode = SimViewMode.LiquidVentMap;
+		buildingDef.ViewMode = OverlayModes.LiquidConduits.ID;
 		buildingDef.AudioCategory = "Metal";
 		buildingDef.PermittedRotations = PermittedRotations.R360;
 		buildingDef.UtilityInputOffset = new CellOffset(0, 0);
@@ -41,19 +40,10 @@ public class LiquidWarpConfig : IBuildingConfig
 		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
-		//valveBase.conduitType = ConduitType.Liquid;
-		valveBase.conduitType = (ConduitType) 100;
+		valveBase.conduitType = CONDUIT_TYPE;       
 		valveBase.maxFlow = 10f;
-		valveBase.animFlowRanges = new ValveBase.AnimRangeInfo[3]
-		{
-			new ValveBase.AnimRangeInfo(3f, "lo"),
-			new ValveBase.AnimRangeInfo(7f, "med"),
-			new ValveBase.AnimRangeInfo(10f, "hi")
-		};
 
 		go.AddOrGet<Valve>();
-		Workable workable = go.AddOrGet<Workable>();
-		workable.workTime = 5f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

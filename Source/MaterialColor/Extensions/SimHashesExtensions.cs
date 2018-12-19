@@ -78,7 +78,7 @@
 
             if (element?.substance != null)
             {
-                Color32 debugColor = element.substance.debugColour;
+                Color32 debugColor = element.substance.uiColour;
 
                 debugColor.a = byte.MaxValue;
 

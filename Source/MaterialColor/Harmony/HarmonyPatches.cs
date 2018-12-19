@@ -74,6 +74,20 @@
         public static void UpdateBuildingColor(BuildingComplete building)
         {
             string    buildingName = building.name.Replace("Complete", string.Empty);
+
+            try
+            {
+                if (!State.TypeFilter.Check(buildingName))
+                {
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                State.Logger.Log("Error while filtering buildings");
+                State.Logger.Log(e);
+            }
+
             SimHashes material     = MaterialHelper.ExtractMaterial(building);
 
             Color32 color;
@@ -590,15 +604,18 @@
         public static class OverlayMenu_InitializeToggles
         {
             // TODO: read from file instead
-            public static void Postfix(OverlayMenu __instance, ref List<KIconToggleMenu.ToggleInfo> __result)
+            public static void Postfix(OverlayMenu __instance)
             {
-				Type oti = AccessTools.Inner(typeof(OverlayMenu), "OverlayToggleInfo");
+                FieldInfo overlayToggleInfosFI = AccessTools.Field(typeof(OverlayMenu), "overlayToggleInfos");
+                var overlayToggleInfos = (List<KIconToggleMenu.ToggleInfo> )overlayToggleInfosFI.GetValue(__instance);
+
+                                Type oti = AccessTools.Inner(typeof(OverlayMenu), "OverlayToggleInfo");
 				
-				ConstructorInfo ci =  oti.GetConstructor(new Type[] { typeof(string), typeof(string), typeof(SimViewMode), typeof(string), typeof(Action), typeof(string), typeof(string) });
+				ConstructorInfo ci =  oti.GetConstructor(new Type[] { typeof(string), typeof(string), typeof(HashedString), typeof(string), typeof(Action), typeof(string), typeof(string) });
 				object ooti = ci.Invoke(new object[] {
 						"Toggle MaterialColor",
 						"overlay_materialcolor",
-						(SimViewMode)IDs.ToggleMaterialColorOverlayID,
+						IDs.MaterialColorOverlayHS,
 						string.Empty,
 						(Action)IDs.ToggleMaterialColorOverlayAction,
 						"Toggles MaterialColor overlay",
@@ -606,7 +623,7 @@
 				});
 				((KIconToggleMenu.ToggleInfo)ooti).getSpriteCB = GetUISprite;
 
-				__result.Add((KIconToggleMenu.ToggleInfo)ooti);
+                overlayToggleInfos.Add((KIconToggleMenu.ToggleInfo)ooti);
 
 				/*
 				__result.Add(
@@ -636,14 +653,14 @@
             {
                 try
                 {
-                    switch (OverlayScreen.Instance.GetMode())
-                    {
-                        case SimViewMode.PowerMap:
-                        case SimViewMode.GasVentMap:
-                        case SimViewMode.LiquidVentMap:
-                        case SimViewMode.Logic:
-                            RefreshMaterialColor();
-                            break;
+                    var currentOverlayMode = OverlayScreen.Instance.GetMode();
+                    if (OverlayModes.Power.ID.Equals(currentOverlayMode) ||
+                        OverlayModes.GasConduits.ID.Equals(currentOverlayMode) ||
+                        OverlayModes.LiquidConduits.ID.Equals(currentOverlayMode) ||
+                        OverlayModes.Logic.ID.Equals(currentOverlayMode)
+                        )
+                    { 
+                        RefreshMaterialColor();
                     }
                 }
                 catch (Exception e)
@@ -691,8 +708,8 @@
                 try
                 {
 					//bool toggleMaterialColor = ((OverlayMenu.OverlayToggleInfo)toggle_info).simView
-					bool toggleMaterialColor = (SimViewMode)GetField(toggle_info, "simView")
-											== (SimViewMode)IDs.ToggleMaterialColorOverlayID;
+					bool toggleMaterialColor = (HashedString)GetField(toggle_info, "simView")
+											== IDs.MaterialColorOverlayHS;
 
                     if (!toggleMaterialColor)
                     {

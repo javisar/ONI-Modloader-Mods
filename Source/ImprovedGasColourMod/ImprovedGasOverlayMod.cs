@@ -87,7 +87,7 @@ namespace ImprovedGasColourMod
                 Element element = Grid.Element[cellIndex];
                 Substance substance = element.substance;
 
-                Color32 overlayColor = substance.overlayColour;
+                Color32 overlayColor = substance.conduitColour;
 
                 overlayColor.a = byte.MaxValue;
 
