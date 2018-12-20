@@ -13,11 +13,21 @@ namespace InverseElectrolyzerMod
         private static void Prefix()
         {
             Debug.Log(" === GeneratedBuildings Prefix === "+ InverseElectrolyzerConfig.ID);			
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.NAME", "Combustioneer");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.DESC", "");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.EFFECT", "");
+
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.NAME", "Burner 1IN");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.DESC", "Hydrogen and oxygen goes in, water comes out");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.EFFECT", "Converts " + STRINGS.UI.FormatAsLink("Oxygen", "OXYGEN") + " and " + STRINGS.UI.FormatAsLink("Hydrogen", "HYDROGEN") + " into " + STRINGS.UI.FormatAsLink("Water", "WATER") + ".\n\nGets oxygen from the environment.");
 
 			ModUtil.AddBuildingToPlanScreen("Utilities", InverseElectrolyzerConfig.ID);
+
+
+			Debug.Log(" === GeneratedBuildings Prefix === " + InverseElectrolyzerAltConfig.ID);
+
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZERALT.NAME", "Burner 2IN");
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZERALT.DESC", "Hydrogen and oxygen goes in, water comes out");
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZERALT.EFFECT", "Converts " + STRINGS.UI.FormatAsLink("Oxygen", "OXYGEN") + " and " + STRINGS.UI.FormatAsLink("Hydrogen", "HYDROGEN") + " into " + STRINGS.UI.FormatAsLink("Water", "WATER") + ".\n\nGets oxygen from an input.");
+
+			ModUtil.AddBuildingToPlanScreen("Utilities", InverseElectrolyzerAltConfig.ID);
 
 			/*
             List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[10].data);
@@ -49,11 +59,15 @@ namespace InverseElectrolyzerMod
 		private static void Prefix(Db __instance)
 		{
 			Debug.Log(" === Database.Techs loaded === " + InverseElectrolyzerConfig.ID);
-			List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["Combustion"]);
-			ls.Add(InverseElectrolyzerConfig.ID);
-			Database.Techs.TECH_GROUPING["Combustion"] = (string[])ls.ToArray();
+			List<string> ls1 = new List<string>((string[])Database.Techs.TECH_GROUPING["Combustion"]);
+			ls1.Add(InverseElectrolyzerConfig.ID);
+			Database.Techs.TECH_GROUPING["Combustion"] = (string[])ls1.ToArray();
 
-			//Database.Techs.TECH_GROUPING["TemperatureModulation"].Add("InsulatedPressureDoor");
+			Debug.Log(" === Database.Techs loaded === " + InverseElectrolyzerAltConfig.ID);
+			List<string> ls2 = new List<string>((string[])Database.Techs.TECH_GROUPING["Combustion"]);
+			ls2.Add(InverseElectrolyzerAltConfig.ID);
+			Database.Techs.TECH_GROUPING["Combustion"] = (string[])ls2.ToArray();
+
 		}
 	}
 	/*
