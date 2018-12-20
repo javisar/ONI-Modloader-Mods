@@ -16,17 +16,22 @@ namespace InverseElectrolyzerMod
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.NAME", "Combustioneer");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.DESC", "");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.EFFECT", "");
-            /*
+
+			ModUtil.AddBuildingToPlanScreen("Utilities", InverseElectrolyzerConfig.ID);
+
+			/*
             List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[10].data);
             ls.Add(InverseElectrolyzerConfig.ID);            
             TUNING.BUILDINGS.PLANORDER[10].data = (string[]) ls.ToArray();
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(InverseElectrolyzerConfig.ID);
             */
+			/*
             List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == (HashedString) "Utilities").data;
             category.Add(InverseElectrolyzerConfig.ID);
+			*/
 
-        }
+		}
         /*
         private static void Postfix()
         {

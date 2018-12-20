@@ -16,17 +16,22 @@ namespace ZeroPointModuleMod
             Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.NAME", "ZP Module");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.DESC", "Zero Point Energy Module.");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.EFFECT", "The energy of the vacuum feeds this battery.");
-            /*
+
+			ModUtil.AddBuildingToPlanScreen("Power", ZeroPointModuleConfig.ID);
+
+			/*
             List<string> ls = new List<string>((string[])TUNING.BUILDINGS.PLANORDER[2].data);
             ls.Add(ZeroPointModuleConfig.ID);
             TUNING.BUILDINGS.PLANORDER[2].data = (string[])ls.ToArray();
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(ZeroPointModuleConfig.ID);
             */
+			/*
             List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => ((HashedString) "Power").Equals(po.category)).data;
             category.Add(ZeroPointModuleConfig.ID);
+			*/
 
-        }
+		}
         /*
         private static void Postfix()
         {
