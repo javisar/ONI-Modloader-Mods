@@ -14,17 +14,6 @@
 
         public static Color?[] TileColors;
 
-        public static Color GetTileMaterialColor(int cellIndex)
-        {
-            if (Grid.IsValidCell(cellIndex) && MaterialHelper.CellIndexToElement(cellIndex, out Element element))
-            {
-                return element.id.ToMaterialColor(out Color materialColor)
-                    ? materialColor
-                    : (Color)element.substance.colour;
-            }
-            else return InvalidTileColor;
-        }
-
         /// <summary>
         /// Tries to get material color for given component, if not possible extracts substance.colour.
         /// 
@@ -46,6 +35,7 @@
                     if (!materialColorResult)
                     {
                         outColor = primaryElement.Element.substance.colour;
+                        outColor.a = 1;
                         if (State.ConfiguratorState.ShowMissingElementColorInfos)
                         {
                             Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
