@@ -320,20 +320,27 @@
         [HarmonyPatch(typeof(Game), "Update")]
         public static class Game_Update_EnterEveryUpdate
         {
+            private const int Interval = 180;
+            private static int framesTillNextCheck = Interval;
+
             public static void Prefix()
             {
-                try
+                if (framesTillNextCheck-- <= 0)
                 {
-                    if (_elementColorInfosChanged || _configuratorStateChanged)
+                    framesTillNextCheck = Interval;
+                    try
                     {
-                        RefreshMaterialColor();
-                        _elementColorInfosChanged = _configuratorStateChanged = false;
+                        if (_elementColorInfosChanged || _configuratorStateChanged)
+                        {
+                            RefreshMaterialColor();
+                            _elementColorInfosChanged = _configuratorStateChanged = false;
+                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    State.Logger.Log("EnterEveryUpdate failed.");
-                    State.Logger.Log(e);
+                    catch (Exception e)
+                    {
+                        State.Logger.Log("EnterEveryUpdate failed.");
+                        State.Logger.Log(e);
+                    }
                 }
             }
         }
@@ -516,7 +523,7 @@
         /// Material + element color
         /// </summary>
         [HarmonyPatch(typeof(Game), "OnPrefabInit")]
-        public static class SimDebugView_OnPrefabInit_EnterOnce
+        public static class Game_OnPrefabInit
         {
             [HarmonyPostfix]
             private static void Postfix()
