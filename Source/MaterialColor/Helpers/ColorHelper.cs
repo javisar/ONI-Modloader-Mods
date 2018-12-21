@@ -34,7 +34,7 @@
 
                     if (!materialColorResult)
                     {
-                        outColor = primaryElement.Element.substance.colour;
+                        outColor = primaryElement.Element.substance.conduitColour;
                         outColor.a = 1;
                         if (State.ConfiguratorState.ShowMissingElementColorInfos)
                         {
