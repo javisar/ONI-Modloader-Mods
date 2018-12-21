@@ -24,7 +24,8 @@
         private static bool _configuratorStateChanged;
         private static bool _elementColorInfosChanged;
 
-        private static readonly List<Type> _storageTypes = new List<Type>() {
+        private static readonly List<Type> _storageTypes = new List<Type>()
+        {
             typeof(RationBox),
             typeof(Refrigerator),
             typeof(SolidConduitInbox),
@@ -134,8 +135,6 @@
                 State.Logger.Log(e);
             }
         }
-
-        private static void OnBuildingsCompletesAdd(BuildingComplete building) => UpdateBuildingColor(building);
 
         private static void OnElementColorsInfosChanged(object sender, FileSystemEventArgs e)
         {
@@ -524,7 +523,7 @@
             {
                 try
                 {
-                    Components.BuildingCompletes.OnAdd += OnBuildingsCompletesAdd;
+                    Components.BuildingCompletes.OnAdd += UpdateBuildingColor;
                     _elementColorInfosChanged = _configuratorStateChanged = true;
                 }
                 catch (Exception e)
