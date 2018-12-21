@@ -20,17 +20,17 @@
             {
                 return element.id.ToMaterialColor(out Color materialColor)
                     ? materialColor
-                    : (Color)element.substance.conduitColour;
+                    : (Color)element.substance.colour;
             }
             else return InvalidTileColor;
         }
 
         /// <summary>
-        /// Tries to get material color for given component, if not possible extracts substance.conduitColour.
+        /// Tries to get material color for given component, if not possible extracts substance.colour.
         /// 
         /// If MaterialColor is disabled or can't get any of the above it returns a zero-offset color.
         /// </summary>
-        /// <param name="outColor">on true outputs color offset, otherwise uses substance.conduitColour, then to ColorHelper.DefaultColor</param>
+        /// <param name="outColor">on true outputs color offset, otherwise uses substance.colour, then to ColorHelper.DefaultColor</param>
         public static bool GetComponentMaterialColor(Component component, out Color outColor)
         {
             if (State.ConfiguratorState.Enabled)
@@ -45,7 +45,7 @@
 
                     if (!materialColorResult)
                     {
-                        outColor = primaryElement.Element.substance.conduitColour;
+                        outColor = primaryElement.Element.substance.colour;
                         if (State.ConfiguratorState.ShowMissingElementColorInfos)
                         {
                             Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
