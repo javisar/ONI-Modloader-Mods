@@ -109,9 +109,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="MaterialColorHowto.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Sprites\overlay_materialColor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
