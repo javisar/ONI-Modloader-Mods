@@ -2,11 +2,10 @@
   "Enabled": true,
   "LogElementsData": false,
   "ShowMissingElementColorInfos": false,
-  "AdditionalBrightness": 0,		// Default: 0
   "IntensityFactor": 1,					// Default: 1
   "TypeFilterInfo": {
     "Inclusive": false,					// false to exclude buildings
-    "ExactMatch": false,		    // true to match to exact bulding id
+		"ExactMatch": false,				// true to match to exact bulding id
     "Rules": [
 			// "Battery"
 		]
