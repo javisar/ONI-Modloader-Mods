@@ -14,7 +14,7 @@
 
         private ConfiguratorStateManager _configuratorStateManager;
 
-        private ElementColorInfosManager _elementColorInfosManager;
+        private ElementColorsManager _elementColorInfosManager;
 
         public JsonFileLoader(JsonManager jsonManager, Logger logger = null)
         {
@@ -45,11 +45,11 @@
             }
         }
 
-        public bool TryLoadElementColorInfos(out Dictionary<SimHashes, Color> elementColorInfos)
+        public bool TryLoadElementColors(out Dictionary<SimHashes, ElementColor> elementColors)
         {
             try
             {
-                elementColorInfos = this._elementColorInfosManager.LoadElementColorInfosDirectory();
+                elementColors = this._elementColorInfosManager.LoadElementColorsDirectory();
                 return true;
             }
             catch (Exception e)
@@ -61,7 +61,7 @@
                 State.Logger.Log(Message);
                 State.Logger.Log(e);
 
-                elementColorInfos = new Dictionary<SimHashes, Color>();
+                elementColors = new Dictionary<SimHashes, ElementColor>();
                 return false;
             }
         }
@@ -69,7 +69,7 @@
         private void InitializeManagers(JsonManager manager)
         {
             this._configuratorStateManager = new ConfiguratorStateManager(manager, this._logger);
-            this._elementColorInfosManager = new ElementColorInfosManager(manager, this._logger);
+            this._elementColorInfosManager = new ElementColorsManager(manager, this._logger);
         }
         
     }

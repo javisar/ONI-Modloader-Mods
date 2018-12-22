@@ -8,17 +8,11 @@ namespace MaterialColor.Extensions
 {
     public static class ColorExtensions
     {
-        public static Color ToTileColor(this Color color, bool useColorAsOffset)
+        public static Color ToTileColor(this Color color)
         {
-            if (useColorAsOffset)
+            if (color.a == 0)
             {
-                color = color.ForEachColorValue
-                (
-                    colorValue => colorValue >= 0
-                        ? colorValue + 1
-                        : Mathf.Abs(colorValue),
-                    false
-                );
+                color = color.ForEachColorValue(colorValue => colorValue + 1);
             }
 
             color.a = 1;
@@ -26,10 +20,9 @@ namespace MaterialColor.Extensions
             return color;
         }
 
-        public static Color ForEachColorValue(this Color color, Func<float, float> action, bool modifyAlpha)
+        public static Color ForEachColorValue(this Color color, Func<float, float> action)
         {
-            int count = modifyAlpha ? 4 : 3;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < 3; i++)
             {
                 color[i] = action.Invoke(color[i]);
             }

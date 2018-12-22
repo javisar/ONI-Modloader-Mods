@@ -1,26 +1,20 @@
 ﻿namespace MaterialColor.Helpers
 {
     using Extensions;
+    using MaterialColor.Data;
     using System;
     using UnityEngine;
 
     public static class ColorHelper
     {
-        public static readonly Color DefaultColorOffset = new Color(0, 0, 0, 0);
-        public static readonly Color InvalidColorOffset = new Color(1, 0, 1, 0);
-
-        public static readonly Color DefaultTileColor = DefaultColorOffset.ToTileColor(true);
-        public static readonly Color InvalidTileColor = InvalidColorOffset.ToTileColor(true);
+        public static readonly Color DefaultColor = new Color(1, 1, 1, 1);
+        public static readonly Color InvalidColor = new Color(1, 0, 1, 1);
 
         public static Color?[] TileColors;
 
         /// <summary>
-        /// Tries to get material color for given component, if not possible extracts substance.colour.
-        /// 
-        /// If MaterialColor is disabled or can't get any of the above it returns a zero-offset color.
-        /// </summary>
-        /// <param name="outColor">on true outputs color offset, otherwise uses substance.colour, then to ColorHelper.DefaultColor</param>
-        public static bool GetComponentMaterialColor(Component component, out Color outColor)
+        /// Tries to get material color for given component, if not possible extracts substance.conduitColour, then uses white color as last fallback.
+        public static Color GetComponentMaterialColor(Component component)
         {
             if (State.ConfiguratorState.Enabled)
             {
@@ -30,24 +24,21 @@
                 {
                     SimHashes material = primaryElement.ElementID;
 
-                    bool materialColorResult = material.ToMaterialColor(out outColor);
-
-                    if (!materialColorResult)
-                    {
-                        outColor = primaryElement.Element.substance.conduitColour;
-                        outColor.a = 1;
-                        if (State.ConfiguratorState.ShowMissingElementColorInfos)
-                        {
-                            Debug.Log($"Missing color for material: {material}, while coloring building: {component.GetComponent<BuildingComplete>()}");
-                        }
-                    }
-
-                    return materialColorResult;
+                    return State.ElementColors.TryGetValue(material, out ElementColor elementColor)
+                        ? elementColor.ToColor()
+                        : ExtractGameColor(primaryElement);
                 }
             }
 
-            outColor = DefaultColorOffset;
-            return false;
+            return ColorHelper.DefaultColor;
+        }
+
+        private static Color ExtractGameColor(PrimaryElement primaryElement)
+        {
+            Color resultColor = primaryElement.Element.substance.conduitColour;
+            resultColor.a = 1;
+
+            return resultColor;
         }
     }
 }

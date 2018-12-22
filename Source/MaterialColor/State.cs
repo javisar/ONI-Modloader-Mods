@@ -32,7 +32,7 @@
 
         private static MaterialColorState _configuratorState;
 
-        private static Dictionary<SimHashes, Color> _materialColors;
+        private static Dictionary<SimHashes, ElementColor> _materialColors;
 
         private static Logger _logger;
 
@@ -73,7 +73,7 @@
         public static TextFilter TypeFilter { get; set; }
 
         [NotNull]
-        public static Dictionary<SimHashes, Color> ElementColorInfos
+        public static Dictionary<SimHashes, ElementColor> ElementColors
         {
             get
             {
@@ -82,7 +82,7 @@
                     return _materialColors;
                 }
 
-                JsonLoader.TryLoadElementColorInfos(out _materialColors);
+                JsonLoader.TryLoadElementColors(out _materialColors);
 
                 return _materialColors;
             }
@@ -110,12 +110,12 @@
 
         public static bool TryReloadElementColorInfos()
         {
-            if (!JsonLoader.TryLoadElementColorInfos(out Dictionary<SimHashes, Color> colorInfos))
+            if (!JsonLoader.TryLoadElementColors(out Dictionary<SimHashes, ElementColor> colorInfos))
             {
                 return false;
             }
 
-            ElementColorInfos = colorInfos;
+            ElementColors = colorInfos;
 
             return true;
         }

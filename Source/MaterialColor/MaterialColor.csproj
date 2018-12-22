@@ -67,15 +67,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ElementColor.cs" />
     <Compile Include="Data\MaterialColorState.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\SimHashesExtensions.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
     <Compile Include="Data\FilterInfo.cs" />
     <Compile Include="TextFilter.cs" />
     <Compile Include="Json\BaseManager.cs" />
     <Compile Include="Json\ConfiguratorStateManager.cs" />
-    <Compile Include="Json\ElementColorInfosManager.cs" />
+    <Compile Include="Json\ElementColorsManager.cs" />
     <Compile Include="Json\JsonFileLoader.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="State.cs" />

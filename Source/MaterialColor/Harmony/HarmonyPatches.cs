@@ -47,11 +47,11 @@
         public static void UpdateBuildingColor(BuildingComplete building)
         {
             string buildingName = building.name.Replace("Complete", string.Empty);
-            bool colorAsOffset = ColorHelper.GetComponentMaterialColor(building, out Color color);
+            Color color = ColorHelper.GetComponentMaterialColor(building);
 
             if (State.TileNames.Contains(buildingName))
             {
-                ApplyColorToTile(building, color, colorAsOffset);
+                ApplyColorToTile(building, color);
                 return;
             }
 
@@ -59,7 +59,7 @@
             {
                 if (!State.TypeFilter.Check(buildingName))
                 {
-                    color = ColorHelper.DefaultColorOffset;
+                    color = ColorHelper.DefaultColor;
                 }
             }
             catch (Exception e)
@@ -116,7 +116,7 @@
             }
         }
 
-        private static void ApplyColorToTile(BuildingComplete building, Color color, bool useColorAsOffset)
+        private static void ApplyColorToTile(BuildingComplete building, Color color)
         {
             try
             {
@@ -125,7 +125,7 @@
                     ColorHelper.TileColors = new Color?[Grid.CellCount];
                 }
 
-                ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor(useColorAsOffset);
+                ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor();
 
                 return;
             }
@@ -242,7 +242,7 @@
         {
             public static void Postfix(Ownable __instance)
             {
-                bool colorAsOffset = ColorHelper.GetComponentMaterialColor(__instance, out Color tint);
+                Color color = ColorHelper.GetComponentMaterialColor(__instance);
                 bool owned = __instance.assignee != null;
 
                 if (owned)
@@ -250,7 +250,7 @@
                     KAnimControllerBase animBase = __instance.GetComponent<KAnimControllerBase>();
                     if (animBase != null)
                     {
-                        animBase.TintColour = tint;
+                        animBase.TintColour = color;
                     }
                 }
             }
@@ -261,7 +261,7 @@
         {
             public static void Postfix(KMonoBehaviour ___root, Tag[] tags)
             {
-                bool colorAsOffset = ColorHelper.GetComponentMaterialColor(___root, out Color tint);
+                Color color = ColorHelper.GetComponentMaterialColor(___root);
                 bool active = tags != null && tags.Length != 0;
 
                 if (active)
@@ -269,7 +269,7 @@
                     KAnimControllerBase animBase = ___root.GetComponent<KAnimControllerBase>();
                     if (animBase != null)
                     {
-                        animBase.TintColour = tint;
+                        animBase.TintColour = color;
                     }
                 }
             }
