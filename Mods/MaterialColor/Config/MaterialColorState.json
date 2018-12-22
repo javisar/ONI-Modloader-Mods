@@ -2,7 +2,6 @@
   "Enabled": true,
   "LogElementsData": false,
   "ShowMissingElementColorInfos": false,
-  "IntensityFactor": 1,					// Default: 1
   "TypeFilterInfo": {
     "Inclusive": false,					// false to exclude buildings
 		"ExactMatch": false,				// true to match to exact bulding id

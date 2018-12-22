@@ -10,8 +10,6 @@ namespace MaterialColor.Data
 
         public bool ShowMissingElementColorInfos { get; set; }
 
-        public float IntensityFactor { get; set; } = 1;
-
         public FilterInfo TypeFilterInfo { get; set; } = new FilterInfo();
     }
 }
