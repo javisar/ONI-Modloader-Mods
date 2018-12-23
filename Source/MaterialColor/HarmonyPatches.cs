@@ -18,224 +18,11 @@
 	using static KInputController;
 	using System.Reflection;
     using MaterialColor.Data;
+    using MaterialColor.IO;
 
     public static class HarmonyPatches
     {
-        private static bool _configuratorStateChanged;
-        private static bool _elementColorInfosChanged;
-
-        private static readonly List<Type> _storageTypes = new List<Type>()
-        {
-            typeof(RationBox),
-            typeof(Refrigerator),
-            typeof(SolidConduitInbox),
-            typeof(StorageLocker),
-            typeof(TinkerStation)
-        };
-
-        public static void OnLoad()
-        {
-            SubscribeToFileChangeNotifier();
-        }
-
-        public static void RefreshMaterialColor()
-        {
-            UpdateBuildingsColors();
-            RebuildAllTiles();
-        }
-
-        public static void UpdateBuildingColor(BuildingComplete building)
-        {
-            string buildingName = building.name.Replace("Complete", string.Empty);
-            Color color = ColorHelper.GetComponentMaterialColor(building);
-
-            if (State.TileNames.Contains(buildingName))
-            {
-                ApplyColorToTile(building, color);
-                return;
-            }
-
-            try
-            {
-                if (!State.TypeFilter.Check(buildingName))
-                {
-                    color = ColorHelper.DefaultColor;
-                }
-            }
-            catch (Exception e)
-            {
-                State.Logger.Log("Error while filtering buildings");
-                State.Logger.Log(e);
-            }
-
-            ApplyColorToBuilding(building, color);
-        }
-
-        private static FilteredStorage ExtractFilteredStorage(Component building)
-        {
-            foreach (Type storageType in _storageTypes)
-            {
-                Component comp = building.GetComponent(storageType);
-
-                if (comp != null)
-                {
-                    return Traverse.Create(comp).Field<FilteredStorage>("filteredStorage").Value;
-                }
-            }
-            return null;
-        }
-
-        private static void ApplyColorToBuilding(BuildingComplete building, Color color)
-        {
-            TreeFilterable treeFilterable;
-            Ownable ownable;
-            KAnimControllerBase kAnimBase;
-
-            if ((ownable = building.GetComponent<Ownable>()) != null)
-            {
-                Traverse.Create(ownable).Field("ownedTint").SetValue(color);
-                Traverse.Create(ownable).Method("UpdateTint").GetValue();
-            }
-            else if ((treeFilterable = building.GetComponent<TreeFilterable>()) != null)
-            {
-                FilteredStorage filteredStorage = ExtractFilteredStorage(treeFilterable);
-
-                if (filteredStorage != null)
-                {
-                    filteredStorage.filterTint = color;
-                    filteredStorage.FilterChanged();
-                }
-            }
-            else if ((kAnimBase = building.GetComponent<KAnimControllerBase>()) != null)
-            {
-                kAnimBase.TintColour = color;
-            }
-            else
-            {
-                Debug.Log($"MaterialColor: Invalid building <{building}> and its not a registered tile.");
-            }
-        }
-
-        private static void ApplyColorToTile(BuildingComplete building, Color color)
-        {
-            try
-            {
-                if (ColorHelper.TileColors == null)
-                {
-                    ColorHelper.TileColors = new Color?[Grid.CellCount];
-                }
-
-                ColorHelper.TileColors[Grid.PosToCell(building.gameObject)] = color.ToTileColor();
-
-                return;
-            }
-            catch (Exception e)
-            {
-                State.Logger.Log("Error while getting cell color");
-                State.Logger.Log(e);
-            }
-        }
-
-        private static void OnElementColorsInfosChanged(object sender, FileSystemEventArgs e)
-        {
-            bool reloadColorInfosResult = false;
-
-            try
-            {
-                reloadColorInfosResult = State.TryReloadElementColorInfos();
-            }
-            catch (Exception ex)
-            {
-                State.Logger.Log("ReloadElementColorInfos failed.");
-                State.Logger.Log(ex);
-            }
-
-            if (reloadColorInfosResult)
-            {
-                _elementColorInfosChanged = true;
-
-                const string message = "Element color infos changed.";
-
-                State.Logger.Log(message);
-                Debug.LogError(message);
-            }
-            else
-            {
-                State.Logger.Log("Reload element color infos failed");
-            }
-        }
-
-        private static void OnMaterialStateChanged(object sender, FileSystemEventArgs e)
-        {
-            if (!State.TryReloadConfiguratorState())
-            {
-                return;
-            }
-
-            _configuratorStateChanged = true;
-
-            const string message = "Configurator state changed.";
-
-            State.Logger.Log(message);
-            Debug.LogError(message);
-        }
-
-        private static void RebuildAllTiles()
-        {
-            for (int i = 0; i < Grid.CellCount; i++)
-            {
-                World.Instance.blockTileRenderer.Rebuild(ObjectLayer.FoundationTile, i);
-            }
-
-            State.Logger.Log("All tiles rebuilt.");
-        }
-
-        private static void SubscribeToFileChangeNotifier()
-        {
-            const string jsonFilter = "*.json";
-
-            try
-            {
-                FileChangeNotifier.StartFileWatch
-                (
-                    jsonFilter,
-                    Paths.ElementColorInfosDirectory,
-                    OnElementColorsInfosChanged
-                );
-
-                FileChangeNotifier.StartFileWatch
-                (
-                    Paths.MaterialColorStateFileName,
-                    Paths.MaterialConfigPath,
-                    OnMaterialStateChanged
-                );
-            }
-            catch (Exception e)
-            {
-                State.Logger.Log("SubscribeToFileChangeNotifier failed");
-                State.Logger.Log(e);
-            }
-        }
-
-        private static void UpdateBuildingsColors()
-        {
-            State.Logger.Log($"Trying to update {Components.BuildingCompletes.Count} buildings.");
-
-            try
-            {
-                foreach (BuildingComplete building in Components.BuildingCompletes.Items)
-                {
-                    UpdateBuildingColor(building);
-                }
-
-                State.Logger.Log("Buildings updated successfully.");
-            }
-            catch (Exception e)
-            {
-                State.Logger.Log("Buildings colors update failed.");
-                State.Logger.Log(e);
-            }
-        }
+        private static ConfigWatcher Watcher;
 
         [HarmonyPatch(typeof(Ownable), "UpdateTint")]
         public static class Ownable_UpdateTint
@@ -316,35 +103,7 @@
                 }
             }
         }
-
-        [HarmonyPatch(typeof(Game), "Update")]
-        public static class Game_Update_EnterEveryUpdate
-        {
-            private const int Interval = 180;
-            private static int framesTillNextCheck = Interval;
-
-            public static void Prefix()
-            {
-                if (framesTillNextCheck-- <= 0)
-                {
-                    framesTillNextCheck = Interval;
-                    try
-                    {
-                        if (_elementColorInfosChanged || _configuratorStateChanged)
-                        {
-                            RefreshMaterialColor();
-                            _elementColorInfosChanged = _configuratorStateChanged = false;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        State.Logger.Log("EnterEveryUpdate failed.");
-                        State.Logger.Log(e);
-                    }
-                }
-            }
-        }
-
+        
         // TODO: still needs rework
         [HarmonyPatch(typeof(Global), "GenerateDefaultBindings")]
         public static class Global_GenerateDefaultBindings
@@ -449,7 +208,7 @@
                         OverlayModes.Logic.ID.Equals(currentOverlayMode)
                         )
                     { 
-                        RefreshMaterialColor();
+                        Painter.Refresh();
                     }
                 }
                 catch (Exception e)
@@ -506,7 +265,7 @@
 
                     State.ConfiguratorState.Enabled = !State.ConfiguratorState.Enabled;
 
-                    RefreshMaterialColor();
+                    Painter.Refresh();
 
                     return false;
                 }
@@ -530,18 +289,26 @@
             {
                 try
                 {
-                    Components.BuildingCompletes.OnAdd += UpdateBuildingColor;
-                    _elementColorInfosChanged = _configuratorStateChanged = true;
+                    Components.BuildingCompletes.OnAdd += Painter.UpdateBuildingColor;
+
+                    Watcher = new ConfigWatcher();
+                    SimAndRenderScheduler.instance.render1000ms.Add(Watcher);
+                    Painter.Refresh();
                 }
                 catch (Exception e)
                 {
-                    string message = "Injection failed\n" + e.Message + '\n';
-
-                    State.Logger.Log(message);
+                    State.Logger.Log("MaterialColor init failed");
                     State.Logger.Log(e);
-
-                    Debug.LogError(message);
                 }
+            }
+        }
+
+        [HarmonyPatch(typeof(Game), "DestroyInstances")]
+        public static class Game_DestroyInstances
+        {
+            public static void Postfix()
+            {
+                Watcher.Dispose();
             }
         }
     }

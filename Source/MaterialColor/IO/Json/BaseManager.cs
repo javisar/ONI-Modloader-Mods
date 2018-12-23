@@ -1,4 +1,4 @@
-﻿namespace MaterialColor.Json
+﻿namespace MaterialColor.IO.Json
 {
     using ONI_Common.IO;
 	using ONI_Common.Json;

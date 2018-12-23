@@ -1,4 +1,4 @@
-﻿namespace MaterialColor
+﻿namespace MaterialColor.IO
 {
     using System.IO;
 
