@@ -27,7 +27,6 @@ namespace MaterialColor.IO
         }
 
         // TODO: too many parameters are needed for stopping file watch, fix oni-common
-        // TODO: test if event handlers are cleared properly
         public void Dispose()
         {
             FileChangeNotifier.StopFileWatch

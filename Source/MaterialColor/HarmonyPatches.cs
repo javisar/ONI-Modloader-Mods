@@ -308,7 +308,9 @@
         {
             public static void Postfix()
             {
+                SimAndRenderScheduler.instance.render1000ms.Remove(Watcher);
                 Watcher.Dispose();
+                Watcher = null;
             }
         }
     }
