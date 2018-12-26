@@ -1,0 +1,23 @@
+{
+  "Unobtanium": {
+		"Red": 0.2,
+		"Green": 0,
+		"Blue": 0.2
+  },
+  "Dirt": {
+		"Red": 0.05,
+		"Green": 0,
+		"Blue": 0
+  },
+  "Clay": {
+		"Red": 0,
+		"Green": 0.1,
+		"Blue": 0.05
+  },
+	"SuperInsulator": {
+		"Red": 1.0,
+		"Green": 0.5,
+		"Blue": 1.0,
+		"DarkMode": true
+	},
+}

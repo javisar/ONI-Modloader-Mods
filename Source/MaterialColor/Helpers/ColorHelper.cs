@@ -1,82 +1,44 @@
 ﻿namespace MaterialColor.Helpers
 {
     using Extensions;
+    using MaterialColor.Data;
     using System;
     using UnityEngine;
 
     public static class ColorHelper
     {
-        public static readonly Color32 DefaultColor =
-        new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, byte.MaxValue);
-
-        public static readonly Color32 MissingDebugColor = new Color32(byte.MaxValue, 0, byte.MaxValue, byte.MaxValue);
-
-        public static readonly Color32 NoOffset = new Color32(0, 0, 0, byte.MaxValue);
+        public static readonly Color DefaultColor = new Color(1, 1, 1, 1);
+        public static readonly Color InvalidColor = new Color(1, 0, 1, 1);
 
         public static Color?[] TileColors;
 
-        public static Color DefaultCellColor => new Color(1, 1, 1);
-
-        public static Color InvalidCellColor => new Color(1, 0, 0);
-
-        public static Color GetCellColorDebug(int cellIndex)
+        /// <summary>
+        /// Tries to get material color for given component, if not possible extracts substance.conduitColour, then uses white color as last fallback.
+        public static Color GetComponentMaterialColor(Component component)
         {
-            Element   element   = Grid.Element[cellIndex];
-            Substance substance = element.substance;
-
-            Color32 debugColor = substance.uiColour;
-
-            debugColor.a = byte.MaxValue;
-
-            return debugColor;
-        }
-
-        public static Color GetCellColorJson(int cellIndex)
-        {
-            SimHashes material = MaterialHelper.GetMaterialFromCell(cellIndex);
-            return material.ToCellMaterialColor();
-        }
-
-
-        public static bool TryGetTypeStandardColor(string typeName, out Color32 standardColor)
-        {
-            Color32 typeStandardColor;
-            if (State.TypeColorOffsets.TryGetValue(typeName, out typeStandardColor))
+            if (State.ConfiguratorState.Enabled)
             {
-                standardColor = typeStandardColor;
-                return true;
+                PrimaryElement primaryElement = component.GetComponent<PrimaryElement>();
+
+                if (primaryElement != null)
+                {
+                    SimHashes material = primaryElement.ElementID;
+
+                    return State.ElementColors.TryGetValue(material, out ElementColor elementColor)
+                        ? elementColor.ToColor()
+                        : ExtractGameColor(primaryElement);
+                }
             }
 
-            standardColor = State.ConfiguratorState.ShowMissingTypeColorOffsets
-                            ? MissingDebugColor
-                            : NoOffset;
-
-            return false;
+            return ColorHelper.DefaultColor;
         }
 
-        private static void BreakdownGridObjectsComponents(int cellIndex)
+        private static Color ExtractGameColor(PrimaryElement primaryElement)
         {
-            for (int i = 0; i <= 20; i++)
-            {
-                State.Logger.Log("Starting object from grid component breakdown, index: " + cellIndex);
+            Color resultColor = primaryElement.Element.substance.conduitColour;
+            resultColor.a = 1;
 
-                try
-                {
-                    Component[] comps = Grid.Objects[cellIndex, i].GetComponents<Component>();
-
-                    foreach (Component comp in comps)
-                    {
-                        State.Logger.Log($"Object Layer: {i}, Name: {comp.name}, Type: {comp.GetType()}");
-                    }
-                }
-                catch (IndexOutOfRangeException e)
-                {
-                    State.Logger.Log($"Cell Index: {cellIndex}, Layer: {i}");
-                    State.Logger.Log(e);
-                }
-
-                // catch { }
-            }
+            return resultColor;
         }
     }
 }
