@@ -1,0 +1,13 @@
+{
+
+  "Modifiers": {
+
+    "PressureDoor": {
+        "RequiresPowerInput": false,
+        "EnergyConsumptionWhenActive": 0,
+        "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+        "ViewMode": "OverlayModes+None.ID"
+    }
+
+  }
+}

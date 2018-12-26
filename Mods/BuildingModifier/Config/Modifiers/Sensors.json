@@ -1,0 +1,27 @@
+{
+
+  "Modifiers": {
+
+        "LogicPressureSensorGas": {
+            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+            "LogicPressureSensor": {
+                "rangeMax": 25.0
+            }
+        },
+
+        "LogicPressureSensorLiquid": {
+            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+            "LogicPressureSensor": {
+                "rangeMax": 10000.0
+            }
+        },
+
+        "LogicTemperatureSensor": {
+          "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+          "LogicTemperatureSensor": {
+            "maxTemp": 1573.15
+          }
+        }
+
+  }
+}

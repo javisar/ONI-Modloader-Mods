@@ -1,0 +1,25 @@
+{
+
+  "Modifiers": {
+
+    "StorageLocker": {
+      "BuildLocationRule": "BuildLocationRule.Tile",
+      "ContinuouslyCheckFoundation": false,
+      "PermittedRotations": "PermittedRotations.R360",
+      "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+      "Storage": {
+        "capacityKg": 40000.0
+      }
+    },
+
+    "StorageLockerSmart": {
+      "BuildLocationRule": "BuildLocationRule.Tile",
+      "ContinuouslyCheckFoundation": false,
+      "PermittedRotations": "PermittedRotations.R360",
+      "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+      "Storage": {
+        "capacityKg": 40000.0
+      }
+    }
+  }
+}

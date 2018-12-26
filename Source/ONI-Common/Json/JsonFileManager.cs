@@ -11,8 +11,12 @@
         private readonly JsonManager _jsonManager;
 
 
+		public JsonManager GetJsonManager()
+		{
+			return _jsonManager;
+		}
 
-        public JsonFileManager(JsonManager jsonManager, Logger logger = null)
+		public JsonFileManager(JsonManager jsonManager, Logger logger = null)
         {
             this._logger = logger;
 

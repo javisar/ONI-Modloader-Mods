@@ -1,0 +1,27 @@
+{
+
+  "Modifiers": {
+
+
+    "GasReservoir": {
+      "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+      "Storage": {
+        "capacityKg": 1000.0
+      },
+      "ConduitConsumer": {
+        "capacityKG": 1000.0 // Required
+      }
+    },
+
+    "LiquidReservoir": {
+        "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+        "Storage": {
+            "capacityKg": 35000.0
+        },
+        "ConduitConsumer": {
+            "capacityKG": 35000.0 // Required
+        }
+    }
+
+  }
+}
