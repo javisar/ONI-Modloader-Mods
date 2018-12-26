@@ -1,0 +1,32 @@
+{
+	"Sandstone": {
+		"Red": 1,
+		"Green": 0.9,
+		"Blue": 0.5,
+		"DarkMode": true
+	},
+	"IgneousRock": {
+		"Red": 1,
+		"Green": 0.4,
+		"Blue": 0.4,
+		"DarkMode": true
+	},
+	"Granite": {
+		"Red": 0.15,
+		"Green": 0.15,
+		"Blue": 0.15,
+	},
+	"SedimentaryRock": {
+		"Red": 0.6,
+		"Green": 1,
+		"Blue": 0.8,
+		"DarkMode": true
+
+	},
+	"Obsidian": {
+		"Red": 0.3,
+		"Green": 0.3,
+		"Blue": 0.4,
+		"DarkMode": true
+	},
+}

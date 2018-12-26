@@ -1,0 +1,39 @@
+﻿{
+
+    "Modifiers": {
+
+        "Battery": {
+            "ExhaustKilowattsWhenActive": 0.25,
+            "SelfHeatKilowattsWhenActive": 1.0,
+            "BaseMeltingPoint": 800.0,
+            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+            "Battery": {
+                "capacity": 20000,
+                "joulesLostPerSecond": 3.33333 // capacity * 0.1 / 600;
+            }
+        },
+
+        "BatteryMedium": {
+            "ExhaustKilowattsWhenActive": 0.25,
+            "SelfHeatKilowattsWhenActive": 1.0,
+            "BaseMeltingPoint": 800.0,
+            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+            "Battery": {
+                "capacity": 80000,
+                "joulesLostPerSecond": 6.66666 // capacity * 0.05 / 600;
+            }
+        },
+
+        "BatterySmart": {
+            "ExhaustKilowattsWhenActive": 0.0,
+            "SelfHeatKilowattsWhenActive": 0.5,
+            "BaseMeltingPoint": 800.0,
+            "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+            "Battery": {
+                "capacity": 40000,
+                "joulesLostPerSecond": 1.33333 // capacity * 0.02 / 600;
+            }
+        }
+
+    }
+}

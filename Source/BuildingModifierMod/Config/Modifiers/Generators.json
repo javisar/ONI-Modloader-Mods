@@ -1,0 +1,22 @@
+{
+
+  "Modifiers": {
+
+    "Generator": {
+        "GeneratorWattageRating": 1200.0,
+        "GeneratorBaseCapacity": 20000.0,
+        "ExhaustKilowattsWhenActive": 8.0,
+        "SelfHeatKilowattsWhenActive": 1.0,
+        "BaseMeltingPoint": 2400.0,
+        "MaterialCategory": "TUNING.MATERIALS.ANY_BUILDABLE",
+        "Storage": {
+            "capacityKg": 1200
+        },
+        "ManualDeliveryKG": {
+            "capacity": 1200,
+            "refillMass": 200.0
+        }
+    }
+
+  }
+}

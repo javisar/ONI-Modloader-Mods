@@ -8,26 +8,24 @@ WARNING: To modify this mod config REQUIRES a fair knowledge of the inner code o
 DON'T TRY if you don't know what you're doing. Ask in the forums or discord.
 WARNING: Not all the fields modifications will work and this is a mod limitation tied to the game.
 
-The config file is in JSON format and must be in:
+The main config file is in JSON format and must be in:
 - \Mods\BuildingModifier\Config\BuildingModifierState.json
-Use this file always as a template.
+Also, ANY JSON modifier file in the config folder (\Mods\BuildingModifier\Config\) WILL BE LOADED, with the exception of 'Examples' folder.
 
-The default config includes:
-- Allows the construction of buildings with any material . Doesn't work for all elements or buildings.
-- Double capacity for all bateries
-- Double Wattage generator
-- Removes the energy need for the mechanized pressure door and makes it buildable from all material. Old PressureDoor mod.
-- Increased ranges in automation sensors. Old Sensors mod.
-- Increases the vents maximum pressure. Old VentPressure mod.
-- Storage lockers won't need a foundation to be built. Old StorageLocker mod.
-- Increased gas and liquid reservoirs capacities.
-- Canvas only takes 1x1 space.
+The default config includes (\BuildingModifier\Config\Modifiers\):
+- Batteries.json: Double capacity for all bateries
+- Generators.json: Double Wattage generator
+- Doors.json: Removes the energy need for the mechanized pressure door and makes it buildable from all material. Old PressureDoor mod.
+- Sensors.json: Increased ranges in automation sensors. Old Sensors mod.
+- Vents.json: Increases the vents maximum pressure. Old VentPressure mod.
+- Storage.json: Storage lockers won't need a foundation to be built. Old StorageLocker mod.
+- Reservoirs.json: Increased gas and liquid reservoirs capacities.
+- Canvas.json: Canvas only takes 1x1 space.
+- MoreMaterials.json: Allows the construction of buildings with any material . Doesn't work for all elements or buildings.
 
 The basic structure is a list of buildings configs inside a "Modifiers" element:
-{
-  "Enabled": true,
-  "Debug": false,
 
+{
   "Modifiers": {
 		...
 		"LogicPressureSensorLiquid": {
@@ -39,6 +37,8 @@ The basic structure is a list of buildings configs inside a "Modifiers" element:
 		...
 	}
 }
+
+
 - Zero level is the building id. eg: LogicPressureSensorLiquid
 - First level fields with basic types (float, int, string...) are fields of all the buildings. eg: BaseMeltingPoint
 - First level fields that are an object {...}, are components of the unity building prefab. eg. LogicPressureSensor is a component of LogicPressureSensorLiquid
@@ -70,3 +70,4 @@ Check the ONI log file for errors.
 
 Known Limitations:
 - Power consumption in Transit Tubes.
+- Ranges and thresholds for Pipe Sensors
