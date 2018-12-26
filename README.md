@@ -78,7 +78,8 @@ Mods - GUI
 | CameraController | Enable further zoom-outs in play and dev mode. Allows camera to be moved out of world boundaries. | Y | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) [@fistak](https://github.com/fistak) [@javisar](https://github.com/javisar)|
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
 | ImprovedGasOverlay | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
-| MaterialColor | Adds an overlay option to visualize what a building is made of. Modifies temperature overlay ranges and colors.  More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/MaterialColor/MaterialColorHowto.txt) | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
+| ImprovedTemperatureOverlay | Modifies temperature overlay ranges and colors. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
+| MaterialColor | Adds an overlay option to visualize what a building is made of. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/MaterialColor/MaterialColorHowto.txt) | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
 
 
