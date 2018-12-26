@@ -14,10 +14,15 @@ namespace FluidWarpMod
             Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.NAME", "Liquid Stargate");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.DESC", "Liquid Stargates provides an easy way to transport liquids from one place to another.");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
+
+			ModUtil.AddBuildingToPlanScreen("Plumbing", LiquidWarpConfig.ID);
+
+			/*
             List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == new HashedString("Plumbing")).data;
             category.Add(LiquidWarpConfig.ID);
+			*/
 
-        }
+		}
     }
 
     [HarmonyPatch(typeof(Db), "Initialize")]

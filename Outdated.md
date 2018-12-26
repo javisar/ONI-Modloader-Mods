@@ -11,6 +11,7 @@ Outdated Mods
 | DraggablePanelMod | Makes panels draggable. | N | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) |
 | GasTankMod | Storage for gases. | N | [@javisar](https://github.com/javisar) |
 | InsulatedDoorsMod | Adds a new element Insulated Pressure Door. | N | [@javisar](https://github.com/javisar) |
+| InverseElectrolyzerAlt | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
 | LiquidTankMod | Storage for liquids. | N | [@javisar](https://github.com/javisar) |
 | MoreMaterials | Allows the construction of some buildings with any material (Doors, filters, bed, canvas, tables, wall fire pole, sculptures, shower, toilets, wash basins, bridges, conduits/wires, ladder, pumps, valves, ventS, tiles, lockers, sensors and gates). | N | [@javisar](https://github.com/javisar) |
 | NaphthaViscosity | Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. | N | [@javisar](https://github.com/javisar) |

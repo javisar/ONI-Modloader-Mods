@@ -66,6 +66,8 @@
   <ItemGroup>
     <None Include="InverseElectrolyzerConfig.cs.bak" />
     <None Include="InverseElectrolyzer.cs.bak" />
+    <Compile Include="InverseElectrolyzerAlt.cs" />
+    <Compile Include="InverseElectrolyzerAltConfig.cs" />
     <Compile Include="InverseElectrolyzerMod.cs" />
     <Compile Include="InverseElectrolyzer.cs" />
     <Compile Include="InverseElectrolyzerConfig.cs" />
