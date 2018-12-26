@@ -72,6 +72,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\ImprovedTemperatureOverlayState.json.default">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Config\ImprovedTemperatureOverlayState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
