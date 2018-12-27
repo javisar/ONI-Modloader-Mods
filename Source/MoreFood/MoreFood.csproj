@@ -54,6 +54,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FungiSaladConfig.cs" />
+    <Compile Include="MeatloafConfig.cs" />
     <Compile Include="MoreFoodState.cs" />
     <Compile Include="MoreFoodMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,6 +64,7 @@
     <ProjectReference Include="..\ONI-Common\ONI-Common.csproj">
       <Project>{1208647d-c8c2-48db-bf29-60c6f3e2b016}</Project>
       <Name>ONI-Common</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
