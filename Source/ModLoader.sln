@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patches", "Patches\Patches.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImprovedTemperatureOverlay", "ImprovedTemperatureOverlay\ImprovedTemperatureOverlay.csproj", "{D2FD659E-6600-4DAC-A0A1-ED4412B74724}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreFood", "MoreFood\MoreFood.csproj", "{1AED6152-5980-4F38-AB42-025D353CDA71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -238,6 +240,14 @@ Global
 		{D2FD659E-6600-4DAC-A0A1-ED4412B74724}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2FD659E-6600-4DAC-A0A1-ED4412B74724}.Release|x86.ActiveCfg = Release|Any CPU
 		{D2FD659E-6600-4DAC-A0A1-ED4412B74724}.Release|x86.Build.0 = Release|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Debug|x86.Build.0 = Debug|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Release|x86.ActiveCfg = Release|Any CPU
+		{1AED6152-5980-4F38-AB42-025D353CDA71}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -269,6 +279,7 @@ Global
 		{F648211E-4AFE-44B3-8A5E-B89D57CF34A7} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
 		{0A8D7289-BF9D-4110-B512-7DD528DC7EDE} = {05AEF266-9A07-41B4-83C5-FC6632B27A0E}
 		{D2FD659E-6600-4DAC-A0A1-ED4412B74724} = {8E4312B0-3AE8-42CB-A2ED-CB8E39B39CD4}
+		{1AED6152-5980-4F38-AB42-025D353CDA71} = {3DDC5DF0-0321-41EA-B556-022CEE509815}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {34648007-CC4C-4A8D-91A2-485820AFC9A9}
