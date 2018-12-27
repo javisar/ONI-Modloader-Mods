@@ -49,88 +49,108 @@ namespace MoreCanvas
 			//artable.stages.Add(new Artable.Stage("Good100", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_e", 15, cheer_on_complete: true, Artable.Status.Great));
 			reader.Position = 0;
 
-			char[] header = reader.ReadChars("ANIM".Length);
-			Debug.Log("header: "+header);
-			uint version = reader.ReadUInt32();
-			Debug.Log("version: " + version);
-			reader.ReadInt32();
-			reader.ReadInt32();
-			int num2 = reader.ReadInt32();
-			Debug.Log("num2: " + num2);
-			for (int i = 0; i < num2; i++)
+			AnimData animData = new AnimData();
+
+			animData.header = reader.ReadChars("ANIM".Length);
+			//Debug.Log("header: "+header);
+			animData.version = reader.ReadUInt32();
+			//Debug.Log("version: " + version);
+			animData.int1 = reader.ReadInt32();
+			animData.int2 = reader.ReadInt32();
+			animData.count = reader.ReadInt32();
+			//Debug.Log("num2: " + num2);
+			for (int i = 0; i < animData.count; i++)
 			{
-				String kleistring = reader.ReadKleiString();
-				Debug.Log("\tkleistring: " + kleistring);
-				int hashvalue = reader.ReadInt32();
-				Debug.Log("\thashvalue: " + hashvalue);
-				float frameRate = reader.ReadSingle();
-				Debug.Log("\tframeRate: " + frameRate);
-				int numFrames = reader.ReadInt32();
-				Debug.Log("\tnumFrames: " + numFrames);
-				for (int j = 0; j < numFrames; j++)
+				AnimElementData animElementData = new AnimElementData();
+
+				animElementData.kleistring = reader.ReadKleiString();
+				//Debug.Log("\tkleistring: " + kleistring);
+				animElementData.hashvalue = reader.ReadInt32();
+				//Debug.Log("\thashvalue: " + hashvalue);
+				animElementData.frameRate = reader.ReadSingle();
+				//Debug.Log("\tframeRate: " + frameRate);
+				animElementData.numFrames = reader.ReadInt32();
+				//Debug.Log("\tnumFrames: " + numFrames);
+				for (int j = 0; j < animElementData.numFrames; j++)
 				{
-					float num3 = reader.ReadSingle();
-					float num4 = reader.ReadSingle();
-					float num5 = reader.ReadSingle();
-					float num6 = reader.ReadSingle();
+					AnimFrameData animFrameData = new AnimFrameData();
 
-					Debug.Log("\t\tnum3: " + num3);
-					Debug.Log("\t\tnum4: " + num4);
-					Debug.Log("\t\tnum5: " + num5);
-					Debug.Log("\t\tnum6: " + num6);
+					animFrameData.num3 = reader.ReadSingle();
+					animFrameData.num4 = reader.ReadSingle();
+					animFrameData.num5 = reader.ReadSingle();
+					animFrameData.num6 = reader.ReadSingle();
 
-					int numElements = reader.ReadInt32();
-					Debug.Log("\t\tnumElements: " + numElements);
-					for (int k = 0; k < numElements; k++)
+					//Debug.Log("\t\tnum3: " + num3);
+					//Debug.Log("\t\tnum4: " + num4);
+					//Debug.Log("\t\tnum5: " + num5);
+					//Debug.Log("\t\tnum6: " + num6);
+
+					animFrameData.numElements = reader.ReadInt32();
+					//Debug.Log("\t\tnumElements: " + numElements);
+					for (int k = 0; k < animFrameData.numElements; k++)
 					{
-						KAnimHashedString symbol = new KAnimHashedString(reader.ReadInt32());
-						Debug.Log("\t\t\tsymbol: " + symbol);
-						int frame = reader.ReadInt32();
-						Debug.Log("\t\t\tframe: " + frame);
-						KAnimHashedString folder = new KAnimHashedString(reader.ReadInt32());
-						Debug.Log("\t\t\tfolder: " + folder);
-						int flags = reader.ReadInt32();
-						Debug.Log("\t\t\tflags: " + flags);
-						float a = reader.ReadSingle();
-						float b = reader.ReadSingle();
-						float g = reader.ReadSingle();
-						float r = reader.ReadSingle();
+						AnimSymbolData animSymbolData = new AnimSymbolData();
+						animSymbolData.symbol = new KAnimHashedString(reader.ReadInt32());
+						//Debug.Log("\t\t\tsymbol: " + symbol);
+						animSymbolData.frame = reader.ReadInt32();
+						//Debug.Log("\t\t\tframe: " + frame);
+						animSymbolData.folder = new KAnimHashedString(reader.ReadInt32());
+						//Debug.Log("\t\t\tfolder: " + folder);
+						animSymbolData.flags = reader.ReadInt32();
+						//Debug.Log("\t\t\tflags: " + flags);
 
-						Debug.Log("\t\t\ta: " + a);
-						Debug.Log("\t\t\tb: " + b);
-						Debug.Log("\t\t\tg: " + g);
-						Debug.Log("\t\t\tr: " + r);
+						animSymbolData.a = reader.ReadSingle();
+						animSymbolData.b = reader.ReadSingle();
+						animSymbolData.g = reader.ReadSingle();
+						animSymbolData.r = reader.ReadSingle();
 
-						Color multColour = new Color(r, g, b, a);
-						float m = reader.ReadSingle();
-						float m2 = reader.ReadSingle();
-						float m3 = reader.ReadSingle();
-						float m4 = reader.ReadSingle();
-						float m5 = reader.ReadSingle();
-						float m6 = reader.ReadSingle();
+						//Debug.Log("\t\t\ta: " + a);
+						//Debug.Log("\t\t\tb: " + b);
+						//Debug.Log("\t\t\tg: " + g);
+						//Debug.Log("\t\t\tr: " + r);
 
-						Debug.Log("\t\t\tm: " + m);
-						Debug.Log("\t\t\tm2: " + m2);
-						Debug.Log("\t\t\tm3: " + m3);
-						Debug.Log("\t\t\tm4: " + m4);
-						Debug.Log("\t\t\tm5: " + m5);
-						Debug.Log("\t\t\tm6: " + m6);
+						Color multColour = new Color(animSymbolData.r, animSymbolData.g, animSymbolData.b, animSymbolData.a);
+						animSymbolData.m = reader.ReadSingle();
+						animSymbolData.m2 = reader.ReadSingle();
+						animSymbolData.m3 = reader.ReadSingle();
+						animSymbolData.m4 = reader.ReadSingle();
+						animSymbolData.m5 = reader.ReadSingle();
+						animSymbolData.m6 = reader.ReadSingle();
 
-						reader.ReadSingle();
+						//Debug.Log("\t\t\tm: " + m);
+						//Debug.Log("\t\t\tm2: " + m2);
+						//Debug.Log("\t\t\tm3: " + m3);
+						//Debug.Log("\t\t\tm4: " + m4);
+						//Debug.Log("\t\t\tm5: " + m5);
+						//Debug.Log("\t\t\tm6: " + m6);
+
+						animSymbolData.float1 = reader.ReadSingle();
+
+						animFrameData.symbolData.Add(animSymbolData);
 					}
+					animElementData.frameData.Add(animFrameData);
 				}
+				animData.elementsData.Add(animElementData);
 			}
-			int maxVisSymbolFrames = reader.ReadInt32();
-			Debug.Log("maxVisSymbolFrames: " + maxVisSymbolFrames);
-			int num = reader.ReadInt32();
-			Debug.Log("num: " + num);
-			for (int i = 0; i < num; i++)
+			animData.maxVisSymbolFrames = reader.ReadInt32();
+			//Debug.Log("maxVisSymbolFrames: " + maxVisSymbolFrames);
+			animData.numHashData = reader.ReadInt32();
+			//Debug.Log("num: " + num);
+			for (int i = 0; i < animData.numHashData; i++)
 			{
-				int hash = reader.ReadInt32();
-				Debug.Log("hash: " + hash);
-				string text = reader.ReadKleiString();
-				Debug.Log("text: " + text);
+				AnimHashData animHashData = new AnimHashData();
+
+				animHashData.hash = reader.ReadInt32();
+				//Debug.Log("hash: " + hash);
+				animHashData.text = reader.ReadKleiString();
+				//Debug.Log("text: " + text);
+
+				animData.hashData.Add(animHashData);
 			}
+
+
+			// Write file
+			MoreCanvasState.StateManager.JsonLoader.TrySaveConfiguration("test.json", animData);
 		}
 	}
 }
