@@ -43,7 +43,7 @@ namespace MoreCanvas
 		{
 			if (!MoreCanvasState.StateManager.State.Enabled) return;
 
-			Debug.Log(" === MoreCanvas_KGlobalAnimParser_ParseAnimData Postfix === " + animFile.name);
+			Debug.Log(" === MoreCanvas_KGlobalAnimParser_ParseAnimData Postfix === " + animFile.name+" "+ fileNameHash.HashValue);
 
 			if (!animFile.name.Equals("painting_kanim")) return;
 			//artable.stages.Add(new Artable.Stage("Good100", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_e", 15, cheer_on_complete: true, Artable.Status.Great));
@@ -150,7 +150,149 @@ namespace MoreCanvas
 
 
 			// Write file
-			MoreCanvasState.StateManager.JsonLoader.TrySaveConfiguration("test.json", animData);
+			MoreCanvasState.StateManager.JsonLoader.TrySaveConfiguration("testAnim.json", animData);
+		}
+	}
+
+
+	[HarmonyPatch(typeof(KGlobalAnimParser), "ParseBuildData")]
+	internal class MoreCanvas_KGlobalAnimParser_ParseBuildData
+	{
+
+		private static void Postfix(KGlobalAnimParser __instance, KBatchGroupData data, KAnimHashedString fileNameHash, FastReader reader, List<Texture2D> textures)
+		{
+			if (!MoreCanvasState.StateManager.State.Enabled) return;
+
+			Debug.Log(" === MoreCanvas_KGlobalAnimParser_ParseBuildData Postfix === " + fileNameHash.HashValue);
+			
+			if (fileNameHash.HashValue != -1320822911) return;
+			//artable.stages.Add(new Artable.Stage("Good100", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_e", 15, cheer_on_complete: true, Artable.Status.Great));
+			reader.Position = 0;
+
+			BuildData buildData = new BuildData();
+
+			buildData.header = reader.ReadChars("BILD".Length);
+			buildData.version = reader.ReadInt32();
+			if (buildData.version != 10 && buildData.version != 9)
+			{
+				Debug.LogError(fileNameHash + " has invalid build.bytes version [" + buildData.version + "]");
+				return;
+			}
+			
+			KAnimGroupFile.Group group = KAnimGroupFile.GetGroup(data.groupID);
+			if (group == null)
+			{
+				Debug.LogErrorFormat("[{1}] Failed to get group [{0}]", data.groupID, fileNameHash.DebuggerDisplay);
+				return;
+			}
+			//KAnim.Build build = null;
+			buildData.numSymbols = reader.ReadInt32();
+			buildData.numSymbolFrames = reader.ReadInt32();
+			buildData.name = reader.ReadKleiString();
+
+			Debug.Log("1");
+			/*
+			build = data.AddNewBuildFile(fileNameHash);
+			build.textureCount = textures.Count;
+			if (textures.Count > 0)
+			{
+				data.AddTextures(textures);
+			}
+			build.symbols = new KAnim.Build.Symbol[buildData.numSymbols];
+			build.frames = new KAnim.Build.SymbolFrame[buildData.numSymbolFrames];
+			build.name = reader.ReadKleiString();
+			build.batchTag = ((!group.swapTarget.IsValid) ? data.groupID : group.target);
+			build.fileHash = fileNameHash;
+			*/
+			int num4 = 0;
+			for (int i = 0; i < buildData.numSymbols; i++)
+			{
+				Debug.Log("2");
+				BuildSymbolData symbolData = new BuildSymbolData();
+				symbolData.hash = new KAnimHashedString(reader.ReadInt32());
+				
+				//KAnim.Build.Symbol symbol = new KAnim.Build.Symbol();
+				//symbol.build = build;
+				//symbol.hash = hash;
+				if (buildData.version > 9)
+				{
+					symbolData.path = new KAnimHashedString(reader.ReadInt32());
+				}
+				symbolData.colourChannel = new KAnimHashedString(reader.ReadInt32());
+				symbolData.flags = reader.ReadInt32();
+				//symbolData.firstFrameIdx = data.symbolFrameInstances.Count;
+				symbolData.firstFrameIdx = num4;
+				symbolData.numFrames = reader.ReadInt32();
+				symbolData.symbolIndexInSourceBuild = i;
+				Debug.Log("3");
+				int num5 = 0;
+				for (int j = 0; j < symbolData.numFrames; j++)
+				{
+					Debug.Log("4");
+					BuildSymbolFrameData buildSymbolFrameData = new BuildSymbolFrameData();
+					Debug.Log("4a");
+					//KAnim.Build.SymbolFrame symbolFrame = new KAnim.Build.SymbolFrame();
+					//KAnim.Build.SymbolFrameInstance item = default(KAnim.Build.SymbolFrameInstance);
+					//item.symbolFrame = symbolFrame;
+					buildSymbolFrameData.fileNameHash = fileNameHash;
+					Debug.Log("4b");
+					buildSymbolFrameData.sourceFrameNum = reader.ReadInt32();
+					Debug.Log("4c");
+					buildSymbolFrameData.duration = reader.ReadInt32();
+					Debug.Log("4d");
+					buildSymbolFrameData.buildImageIdx = reader.ReadInt32();
+					Debug.Log("4e");
+					/*
+					if (item.buildImageIdx >= textures.Count + data.textureStartIndex[fileNameHash])
+					{
+						Debug.LogErrorFormat("{0} Symbol: [{1}] tex count: [{2}] buildImageIdx: [{3}] group total [{4}]", fileNameHash.ToString(), symbol.hash, textures.Count, item.buildImageIdx, data.textureStartIndex[fileNameHash]);
+					}
+					*/
+					//item.symbolIdx = data.GetSymbolCount();
+					num5 = Math.Max(buildSymbolFrameData.sourceFrameNum + buildSymbolFrameData.duration, num5);
+					Debug.Log("5");
+					buildSymbolFrameData.num6 = reader.ReadSingle();
+					buildSymbolFrameData.num7 = reader.ReadSingle();
+					buildSymbolFrameData.num8 = reader.ReadSingle();
+					buildSymbolFrameData.num9 = reader.ReadSingle();
+					//symbolFrame.bboxMin = new Vector2(num6 - num8 * 0.5f, num7 - num9 * 0.5f);
+					//symbolFrame.bboxMax = new Vector2(num6 + num8 * 0.5f, num7 + num9 * 0.5f);
+					buildSymbolFrameData.x = reader.ReadSingle();
+					buildSymbolFrameData.num10 = reader.ReadSingle();
+					buildSymbolFrameData.x2 = reader.ReadSingle();
+					buildSymbolFrameData. num11 = reader.ReadSingle();
+					//symbolFrame.uvMin = new Vector2(x, 1f - num10);
+					//symbolFrame.uvMax = new Vector2(x2, 1f - num11);
+					//build.frames[num4] = symbolFrame;
+					//data.symbolFrameInstances.Add(item);
+					num4++;
+
+					symbolData.symbolFrameData.Add(buildSymbolFrameData);
+				}
+				Debug.Log("6");
+				symbolData.numLookupFrames = num5;
+				//data.AddBuildSymbol(symbol);
+				//build.symbols[i] = symbol;
+
+				buildData.symbolData.Add(symbolData);
+			}
+			Debug.Log("7");
+			//ParseHashTable(reader);
+			buildData.numHashData = reader.ReadInt32();
+			//Debug.Log("num: " + num);
+			for (int i = 0; i < buildData.numHashData; i++)
+			{
+				BuildHashData buildHashData = new BuildHashData();
+
+				buildHashData.hash = reader.ReadInt32();
+				buildHashData.text = reader.ReadKleiString();			
+
+				buildData.hashData.Add(buildHashData);
+			}
+
+			// Write file
+			MoreCanvasState.StateManager.JsonLoader.TrySaveConfiguration("testBuild.json", buildData);
+			
 		}
 	}
 }
