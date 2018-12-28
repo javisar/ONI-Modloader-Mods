@@ -12,7 +12,6 @@ public class MeatloafConfig : IEntityConfig
 
 	public static ComplexRecipe recipe;
 
-	public static readonly EdiblesManager.FoodInfo MEATLOAF = new EdiblesManager.FoodInfo("Meatloaf", 3000000f, 3, 255.15f, 277.15f, 5200f, can_rot: true);
 	/*
 	private static readonly EventSystem.IntraObjectHandler<Edible> OnEatCompleteDelegate = new EventSystem.IntraObjectHandler<Edible>(delegate (Edible component, object data)
 	{
@@ -24,7 +23,7 @@ public class MeatloafConfig : IEntityConfig
 		string name = UI.FormatAsLink("Meatloaf", "MEATLOAF"); //ITEMS.FOOD.PRICKLEFRUIT.NAME;
 		string description = "Meatloaf";
 		GameObject template = EntityTemplates.CreateLooseEntity(ID, name, description, 1f, false, Assets.GetAnim("pepperbread_kanim"), "object", Grid.SceneLayer.Front, EntityTemplates.CollisionShape.RECTANGLE, 0.8f, 0.4f, isPickupable: true);
-		return EntityTemplates.ExtendEntityToFood(template, MEATLOAF);
+		return EntityTemplates.ExtendEntityToFood(template, MoreFood.MoreFood_CookingStationConfig_ConfigureRecipes.MEATLOAF);
 	}
 
 	public void OnPrefabInit(GameObject inst)

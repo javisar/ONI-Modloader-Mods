@@ -10,6 +10,9 @@ namespace MoreFood
 	[HarmonyPatch(typeof(CookingStationConfig), "ConfigureRecipes")]
 	internal class MoreFood_CookingStationConfig_ConfigureRecipes
 	{
+		public static EdiblesManager.FoodInfo MEATLOAF;
+
+		public static EdiblesManager.FoodInfo FUNGISALAD;
 
 		private static void Postfix(Game __instance)
 		{
@@ -17,11 +20,18 @@ namespace MoreFood
 
 			Debug.Log(" === MoreFood_CookingStationConfig_ConfigureRecipes Postfix === ");
 
+			Strings.Add("STRINGS.ITEMS.FOOD.MEATLOAF.NAME", "Meatloaf");
+			Strings.Add("STRINGS.ITEMS.FOOD.MEATLOAF.DESC", "");
+			Strings.Add("STRINGS.ITEMS.FOOD.MEATLOAF.RECIPEDESC", "");
+			MEATLOAF = new EdiblesManager.FoodInfo("Meatloaf", 3000000f, 3, 255.15f, 277.15f, 5200f, can_rot: true);
 			MeatloafConfig.recipe = CreateMeatloafRecipe();
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.MEATLOAF.NAME", "Meatloaf");
 
+			Strings.Add("STRINGS.ITEMS.FOOD.FUNGISALAD.NAME", "Fungi Salad");
+			Strings.Add("STRINGS.ITEMS.FOOD.FUNGISALAD.DESC", "");
+			Strings.Add("STRINGS.ITEMS.FOOD.FUNGISALAD.RECIPEDESC", "");
+			FUNGISALAD = new EdiblesManager.FoodInfo("FungiSalad", 3000000f, 3, 255.15f, 277.15f, 5200f, can_rot: true);
 			FungiSaladConfig.recipe = CreateFungiSaladRecipe();
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.FUNGISALAD.NAME", "Fungi Salad");
+			
 
 
 
@@ -64,7 +74,7 @@ namespace MoreFood
 			};
 			ComplexRecipe.RecipeElement[] outputs = new ComplexRecipe.RecipeElement[1]
 			{
-				new ComplexRecipe.RecipeElement(FungiSaladConfig.FUNGISALAD.Id, 1f)
+				new ComplexRecipe.RecipeElement(FungiSaladConfig.ID, 1f)
 			};
 			string id = ComplexRecipeManager.MakeRecipeID("CookingStation", inputs, outputs);
 
