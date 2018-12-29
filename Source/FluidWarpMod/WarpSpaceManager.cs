@@ -9,37 +9,110 @@ using UnityEngine;
 
 namespace FluidWarpMod
 {
-    internal class StatefullList<T>: List<T>
+    internal class ValvesList : List<ValveBase>
     {
-        private int currentItem = -1;
+        private int currentRequestorItem;
 
-        public T getNext()
+        private int currentProviderItem;
+
+        private ConduitFlow flowManager;
+
+        public ConduitFlow FlowManager
         {
-            if (++currentItem >= Count)
+            get
             {
-                currentItem = 0;
-            }
-            if (currentItem < Count)
-            {
-                return base[currentItem];
-            }
-            else
-            {
-                return default(T);
+                return flowManager;
             }
         }
 
-    }
+        public ValvesList(ConduitFlow flowManager) : base()
+        {
+            currentProviderItem = 0;
+            currentRequestorItem = 0;
+            this.flowManager = flowManager;
+        }
 
-    internal class ValvesList : StatefullList<ValveBase> { }
+        private ValvesList()
+        {
+
+        }
+
+        private bool isValidRequestor(ValveBase warpGate)
+        {
+            return warpGate != null && flowManager.HasConduit(warpGate.GetOutputCell());
+        }
+
+        private bool isValidProvider(ValveBase warpGate)
+        {
+            return warpGate != null && flowManager.HasConduit(warpGate.GetInputCell());
+        }
+
+        public ValveBase getCurrentRequestor()
+        {
+            if (Count == 0)
+            {
+                return null;
+            }
+            if (isValidRequestor(base[currentRequestorItem]))
+            {
+                return base[currentRequestorItem];
+            }
+            else
+            {
+                return getNextRequestor();
+            }
+        }
+
+        public ValveBase getNextRequestor()
+        {
+            if (Count == 0)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (++currentRequestorItem >= Count)
+                {
+                    currentRequestorItem = 0;
+                }
+                ValveBase warpGate = base[currentRequestorItem];
+                if (isValidRequestor(warpGate))
+                {
+                    return warpGate;
+                }
+            };
+            return null;
+        }
+
+        public ValveBase getNextProvider()
+        {
+            if (Count == 0)
+            {
+                return null;
+            }
+
+            for (int i=0; i < Count; i++)
+            {
+                if (++currentProviderItem >= Count)
+                {
+                    currentProviderItem = 0;
+                }
+                ValveBase warpGate = base[currentProviderItem];
+                if (isValidProvider(warpGate))
+                {
+                    return warpGate;
+                }
+            };
+            return null;
+        }
+    }
 
     internal class ValveChannels : Dictionary<int, ValvesList> { }
 
     static class WarpSpaceManager
     {
-        private static FieldInfo valveBaseOutputCellFieldInfo = AccessTools.Field(typeof(ValveBase), "outputCell");
-
-        private static FieldInfo valveBaseInputCellFieldInfo = AccessTools.Field(typeof(ValveBase), "inputCell");
+        private static bool isUpdaterRegistered = false;
 
         private static ValveChannels gasChannels = new ValveChannels();
  
@@ -48,6 +121,43 @@ namespace FluidWarpMod
         private static ValveChannels getChannelsForConduitType(ConduitType conduitType)
         {
             return (conduitType == LiquidWarpConfig.CONDUIT_TYPE ? liquidChannels : gasChannels);
+        }
+
+        public static void RegisterConduitUpdater()
+        {
+            if (!isUpdaterRegistered)
+            {
+                Logger.Log("WarpSpaceManager.RegisterConduitUpdater start");
+                Conduit.GetFlowManager(ConduitType.Gas).AddConduitUpdater(new Action<float>(WarpSpaceManager.GasConduitUpdate), ConduitFlowPriority.Default);
+                Conduit.GetFlowManager(ConduitType.Liquid).AddConduitUpdater(new Action<float>(WarpSpaceManager.LiquidConduitUpdate), ConduitFlowPriority.Default);
+                isUpdaterRegistered = true;
+                Logger.Log("WarpSpaceManager.RegisterConduitUpdater end");
+            }
+        }
+
+        public static void UnregisterConduitUpdate()
+        {
+            if (isUpdaterRegistered)
+            {
+                Logger.Log("WarpSpaceManager.UnregisterConduitUpdate start");
+                Conduit.GetFlowManager(ConduitType.Gas).RemoveConduitUpdater(new Action<float>(WarpSpaceManager.GasConduitUpdate));
+                Conduit.GetFlowManager(ConduitType.Liquid).RemoveConduitUpdater(new Action<float>(WarpSpaceManager.LiquidConduitUpdate));
+                isUpdaterRegistered = false;
+                Logger.Log("WarpSpaceManager.UnregisterConduitUpdate end");
+            }
+        }
+
+        private static ConduitFlow getFlowManager(ConduitType conduitType)
+        {
+            switch (conduitType)
+            {
+                case LiquidWarpConfig.CONDUIT_TYPE:
+                    return Conduit.GetFlowManager(ConduitType.Liquid);
+                case GasWarpConfig.CONDUIT_TYPE:
+                    return Conduit.GetFlowManager(ConduitType.Gas);
+                default:
+                    return null;
+            }
         }
 
         public static void SetProviderValveChannel(ValveBase valveBase, int newChannel)
@@ -64,7 +174,7 @@ namespace FluidWarpMod
             ValvesList valves;
             if (!providers.TryGetValue(newChannel, out valves))
             {
-                valves = new ValvesList();
+                valves = new ValvesList(getFlowManager(valveBase.conduitType));
                 providers[newChannel] = valves;
             }
 
@@ -75,16 +185,9 @@ namespace FluidWarpMod
         public static void OnValveChannelChange(ValveBase valveBase)
         {
             Logger.LogFormat("==Enter WarpSpaceManager.OnValveChannelChange(valveBase={0})", valveBase.GetInstanceID());
-            ConduitFlow flowManager = null;
-            if (valveBase.conduitType == LiquidWarpConfig.CONDUIT_TYPE)
-            {
-                flowManager = Conduit.GetFlowManager(ConduitType.Liquid);
-            }
-            else if (valveBase.conduitType == GasWarpConfig.CONDUIT_TYPE)
-            {
-                flowManager = Conduit.GetFlowManager(ConduitType.Gas);
-            }
-            else
+            ConduitFlow flowManager = getFlowManager(valveBase.conduitType);
+
+            if (flowManager == null)
             {
                 return;
             }
@@ -95,87 +198,114 @@ namespace FluidWarpMod
             Logger.Log("==Exit WarpSpaceManager.OnValveChannelChange");
         }
 
-
-        public static void RemoveProviderValve(ValveBase valveBase)
+        // Tries to request fluid for current requestor in specified list of Warp Gates
+        // returns true when at least some amount of fluid has been transfered, 
+        //         false otherwise
+        private static bool RequestFluid(ValvesList warpGates)
         {
-            Logger.LogFormat("==Enter WarpSpaceManager.RemoveProviderValve(valveBase={0})", valveBase);
-            ValveChannels providers = getChannelsForConduitType(valveBase.conduitType);
-            foreach (var channel in providers)
+            var requestor = warpGates.getCurrentRequestor();
+            var provider = warpGates.getNextProvider();
+            var start = provider;
+            if (null == provider || null == requestor)
             {
-                channel.Value.Remove(valveBase);
+                return false;
             }
-            Logger.Log("==Exit WarpSpaceManager.RemoveProviderValve");
+            int toCell = requestor.GetOutputCell();
+            var flowManager = warpGates.FlowManager;
+            ConduitFlow.ConduitContents requestorContents = flowManager.GetContents(toCell);
+            bool fluidTransfered = false;
+            // Fill input cell from various providers, in case when provider's conduit is not full
+            do
+            {
+                int fromCell = provider.GetInputCell();
+                if (provider != requestor)
+                {
+                    ConduitFlow.ConduitContents providerContents = flowManager.GetContents(fromCell);
+                    float addedMass = flowManager.AddElement(toCell, providerContents.element, providerContents.mass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
+                    Game.Instance.accumulators.Accumulate(provider.AccumulatorHandle, addedMass);
+                    if (addedMass > 0f)
+                    {
+                        fluidTransfered = true;
+                        flowManager.RemoveElement(fromCell, addedMass);
+                        Game.Instance.accumulators.Accumulate(requestor.AccumulatorHandle, addedMass);
+                    }
+                }
+                if (flowManager.IsConduitFull(toCell))
+                {
+                    break;
+                }
+                provider = warpGates.getNextProvider();
+            } while (provider != start);
+            return fluidTransfered;
         }
 
-        public static void RequestFluidFromChannel(ValveBase requestor, int channelNo)
+        private static void UpdateConduitsOfWarpGates(float dt, ConduitType warpGateType)
         {
-            Logger.LogFormat("==Entry WarpSpaceManager.RequestFluidFromChannel(requestor={0}, channelNo={1})", requestor.GetInstanceID(), channelNo);
             try
             {
-                ConduitFlow flowManager = null;
-                if (requestor.conduitType == LiquidWarpConfig.CONDUIT_TYPE)
-                {
-                    flowManager = Conduit.GetFlowManager(ConduitType.Liquid);
-                }
-                else if (requestor.conduitType == GasWarpConfig.CONDUIT_TYPE)
-                {
-                    flowManager = Conduit.GetFlowManager(ConduitType.Gas);
-                }
-                else
+                ConduitFlow flowManager = getFlowManager(warpGateType);
+                if (flowManager == null)
                 {
                     Logger.Log("unable to determine correct ConduitType.");
                     return;
                 }
 
-                ValveChannels channels = getChannelsForConduitType(requestor.conduitType);
-                ValvesList providers;
+                ValveChannels channels = getChannelsForConduitType(warpGateType);
 
-                if (!channels.TryGetValue(channelNo, out providers) || (providers.Count == 0))
+                foreach (KeyValuePair<int, ValvesList> warpChannel in channels)
                 {
-                    Logger.LogFormat("No providers for channel {0} found.", channelNo);
-                    return;
-                }
-
-                ValveBase provider = providers.getNext();
-                ValveBase start = provider;
-                if (null == provider)
-                {
-                    Logger.Log("You should never see this message! provider is null");
-                    return;
-                }
-                int toCell = (int)valveBaseOutputCellFieldInfo.GetValue(requestor);
-                ConduitFlow.ConduitContents requestorContents = flowManager.GetContents(toCell);
-                // Fill input cell from various providers, in case when provider's conduit is not full
-                do
-                {
-                    Logger.LogFormat("Trying to request from valveBase {0}", provider.GetInstanceID());
-                    int fromCell = (int)valveBaseInputCellFieldInfo.GetValue(provider);
-                    if (provider != requestor && flowManager.HasConduit(fromCell))
+                    if (warpChannel.Key == 10000)
                     {
-                        ConduitFlow.ConduitContents providerContents = flowManager.GetContents(fromCell);
-                        float addedMass = flowManager.AddElement(toCell, providerContents.element, providerContents.mass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
-                        Game.Instance.accumulators.Accumulate(provider.AccumulatorHandle, addedMass);
-                        if (addedMass > 0f)
+                        continue;
+                    }
+                    var warpValves = warpChannel.Value;
+                    var startRequestor = warpValves.getCurrentRequestor();
+                    if (startRequestor == null)
+                    {
+                        continue;
+                    }
+                    do
+                    {
+                        int destinationCell = warpValves.getCurrentRequestor().GetOutputCell();
+                        if (!flowManager.IsConduitFull(destinationCell) && !RequestFluid(warpValves))
                         {
-                            Logger.LogFormat("Adding Element to cell: requestor={0} provider={1} actually added mass={2}, element type={3}", requestor.GetInstanceID(), provider.GetInstanceID(), addedMass, providerContents.element);
-                            flowManager.RemoveElement(fromCell, addedMass);
-                            Game.Instance.accumulators.Accumulate(requestor.AccumulatorHandle, addedMass);
+                            break;
                         }
-                    }
-                    if (flowManager.IsConduitFull(toCell))
-                    {
-                        break;
-                    }
-                    provider = providers.getNext();
-                } while (provider != start);
+                        warpValves.getNextRequestor();
+                    } while (startRequestor != warpValves.getCurrentRequestor());
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Logger.LogFormat("Exception in WarpSpaceManager.RequestFluidFromChannel: {0}\n{1}", ex.Message, ex.StackTrace);  
+                Logger.LogFormat("Exception in WarpSpaceManager.UpdateConduitsOfWarpGates: {0}\n{1}", ex.Message, ex.StackTrace);
             }
-            Logger.Log("==Exit WarpSpaceManager.RequestFluidFromChannel");
-
         }
 
+        private static void GasConduitUpdate(float dt)
+        {
+            UpdateConduitsOfWarpGates(dt, GasWarpConfig.CONDUIT_TYPE);
+        }
+
+        private static void LiquidConduitUpdate(float dt)
+        {
+            UpdateConduitsOfWarpGates(dt, LiquidWarpConfig.CONDUIT_TYPE);
+        }
+
+        public static void RemoveProviderValve(ValveBase valveBase)
+        {
+            Logger.LogFormat("==Enter WarpSpaceManager.RemoveProviderValve(valveBase={0})", valveBase);
+            ValveChannels providers = getChannelsForConduitType(valveBase.conduitType);
+            int totalWarpGates = 0;
+            foreach (var channel in providers)
+            {
+                channel.Value.Remove(valveBase);
+                totalWarpGates += channel.Value.Count;
+            }
+            if (totalWarpGates == 0)
+            {
+                UnregisterConduitUpdate();
+            }
+            Logger.Log("==Exit WarpSpaceManager.RemoveProviderValve");
+        }
     }
 }
