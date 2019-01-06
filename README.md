@@ -32,7 +32,7 @@ Mods Installation
 0. Prerequisites:
    * This mod installation guide ONLY applies to the mods below.
    * Make SURE you're using the latest version from Github main branch.
-   * **[ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed**
+   * **[ONI-Modloader](https://github.com/javisar/ONI-Modloader#quick-start) must be installed**
    * Make sure you deleted all previous mod files and its config:
      * Windows: \OxygenNotIncluded\Mods\
 	 * Mac: /OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Mods/
