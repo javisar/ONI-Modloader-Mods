@@ -35,12 +35,12 @@ Mods Installation
    * **[ONI-Modloader](https://github.com/javisar/ONI-Modloader#installation) must be installed**
    * Make sure you deleted all previous mod files and its config:
      * Windows: \OxygenNotIncluded\Mods\
-	 * Mac: /OxygenNotIncluded/Mods
+	 * Mac: /OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Mods/
 1. Select the mod you want to install from [HERE](https://github.com/javisar/ONI-Modloader-Mods/tree/master/Mods).
 2. Click "Clone or Download" and "Download ZIP" for the current version as the releases may not be up to date.
 3. Copy the desired **mod dll file OR mod folder [WITH THE SAME FOLDER STRUCTURE](https://github.com/javisar/ONI-Modloader-Mods/tree/master/.github/folders.png)** into the folder:
    * Windows: \OxygenNotIncluded\Mods\
-   * Mac: /OxygenNotIncluded/Mods
+   * Mac: /OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Mods/
 4. The main mod config files must be located in:
    * \Mods\\[MOD_NAME]\Config\\[MOD_NAME]State.json
 5. **Copy also ONI-Common folder** since many mods use it as a support library.
