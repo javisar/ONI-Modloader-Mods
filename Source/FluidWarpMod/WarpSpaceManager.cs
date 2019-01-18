@@ -106,6 +106,23 @@ namespace FluidWarpMod
             };
             return null;
         }
+
+        public new bool Remove(ValveBase valveBaseToRemove)
+        {
+            bool result = base.Remove(valveBaseToRemove);
+            if (result)
+            {
+                if (currentProviderItem >= Count)
+                {
+                    currentProviderItem = 0;
+                }
+                if (currentRequestorItem >= Count)
+                {
+                    currentRequestorItem = 0;
+                }
+            }
+            return result;
+        }
     }
 
     internal class ValveChannels : Dictionary<int, ValvesList> { }
@@ -184,7 +201,11 @@ namespace FluidWarpMod
 
         public static void OnValveChannelChange(ValveBase valveBase)
         {
-            Logger.LogFormat("==Enter WarpSpaceManager.OnValveChannelChange(valveBase={0})", valveBase.GetInstanceID());
+            Logger.LogFormat("==Enter WarpSpaceManager.OnValveChannelChange(valveBase={0} conduitType={1} inputCell={2} outputCell={3})", 
+                valveBase.GetInstanceID(), 
+                valveBase.conduitType, 
+                valveBase.GetInputCell(), 
+                valveBase.GetOutputCell());
             ConduitFlow flowManager = getFlowManager(valveBase.conduitType);
 
             if (flowManager == null)
@@ -199,8 +220,7 @@ namespace FluidWarpMod
         }
 
         // Tries to request fluid for current requestor in specified list of Warp Gates
-        // returns true when at least some amount of fluid has been transfered, 
-        //         false otherwise
+        // returns false when all providers are dry at the moment and no more fluid can be transfered in this channel
         private static bool RequestFluid(ValvesList warpGates)
         {
             var requestor = warpGates.getCurrentRequestor();
@@ -212,31 +232,41 @@ namespace FluidWarpMod
             }
             int toCell = requestor.GetOutputCell();
             var flowManager = warpGates.FlowManager;
-            ConduitFlow.ConduitContents requestorContents = flowManager.GetContents(toCell);
-            bool fluidTransfered = false;
             // Fill input cell from various providers, in case when provider's conduit is not full
             do
             {
                 int fromCell = provider.GetInputCell();
                 if (provider != requestor)
                 {
-                    ConduitFlow.ConduitContents providerContents = flowManager.GetContents(fromCell);
-                    float addedMass = flowManager.AddElement(toCell, providerContents.element, providerContents.mass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
-                    Game.Instance.accumulators.Accumulate(provider.AccumulatorHandle, addedMass);
-                    if (addedMass > 0f)
+                    ConduitFlow.Conduit providerConduit = flowManager.GetConduit(fromCell);
+                    ConduitFlow.ConduitContents providerContents = providerConduit.GetContents(flowManager);
+                    if (!SimHashes.Vacuum.Equals(providerContents.element))
                     {
-                        fluidTransfered = true;
-                        flowManager.RemoveElement(fromCell, addedMass);
-                        Game.Instance.accumulators.Accumulate(requestor.AccumulatorHandle, addedMass);
+#if DEBUG
+                        ConduitFlow.Conduit requestorConduit = flowManager.GetConduit(toCell);
+                        ConduitFlow.ConduitContents requestorContents = requestorConduit.GetContents(flowManager);
+                        Logger.LogFormat("Trying to move {0} kg. of {1} from {2} to {3}", providerContents.mass, providerContents.element, fromCell, toCell);
+                        Logger.LogFormat("Requestor contents is: {0} kg. of {1}", requestorContents.mass, requestorContents.element);
+#endif
+                        float addedMass = flowManager.AddElement(toCell, providerContents.element, providerContents.mass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
+                        Game.Instance.accumulators.Accumulate(provider.AccumulatorHandle, addedMass);
+                        if (addedMass > 0f)
+                        {
+#if DEBUG
+                            Logger.LogFormat("Moved {0} kg. from {1} to {2}", addedMass, fromCell, toCell);
+#endif
+                            ConduitFlow.ConduitContents removed = flowManager.RemoveElement(providerConduit, addedMass);
+                            Game.Instance.accumulators.Accumulate(requestor.AccumulatorHandle, addedMass);
+                        }
                     }
                 }
                 if (flowManager.IsConduitFull(toCell))
                 {
-                    break;
+                    return true;
                 }
                 provider = warpGates.getNextProvider();
             } while (provider != start);
-            return fluidTransfered;
+            return false;
         }
 
         private static void UpdateConduitsOfWarpGates(float dt, ConduitType warpGateType)
