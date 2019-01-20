@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionClasses.cs" />
     <Compile Include="GasWarpConfig.cs" />
     <Compile Include="GasWarpMod.cs" />
     <Compile Include="FluidWarpMod.cs" />
