@@ -11,11 +11,7 @@ Disclaimers
 * We do not take any responsibility for broken saves or any other damage. Use this software at your own risk.
 * If you load a savegame, it requires that you have exactly the same mods when you saved it.
 
-This project uses source code of and is based on:
-* https://github.com/zeobviouslyfakeacc/ModLoaderInstaller
-* https://github.com/spaar/besiege-modloader
-* https://github.com/pardeike/Harmony
-* https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
+This project uses source code of and is based on: [Harmony](https://github.com/pardeike/Harmony), [ModLoader Installer](https://github.com/zeobviouslyfakeacc/ModLoaderInstaller), [Besiege Modloader](https://github.com/spaar/besiege-modloader), [OnionPatcher](https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/)
 
 
 **NOTE**: Compiled for **Q1-303707** and ONI-Modloader v0.5.2
@@ -76,7 +72,6 @@ Mods - GUI
 | ----- | ----------- | ---------- | ------- |
 | CameraController | Enable further zoom-outs in play and dev mode. Allows camera to be moved out of world boundaries. | Y | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) [@EtiamNullam](https://github.com/EtiamNullam) [@javisar](https://github.com/javisar)|
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
-| ImprovedGasOverlay | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@EtiamNullam](https://github.com/EtiamNullam) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | ImprovedTemperatureOverlay | Modifies temperature overlay ranges and colors. | Y | [@EtiamNullam](https://github.com/EtiamNullam) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
 
