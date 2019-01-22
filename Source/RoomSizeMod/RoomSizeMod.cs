@@ -1,21 +1,37 @@
 ﻿using Harmony;
 using ONI_Common.Json;
-using STRINGS;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
 using static RoomConstraints;
+using static UnityModManagerNet.UnityModManager;
 
 namespace RoomSizeMod
 {
-    
-    [HarmonyPatch(typeof(Game),"OnPrefabInit")]
-    internal class RoomSizeMod_Game_OnPrefabInit
-    {
 
-        private static void Postfix(Game __instance)
+	[HarmonyPatch(typeof(OptionsMenuScreen), "OnAudioOptions")]
+	internal class RoomSizeMod_OptionsMenuScreen_OnAudioOptions
+	{
+
+		private static bool Prefix(OptionsMenuScreen __instance)
+		{
+			Debug.Log(" === RoomSizeMod_OptionsMenuScreen_OnAudioOptions Postfix === "+ RoomSizeMod_Manager_Initialize.go);
+			MethodInfo mi = AccessTools.Method(typeof(KModalButtonMenu), "ActivateChildScreen");
+			mi.Invoke(((KModalButtonMenu)__instance), new object[] { RoomSizeMod_Manager_Initialize.go });
+			return false;
+		}
+	}
+
+	[HarmonyPatch(typeof(KSerialization.Manager), "Initialize")]
+    internal class RoomSizeMod_Manager_Initialize
+	{
+		public static GameObject go = null;
+        private static void Postfix(Global __instance)
         {
-            Debug.Log(" === RoomSizeMod_Game_OnPrefabInit Postfix === ");
-
+            Debug.Log(" === RoomSizeMod_Manager_Initialize Postfix === ");
+			UI.Load();
+			go = MyAudioOptionsScreen.Load();
         }
     }
 
@@ -83,7 +99,7 @@ namespace RoomSizeMod
             //foreach (KeyValuePair<string, int> entry in RoomSizeStateManager.ConfiguratorState.MaximumRoomSizes)
             foreach (KeyValuePair<string, int> entry in RoomSizeState.StateManager.State.MaximumRoomSizes)
             {
-                Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, ""+ entry.Value), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, ""+ entry.Value), null);
+                Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(STRINGS.ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, ""+ entry.Value), string.Format(STRINGS.ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, ""+ entry.Value), null);
                 //Debug.Log(entry.Key);
                 //Debug.Log(__instance.Get(entry.Key));
                 ChangeRoomMaximumSize(__instance.Get(entry.Key), max_size); 
