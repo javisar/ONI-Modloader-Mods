@@ -32,12 +32,15 @@ public class LiquidWarpConfig : IBuildingConfig
         buildingDef.RequiresPowerInput = true;
         buildingDef.PowerInputOffset = new CellOffset(0, 1);
         buildingDef.EnergyConsumptionWhenActive = 480f;
+        buildingDef.SelfHeatKilowattsWhenActive = 32;
         return buildingDef;
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
-		GeneratedBuildings.MakeBuildingAlwaysOperational(go);
+        go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
+        //GeneratedBuildings.MakeBuildingAlwaysOperational(go);
+
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		ValveBase valveBase = go.AddOrGet<ValveBase>();
 		valveBase.conduitType = CONDUIT_TYPE;       
@@ -48,10 +51,14 @@ public class LiquidWarpConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		Object.DestroyImmediate(go.GetComponent<RequireInputs>());
-		Object.DestroyImmediate(go.GetComponent<ConduitConsumer>());
+        //Object.DestroyImmediate(go.GetComponent<RequireInputs>());
+        RequireInputs component = go.GetComponent<RequireInputs>();
+        component.SetRequirements(power: true, conduit: false);
+        Object.DestroyImmediate(go.GetComponent<ConduitConsumer>());
 		Object.DestroyImmediate(go.GetComponent<ConduitDispenser>());
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
-		BuildingTemplates.DoPostConfigure(go);
+        go.AddOrGet<LogicOperationalController>();
+        go.AddOrGetDef<PoweredActiveController.Def>();
+        BuildingTemplates.DoPostConfigure(go);
 	}
 }
