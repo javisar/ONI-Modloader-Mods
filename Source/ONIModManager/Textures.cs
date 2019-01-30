@@ -5,10 +5,9 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace UnityModManagerNet
+namespace ONIModManager
 {
-	public partial class UnityModManager
-	{
+
 		static class Textures
 		{
 			private static string WindowBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAIAAAEACAYAAACZCaebAAAAnElEQVRIS63MtQHDQADAwPdEZmaG/fdJCq2g7qqLvu/7hRBCZOF9X0ILz/MQWrjvm1DHdV3MFs7zJLRwHAehhX3fCS1s20ZoYV1XQgvLshDqmOeZ2cI0TYQWxnEktDAMA6GFvu8JLXRdR2ihbVtCHU3TMFuo65rQQlVVhBbKsiS0UBQFoYU8zwktZFlGqCNNU2YLSZIQWojjmFDCH22GtZAncD8TAAAAAElFTkSuQmCC";
@@ -65,5 +64,5 @@ namespace UnityModManagerNet
 				*/
 			}
 		}
-	}
+	
 }

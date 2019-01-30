@@ -10,10 +10,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace UnityModManagerNet
+namespace ONIModManager
 {
-	public partial class UnityModManager
-	{
+
 		public class UI : MonoBehaviour
 		{
 			internal static bool Load()
@@ -660,6 +659,6 @@ namespace UnityModManagerNet
 			}
 		}
 
-	}
+	
 }
 

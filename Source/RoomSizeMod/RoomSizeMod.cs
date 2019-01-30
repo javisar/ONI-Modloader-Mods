@@ -5,36 +5,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using static RoomConstraints;
-using static UnityModManagerNet.UnityModManager;
 
 namespace RoomSizeMod
 {
-
-	[HarmonyPatch(typeof(OptionsMenuScreen), "OnAudioOptions")]
-	internal class RoomSizeMod_OptionsMenuScreen_OnAudioOptions
-	{
-
-		private static bool Prefix(OptionsMenuScreen __instance)
-		{
-			Debug.Log(" === RoomSizeMod_OptionsMenuScreen_OnAudioOptions Postfix === "+ RoomSizeMod_Manager_Initialize.go);
-			MethodInfo mi = AccessTools.Method(typeof(KModalButtonMenu), "ActivateChildScreen");
-			mi.Invoke(((KModalButtonMenu)__instance), new object[] { RoomSizeMod_Manager_Initialize.go });
-			return false;
-		}
-	}
-
-	[HarmonyPatch(typeof(KSerialization.Manager), "Initialize")]
-    internal class RoomSizeMod_Manager_Initialize
-	{
-		public static GameObject go = null;
-        private static void Postfix(Global __instance)
-        {
-            Debug.Log(" === RoomSizeMod_Manager_Initialize Postfix === ");
-			UI.Load();
-			go = MyAudioOptionsScreen.Load();
-        }
-    }
-
 
     [HarmonyPatch(typeof(RoomProber),MethodType.Constructor)]
     internal class RoomSizeMod_RoomProber

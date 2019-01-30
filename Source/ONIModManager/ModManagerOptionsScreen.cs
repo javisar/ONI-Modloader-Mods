@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MyAudioOptionsScreen : KModalScreen
+public class ModManagerOptionsScreen : KModalScreen
 {
 	[SerializeField]
 	private KButton closeButton;
@@ -43,7 +43,7 @@ public class MyAudioOptionsScreen : KModalScreen
 	private Dictionary<string, object> alwaysPlayMusicMetric = new Dictionary<string, object>
 	{
 		{
-			MyAudioOptionsScreen.AlwaysPlayMusicKey,
+			ModManagerOptionsScreen.AlwaysPlayMusicKey,
 			(object)null
 		}
 	};
@@ -56,7 +56,7 @@ public class MyAudioOptionsScreen : KModalScreen
 	{
 		try
 		{
-			return new GameObject(typeof(MyAudioOptionsScreen).FullName, typeof(MyAudioOptionsScreen));
+			return new GameObject(typeof(ModManagerOptionsScreen).FullName, typeof(ModManagerOptionsScreen));
 
 			//return true;
 		}
@@ -126,9 +126,9 @@ public class MyAudioOptionsScreen : KModalScreen
 		Debug.Log("3");
 		LocText reference = component.GetReference<LocText>("Label");
 		reference.SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUSIC_EVERY_CYCLE);
-		if (!KPlayerPrefs.HasKey(MyAudioOptionsScreen.AlwaysPlayAutomation))
+		if (!KPlayerPrefs.HasKey(ModManagerOptionsScreen.AlwaysPlayAutomation))
 		{
-			KPlayerPrefs.SetInt(MyAudioOptionsScreen.AlwaysPlayAutomation, 1);
+			KPlayerPrefs.SetInt(ModManagerOptionsScreen.AlwaysPlayAutomation, 1);
 		}
 		Debug.Log("4");
 		HierarchyReferences component2 = this.alwaysPlayAutomationButton.GetComponent<HierarchyReferences>();
@@ -142,7 +142,7 @@ public class MyAudioOptionsScreen : KModalScreen
 		Debug.Log("5");
 		LocText reference2 = component2.GetReference<LocText>("Label");
 		reference2.SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.AUTOMATION_SOUNDS_ALWAYS);
-		this.alwaysPlayAutomationButton.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive((byte)((KPlayerPrefs.GetInt(MyAudioOptionsScreen.AlwaysPlayAutomation) == 1) ? 1 : 0) != 0);
+		this.alwaysPlayAutomationButton.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive((byte)((KPlayerPrefs.GetInt(ModManagerOptionsScreen.AlwaysPlayAutomation) == 1) ? 1 : 0) != 0);
 		Debug.Log("6");
 	}
 
@@ -172,13 +172,13 @@ public class MyAudioOptionsScreen : KModalScreen
 	{
 		MusicManager.instance.alwaysPlayMusic = !MusicManager.instance.alwaysPlayMusic;
 		this.alwaysPlayMusicButton.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive(MusicManager.instance.alwaysPlayMusic);
-		KPlayerPrefs.SetInt(MyAudioOptionsScreen.AlwaysPlayMusicKey, MusicManager.instance.alwaysPlayMusic ? 1 : 0);
+		KPlayerPrefs.SetInt(ModManagerOptionsScreen.AlwaysPlayMusicKey, MusicManager.instance.alwaysPlayMusic ? 1 : 0);
 	}
 
 	private void ToggleAlwaysPlayAutomation()
 	{
-		KPlayerPrefs.SetInt(MyAudioOptionsScreen.AlwaysPlayAutomation, (KPlayerPrefs.GetInt(MyAudioOptionsScreen.AlwaysPlayAutomation) != 1) ? 1 : 0);
-		this.alwaysPlayAutomationButton.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive((byte)((KPlayerPrefs.GetInt(MyAudioOptionsScreen.AlwaysPlayAutomation) == 1) ? 1 : 0) != 0);
+		KPlayerPrefs.SetInt(ModManagerOptionsScreen.AlwaysPlayAutomation, (KPlayerPrefs.GetInt(ModManagerOptionsScreen.AlwaysPlayAutomation) != 1) ? 1 : 0);
+		this.alwaysPlayAutomationButton.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive((byte)((KPlayerPrefs.GetInt(ModManagerOptionsScreen.AlwaysPlayAutomation) == 1) ? 1 : 0) != 0);
 	}
 
 	private void BuildAudioDeviceList()
@@ -223,7 +223,7 @@ public class MyAudioOptionsScreen : KModalScreen
 
 	private void OnClose(GameObject go)
 	{
-		this.alwaysPlayMusicMetric[MyAudioOptionsScreen.AlwaysPlayMusicKey] = MusicManager.instance.alwaysPlayMusic;
+		this.alwaysPlayMusicMetric[ModManagerOptionsScreen.AlwaysPlayMusicKey] = MusicManager.instance.alwaysPlayMusic;
 		ThreadedHttps<KleiMetrics>.Instance.SendEvent(this.alwaysPlayMusicMetric);
 		UnityEngine.Object.Destroy(go);
 	}
