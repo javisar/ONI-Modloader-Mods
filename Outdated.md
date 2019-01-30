@@ -12,7 +12,10 @@ Outdated Mods
 | GasTankMod | Storage for gases. | N | [@javisar](https://github.com/javisar) |
 | InsulatedDoorsMod | Adds a new element Insulated Pressure Door. | N | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzerAlt | Combines hydrogen and oxygen into steam. Uses two input conduits instead of getting oxygen from the environment. | N | [@javisar](https://github.com/javisar) |
+| ImprovedGasOverlay | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@EtiamNullam](https://github.com/EtiamNullam) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
+| ImprovedTemperatureOverlay | Modifies temperature overlay ranges and colors. | Y | [@EtiamNullam](https://github.com/EtiamNullam) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | LiquidTankMod | Storage for liquids. | N | [@javisar](https://github.com/javisar) |
+| MaterialColor | Adds an overlay option to visualize what a building is made of. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/MaterialColor/MaterialColorHowto.txt) | Y | [@EtiamNullam](https://github.com/EtiamNullam) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | MoreMaterials | Allows the construction of some buildings with any material (Doors, filters, bed, canvas, tables, wall fire pole, sculptures, shower, toilets, wash basins, bridges, conduits/wires, ladder, pumps, valves, ventS, tiles, lockers, sensors and gates). | N | [@javisar](https://github.com/javisar) |
 | NaphthaViscosity | Recovers the old behaviour in Naphtha. Sets the viscosity to 0 and allows building vertical airlocks. | N | [@javisar](https://github.com/javisar) |
 | NoOverloadedWiresMod | Avoid overloaded wires. Check NoDamageMod. | N | [@javisar](https://github.com/javisar) |

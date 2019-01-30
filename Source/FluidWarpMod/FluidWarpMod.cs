@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Harmony;
 using UnityEngine;
 
@@ -25,8 +26,11 @@ namespace FluidWarpMod
     {
         private static void Postfix(Valve __instance, ValveBase ___valveBase)
         {
-            WarpSpaceManager.OnValveChannelChange(___valveBase);
-            return;
+            if (___valveBase.conduitType == GasWarpConfig.CONDUIT_TYPE || ___valveBase.conduitType == LiquidWarpConfig.CONDUIT_TYPE)
+            {
+                WarpSpaceManager.OnValveChannelChange(___valveBase);
+                WarpSpaceManager.RegisterConduitUpdater();
+            }
         }
     }
 
@@ -35,8 +39,10 @@ namespace FluidWarpMod
     {
         private static void Postfix(Valve __instance, ValveBase ___valveBase)
         {
-            WarpSpaceManager.RemoveProviderValve(___valveBase);
-            return;
+            if (___valveBase.conduitType == GasWarpConfig.CONDUIT_TYPE || ___valveBase.conduitType == LiquidWarpConfig.CONDUIT_TYPE)
+            {
+                WarpSpaceManager.RemoveProviderValve(___valveBase);
+            }
         }
     }
 
@@ -44,59 +50,48 @@ namespace FluidWarpMod
     [HarmonyPatch(typeof(Valve), "UpdateFlow")]
     internal static class FluidWarpMod_Valve_UpdateFlow
     {
+        [HarmonyPrefix]
         private static void Postfix(Valve __instance, ValveBase ___valveBase)
         {
-            WarpSpaceManager.OnValveChannelChange(___valveBase);
-            return;
+            if (___valveBase.conduitType == GasWarpConfig.CONDUIT_TYPE || ___valveBase.conduitType == LiquidWarpConfig.CONDUIT_TYPE)
+            {
+                WarpSpaceManager.OnValveChannelChange(___valveBase);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Valve), "OnCopySettings")]
+    internal static class FluidWarpMod_Valve_OnCopySettings
+    {
+        [HarmonyPrefix]
+        private static bool Prefix(Valve __instance, object data)
+        {
+            if (__instance.GetValveBase().conduitType == GasWarpConfig.CONDUIT_TYPE || __instance.GetValveBase().conduitType == LiquidWarpConfig.CONDUIT_TYPE)
+            {
+                GameObject gameObject = (GameObject)data;
+                Valve component = gameObject.GetComponent<Valve>();
+                if (component != null && (component.GetValveBase().conduitType == GasWarpConfig.CONDUIT_TYPE || component.GetValveBase().conduitType == LiquidWarpConfig.CONDUIT_TYPE))
+                {
+                    __instance.ChangeFlow(component.GetValveBase().CurrentFlow);
+                }
+                return false;
+            }
+            return true;
         }
     }
 
     [HarmonyPatch(typeof(ValveBase), "ConduitUpdate")]
-	internal class FluidWarpMod_ValveBase_ConduitUpdate
+	internal static class FluidWarpMod_ValveBase_ConduitUpdate
 	{
-        public FluidWarpMod_ValveBase_ConduitUpdate()
-        {
-
-        }
+        [HarmonyPrefix]
         private static bool Prefix(ValveBase __instance, float dt, int ___inputCell, int ___outputCell)
 		{
-            if (__instance.conduitType != LiquidWarpConfig.CONDUIT_TYPE && __instance.conduitType != GasWarpConfig.CONDUIT_TYPE)
+            if (__instance.conduitType == LiquidWarpConfig.CONDUIT_TYPE || __instance.conduitType == GasWarpConfig.CONDUIT_TYPE)
             {
-                return true;
-            }
-
-            int channelNo = Mathf.RoundToInt(__instance.CurrentFlow * 1000.0f); // simple cast to int sometimes gives invalid result
-            Logger.LogFormat(" === ValveBase.ConduitUpdate({0}) Prefix conduitType={1}, inputCell={2}, outputCell={3}, channelNo={4}", dt, __instance.conduitType, ___inputCell, ___outputCell, channelNo);
-
-            if (channelNo == 10000)
-            {
-                // Channel number is set to MaxFlow (10k), which means WarpGate is disabled
-                return false;
-            }
-
-            ConduitFlow flowManager = null;
-            if (__instance.conduitType == LiquidWarpConfig.CONDUIT_TYPE)
-            {
-                flowManager = Conduit.GetFlowManager(ConduitType.Liquid);
-            }
-            else if (__instance.conduitType == GasWarpConfig.CONDUIT_TYPE)
-            {
-                flowManager = Conduit.GetFlowManager(ConduitType.Gas);
-            }
-
-			if (!flowManager.HasConduit(___inputCell) || !flowManager.HasConduit(___outputCell))
-			{
-                __instance.UpdateAnim();
-			}
-
-			if (flowManager.HasConduit(___outputCell) && !flowManager.IsConduitFull(___outputCell))
-            {
-                WarpSpaceManager.RequestFluidFromChannel(__instance, channelNo);
                 __instance.UpdateAnim();
                 return false;
             }
-
-            return false;
+            return true;
 		}
     }
 
@@ -106,17 +101,22 @@ namespace FluidWarpMod
         private static FieldInfo controllerFI = AccessTools.Field(typeof(ValveBase), "controller");
         public static bool Prefix(ValveBase __instance)
         {
-            var controller = ((KBatchedAnimController)controllerFI.GetValue(__instance));
-            float averageRate = Game.Instance.accumulators.GetAverageRate(__instance.AccumulatorHandle);
-            if (averageRate <= 0f)
+            if (__instance.conduitType == LiquidWarpConfig.CONDUIT_TYPE || __instance.conduitType == GasWarpConfig.CONDUIT_TYPE)
             {
-                controller.Play("off", KAnim.PlayMode.Once, 1f, 0f);
+
+                var controller = ((KBatchedAnimController)controllerFI.GetValue(__instance));
+                float averageRate = Game.Instance.accumulators.GetAverageRate(__instance.AccumulatorHandle);
+                if (averageRate <= 0f)
+                {
+                    controller.Play("off", KAnim.PlayMode.Once, 1f, 0f);
+                }
+                else
+                {
+                    controller.Play("hi", (averageRate > 0f ? KAnim.PlayMode.Loop : KAnim.PlayMode.Once), 1f, 0f);
+                }
+                return false;
             }
-            else
-            {
-                controller.Play("hi", (averageRate > 0f ? KAnim.PlayMode.Loop : KAnim.PlayMode.Once), 1f, 0f);
-            }
-            return false;
+            return true;
         }
     }
 

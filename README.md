@@ -11,14 +11,10 @@ Disclaimers
 * We do not take any responsibility for broken saves or any other damage. Use this software at your own risk.
 * If you load a savegame, it requires that you have exactly the same mods when you saved it.
 
-This project uses source code of and is based on:
-* https://github.com/zeobviouslyfakeacc/ModLoaderInstaller
-* https://github.com/spaar/besiege-modloader
-* https://github.com/pardeike/Harmony
-* https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/
+This project uses source code of and is based on: [Harmony](https://github.com/pardeike/Harmony), [ModLoader Installer](https://github.com/zeobviouslyfakeacc/ModLoaderInstaller), [Besiege Modloader](https://github.com/spaar/besiege-modloader), [OnionPatcher](https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/)
 
 
-**NOTE**: Compiled for **Q1-299745** and ONI-Modloader v0.5.1
+**NOTE**: Compiled for **Q1-303707** and ONI-Modloader v0.5.2
 
 **[Report Mod Bugs](https://github.com/javisar/ONI-Modloader-Mods/issues/new/choose)**
 
@@ -57,7 +53,7 @@ ONI-Common
 --------------------
 | Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
-| **ONI-Common** | **Requieres Mono.Cecil.dll** Common code. Provides config load/save functionality, logger, help tools. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
+| **ONI-Common** | **Requieres Mono.Cecil.dll** Common code. Provides config load/save functionality, logger, help tools. | Y | [@EtiamNullam](https://github.com/EtiamNullam) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 
 
 Mods - New Buildings
@@ -74,11 +70,8 @@ Mods - GUI
 --------------------
 | Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
-| CameraController | Enable further zoom-outs in play and dev mode. Allows camera to be moved out of world boundaries. | Y | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) [@fistak](https://github.com/fistak) [@javisar](https://github.com/javisar)|
+| CameraController | Enable further zoom-outs in play and dev mode. Allows camera to be moved out of world boundaries. | Y | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) [@EtiamNullam](https://github.com/EtiamNullam) [@javisar](https://github.com/javisar)|
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
-| ImprovedGasOverlay | Replaces the oxygen overlay with gas overlay. Also visualizes the density. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
-| ImprovedTemperatureOverlay | Modifies temperature overlay ranges and colors. | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
-| MaterialColor | Adds an overlay option to visualize what a building is made of. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/MaterialColor/MaterialColorHowto.txt) | Y | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
 
 
@@ -106,5 +99,6 @@ Downloads
 * Choose 'Download or Clone'.
 * Put the desired mods into the Mods folder "OxygenNotIncluded\Mods".
 * BE SURE to also copy **ALL** required config and icons folders.
+
 
 
