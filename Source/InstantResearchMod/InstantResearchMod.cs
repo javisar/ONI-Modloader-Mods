@@ -42,7 +42,7 @@ namespace InstantResearch
 				//this.ConfigureToggle(this.researchInfo.toggle, flag, active, tooltip, base.ToggleToolTipTextStyleSetting);
 				disabled = false;
 				//active = true;
-				tooltip = UI.TOOLTIPS.MANAGEMENTMENU_RESEARCH + " " + GameUtil.GetHotkeyString(Action.ManageResearch);
+				tooltip = UI.TOOLTIPS.MANAGEMENTMENU_RESEARCH + " " + GameUtil.GetActionString(Action.ManageResearch);
 			}
 
 		}

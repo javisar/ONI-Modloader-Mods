@@ -20,6 +20,12 @@ namespace AllBuildingsDestroyableMod
             //Debug.Log(" === AllBuildingsDestroyableMod_BuildingDef_IsAreaClear Prefix === ");
             //Debug.Log(" === A "+__instance.PrefabID+" ===  ");
             //Debug.Log(" === A " + __instance.PrefabID + " ===  "+ fail_reason);
+            if (!Grid.IsValidCell(cell))
+            {
+                Debug.Log(" === AllBuildingsDestroyableMod_BuildingDef_IsAreaClear: cell(cell) not valid = "+cell);
+                return;
+            }
+
             bool flag = true;
             //fail_reason = null;
             switch (__instance.BuildLocationRule)
@@ -57,6 +63,12 @@ namespace AllBuildingsDestroyableMod
                     break;
                 }
                 */
+                if (!Grid.IsValidCell(num))
+                {
+                    Debug.Log(" === AllBuildingsDestroyableMod_BuildingDef_IsAreaClear: cell(num) not valid = " + num);
+                    return;
+                }
+
                 GameObject gameObject = Grid.Objects[num, (int)layer];
                 if ((UnityEngine.Object)gameObject != (UnityEngine.Object)null)
                 {

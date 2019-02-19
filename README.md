@@ -14,7 +14,7 @@ Disclaimers
 This project uses source code of and is based on: [Harmony](https://github.com/pardeike/Harmony), [ModLoader Installer](https://github.com/zeobviouslyfakeacc/ModLoaderInstaller), [Besiege Modloader](https://github.com/spaar/besiege-modloader), [OnionPatcher](https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/)
 
 
-**NOTE**: Compiled for **Q1-303707** and ONI-Modloader v0.5.2
+**NOTE**: Compiled for **Q2-309851** and ONI-Modloader v0.5.2
 
 **[Report Mod Bugs](https://github.com/javisar/ONI-Modloader-Mods/issues/new/choose)**
 
