@@ -7,8 +7,8 @@
     <ProjectGuid>{651ACC28-7A4C-41DB-8BAB-16830D4713BD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AllBuildingsDestroyableMod</RootNamespace>
-    <AssemblyName>AllBuildingsDestroyableMod</AssemblyName>
+    <RootNamespace>BuildOverFacilities</RootNamespace>
+    <AssemblyName>BuildOverFacilities</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllBuildingsDestroyableMod.cs" />
+    <Compile Include="BuildOverFacilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
