@@ -6,6 +6,7 @@ Outdated Mods
 | Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
 | AlternateOrders | The Fabricators and Refineries will alternate between infinity orders. | N | [@javisar](https://github.com/javisar) |
+| CameraController | Enable further zoom-outs in play and dev mode. Allows camera to be moved out of world boundaries. | Y | [@Moonkis](https://github.com/Moonkis) [@Killface1980](https://github.com/Killface1980) [@EtiamNullam](https://github.com/EtiamNullam) [@javisar](https://github.com/javisar)|
 | CritterNumberSensor | Sensor for the critter number in a room (original from R9MX4). | N | [@Cairath](https://github.com/Cairath) |
 | DisplayDraggedBoxSize | Shows selected rectangle dimensions using any tool. | N | [@fistak](https://github.com/fistak) |
 | DraggablePanelMod | Makes panels draggable. | N | [@fistak](https://github.com/fistak) [@Killface1980](https://github.com/Killface1980) |
