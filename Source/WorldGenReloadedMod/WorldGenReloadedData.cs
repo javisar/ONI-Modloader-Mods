@@ -56,7 +56,7 @@ namespace WorldGenReloadedMod
                 // Remove invalid subworlds
                 for (int i = _subworlds.Count - 1; i >= 0; i--)
                 {
-                    List<TerrainCell> terrainCellsForTag2 = WorldGen.GetTerrainCellsForTag(_subworlds[i]);
+                    List<TerrainCell> terrainCellsForTag2 = worldgen.GetTerrainCellsForTag(_subworlds[i]);
                     
                     for (int num = terrainCellsForTag2.Count - 1; num >= 0; num--)
                     {

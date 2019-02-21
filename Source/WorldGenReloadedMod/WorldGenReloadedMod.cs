@@ -112,33 +112,46 @@ namespace WorlGenReloadedMod
         private static MethodInfo SpawnMobsAndTemplatesM = AccessTools.Method(typeof(WorldGen), "SpawnMobsAndTemplates");
         private static MethodInfo PlaceTemplateSpawnersM = AccessTools.Method(typeof(WorldGen), "PlaceTemplateSpawners");
 
-        private static bool Prefix(WorldGen __instance, ref Sim.Cell[] __result, bool doSettle, ref Sim.DiseaseCell[] dc)
+		private static bool Prefix(WorldGen __instance, ref Sim.Cell[] __result, bool doSettle, ref Sim.DiseaseCell[] dc)
+		{
+			try
+			{
+				__result = RenderOffline(__instance, doSettle, ref dc);
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError(ex);
+				__result = null;				
+			}
+			return false;
+		}
+
+		private static Sim.Cell[] RenderOffline(WorldGen __instance, bool doSettle, ref Sim.DiseaseCell[] dc)
         {
             Debug.Log(" === WorldGenReloadedMod_WorldGen_RenderOffline ===");
             WorldGen.OfflineCallbackFunction successCallbackFn = ((WorldGen.OfflineCallbackFunction)successCallbackFnF.GetValue(__instance));
             SeededRandom myRandom = ((SeededRandom)myRandomF.GetValue(__instance));
-            Data data = ((Data)dataF.GetValue(null));
+            Data data = ((Data)dataF.GetValue(__instance));
             Action<OfflineWorldGen.ErrorInfo> errorCallback = ((Action<OfflineWorldGen.ErrorInfo>)errorCallbackF.GetValue(__instance));
 
 
-            Sim.Cell[] cells = null;
+            Sim.Cell[] array = null;
             float[] bgTemp = null;
             dc = null;
             HashSet<int> borderCells = new HashSet<int>();
             //CompleteLayout(successCallbackFn);
             __instance.CompleteLayout(successCallbackFn);
-            //WriteOverWorldNoise(successCallbackFn);
-            WorldGen.WriteOverWorldNoise(successCallbackFn);
-            if (!WorldGen.RenderToMap(successCallbackFn, ref cells, ref bgTemp, ref dc, ref borderCells))
+			//WriteOverWorldNoise(successCallbackFn);
+			__instance.WriteOverWorldNoise(successCallbackFn);
+            if (!__instance.RenderToMap(successCallbackFn, ref array, ref bgTemp, ref dc, ref borderCells))
             {
                 successCallbackFn(UI.WORLDGEN.FAILED.key, -100f, WorldGenProgressStages.Stages.Failure);
-                __result = null;
-                return false;
+                return null;
             }
-            WorldGen.EnsureEnoughAlgaeInStartingBiome(cells);
+			__instance.EnsureEnoughAlgaeInStartingBiome(array);
             List<KeyValuePair<Vector2I, TemplateContainer>> list = new List<KeyValuePair<Vector2I, TemplateContainer>>();
             TemplateContainer baseStartingTemplate = TemplateCache.GetBaseStartingTemplate();
-            List<TerrainCell> terrainCellsForTag = WorldGen.GetTerrainCellsForTag(WorldGenTags.StartLocation);
+            List<TerrainCell> terrainCellsForTag = __instance.GetTerrainCellsForTag(WorldGenTags.StartLocation);
             foreach (TerrainCell item5 in terrainCellsForTag)
             {
                 List<KeyValuePair<Vector2I, TemplateContainer>> list2 = list;
@@ -149,7 +162,7 @@ namespace WorlGenReloadedMod
             }
 
             List<TemplateContainer> list3 = TemplateCache.CollectBaseTemplateAssets("poi/");
-            foreach (SubWorld subWorld in WorldGen.Settings.GetSubWorldList())
+            foreach (SubWorld subWorld in __instance.Settings.GetSubWorldList())
             {
                 if (subWorld.pointsOfInterest != null)
                 {
@@ -163,7 +176,7 @@ namespace WorlGenReloadedMod
                     ////
                     foreach (KeyValuePair<string, string[]> item6 in subWorld.pointsOfInterest)
                     {
-                        List<TerrainCell> terrainCellsForTag2 = WorldGen.GetTerrainCellsForTag(subWorld.name.ToTag());
+                        List<TerrainCell> terrainCellsForTag2 = __instance.GetTerrainCellsForTag(subWorld.name.ToTag());
                         for (int num = terrainCellsForTag2.Count - 1; num >= 0; num--)
                         {
                             if (!__instance.IsSafeToSpawnPOI(terrainCellsForTag2[num]))
@@ -224,10 +237,10 @@ namespace WorlGenReloadedMod
 
             ////        
             ProcessGeysers(__instance, ref list, myRandom);
-            ////
+			////
 
-            // Generation of geyser Overwrited in the previous line
-            /*
+			// Generation of geyser Overwrited in the previous line
+			/*
             List<TemplateContainer> list6 = TemplateCache.CollectBaseTemplateAssets("features/");
             foreach (SubWorld subWorld2 in WorldGen.Settings.GetSubWorldList())
             {
@@ -250,7 +263,7 @@ namespace WorlGenReloadedMod
                         {
                             break;
                         }
-                        if (__instance.IsSafeToSpawnFeatureTemplate(item7))
+                        if (item7.IsSafeToSpawnFeatureTemplate())
                         {
                             string template2 = list7[list7.Count - 1];
                             list7.RemoveAt(list7.Count - 1);
@@ -270,14 +283,14 @@ namespace WorlGenReloadedMod
                 }
             }
             */
-            foreach (int item8 in borderCells)
+			foreach (int item8 in borderCells)
             {
-                cells[item8].SetValues(WorldGen.unobtaniumElement, ElementLoader.elements);
+				array[item8].SetValues(WorldGen.unobtaniumElement, ElementLoader.elements);
             }
             if (doSettle)
             {
-                //running = WorldGenSimUtil.DoSettleSim(cells, bgTemp, dc, successCallbackFn, data, list, errorCallback, delegate (Sim.Cell[] updatedCells, float[] updatedBGTemp, Sim.DiseaseCell[] updatedDisease)
-                runningF.SetValue(null, WorldGenSimUtil.DoSettleSim(cells, bgTemp, dc, successCallbackFn, data, list, errorCallback, delegate (Sim.Cell[] updatedCells, float[] updatedBGTemp, Sim.DiseaseCell[] updatedDisease)
+				//this.running = WorldGenSimUtil.DoSettleSim(this.Settings, array, bgTemp, dc, this.successCallbackFn, this.data, list, this.errorCallback, delegate(Sim.Cell[] updatedCells, float[] updatedBGTemp, Sim.DiseaseCell[] updatedDisease)
+				runningF.SetValue(__instance, WorldGenSimUtil.DoSettleSim(__instance.Settings, array, bgTemp, dc, successCallbackFn, data, list, errorCallback, delegate (Sim.Cell[] updatedCells, float[] updatedBGTemp, Sim.DiseaseCell[] updatedDisease)
                 {
                     //SpawnMobsAndTemplates(updatedCells, updatedBGTemp, updatedDisease, borderCells);
                     SpawnMobsAndTemplatesM.Invoke(__instance, new object[] { updatedCells, updatedBGTemp, updatedDisease, borderCells });
@@ -320,12 +333,11 @@ namespace WorlGenReloadedMod
                     data.gameSpawnData.pickupables.RemoveAt(num8);
                 }
             }
-            WorldGen.SaveWorldGen();
+            __instance.SaveWorldGen();
             successCallbackFn(UI.WORLDGEN.COMPLETE.key, 101f, WorldGenProgressStages.Stages.Complete);
             //running = false;
-            runningF.SetValue(null, false);
-            __result = cells;
-            return false;
+            runningF.SetValue(__instance, false);
+            return array;
         }
 
         private static void DisableDefaultPoiGeysers(ref SubWorld subWorld)
@@ -376,7 +388,7 @@ namespace WorlGenReloadedMod
         {
             WorldGenReloadedData.CalculateGeysers(myRandom, __instance);
             List<TemplateContainer> featuresList = TemplateCache.CollectBaseTemplateAssets("features/");
-            foreach (SubWorld subWorld in WorldGen.Settings.GetSubWorldList())
+            foreach (SubWorld subWorld in __instance.Settings.GetSubWorldList())
             {
                 Debug.Log("Processing zone: " + subWorld.name);
                 if (!WorldGenReloadedData.CalculatedGeysers.ContainsKey(subWorld.name))
@@ -393,7 +405,7 @@ namespace WorlGenReloadedMod
                         Debug.Log("Processing geyser: [" + item6.Key + "," + item6.Value + "]");
                         for (int numGeysers = 0; numGeysers < item6.Value; numGeysers++)
                         {
-                            List<TerrainCell> terrainCellsForTag2 = WorldGen.GetTerrainCellsForTag(subWorld.name.ToTag());
+                            List<TerrainCell> terrainCellsForTag2 = __instance.GetTerrainCellsForTag(subWorld.name.ToTag());
                             for (int num = terrainCellsForTag2.Count - 1; num >= 0; num--)
                             {
                                 if (!__instance.IsSafeToSpawnPOI(terrainCellsForTag2[num]))
