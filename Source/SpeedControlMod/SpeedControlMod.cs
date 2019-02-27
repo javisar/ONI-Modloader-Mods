@@ -22,8 +22,9 @@
             }
             else if (__instance.GetSpeed() == 1)
             {
-                Time.timeScale = __instance.fastSpeed;
-            }
+				//Time.timeScale = __instance.fastSpeed;
+				Time.timeScale = __instance.ultraSpeed;
+			}
             else if (__instance.GetSpeed() == 2)
             {
                 Time.timeScale = 10f;
