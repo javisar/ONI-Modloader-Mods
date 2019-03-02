@@ -14,7 +14,7 @@ Disclaimers
 This project uses source code of and is based on: [Harmony](https://github.com/pardeike/Harmony), [ModLoader Installer](https://github.com/zeobviouslyfakeacc/ModLoaderInstaller), [Besiege Modloader](https://github.com/spaar/besiege-modloader), [OnionPatcher](https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/)
 
 
-**NOTE**: Compiled for **Q2-309851** and ONI-Modloader v0.5.2
+**NOTE**: Compiled for **Q2-312713** and ONI-Modloader v0.5.2
 
 **[Report Mod Bugs](https://github.com/javisar/ONI-Modloader-Mods/issues/new/choose)**
 
@@ -74,7 +74,7 @@ Mods - GUI
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
 
 
-Mods - Mechanics
+Mods - Game Mechanics
 --------------------
 | Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
@@ -83,6 +83,7 @@ Mods - Mechanics
 | FastMode | Duplicants will build and dig very fast. | N | [@javisar](https://github.com/javisar) |
 | FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | N | [@javisar](https://github.com/javisar) |
 | InstantResearch | Forces instant research without Debug mode. | N | [@javisar](https://github.com/javisar) |
+| MoreTraits | Adds new duplicant traits: Amphibious (They also breath under water). EXPERIMENTAL. | N | [@javisar](https://github.com/javisar) |
 | NoDamage | Disables various damages in game. Overload, Overheat, boiling, cold, buildings. | Y | [@javisar](https://github.com/javisar) |
 | NoFixedTemps | The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). | N | [@javisar](https://github.com/javisar) |
 | RoomSize | Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. | Y | [@javisar](https://github.com/javisar) |
