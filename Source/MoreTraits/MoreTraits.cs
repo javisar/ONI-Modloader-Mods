@@ -35,12 +35,14 @@ namespace MoreTraits
     [HarmonyPatch(typeof(OxygenBreather), "GetBreathableElementAtCell")]
     internal static class MoreTraits_OxygenBreather_GetBreathableElementAtCell
     {
-        //private static MethodInfo mi = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
-        private static MethodInfo _GetMouthCellAtCellM = typeof(OxygenBreather).GetMethod("GetMouthCellAtCell", BindingFlags.NonPublic);
+        
+        private static MethodInfo mi = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
+        /*
+        private static MethodInfo _GetMouthCellAtCellM = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
         private delegate int GetMouthCellAtCell_Delegate(int cell, CellOffset[] offsets);
         private static GetMouthCellAtCell_Delegate _GetMouthCellAtCell =
             (GetMouthCellAtCell_Delegate)Delegate.CreateDelegate(typeof(GetMouthCellAtCell_Delegate), _GetMouthCellAtCellM);
-
+        */
         private static bool Prefix(OxygenBreather __instance, ref SimHashes __result, ref int cell, ref CellOffset[] offsets)
         {
 
@@ -54,9 +56,9 @@ namespace MoreTraits
             {
                 offsets = __instance.breathableCells;
             }
-            //int mouthCellAtCell = (int)mi.Invoke(__instance, new object[] { cell, offsets });//this.GetMouthCellAtCell(cell, offsets);
+            int mouthCellAtCell = (int)mi.Invoke(__instance, new object[] { cell, offsets });//this.GetMouthCellAtCell(cell, offsets);
             //int mouthCellAtCell = GetMouthCellAtCell(__instance, cell, offsets);
-            int mouthCellAtCell = _GetMouthCellAtCell(cell, offsets);
+            //int mouthCellAtCell = _GetMouthCellAtCell(cell, offsets);
             if (!Grid.IsValidCell(mouthCellAtCell))
             {
                 __result = SimHashes.Vacuum;
