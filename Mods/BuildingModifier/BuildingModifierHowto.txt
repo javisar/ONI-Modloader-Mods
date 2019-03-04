@@ -1,3 +1,5 @@
+ONI-Common Mod REQUIRED!
+
 How it works:
 This mod overrides the building registering fuction at the loading of ONI (BuildingConfigManager.RegisterBuilding)
 This function is in charge of creating all the buildings templates and properties they will have.
