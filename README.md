@@ -60,6 +60,7 @@ Mods - New Buildings
 --------------------
 | Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
+| AirLock | This door doesn't allow gases or liquids to flow. | N | [@javisar](https://github.com/javisar) |
 | BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | N | [@javisar](https://github.com/javisar) |
 | FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) |
 | InverseElectrolyzer | Combines hydrogen and oxygen into steam. 2 buildings, one gets oxygen from the environment, the other uses two input conduits instead. | N | [@javisar](https://github.com/javisar) |
