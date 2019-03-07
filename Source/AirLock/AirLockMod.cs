@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using Harmony;
 using static Door;
+using static PlanScreen;
 
 namespace AirLock
 {
@@ -14,12 +15,12 @@ namespace AirLock
 	{
 		private static void Prefix()
 		{
-			//Debug.Log(" === AirLock_GeneratedBuildings_LoadGeneratedBuildings Prefix === ");
+			Debug.Log(" === AirLock_GeneratedBuildings_LoadGeneratedBuildings Prefix === ");
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.AIRLOCK.NAME", "AirLock");
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.AIRLOCK.DESC", "This door doesn't allow gases or liquids to flow.");
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.AIRLOCK.EFFECT", "");
 
-			ModUtil.AddBuildingToPlanScreen("Base", AirLockConfig.ID);
+			ModUtil.AddBuildingToPlanScreen("Utilities", AirLockConfig.ID);
 
 		}
 	
@@ -30,12 +31,10 @@ namespace AirLock
 	{
 		private static void Prefix(Db __instance)
 		{
-			//Debug.Log(" === AirLock_Db_Initialize loaded === ");
+			Debug.Log(" === AirLock_Db_Initialize loaded === ");
 			List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["DupeTrafficControl"]);
 			ls.Add(AirLockConfig.ID);
 			Database.Techs.TECH_GROUPING["DupeTrafficControl"] = (string[])ls.ToArray();
-
-			//Database.Techs.TECH_GROUPING["TemperatureModulation"].Add("InsulatedPressureDoor");
 		}
 	}
 
