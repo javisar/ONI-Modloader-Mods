@@ -10,10 +10,11 @@ using UnityEngine;
 namespace BuildingModifierMod
 {
     public class Helper
-    {       
-        public static HashSet<string> ModifiersAll = new HashSet<string>();
+    {
+		public static HashSet<string> ModifiersAll = new HashSet<string>();
         public static HashSet<string> ModifiersFound = new HashSet<string>();
-        public static BuildingModifierState Config = BuildingModifierState.StateManager.State;
+		public static HashSet<string> ModifiersAlways = new HashSet<string>();
+		public static BuildingModifierState Config = BuildingModifierState.StateManager.State;
 
 		public enum BuildingType
 		{
@@ -30,14 +31,16 @@ namespace BuildingModifierMod
             Helper.Log(" === [BuildingModifier] Process === " + def.PrefabID);
             bool error = false;
 
-            ModifiersAll.Add(def.PrefabID);
+            AddModifiers(ModifiersAll, def.PrefabID);
           
             // If a modifier has been applied, skip it
-            if (ModifiersFound.Contains(def.PrefabID)) return;
+            if (ModifiersFound.Contains(def.PrefabID) 
+				&& !ModifiersAlways.Contains(def.PrefabID)) return;
 
             // Get building config modifiers
             Dictionary<string, object> entry = Config.Modifiers[def.PrefabID];
 
+			bool _modifyAlways = false;
             try
             {
                 //BuildingDef def = Assets.GetBuildingDef(entry.Key);
@@ -51,7 +54,7 @@ namespace BuildingModifierMod
 						Type valueType = modifier.Value.GetType();
 						Helper.Log(" === [BuildingModifier] "+modifier.Key + ": " + valueType + "; " + modifier.Value);
 
-						ModifiersAll.Add(def.PrefabID + "_" + modifier.Key);
+						AddModifiers(ModifiersAll, def.PrefabID + "_" + modifier.Key);
 
 						if (valueType.Equals(typeof(JObject)))
 						{       // Is a Component of the building
@@ -71,10 +74,15 @@ namespace BuildingModifierMod
 								if (building != null)
 								{
                                     UnityEngine.Object _building = building;
-                                    ProcessObject(ref _building, def, modifier.Key, modifier);
-
+                                    bool modifyAlways = ProcessObject(ref _building, def, modifier.Key, modifier);
+									_modifyAlways = modifyAlways || _modifyAlways;
 									Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
-									ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
+
+									AddModifiers(ModifiersFound, def.PrefabID + "_" + modifier.Key);
+									if (modifyAlways)
+									{
+										AddModifiers(ModifiersAlways, def.PrefabID + "_" + modifier.Key);
+									}									
 								}
 								else // def.Building
 								{
@@ -113,8 +121,13 @@ namespace BuildingModifierMod
 
                             bool found = SetValue(def, new JProperty(modifier.Key, modifier.Value), typeof(BuildingDef));                           
                             Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
-                            ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
-                        }
+							AddModifiers(ModifiersFound, def.PrefabID + "_" + modifier.Key);
+							bool modifyAlways = false;
+							if (modifyAlways)
+							{
+								AddModifiers(ModifiersAlways, def.PrefabID + "_" + modifier.Key);
+							}
+						}
                     }
                     catch (Exception ex)
                     {
@@ -137,29 +150,42 @@ namespace BuildingModifierMod
             if (!error)
             {
                 Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID);
-                ModifiersFound.Add(def.PrefabID);
-            }
+				AddModifiers(ModifiersFound, def.PrefabID);
+				if (_modifyAlways)
+				{
+					AddModifiers(ModifiersAlways, def.PrefabID);
+				}
+			}
 
 
         }        
         
-        private static void ProcessObject(ref UnityEngine.Object go, BuildingDef buildingDef, String componentName, KeyValuePair<string, object> modifier)
+        private static bool ProcessObject(ref UnityEngine.Object go, BuildingDef buildingDef, String componentName, KeyValuePair<string, object> modifier)
         {
             Debug.Log(" === [BuildingModifier] ProcessObject === " + go.name+ " "+componentName);
-
-            // For every component in the building
-            foreach (JProperty x in (JToken)modifier.Value)
+			bool _modifyAlways = false;
+			// For every component in the building
+			foreach (JProperty x in (JToken)modifier.Value)
             {                
                 string name = x.Name;
                 JToken value = x.Value;
+				bool modifyAlways = false;
+
+				if (name.Contains("*"))
+				{
+					name = name.Replace("*","");
+					modifyAlways = true;
+				}
+
                 try
                 {
-                    //Debug.Log(componentName + ", " + name + ": " + value.ToString());
+					//Debug.Log(componentName + ", " + name + ": " + value.ToString());
 
-                    if (ModifiersFound.Contains(buildingDef.PrefabID + "_" + componentName + "_" + name))
-                        continue;
+					if (ModifiersFound.Contains(buildingDef.PrefabID + "_" + componentName + "_" + name)
+						&& !ModifiersAlways.Contains(buildingDef.PrefabID + "_" + componentName + "_" + name))
+						continue;
 
-                    ModifiersAll.Add(buildingDef.PrefabID + "_" + componentName + "_" + name);
+                    AddModifiers(ModifiersAll, buildingDef.PrefabID + "_" + componentName + "_" + name);
 
                     // Tries to find the component
                     MethodInfo method = typeof(GameObject).GetMethod("GetComponent", new Type[] { typeof(Type) });
@@ -191,13 +217,20 @@ namespace BuildingModifierMod
 						//Debug.Log("component: " + component);
 						//Debug.Log("x: " + x);
 						//Debug.Log("getType: " + Type.GetType(componentName + ", Assembly-CSharp"));
-						bool found = SetValue(component, x, Type.GetType(componentName + ", Assembly-CSharp"));
+						bool found = SetValue(component, new JProperty(name, x.Value), Type.GetType(componentName + ", Assembly-CSharp"));
 						//Debug.Log("found: " + found);
 					}
                     
                     Debug.Log(" === [BuildingModifier] Found: " + buildingDef.PrefabID + "_" + componentName + "_" + name);
-                    ModifiersFound.Add(buildingDef.PrefabID + "_" + componentName + "_" + name);
-                }
+					AddModifiers(ModifiersFound, buildingDef.PrefabID + "_" + componentName + "_" + name);
+					_modifyAlways = modifyAlways || _modifyAlways;
+					if (_modifyAlways)
+					{
+						AddModifiers(ModifiersAlways, buildingDef.PrefabID + "_" + componentName + "_" + name);
+					}
+					
+
+				}
                 catch (Exception ex)
                 {
                     //Debug.LogError(ex);
@@ -205,8 +238,9 @@ namespace BuildingModifierMod
                     throw ex;
                 }
             }
+			return _modifyAlways;
 
-        }
+		}
 
         private static bool SetValue(UnityEngine.Object component, JProperty property, Type type)
         {
@@ -282,7 +316,10 @@ namespace BuildingModifierMod
                 Debug.Log(txt);
         }
 
-        
+		public static void AddModifiers(HashSet<string> set, string id)
+		{
+			if (!set.Contains(id)) set.Add(id);
+		}
 
     }
 }

@@ -1,8 +1,9 @@
 {
-  "Enabled": true,
-  "Debug": false,
+    "Enabled": true,
+    "Debug": false,
+    "DumpBuildingIDList": false,
 
-  "Modifiers": {
+    "Modifiers": {
 
-  }
+    }
 }

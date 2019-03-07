@@ -49,8 +49,24 @@ namespace BuildingModifierMod
 						//Debug.Log(config.Modifiers.Count);
 
 						// Append config, ignore duplicates
+						
 						_state.Modifiers = _state.Modifiers.Concat(config.Modifiers).GroupBy(d => d.Key)
 									.ToDictionary(d => d.Key, d => d.First().Value);
+						/*
+						foreach (KeyValuePair<string, Dictionary<string, object>> entry in config.Modifiers)
+						{
+							if (_state.Modifiers.ContainsKey(entry.Key))
+							{
+								Dictionary<string, object> currentModifier = _state.Modifiers[entry.Key];
+								currentModifier = currentModifier.Concat(entry.Value).GroupBy(d => d.Key)
+										.ToDictionary(d => d.Key, d => d.First().Value);
+							}
+							else
+							{
+								_state.Modifiers[entry.Key] = entry.Value;
+							}
+						}
+						*/
 						//Debug.Log(_state.Modifiers.Count);
 					}
 					catch (Exception ex)

@@ -179,6 +179,7 @@ namespace BuildingModifierMod
 				Debug.Log(" === [BuildingModifier] ERROR: Not found modifiers:");
 				foreach (string modifier in Helper.ModifiersAll)
 				{
+					//if (!Helper.ModifiersFound.Contains(modifier) && !Helper.ModifiersAlways.Contains(modifier))
 					if (!Helper.ModifiersFound.Contains(modifier))
 					{
 						Debug.Log(modifier);
@@ -199,7 +200,10 @@ namespace BuildingModifierMod
             if (!Helper.Config.Enabled)
                 return;
 
-            Helper.Log(" === [BuildingModifier] BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings Postfix === ");
+			if (!Helper.Config.DumpBuildingIDList)
+				return;
+
+			Helper.Log(" === [BuildingModifier] BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings Postfix === ");
             Helper.Log(" === [BuildingModifier] Building ID List === ");
             Comparison<BuildingDef> comparison = (x, y) => x.PrefabID.CompareTo(y.PrefabID);
             BuildingDef[] list = (BuildingDef[])Assets.BuildingDefs.ToArray();

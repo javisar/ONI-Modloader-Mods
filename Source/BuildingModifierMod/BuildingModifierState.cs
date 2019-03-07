@@ -9,6 +9,8 @@ namespace BuildingModifierMod
 
 		public bool Debug { get; set; } = false;
 
+		public bool DumpBuildingIDList { get; set; } = false;
+
 		public Dictionary<string, Dictionary<string, object>> Modifiers { get; set; } = new Dictionary<string, Dictionary<string, object>>();
 
 
