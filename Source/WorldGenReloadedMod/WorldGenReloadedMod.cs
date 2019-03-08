@@ -58,8 +58,11 @@ namespace WorlGenReloadedMod
                     switch (attribute.Key.ToLower())
                     {
                         case "properties":
-                            //Debug.Log(attribute.Value.GetType());
-                            //Debug.Log("attribute.Value: "+attribute.Value);
+							//Debug.Log(attribute.Value.GetType());
+							//Debug.Log("attribute.Value: "+attribute.Value);
+
+							if (!WorldGenReloadedData.Config.EnableGeyserCustomProperties)
+								break;
 
                             // Set geyser basic properties
                             foreach (JProperty property in (JToken)attribute.Value)
@@ -114,6 +117,9 @@ namespace WorlGenReloadedMod
 
 		private static bool Prefix(WorldGen __instance, ref Sim.Cell[] __result, bool doSettle, ref Sim.DiseaseCell[] dc)
 		{
+			if (!WorldGenReloadedData.Config.EnableGeyserCustomGeneration)
+				return true;
+
 			try
 			{
 				__result = RenderOffline(__instance, doSettle, ref dc);

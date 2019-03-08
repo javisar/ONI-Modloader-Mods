@@ -9,7 +9,11 @@ namespace WorldGenReloadedMod
 
         public bool LogGeysersDefaultConfig { get; set; } = true;
 
-        public bool DisableDefaultPoiGeysers { get; set; } = false;
+		public bool EnableGeyserCustomProperties { get; set; } = true;
+
+		public bool EnableGeyserCustomGeneration { get; set; } = true;
+
+		public bool DisableDefaultPoiGeysers { get; set; } = false;
 
         public bool ForceSpawnGeyserUnsafePlace { get; set; } = false;
 

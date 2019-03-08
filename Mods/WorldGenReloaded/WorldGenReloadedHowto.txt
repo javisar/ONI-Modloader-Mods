@@ -1,3 +1,5 @@
+ONI-Common REQUIRED!
+
 How it works:
 This mod overrides the world generation function in ONI. It maintais all the default behaviour except geyser generation.
 
@@ -11,7 +13,7 @@ Use as a template the 'steam' geyser.
 
 Set in the config LogGeysersDefaultConfig to true to see default geyser properties in the output_log.txt file.
 
-There are two kinds of geysers. Buried and templated (with open spaces). The mod only overrides the buried geysers.
+There are two kinds of geysers. Buried and Templated (with open spaces). The mod only overrides the buried geysers.
 DisableDefaultPoiGeysers config disables the POI templated non buried ONI generated geysers.
 
 The properties affects to all geysers in the map.
