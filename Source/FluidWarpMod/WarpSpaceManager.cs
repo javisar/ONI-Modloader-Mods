@@ -242,12 +242,16 @@ namespace FluidWarpMod
                     ConduitFlow.ConduitContents providerContents = providerConduit.GetContents(flowManager);
                     if (!SimHashes.Vacuum.Equals(providerContents.element))
                     {
-#if DEBUG
                         ConduitFlow.Conduit requestorConduit = flowManager.GetConduit(toCell);
                         ConduitFlow.ConduitContents requestorContents = requestorConduit.GetContents(flowManager);
+#if DEBUG
                         Logger.LogFormat("Trying to move {0} kg. of {1} from {2} to {3}", providerContents.mass, providerContents.element, fromCell, toCell);
                         Logger.LogFormat("Requestor contents is: {0} kg. of {1}", requestorContents.mass, requestorContents.element);
 #endif
+                        if (requestorContents.mass < 1f && requestorContents.element != providerContents.element && requestorContents.element != SimHashes.Vacuum)
+                        {
+                            flowManager.RemoveElement(requestorConduit, requestorContents.mass);
+                        }
                         float addedMass = flowManager.AddElement(toCell, providerContents.element, providerContents.mass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
                         Game.Instance.accumulators.Accumulate(provider.AccumulatorHandle, addedMass);
                         if (addedMass > 0f)
