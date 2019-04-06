@@ -25,11 +25,14 @@ namespace FluidWarpMod
 
         public bool isValidRequestor()
         {
+
+            Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 Is valid requestor {0}", FlowManager.HasConduit(ValveBase.GetOutputCell())));
             return ValveBase != null && FlowManager.HasConduit(ValveBase.GetOutputCell());
         }
 
         public bool isValidProvider()
         {
+            Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 Is valid provider {0}", FlowManager.HasConduit(ValveBase.GetInputCell())));
             return ValveBase != null && FlowManager.HasConduit(ValveBase.GetInputCell());
         }
 
@@ -136,15 +139,12 @@ namespace FluidWarpMod
 
         private static void PushFluid(List<ValveBaseExt> requesters, List<ValveBaseExt> providers)
         {
-            Logger.Log("WarpSpaceManager.RequestFluid2 start");
-
-            Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 requestor count: {0}", requesters.Count));
-            Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 providers count: {0}", providers.Count));
 
             foreach (var provider in providers)
             {
                 if (!provider.isValidProvider())
                     continue;
+                Logger.LogFormat("-----WarpSpaceManager.RequestFluid start for channel: {0}", provider.Channel);
                 var flowManager = provider.FlowManager;
                 int fromCell = provider.ValveBase.GetInputCell();
                 ConduitFlow.Conduit providerConduit = flowManager.GetConduit(fromCell);
@@ -156,6 +156,9 @@ namespace FluidWarpMod
                 if (matchedRequesters.Count == 0)
                     continue;
                 var splitMass = providerContents.mass / matchedRequesters.Count();
+
+                Logger.Log(String.Format("WarpSpaceManager.RequestFluid splitMass: {0}", splitMass));
+                Logger.Log(String.Format("WarpSpaceManager.RequestFluid matchedRequesters: {0}", matchedRequesters.Count));
                 foreach (var requester in matchedRequesters)
                 {
                     if (!requester.isValidRequestor())
@@ -169,23 +172,30 @@ namespace FluidWarpMod
                         Logger.LogFormat("Removing contents is: {0} kg. of {1}", requestorContents.mass, requestorContents.element);
                         flowManager.RemoveElement(requestorConduit, requestorContents.mass);
                     }
+
                     float addedMass = flowManager.AddElement(toCell, providerContents.element, splitMass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
                     Game.Instance.accumulators.Accumulate(provider.ValveBase.AccumulatorHandle, addedMass);
+                    Logger.LogFormat($@"Requestor Info 
+requester mass: {requestorContents.mass} requester element: {requestorContents.element}
+provider mass: {providerContents.mass} provider element: {providerContents.element}
+provider split: {splitMass} added mass: {addedMass}
+\r\n ");
                     if (addedMass > 0f)
                     {
                         ConduitFlow.ConduitContents removed = flowManager.RemoveElement(providerConduit, addedMass);
                         Game.Instance.accumulators.Accumulate(requester.ValveBase.AccumulatorHandle, addedMass);
                         Logger.LogFormat("Moved {0} kg. from {1} to {2}. ", addedMass, fromCell, toCell);
                     }
-
-                    if (flowManager.IsConduitFull(toCell))
+                    else
                     {
-                        break;
+                        Logger.Log(String.Format("WarpSpaceManager.RequestFluid No mass moved"));
                     }
                 }
+
+                Logger.LogFormat("-----WarpSpaceManager.RequestFluid end for channel: {0}", provider.Channel);
             }
 
-            Logger.Log("WarpSpaceManager.RequestFluid2 End");
+            Logger.LogFormat("WarpSpaceManager.RequestFluid end");
         }
 
         private static void UpdateConduitsOfWarpGates(float dt, ConduitType warpGateType)
