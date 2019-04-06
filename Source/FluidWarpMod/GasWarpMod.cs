@@ -9,20 +9,19 @@ namespace FluidWarpMod
 	{
         private static void Prefix()
         {
-            Logger.Log(" === GeneratedBuildings Prefix === " + GasWarpConfig.ID);
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.NAME", "Gas Stargate");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.DESC", "Gas Stargates provides an easy way to transport gases from one place to another.");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.GASWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
+            Logger.Log(" === GeneratedBuildings Prefix === " + WarpProviderGas.ID);
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.NAME", "Gas Warp Provider");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.DESC", "Gas Warp Providers provides an easy way to transport gases from one place to another.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
 
-			ModUtil.AddBuildingToPlanScreen("HVAC", GasWarpConfig.ID);
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.NAME", "Gas Warp Requester");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.DESC", "Gas Warp Requesters provides an easy way to transport gases from one place to another.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
 
-			/*
-            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == new HashedString("HVAC")).data;
-            category.Add(GasWarpConfig.ID);
-			*/
+            ModUtil.AddBuildingToPlanScreen("HVAC", WarpProviderGas.ID);
+            ModUtil.AddBuildingToPlanScreen("HVAC", WarpRequesterGas.ID);
 
-
-		}
+        }
     }
 
     [HarmonyPatch(typeof(Db), "Initialize")]
@@ -30,9 +29,10 @@ namespace FluidWarpMod
 	{
         private static void Prefix(Db __instance)
         {
-            Logger.Log(" === Database.Techs loaded === " + GasWarpConfig.ID);
+            Logger.Log(" === Database.Techs loaded === " + WarpProviderGas.ID);
             List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["ImprovedGasPiping"]);
-            ls.Add(GasWarpConfig.ID);
+            ls.Add(WarpProviderGas.ID);
+            ls.Add(WarpRequesterGas.ID);
             Database.Techs.TECH_GROUPING["ImprovedGasPiping"] = (string[])ls.ToArray();
         }
     }
