@@ -11,12 +11,12 @@ namespace FluidWarpMod
         {
             Logger.Log(" === GeneratedBuildings Prefix === " + WarpProviderGas.ID);
             Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.NAME", "Gas Warp Provider");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.DESC", "Gas Warp Providers provides an easy way to transport gases from one place to another.");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.DESC", "Gas Warp Providers provides an easy way to push gases to a Receiver.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERGAS.EFFECT", "Place one gas warp provider, and place one gas warp requester. Synchronize your warpgates using the same channel.");
 
             Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.NAME", "Gas Warp Requester");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.DESC", "Gas Warp Requesters provides an easy way to transport gases from one place to another.");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.DESC", "Gas Warp Requesters provides an easy way to request gases from a Provider.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERGAS.EFFECT", "Place one gas warp provider, and place one gas warp requester. Synchronize your warpgates using the same channel.");
 
             ModUtil.AddBuildingToPlanScreen("HVAC", WarpProviderGas.ID);
             ModUtil.AddBuildingToPlanScreen("HVAC", WarpRequesterGas.ID);
