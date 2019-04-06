@@ -194,16 +194,16 @@ namespace FluidWarpMod
             {
                 if (warpGateType == ConduitType.Liquid)
                 {
-                    var requesters = _liquidRequesters.Values.Where(x => x.Channel != 1000).ToList();
-                    var providers = _liquidProviders.Values.Where(x => x.Channel != 1000).ToList();
+                    var requesters = _liquidRequesters.Values.Where(x => x.Channel != 10000).ToList();
+                    var providers = _liquidProviders.Values.Where(x => x.Channel != 10000).ToList();
                     if (requesters.Count == 0 || providers.Count == 0)
                         return;
                     PushFluid(requesters, providers);
                 }
                 else
                 {
-                    var requesters = _gasRequesters.Values.Where(x => x.Channel != 1000).ToList();
-                    var providers = _gasProviders.Values.Where(x => x.Channel != 1000).ToList();
+                    var requesters = _gasRequesters.Values.Where(x => x.Channel != 10000).ToList();
+                    var providers = _gasProviders.Values.Where(x => x.Channel != 10000).ToList();
                     if (requesters.Count == 0 || providers.Count == 0)
                         return;
                     PushFluid(requesters, providers);
