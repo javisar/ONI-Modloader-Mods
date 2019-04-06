@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Harmony;
 using UnityEngine;
@@ -19,11 +20,11 @@ namespace FluidWarpMod
 
         private static FieldInfo valveValveBaseFI = AccessTools.Field(typeof(Valve), "valveBase");
 
-        public static ConduitType GetConduitType(ValveSideScreen __instance)
+        public static ValveBase GetValveBaseFromScreen(ValveSideScreen __instance)
         {
-            ConduitType type = ((ValveBase)valveValveBaseFI.GetValue(valveSideScreenTargetValveFI.GetValue(__instance))).conduitType;
-            return type;
+            return ((ValveBase)valveValveBaseFI.GetValue(valveSideScreenTargetValveFI.GetValue(__instance)));
         }
+
         public static bool IsWarpGate(ValveBase vb)
         {
             return (vb.conduitType == FluidWarpMod_Utils.GAS_CONDUIT_PROVIDER_TYPE
@@ -31,14 +32,8 @@ namespace FluidWarpMod
                 || vb.conduitType == FluidWarpMod_Utils.LIQUID_CONDUIT_REQUESTER_TYPE
                 || vb.conduitType == FluidWarpMod_Utils.GAS_CONDUIT_REQUESTER_TYPE);
         }
-        public static bool IsWarpGate(ConduitType vb)
-        {
-            return (vb == FluidWarpMod_Utils.GAS_CONDUIT_PROVIDER_TYPE
-                || vb == FluidWarpMod_Utils.LIQUID_CONDUIT_PROVIDER_TYPE
-                || vb == FluidWarpMod_Utils.LIQUID_CONDUIT_REQUESTER_TYPE
-                || vb == FluidWarpMod_Utils.GAS_CONDUIT_REQUESTER_TYPE);
-        }
     }
+
     [HarmonyPatch(typeof(Valve), "OnSpawn")]
     internal static class FluidWarpMod_Valve_OnSpawn
     {
@@ -65,7 +60,6 @@ namespace FluidWarpMod
             }
         }
     }
-
 
     [HarmonyPatch(typeof(Valve), "UpdateFlow")]
     internal static class FluidWarpMod_Valve_UpdateFlow
@@ -119,12 +113,12 @@ namespace FluidWarpMod
     internal class FluidWarpMod_ValveBase_UpdateAnim
     {
         private static FieldInfo controllerFI = AccessTools.Field(typeof(ValveBase), "controller");
+
         [HarmonyPrefix]
         public static bool Prefix(ValveBase __instance)
         {
             if (FluidWarpMod_Utils.IsWarpGate(__instance))
             {
-
                 var controller = ((KBatchedAnimController)controllerFI.GetValue(__instance));
                 float averageRate = Game.Instance.accumulators.GetAverageRate(__instance.AccumulatorHandle);
                 if (averageRate <= 0f)
@@ -141,7 +135,6 @@ namespace FluidWarpMod
         }
     }
 
-
     [HarmonyPatch(typeof(ValveSideScreen), "OnSpawn")]
     internal class FluidWarpMod_ValveSideScreen_OnSpawn
     {
@@ -153,9 +146,8 @@ namespace FluidWarpMod
         private static void Postfix(ValveSideScreen __instance)
         {
             Logger.LogFormat(" === FluidWarpMod_ValveSideScreen_OnSpawn Postfix === ");
-
-            ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
-            if (FluidWarpMod_Utils.IsWarpGate(type))
+            
+            if (FluidWarpMod_Utils.IsWarpGate(FluidWarpMod_Utils.GetValveBaseFromScreen(__instance)))
             {
                 if ((float)((KNumberInputField)numberInputFI.GetValue(__instance)).currentValue == 10f)
                 {
@@ -178,9 +170,8 @@ namespace FluidWarpMod
             Logger.LogFormat(" === FluidWarpMod_SideScreenContent_GetTitle Postfix === ");
 
             if (!(__instance is ValveSideScreen)) return true;
-
-            ConduitType type = FluidWarpMod_Utils.GetConduitType((ValveSideScreen)__instance);
-            if (FluidWarpMod_Utils.IsWarpGate(type))
+            
+            if (FluidWarpMod_Utils.IsWarpGate(FluidWarpMod_Utils.GetValveBaseFromScreen((ValveSideScreen)__instance)))
             {
                 __result = "Channel";
                 return false;
@@ -189,9 +180,7 @@ namespace FluidWarpMod
             {
                 return true;
             }
-
         }
-
     }
 
     [HarmonyPatch(typeof(ValveSideScreen), "SetTarget")]
@@ -199,14 +188,15 @@ namespace FluidWarpMod
     {
         private static FieldInfo minFlowLabelFI = AccessTools.Field(typeof(ValveSideScreen), "minFlowLabel");
         private static FieldInfo maxFlowLabelFI = AccessTools.Field(typeof(ValveSideScreen), "maxFlowLabel");
+
         [HarmonyPostfix]
         private static void Postfix(ValveSideScreen __instance)
         {
             Logger.LogFormat(" === FluidWarpMod_ValveSideScreen_SetTarget Postfix === ");
-
-            ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
-            if (FluidWarpMod_Utils.IsWarpGate(type))
+            var valveBase = FluidWarpMod_Utils.GetValveBaseFromScreen(__instance);
+            if (FluidWarpMod_Utils.IsWarpGate(valveBase))
             {
+
                 ((LocText)minFlowLabelFI.GetValue(__instance)).text = "-Channel";
                 ((LocText)maxFlowLabelFI.GetValue(__instance)).text = "+Channel";
             }
@@ -221,8 +211,7 @@ namespace FluidWarpMod
         [HarmonyPostfix]
         private static void Postfix(ValveSideScreen __instance, float newValue)
         {
-            ConduitType type = FluidWarpMod_Utils.GetConduitType(__instance);
-            if (FluidWarpMod_Utils.IsWarpGate(type))
+            if (FluidWarpMod_Utils.IsWarpGate(FluidWarpMod_Utils.GetValveBaseFromScreen(__instance)))
             {
                 if (newValue == 10f)
                 {
