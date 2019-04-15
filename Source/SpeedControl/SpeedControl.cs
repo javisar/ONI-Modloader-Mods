@@ -1,4 +1,4 @@
-﻿namespace SpeedControlMod
+﻿namespace SpeedControl
 {
     using Harmony;
     using System;
@@ -6,11 +6,11 @@
     using Debug = Debug;
 
     [HarmonyPatch(typeof(SpeedControlScreen), "OnChanged", new Type[0])]
-    internal static class SpeedControlMod
+    internal static class SpeedControl
     {
         private static bool Prefix(SpeedControlScreen __instance)
         {
-            //Debug.Log(" === SpeedControlMod INI === ");
+            //Debug.Log(" === SpeedControl INI === "+ __instance.ultraSpeed);
 
             if (__instance.IsPaused)
             {
@@ -18,12 +18,12 @@
             }
             else if (__instance.GetSpeed() == 0)
             {
-                Time.timeScale = __instance.normalSpeed;
+                Time.timeScale = 1f;
             }
             else if (__instance.GetSpeed() == 1)
             {
 				//Time.timeScale = __instance.fastSpeed;
-				Time.timeScale = __instance.ultraSpeed;
+				Time.timeScale = 3f;
 			}
             else if (__instance.GetSpeed() == 2)
             {
@@ -32,7 +32,7 @@
 
             //__instance.OnGameSpeedChanged?.Invoke();
 
-            //Debug.Log(" === SpeedControlMod END === ");
+            //Debug.Log(" === SpeedControl END === ");
 
             return false;
         }
