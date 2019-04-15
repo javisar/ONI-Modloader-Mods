@@ -2,7 +2,7 @@
 using Harmony;
 using Klei.CustomSettings;
 
-namespace CustomWorldMod
+namespace CustomWorldSize
 {
 
     [HarmonyPatch(typeof(GridSettings), nameof(GridSettings.Reset))]
@@ -24,11 +24,11 @@ namespace CustomWorldMod
                 return;
             }
 
-            //SettingConfig settingConfig = CustomGameSettings.Get().QualitySettings[CustomWorldMod.UseCustomWorldSize];
-            SettingConfig settingConfig = CustomGameSettings.Instance.QualitySettings[CustomWorldMod.UseCustomWorldSize];
+            //SettingConfig settingConfig = CustomGameSettings.Get().QualitySettings[CustomWorldSize.UseCustomWorldSize];
+            SettingConfig settingConfig = CustomGameSettings.Instance.QualitySettings[CustomWorldSize.UseCustomWorldSize];
             SettingLevel currentQualitySetting =
-            //CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.UseCustomWorldSize);
-            CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldMod.UseCustomWorldSize);
+            //CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldSize.UseCustomWorldSize);
+            CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldSize.UseCustomWorldSize);
 
             bool allowCustomSize = !settingConfig.IsDefaultLevel(currentQualitySetting.id);
 
@@ -38,10 +38,10 @@ namespace CustomWorldMod
                 return;
             }
 
-            //SettingLevel currentQualitySettingX = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.WorldsizeX);
-            //SettingLevel currentQualitySettingY = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldMod.WorldsizeY);
-            SettingLevel currentQualitySettingX = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldMod.WorldsizeX);
-            SettingLevel currentQualitySettingY = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldMod.WorldsizeY);
+            //SettingLevel currentQualitySettingX = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldSize.WorldsizeX);
+            //SettingLevel currentQualitySettingY = CustomGameSettings.Get().GetCurrentQualitySetting(CustomWorldSize.WorldsizeY);
+            SettingLevel currentQualitySettingX = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldSize.WorldsizeX);
+            SettingLevel currentQualitySettingY = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomWorldSize.WorldsizeY);
             Int32.TryParse(currentQualitySettingX.id, out width);
             Int32.TryParse(currentQualitySettingY.id, out height);
 

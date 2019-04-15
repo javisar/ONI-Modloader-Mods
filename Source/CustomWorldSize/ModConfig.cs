@@ -1,4 +1,4 @@
-﻿namespace CustomWorldMod
+﻿namespace CustomWorldSize
 {
     public static partial class HarmonyPatches
     {

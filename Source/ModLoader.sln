@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedControl", "SpeedContro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ONI-Common", "ONI-Common\ONI-Common.csproj", "{1208647D-C8C2-48DB-BF29-60C6F3E2B016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomWorldMod", "CustomWorldMod\CustomWorldMod.csproj", "{0D05225C-C127-40DA-9D80-F1BA481B7616}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomWorldSize", "CustomWorldSize\CustomWorldSize.csproj", "{0D05225C-C127-40DA-9D80-F1BA481B7616}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mods", "Mods", "{0263B9CC-A5D0-433C-82D2-20AAD99BAE40}"
 EndProject

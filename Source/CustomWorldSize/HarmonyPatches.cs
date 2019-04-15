@@ -3,11 +3,11 @@ using System.Runtime.CompilerServices;
 using Harmony;
 using Klei.CustomSettings;
 
-namespace CustomWorldMod
+namespace CustomWorldSize
 {
     
         [HarmonyPatch(typeof(CustomGameSettings), nameof(CustomGameSettings.AddSettingConfig))]
-        public static class CustomWorldMod
+        public static class CustomWorldSize
         {
             public static SettingConfig UseCustomWorld = new ToggleSettingConfig(UseCustomWorldSize,
                                                                                     "Use custom world size",
