@@ -5,7 +5,7 @@ using System.Text;
 using Harmony;
 using UnityEngine;
 
-namespace BuildableAETNMod
+namespace BuildableAETN
 {
 
     [HarmonyPatch(typeof(GeneratedBuildings), "LoadGeneratedBuildings")]
@@ -54,9 +54,9 @@ namespace BuildableAETNMod
         private static void Prefix(Db __instance)
         {
             Debug.Log(" === Db.Initialize loaded === " + MassiveHeatSinkConfig.ID);
-            List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["TemperatureModulation"]);
+            List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["HVAC"]);
             ls.Add(MassiveHeatSinkConfig.ID);
-            Database.Techs.TECH_GROUPING["TemperatureModulation"] = (string[])ls.ToArray();
+            Database.Techs.TECH_GROUPING["HVAC"] = (string[])ls.ToArray();
             
         }
     }
@@ -74,11 +74,12 @@ namespace BuildableAETNMod
         {
             Debug.Log(" === MassiveHeatSinkConfig.CreateBuildingDef loaded === " + MassiveHeatSinkConfig.ID);
             __result.ViewMode = OverlayModes.GasConduits.ID;
-            __result.MaterialCategory = new string[] { "RefinedMetal"};
-            __result.Mass = new float[] { 20000f };
+            __result.MaterialCategory = new string[] { "RefinedMetal" };
+            __result.Mass = new float[] { 4000f };
         }
     }
 
+    /*
     [HarmonyPatch(typeof(MassiveHeatSinkConfig), "DoPostConfigureComplete")]
     internal class MassiveHeatSinkConfigDoPostConfigureCompleteMod
     {
@@ -91,4 +92,5 @@ namespace BuildableAETNMod
             elementConverter.outputElements = new ElementConverter.OutputElement[] { };
         }
     }
+    */
 }

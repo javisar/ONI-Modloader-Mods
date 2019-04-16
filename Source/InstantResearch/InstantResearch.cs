@@ -8,7 +8,7 @@ namespace InstantResearch
 {
 
 	[HarmonyPatch(typeof(ResearchEntry), "OnResearchClicked")]
-	internal class InstantResearchMod
+	internal class InstantResearch
 	{
 		private static bool instantBuildMode = false;
 
@@ -29,7 +29,7 @@ namespace InstantResearch
 		ManagementMenu.Instance.CheckResearch(null);
 		 * 
 		 * */
-
+        /*
 		[HarmonyPatch(typeof(ManagementMenu), "ConfigureToggle", new Type[] {typeof(KToggle), typeof(bool), typeof(bool), typeof(string), typeof(TextStyleSetting) })]
 		internal class ManagementMenuMod
 		{
@@ -46,6 +46,7 @@ namespace InstantResearch
 			}
 
 		}
+        */
 		/*
 		[HarmonyPatch(typeof(ManagementMenu), "ReseachAvailable")]
 		internal class ManagementMenuMod2
