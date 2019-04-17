@@ -1,17 +1,25 @@
 ﻿using Harmony;
-using ONI_Common.Json;
 using STRINGS;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using static RoomConstraints;
 
-namespace RoomSizeMod
+namespace RoomSize
 {
-    
+
+    internal class RoomSizeMod_OnLoad
+    {
+        public static void OnLoad(string path)
+        {
+            RoomSizeConfig.LoadConfig(path);
+        }
+    }
+
+
     [HarmonyPatch(typeof(Game),"OnPrefabInit")]
     internal class RoomSizeMod_Game_OnPrefabInit
-    {
-
+    {       
         private static void Postfix(Game __instance)
         {
             Debug.Log(" === RoomSizeMod_Game_OnPrefabInit Postfix === ");
@@ -29,7 +37,7 @@ namespace RoomSizeMod
             //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
             //RoomProber.MaxRoomSize = 1024;
             //RoomProber.MaxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
-            TuningData<RoomProber.Tuning>.Get().maxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
+            TuningData<RoomProber.Tuning>.Get().maxRoomSize = RoomSizeConfig.Config.OverallMaximumRoomSize;
         }
     }
 
@@ -81,7 +89,7 @@ namespace RoomSizeMod
 			ChangeRoomMaximumSize(__instance.RecRoom,			MAXIMUM_SIZE_128);
             */
             //foreach (KeyValuePair<string, int> entry in RoomSizeStateManager.ConfiguratorState.MaximumRoomSizes)
-            foreach (KeyValuePair<string, int> entry in RoomSizeState.StateManager.State.MaximumRoomSizes)
+            foreach (KeyValuePair<string, int> entry in RoomSizeConfig.Config.MaximumRoomSizes)
             {
                 Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, ""+ entry.Value), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, ""+ entry.Value), null);
                 //Debug.Log(entry.Key);
