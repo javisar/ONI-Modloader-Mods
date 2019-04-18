@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ZeroPointModuleMod
+namespace ZeroPointModule
 {
 
     [HarmonyPatch(typeof(GeneratedBuildings), "LoadGeneratedBuildings")]
@@ -14,8 +14,8 @@ namespace ZeroPointModuleMod
         {
             Debug.Log(" === ZeroPointModuleMod_GeneratedBuildings_LoadGeneratedBuildings Prefix === ");
             Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.NAME", "ZP Module");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.DESC", "Zero Point Energy Module.");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.EFFECT", "The energy of the vacuum feeds this battery.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.DESC", "Zero Point Energy Module. The energy of the vacuum feeds this battery.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.ZEROPOINTMODULE.EFFECT", "An inexhaustible energy source at the expense of large amounts of heat. It needs refrigeration.");
 
 			ModUtil.AddBuildingToPlanScreen("Power", ZeroPointModuleConfig.ID);
 
@@ -26,12 +26,12 @@ namespace ZeroPointModuleMod
 
             TUNING.BUILDINGS.COMPONENT_DESCRIPTION_ORDER.Add(ZeroPointModuleConfig.ID);
             */
-			/*
+            /*
             List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => ((HashedString) "Power").Equals(po.category)).data;
             category.Add(ZeroPointModuleConfig.ID);
 			*/
 
-		}
+        }
         /*
         private static void Postfix()
         {
@@ -63,10 +63,12 @@ namespace ZeroPointModuleMod
         private static bool Prefix(Battery __instance)
         {
             //Debug.Log(" ===ZeroPointModuleMod_Battery_ConsumeEnergy loaded === ");
+            
             if (__instance.gameObject.GetComponent<KPrefabID>().PrefabTag == ZeroPointModuleConfig.ID)
             {
                 return false;
             }
+            
             return true;
         }
     }
@@ -77,10 +79,12 @@ namespace ZeroPointModuleMod
         private static void Prefix(Battery __instance)
         {
             Debug.Log(" ===ZeroPointModuleMod_Battery_OnSpawn loaded === ");
+            
             if (__instance.gameObject.GetComponent<KPrefabID>().PrefabTag == ZeroPointModuleConfig.ID)
             {
                 AccessTools.Field(typeof(Battery), "joulesAvailable").SetValue(__instance, 40000f);
             }
+            
         }
     }
 

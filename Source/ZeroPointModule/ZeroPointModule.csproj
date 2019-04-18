@@ -7,8 +7,8 @@
     <ProjectGuid>{1F1220E9-0CBD-4776-A9FA-31941CE63FA0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZeroPointModuleMod</RootNamespace>
-    <AssemblyName>ZeroPointModuleMod</AssemblyName>
+    <RootNamespace>ZeroPointModule</RootNamespace>
+    <AssemblyName>ZeroPointModule</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Mods\ZeroPointModuleMod\</OutputPath>
+    <OutputPath>..\..\Mods\ZeroPointModule\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,15 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ZeroPointModuleConfig.cs" />
-    <Compile Include="ZeroPointModuleMod.cs" />
+    <Compile Include="ZeroPointModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-xcopy "$(TargetDir.TrimEnd('\'))" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
-
-xcopy "$(TargetDir.TrimEnd('\'))" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+xcopy "$(TargetDir.TrimEnd('\'))" "%25UserProfile%25\Documents\Klei\OxygenNotIncluded\mods\dev\$(ProjectName)" /Y /S /E /I
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
