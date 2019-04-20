@@ -10,9 +10,9 @@ namespace RoomSize
 
     internal class RoomSizeMod_OnLoad
     {
-        public static void OnLoad(string path)
+        public static void OnLoad(string modPath)
         {
-            RoomSizeConfig.LoadConfig(path);
+            RoomSizeConfig.LoadConfig(modPath);
         }
     }
 
@@ -34,10 +34,11 @@ namespace RoomSize
 
         private static void Postfix(RoomProber __instance)
         {
-            //Debug.Log(" === RoomSizeMod_RoomProber Postfix === ");
+            Debug.Log(" === RoomSizeMod_RoomProber Postfix === Original Max. Room Size: "+ TuningData<RoomProber.Tuning>.Get().maxRoomSize);            
             //RoomProber.MaxRoomSize = 1024;
             //RoomProber.MaxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
             TuningData<RoomProber.Tuning>.Get().maxRoomSize = RoomSizeConfig.Config.OverallMaximumRoomSize;
+            Debug.Log(" === RoomSizeMod_RoomProber Postfix === New Max. Room Size: " + TuningData<RoomProber.Tuning>.Get().maxRoomSize);
         }
     }
 
@@ -91,10 +92,18 @@ namespace RoomSize
             //foreach (KeyValuePair<string, int> entry in RoomSizeStateManager.ConfiguratorState.MaximumRoomSizes)
             foreach (KeyValuePair<string, int> entry in RoomSizeConfig.Config.MaximumRoomSizes)
             {
-                Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, ""+ entry.Value), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, ""+ entry.Value), null);
-                //Debug.Log(entry.Key);
-                //Debug.Log(__instance.Get(entry.Key));
-                ChangeRoomMaximumSize(__instance.Get(entry.Key), max_size); 
+                try
+                {
+                    Constraint max_size = new Constraint(null, (Room room) => room.cavity.numCells <= entry.Value, 1, string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.NAME, "" + entry.Value), string.Format(ROOMS.CRITERIA.MAXIMUM_SIZE.DESCRIPTION, "" + entry.Value), null);
+                    //Debug.Log(entry.Key);
+                    //Debug.Log(__instance.Get(entry.Key));                    
+                    ChangeRoomMaximumSize(__instance.TryGet(entry.Key), max_size);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(" === RoomSizeMod_ChangeRoomMaximumSize === Cannot find roomtype: "+ entry.Key);
+                    Debug.LogError(ex);
+                }
             }
             
            

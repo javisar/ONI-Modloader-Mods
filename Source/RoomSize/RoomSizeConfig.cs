@@ -15,7 +15,7 @@ namespace RoomSize
 
 
         public static RoomSizeConfig Config = null;
-        public static void LoadConfig(string path) { Config = LoadConfig<RoomSizeConfig>(Path.Combine(path,"Config/RoomSizeConfig.json"));  }
+        public static void LoadConfig(string modPath) { Config = LoadConfig<RoomSizeConfig>(Path.Combine(modPath,"Config/RoomSizeConfig.json"));  }
         
 
         protected static T LoadConfig<T>(string path)
