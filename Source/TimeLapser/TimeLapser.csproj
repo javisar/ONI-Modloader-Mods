@@ -251,11 +251,6 @@
       <Name>ONI-Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Template\Config\TemplateState.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"$(TargetDir)..\..\..\lib\pdb2mdb.exe" "$(TargetDir)$(TargetFileName)"
