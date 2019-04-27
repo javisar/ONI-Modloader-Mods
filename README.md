@@ -72,6 +72,7 @@ Mods - GUI
 | ----- | ----------- | ---------- | ------- |
 | CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
 | SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
+| TimeLapser | Forces an automatic screenshot via a F12 keypress at saved view #1 in screenshot mode directly after every autosave. Put them into a GIF for a neat time-lapse | N | [@dsmiller95](https://https://github.com/dsmiller95)
 
 
 Mods - Game Mechanics

@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastModeMod", "FastModeMod\FastModeMod.csproj", "{FF9011A6-FD08-45B5-AB3E-195C9C804AF8}"
 EndProject
@@ -49,6 +49,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildOverFacilities", "BuildOverFacilities\BuildOverFacilities.csproj", "{651ACC28-7A4C-41DB-8BAB-16830D4713BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoreTraits", "MoreTraits\MoreTraits.csproj", "{65A73428-C608-4033-B1D6-C7B27508C103}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeLapser", "TimeLapser\TimeLapser.csproj", "{42523CE4-D03C-4710-82DA-C84B447A1C79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -208,6 +210,14 @@ Global
 		{65A73428-C608-4033-B1D6-C7B27508C103}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65A73428-C608-4033-B1D6-C7B27508C103}.Release|x86.ActiveCfg = Release|Any CPU
 		{65A73428-C608-4033-B1D6-C7B27508C103}.Release|x86.Build.0 = Release|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Debug|x86.Build.0 = Debug|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Release|x86.ActiveCfg = Release|Any CPU
+		{42523CE4-D03C-4710-82DA-C84B447A1C79}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,6 +246,7 @@ Global
 		{0A8D7289-BF9D-4110-B512-7DD528DC7EDE} = {05AEF266-9A07-41B4-83C5-FC6632B27A0E}
 		{651ACC28-7A4C-41DB-8BAB-16830D4713BD} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
 		{65A73428-C608-4033-B1D6-C7B27508C103} = {F23F1C19-7F80-41CC-86F7-F720C6D3C43B}
+		{42523CE4-D03C-4710-82DA-C84B447A1C79} = {8E4312B0-3AE8-42CB-A2ED-CB8E39B39CD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {34648007-CC4C-4A8D-91A2-485820AFC9A9}
