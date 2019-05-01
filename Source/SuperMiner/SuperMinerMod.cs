@@ -14,7 +14,7 @@ namespace SuperMinerMod
 
 		private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
 		{
-			Debug.Log(" === SuperMinerMod_WorldDamage_OnDigComplete Transpiler === ");
+			//Debug.Log(" === SuperMinerMod_WorldDamage_OnDigComplete Transpiler === ");
 
 			List<CodeInstruction> code = instr.ToList();
 			foreach (CodeInstruction codeInstruction in code)
