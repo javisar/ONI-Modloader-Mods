@@ -1,6 +1,6 @@
 {
   "Enabled": true,
-  "DisableAllDamage": false,
+  "DisableAllDamage": false,	//If true, configs from below are ignored
 
   "NoBuildingDamage": true,
   "NoCircuitOverload": true,

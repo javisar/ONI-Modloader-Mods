@@ -1,12 +1,20 @@
 ﻿using Harmony;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace NoDamageMod
 {
+
+
+    internal class RoomSizeMod_OnLoad
+    {
+        public static void OnLoad(string modPath)
+        {
+            NoDamageConfig.LoadConfig(modPath);
+        }
+    }
+
+
+
     [HarmonyPatch(typeof(EventExtensions), "Trigger")]
     internal class NoOverloadedWiresMod_EventExtensions_Trigger
     {
@@ -14,24 +22,24 @@ namespace NoDamageMod
         private static bool Prefix(GameObject go, GameHashes hash, object data)
         {
             //Debug.Log(" === NoOverloadedWiresMod_EventExtensions_Trigger Prefix === ");
-            if (!NoDamageState.StateManager.State.Enabled)
+            if (!NoDamageConfig.Config.Enabled)
                 return true;
 
             if (hash == GameHashes.ConduitContentsBoiling
-                && (NoDamageState.StateManager.State.DisableAllDamage 
-                        || NoDamageState.StateManager.State.NoConduitContentsBoiling))
+                && (NoDamageConfig.Config.DisableAllDamage 
+                        || NoDamageConfig.Config.NoConduitContentsBoiling))
             {
                 return false;
             }
             else if (hash == GameHashes.ConduitContentsFrozen
-                && (NoDamageState.StateManager.State.DisableAllDamage
-                        || NoDamageState.StateManager.State.NoConduitContentsFrozen))
+                && (NoDamageConfig.Config.DisableAllDamage
+                        || NoDamageConfig.Config.NoConduitContentsFrozen))
             {
                 return false;
             }
             else if (hash == GameHashes.DoBuildingDamage
-                && (NoDamageState.StateManager.State.DisableAllDamage
-                        || NoDamageState.StateManager.State.NoBuildingDamage))
+                && (NoDamageConfig.Config.DisableAllDamage
+                        || NoDamageConfig.Config.NoBuildingDamage))
             {
                 return false;
             }
@@ -59,10 +67,10 @@ namespace NoDamageMod
         private static bool Prefix(int sim_handle)
         {
             //Debug.Log(" === NoOverloadedWiresMod_StructureTemperatureComponents_DoOverheat Prefix === ");
-            if (!NoDamageState.StateManager.State.Enabled)
+            if (!NoDamageConfig.Config.Enabled)
                 return true;
 
-            if (NoDamageState.StateManager.State.DisableAllDamage || NoDamageState.StateManager.State.NoBuildingOverheat)
+            if (NoDamageConfig.Config.DisableAllDamage || NoDamageConfig.Config.NoBuildingOverheat)
                 return false;
 
             return true;
@@ -77,10 +85,10 @@ namespace NoDamageMod
         private static bool Prefix(CircuitManager __instance, float dt, int id, float watts_used)
         {
             //Debug.Log(" === NoDamageMod_CircuitManager_CheckCircuitOverloaded Prefix === ");
-            if (!NoDamageState.StateManager.State.Enabled)
+            if (!NoDamageConfig.Config.Enabled)
                 return true;
 
-            if (NoDamageState.StateManager.State.DisableAllDamage || NoDamageState.StateManager.State.NoCircuitOverload)
+            if (NoDamageConfig.Config.DisableAllDamage || NoDamageConfig.Config.NoCircuitOverload)
                 return false;
 
             return true;
