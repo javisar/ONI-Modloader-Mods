@@ -3,8 +3,7 @@ Source/.vs/
 Source/lib/Assembly-CSharp-firstpass.dll
 Source/lib/Assembly-CSharp.dll
 Source/lib/Assembly-UnityScript-firstpass.dll
-Source/lib/UnityEngine.dll
-Source/lib/UnityEngine.*.dll
+Source/lib/Unity*.dll
 Mods/UnityEngine.*.dll
 *.FileListAbsolute.txt
 *.CopyComplete
