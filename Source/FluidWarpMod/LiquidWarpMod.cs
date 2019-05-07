@@ -10,19 +10,19 @@ namespace FluidWarpMod
 	{
         private static void Prefix()
         {
-            Logger.LogFormat(" === GeneratedBuildings Prefix === {0}", LiquidWarpConfig.ID);
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.NAME", "Liquid Stargate");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.DESC", "Liquid Stargates provides an easy way to transport liquids from one place to another.");
-            Strings.Add("STRINGS.BUILDINGS.PREFABS.LIQUIDWARP.EFFECT", "Place one providing input fluid, and another one with an output pipe. Sintonize your stargates using the same channel.");
+            Logger.LogFormat(" === GeneratedBuildings Prefix === {0}", WarpProviderLiquid.ID);
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERLIQUID.NAME", "Liquid Warp Provider");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERLIQUID.DESC", "Liquid Warp Providers provides an easy way to push liquids to a Receiver.");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPPROVIDERLIQUID.EFFECT", "Place one liquid warp provider, and place one liquid warp requester. Synchronize your warpgates using the same channel.");
 
-			ModUtil.AddBuildingToPlanScreen("Plumbing", LiquidWarpConfig.ID);
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERLIQUID.NAME", "Liquid Warp Requester");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERLIQUID.DESC", "Liquid Warp Requesters provides an easy way to request liquids from a Provider");
+            Strings.Add("STRINGS.BUILDINGS.PREFABS.WARPREQUESTERLIQUID.EFFECT", "Place one liquid warp provider, and place one liquid warp requester. Synchronize your warpgates using the same channel.");
 
-			/*
-            List<string> category = (List<string>)TUNING.BUILDINGS.PLANORDER.First(po => po.category == new HashedString("Plumbing")).data;
-            category.Add(LiquidWarpConfig.ID);
-			*/
+            ModUtil.AddBuildingToPlanScreen("Plumbing", WarpProviderLiquid.ID);
+            ModUtil.AddBuildingToPlanScreen("Plumbing", WarpRequesterLiquid.ID);
 
-		}
+        }
     }
 
     [HarmonyPatch(typeof(Db), "Initialize")]
@@ -30,9 +30,10 @@ namespace FluidWarpMod
 	{
         private static void Prefix(Db __instance)
         {
-            Logger.LogFormat(" === Database.Techs loaded === {0}",  LiquidWarpConfig.ID);
+            Logger.LogFormat(" === Database.Techs loaded === {0}", WarpProviderLiquid.ID);
             List<string> ls = new List<string>((string[])Database.Techs.TECH_GROUPING["ImprovedLiquidPiping"]);
-            ls.Add(LiquidWarpConfig.ID);
+            ls.Add(WarpProviderLiquid.ID);
+            ls.Add(WarpRequesterLiquid.ID);
             Database.Techs.TECH_GROUPING["ImprovedLiquidPiping"] = (string[])ls.ToArray();
         }
     }
