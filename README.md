@@ -30,26 +30,26 @@ Mods Installation
    * Make SURE you're using the latest version from Github main branch.
    * **[ONI-Modloader](https://github.com/javisar/ONI-Modloader#quick-start) must be installed**
    * Make sure you deleted all previous mod files and its config:
-     a. ONI-Modloader	
+     1. ONI-Modloader	
         * Windows: %PROGRAMFILES(X86)%\Steam\steamapps\common\OxygenNotIncluded\Mods\
         * Mac: /OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Mods/
-     b. ONI Builtin Modloader (Steam)
+     2. ONI Builtin Modloader (Steam)
         * Windows: %USERPROFILE%\Documents\Klei\OxygenNotIncluded\mods\local\
         * Mac: ???
 1. Select the mod you want to install from [HERE](https://github.com/javisar/ONI-Modloader-Mods/tree/master/Mods).
 2. Click "Clone or Download" and "Download ZIP" for the latest version as the releases may not be up to date.
 3. Copy the desired mod folder [WITH THE SAME FOLDER STRUCTURE](https://github.com/javisar/ONI-Modloader-Mods/tree/master/.github/folders.png)** into the folder:
-   a. ONI-Modloader	
+   1. ONI-Modloader	
       * Windows: %PROGRAMFILES(X86)%\Steam\steamapps\common\OxygenNotIncluded\Mods\
       * Mac: /OxygenNotIncluded/OxygenNotIncluded.app/Contents/Resources/Mods/
-   b. ONI Builtin Modloader (Steam)
+   2. ONI Builtin Modloader (Steam)
       * Windows: %USERPROFILE%\Documents\Klei\OxygenNotIncluded\mods\local\
       * Mac: ???
 4. The main mod config files must be located in:
-   a. ONI-Modloader
-      * \Mods\[MOD_NAME]\Config\*.json
-   b. ONI Builtin Modloader (Steam)
-      * \mods\local\[MOD_NAME]\Config\*.json
+   1. ONI-Modloader
+      * \Mods\\[MOD_NAME]\Config\\*.json
+   2. ONI Builtin Modloader (Steam)
+      * \mods\local\\[MOD_NAME]\Config\\*.json
 5. **IMPORTANT: Copy also ONI-Common folder** since many mods use it as a support library.
 6. Run the game.
 7. **Check for error logs in**:
