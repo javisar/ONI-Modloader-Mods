@@ -30,7 +30,10 @@ namespace ExportDailyReports
         private static void OnExportDailyReports()
         {
 			bool error = false;
+
 			List<DailyReport> dailyReports = ReportManager.Instance.reports;
+            if (dailyReports == null)
+                return;
 
 			ReportData data = new ReportData();
 
@@ -44,37 +47,29 @@ namespace ExportDailyReports
 					AddValueCycle("Cycle", report.day, data.dataPower, data.headersPower);
 					
 
-					int num = 1;
                     foreach (KeyValuePair<ReportManager.ReportType, ReportManager.ReportGroup> reportGroup in ReportManager.Instance.ReportGroups)
                     {
 						ReportManager.ReportEntry entry = report.GetEntry(reportGroup.Key);
-                        int num2 = num;
-                        ReportManager.ReportGroup value = reportGroup.Value;
-                        if (num2 != value.group)
-                        {
-                            ReportManager.ReportGroup value2 = reportGroup.Value;
-                            num = value2.group;
-                        }
-                        int num3;
+
+                        bool showLine = true;
                         if (entry.accumulate == 0f)
                         {
-                            ReportManager.ReportGroup value3 = reportGroup.Value;
-                            num3 = (value3.reportIfZero ? 1 : 0);
+                            showLine = reportGroup.Value.reportIfZero;
                         }
-                        else
-                        {
-                            num3 = 1;
-                        }
-                        bool flag2 = (byte)num3 != 0;
-                        ReportManager.ReportGroup value4 = reportGroup.Value;
-                        if (value4.isHeader)
+                                                
+                        if (reportGroup.Value.isHeader)
                         {
                             //CreateHeader(reportGroup.Value);
                         }
-                        else if (flag2)
+                        else if (showLine)
                         {
-							CreateOrUpdateLine(entry, reportGroup.Value, flag2, report.day, data);
+							CreateOrUpdateLine(entry, reportGroup.Value, report.day, data);
 						}
+                        else
+                        {
+                            string columnName = (entry.context == null ? reportGroup.Value.stringKey : entry.context);
+                            //Debug.Log("Hidden data: "+ columnName);
+                        }
                     }
 
 				}
@@ -85,6 +80,7 @@ namespace ExportDailyReports
 					InfoDialogScreen infoDialogScreen = (InfoDialogScreen)GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject);
 					infoDialogScreen.SetHeader("Export Daily Reports").AddPlainText("Error exporting daily reports:\n" + e.ToString());
 					infoDialogScreen.Show();
+                    break;
 				}				
             }
 
@@ -92,7 +88,7 @@ namespace ExportDailyReports
 			{
 				data.headersPower.Sort((f1, f2) =>
 					{
-						if (f1.Equals("Cycle")) return -1;
+						if (f1.Equals("Cycle")) return -1;      // Cycle is the first column
 						return f1.CompareTo(f2);
 					}
 				);
@@ -100,8 +96,13 @@ namespace ExportDailyReports
 				WriteData(dailyReports.Count, data);
 			}
 
+            data.dataGeneral.Clear();
+            data.dataPower.Clear();
 
-		}
+            data.headersGeneral.Clear();
+            data.headersPower.Clear();
+
+        }
 
 		private static void WriteData(int day, ReportData data)
 		{
@@ -158,7 +159,11 @@ namespace ExportDailyReports
             Debug.Log("header: "+reportGroup.stringKey);            
         }
 
-        private static void CreateOrUpdateLine(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, bool is_line_active, int day, ReportData data)
+        private static float addedValue;
+        private static float removedValue;
+        private static float netValue;
+
+        private static void CreateOrUpdateLine(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, int day, ReportData data)
         {
 			addedValue = float.NegativeInfinity;
 			removedValue = float.NegativeInfinity;
@@ -168,15 +173,43 @@ namespace ExportDailyReports
 		}
 
 
-		private static float addedValue = float.NegativeInfinity;
-		private static float removedValue = float.NegativeInfinity;
-		private static float netValue = float.NegativeInfinity;
-		
-
         public static void SetLine(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, int day, ReportData data)
         {
 			//Debug.Log("cycle: "+day);
+            
+			string columnName = (entry.context == null ? reportGroup.stringKey : entry.context);
 
+			if (addedValue != entry.Positive)
+            {
+				addedValue = entry.Positive;
+			}
+			if (removedValue != entry.Negative)
+            {
+				removedValue = entry.Negative;
+			}
+            if (netValue != entry.Net)
+            {                  
+				netValue = entry.Net;
+			}
+            //pos_notes.Clear();
+            //neg_notes.Clear();
+
+			string cleanedColName = CleanHeader(columnName);			
+
+			AddValue(cleanedColName + " (+)", addedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
+			AddValue(cleanedColName + " (-)", removedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
+			AddValue(cleanedColName + " (=)", netValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
+
+			if (cleanedColName.Contains("Power Usage"))
+			{
+				//Debug.Log(cleanedColName + " TOOLTIP POSITIVE:");
+				OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, (ReportManager.ReportEntry.Note note) => IsPositiveNote(note));
+
+				//Debug.Log(cleanedColName + " TOOLTIP NEGATIVE:");
+				OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, (ReportManager.ReportEntry.Note note) => IsNegativeNote(note));				
+			}
+
+            /*
 			List<ReportManager.ReportEntry.Note> pos_notes = new List<ReportManager.ReportEntry.Note>();
 			entry.IterateNotes(delegate (ReportManager.ReportEntry.Note note)
 			{
@@ -196,48 +229,16 @@ namespace ExportDailyReports
                     //Debug.Log("neg " + note.note + " = " + note.value);
                 }
             });			
-
-			string columnName = (entry.context == null ? reportGroup.stringKey : entry.context);
-
-			if (addedValue != entry.Positive)
-            {
-				addedValue = entry.Positive;
-			}
-			if (removedValue != entry.Negative)
-            {
-				removedValue = entry.Negative;
-			}
-            if (netValue != entry.Net)
-            {                  
-				netValue = entry.Net;
-			}
-            pos_notes.Clear();
-            neg_notes.Clear();
-
-			string cleanedColName = CleanHeader(columnName);			
-
-			AddValue(cleanedColName + " (+)", addedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
-			AddValue(cleanedColName + " (-)", removedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
-			AddValue(cleanedColName + " (=)", netValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
-
-			if (cleanedColName.Contains("Power Usage"))
-			{
-				//Debug.Log(cleanedColName + " TOOLTIP POS:");
-				OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, (ReportManager.ReportEntry.Note note) => IsPositiveNote(note));
-
-				//Debug.Log(cleanedColName + " TOOLTIP NEG:");
-				OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, (ReportManager.ReportEntry.Note note) => IsNegativeNote(note));				
-			}
-
-		}
+            */
+        }
 
 
-		private static void OnNoteTooltip(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, Dictionary<string, string> dataP, List<string> dataPH, Func<ReportManager.ReportEntry.Note, bool> is_note_applicable_cb)
+        private static void OnNoteTooltip(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, Dictionary<string, string> data, List<string> headers, Func<ReportManager.ReportEntry.Note, bool> is_note_applicable_cb)
 		{
 			//Debug.Log("OnNoteTooltip");
 			List <ReportManager.ReportEntry.Note> notes = new List<ReportManager.ReportEntry.Note>();
-			notes.Clear();
-			entry.IterateNotes(delegate (ReportManager.ReportEntry.Note note)
+			
+            entry.IterateNotes(delegate (ReportManager.ReportEntry.Note note)
 			{
 				if (is_note_applicable_cb(note))
 				{
@@ -253,11 +254,11 @@ namespace ExportDailyReports
 
 				if (current.value > 0f)
 				{				
-					AddValue(colName + " (+)", current.value, dataP, dataPH);					
+					AddValue(colName + " (+)", current.value, data, headers);					
 				}
 				else
 				{
-					AddValue(colName + " (-)", current.value, dataP, dataPH);					
+					AddValue(colName + " (-)", current.value, data, headers);					
 				}				
 			}
 		}
@@ -297,8 +298,8 @@ namespace ExportDailyReports
 
 		private static void AddValueCycle(string name, int value, Dictionary<int, Dictionary<string, string>> data, List<string> dataH)
 		{
-			if (!dataH.Contains("Cycle"))
-				dataH.Add("Cycle");
+			if (!dataH.Contains(name))
+				dataH.Add(name);
 			if (!data.ContainsKey(value))
 				data.Add(value, new Dictionary<string, string>());
 			if (!data.GetValueSafe(value).ContainsKey(name))
@@ -319,11 +320,20 @@ namespace ExportDailyReports
 		{
 			//string outT = txt.Replace(":", "");
 			string outT = txt.Split(':')[0];
-			int idx = outT.IndexOf("\">");
-			if (idx > 0)
-				outT = outT.Substring(idx + 2, outT.IndexOf("</link>") - idx - 2) + outT.Substring(outT.IndexOf("</link>")+7);
+            try
+            {
+                int idx = outT.IndexOf("\">");
+                if (idx > 0)
+                {
+                    outT = outT.Substring(idx + 2, outT.IndexOf("</link>") - idx - 2) + outT.Substring(outT.IndexOf("</link>") + 7);
+                }
 
-			return outT.Trim();
+                return outT.Trim();
+            }
+            catch (Exception e)
+            {
+                return outT.Trim();
+            }
 		}
     }
 }
