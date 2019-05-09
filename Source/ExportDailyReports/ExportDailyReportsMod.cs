@@ -34,9 +34,6 @@ namespace ExportDailyReports
 
 			ReportData data = new ReportData();
 
-			//data.headersGeneral.Add("Cycle");
-			//data.headersPower.Add("Cycle");
-
 			foreach (var report in dailyReports)
             {
                 try
@@ -45,18 +42,7 @@ namespace ExportDailyReports
 
 					AddValueCycle("Cycle", report.day, data.dataGeneral, data.headersGeneral);
 					AddValueCycle("Cycle", report.day, data.dataPower, data.headersPower);
-
-					/*
-					if (!data.ContainsKey(report.day))
-						data.Add(report.day, new Dictionary<string, string>());
-					if (!data.GetValueSafe(report.day).ContainsKey("Cycle"))
-						data.GetValueSafe(report.day).Add("Cycle", report.day.ToString());
-
-					if (!dataP.ContainsKey(report.day))
-						dataP.Add(report.day, new Dictionary<string, string>());
-					if (!dataP.GetValueSafe(report.day).ContainsKey("Cycle"))
-						dataP.GetValueSafe(report.day).Add("Cycle", report.day.ToString());
-					*/
+					
 
 					int num = 1;
                     foreach (KeyValuePair<ReportManager.ReportType, ReportManager.ReportGroup> reportGroup in ReportManager.Instance.ReportGroups)
@@ -87,7 +73,6 @@ namespace ExportDailyReports
                         }
                         else if (flag2)
                         {
-							//CreateOrUpdateLine(entry, reportGroup.Value, flag2, data.GetValueSafe(report.day), dataH, dataP.GetValueSafe(report.day), dataPH);
 							CreateOrUpdateLine(entry, reportGroup.Value, flag2, report.day, data);
 						}
                     }
@@ -174,27 +159,24 @@ namespace ExportDailyReports
         }
 
         private static void CreateOrUpdateLine(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, bool is_line_active, int day, ReportData data)
-        {			
-			SetMainEntry(entry, reportGroup, day, data);
-        }
-
-
-		private static float addedValue = float.NegativeInfinity;
-		private static float removedValue = float.NegativeInfinity;
-		private static float netValue = float.NegativeInfinity;
-
-		public static void SetMainEntry(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, int day, ReportData data)
         {
 			addedValue = float.NegativeInfinity;
 			removedValue = float.NegativeInfinity;
 			netValue = float.NegativeInfinity;
 
-			SetLine(entry, reportGroup, day, data);           
-        }
+			SetLine(entry, reportGroup, day, data);
+		}
+
+
+		private static float addedValue = float.NegativeInfinity;
+		private static float removedValue = float.NegativeInfinity;
+		private static float netValue = float.NegativeInfinity;
+		
 
         public static void SetLine(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, int day, ReportData data)
         {
-			Debug.Log("cycle: "+day);
+			//Debug.Log("cycle: "+day);
+
 			List<ReportManager.ReportEntry.Note> pos_notes = new List<ReportManager.ReportEntry.Note>();
 			entry.IterateNotes(delegate (ReportManager.ReportEntry.Note note)
 			{
@@ -216,97 +198,43 @@ namespace ExportDailyReports
             });			
 
 			string columnName = (entry.context == null ? reportGroup.stringKey : entry.context);
-			string textPos = "";
-			string textNeg = "";
-			string textNet = "";
 
 			if (addedValue != entry.Positive)
             {
-                textPos = reportGroup.formatfn(entry.Positive);
-                if (reportGroup.groupFormatfn != null && entry.context == null)
-                {
-                    float num6 = 0f;
-                    num6 = ((entry.contextEntries.Count <= 0) ? ((float)pos_notes.Count) : ((float)entry.contextEntries.Count));
-                    num6 = Mathf.Max(num6, 1f);
-                    textPos = reportGroup.groupFormatfn(entry.Positive, num6);
-                }
-				//added.text = textPos;
 				addedValue = entry.Positive;
 			}
 			if (removedValue != entry.Negative)
             {
-                textNeg = reportGroup.formatfn(entry.Negative);
-                if (reportGroup.groupFormatfn != null && entry.context == null)
-                {
-                    float num7 = 0f;
-                    num7 = ((entry.contextEntries.Count <= 0) ? ((float)neg_notes.Count) : ((float)entry.contextEntries.Count));
-                    num7 = Mathf.Max(num7, 1f);
-                    textNeg = reportGroup.groupFormatfn(entry.Negative, num7);
-                }
-				//removed.text = textNeg;
 				removedValue = entry.Negative;
 			}
             if (netValue != entry.Net)
-            {
-                textNet = (reportGroup.formatfn != null) ? reportGroup.formatfn(entry.Net) : entry.Net.ToString();
-                if (reportGroup.groupFormatfn != null && entry.context == null)
-                {
-                    float num8 = 0f;
-                    num8 = ((entry.contextEntries.Count <= 0) ? ((float)(pos_notes.Count + neg_notes.Count)) : ((float)entry.contextEntries.Count));
-                    num8 = Mathf.Max(num8, 1f);
-                    textNet = reportGroup.groupFormatfn(entry.Net, num8);
-                }
-				//net.text = textNet;                
+            {                  
 				netValue = entry.Net;
 			}
             pos_notes.Clear();
             neg_notes.Clear();
 
-			string cleanedColName = CleanHeader(columnName);
-			/*
-			if (!dataH.Contains(CleanHeader(columnName) + " (Added)"))
-				dataH.Add(CleanHeader(columnName) + " (Added)");
-			if (!data.ContainsKey(CleanHeader(columnName) + " (Added)"))
-				data.Add(CleanHeader(columnName) + " (Added)", addedValue.ToString("F2"));
+			string cleanedColName = CleanHeader(columnName);			
 
-			if (!dataH.Contains(CleanHeader(columnName) + " (Removed)"))
-				dataH.Add(CleanHeader(columnName) + " (Removed)");
-			if (!data.ContainsKey(CleanHeader(columnName) + " (Removed)"))
-				data.Add(CleanHeader(columnName) + " (Removed)", removedValue.ToString("F2"));
-
-			if (!dataH.Contains(CleanHeader(columnName) + " (Net)"))
-				dataH.Add(CleanHeader(columnName) + " (Net)");
-			if (!data.ContainsKey(CleanHeader(columnName) + " (Net)"))
-				data.Add(CleanHeader(columnName) + " (Net)", netValue.ToString("F2"));
-			*/
-			AddValue(cleanedColName + " (Added)", addedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
-			AddValue(cleanedColName + " (Removed)", removedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
-			AddValue(cleanedColName + " (Net)", netValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
+			AddValue(cleanedColName + " (+)", addedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
+			AddValue(cleanedColName + " (-)", removedValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
+			AddValue(cleanedColName + " (=)", netValue, data.dataGeneral.GetValueSafe(day), data.headersGeneral);
 
 			if (cleanedColName.Contains("Power Usage"))
 			{
-				//if (entry.Net > 0f)
-				//{
-					Debug.Log(cleanedColName + " TOOLTIP POS:");
-					string tooltipP = OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, entry.Positive, reportGroup.positiveTooltip, reportGroup.posNoteOrder, reportGroup.formatfn, (ReportManager.ReportEntry.Note note) => IsPositiveNote(note), reportGroup.groupFormatfn);
-					Debug.Log(tooltipP);
-				//}
-				//else
-				//{
+				//Debug.Log(cleanedColName + " TOOLTIP POS:");
+				OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, (ReportManager.ReportEntry.Note note) => IsPositiveNote(note));
 
-					Debug.Log(cleanedColName + " TOOLTIP NEG:");
-					string tooltipN = OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, entry.Negative, reportGroup.negativeTooltip, reportGroup.negNoteOrder, reportGroup.formatfn, (ReportManager.ReportEntry.Note note) => IsNegativeNote(note), reportGroup.groupFormatfn);
-					Debug.Log(tooltipN);
-				//}
-				
+				//Debug.Log(cleanedColName + " TOOLTIP NEG:");
+				OnNoteTooltip(entry, reportGroup, data.dataPower.GetValueSafe(day), data.headersPower, (ReportManager.ReportEntry.Note note) => IsNegativeNote(note));				
 			}
 
 		}
 
 
-		private static string OnNoteTooltip(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, Dictionary<string, string> dataP, List<string> dataPH, float total_accumulation, string tooltip_text, ReportManager.ReportEntry.Order order, ReportManager.FormattingFn format_fn, Func<ReportManager.ReportEntry.Note, bool> is_note_applicable_cb, ReportManager.GroupFormattingFn group_format_fn = null)
+		private static void OnNoteTooltip(ReportManager.ReportEntry entry, ReportManager.ReportGroup reportGroup, Dictionary<string, string> dataP, List<string> dataPH, Func<ReportManager.ReportEntry.Note, bool> is_note_applicable_cb)
 		{
-			Debug.Log("OnNoteTooltip");
+			//Debug.Log("OnNoteTooltip");
 			List <ReportManager.ReportEntry.Note> notes = new List<ReportManager.ReportEntry.Note>();
 			notes.Clear();
 			entry.IterateNotes(delegate (ReportManager.ReportEntry.Note note)
@@ -316,58 +244,22 @@ namespace ExportDailyReports
 					notes.Add(note);
 				}
 			});
-			//Debug.Log("1");
-			string text = string.Empty;
-			float num = 0f;
-			num = ((entry.contextEntries.Count <= 0) ? ((float)notes.Count) : ((float)entry.contextEntries.Count));
-			num = Mathf.Max(num, 1f);
-			//Debug.Log("2");
+		
 			foreach (ReportManager.ReportEntry.Note item in Sort(notes, reportGroup.posNoteOrder))
 			{
-				Debug.Log("3 "+ item.ToString());
-				ReportManager.ReportEntry.Note current = item;
-				string arg = format_fn(current.value);
-				Debug.Log(current.value);
-				/*
-				if (group_format_fn != null)
-				{
-					arg = group_format_fn(current.value, num);
-				}
-				*/
-				//Debug.Log("5");
-				Debug.Log("dataPH: " + dataPH);
-				Debug.Log("current.note: "+ current.note);
+				ReportManager.ReportEntry.Note current = item;				
+
 				string colName = CleanHeader(current.note);
-				Debug.Log("colName: " + colName);
 
 				if (current.value > 0f)
 				{				
-					AddValue(colName + " (Added)", current.value, dataP, dataPH);
-					/*
-					if (!dataPH.Contains(colName + " (Added)"))
-						dataPH.Add(colName + " (Added)");
-					if (!dataP.ContainsKey(colName + " (Added)"))
-						dataP.Add(colName + " (Added)", current.value.ToString("F2"));
-						*/
+					AddValue(colName + " (+)", current.value, dataP, dataPH);					
 				}
 				else
 				{
-					AddValue(colName + " (Removed)", current.value, dataP, dataPH);
-					/*
-					if (!dataPH.Contains(colName + " (Removed)"))
-						dataPH.Add(colName + " (Removed)");
-					if (!dataP.ContainsKey(colName + " (Removed)"))
-						dataP.Add(colName + " (Removed)", current.value.ToString("F2"));
-					*/
-				}
-				text = string.Format(STRINGS.UI.ENDOFDAYREPORT.NOTES.NOTE_ENTRY_LINE_ITEM, text, current.note, arg);
+					AddValue(colName + " (-)", current.value, dataP, dataPH);					
+				}				
 			}
-			string arg2 = format_fn(total_accumulation);
-			if (group_format_fn != null && entry.context == null)
-			{
-				arg2 = group_format_fn(total_accumulation, num);
-			}
-			return string.Format(tooltip_text + "\n" + text, arg2);
 		}
 
 		private static bool IsPositiveNote(ReportManager.ReportEntry.Note note)
@@ -421,9 +313,7 @@ namespace ExportDailyReports
 				dataH.Add(name);
 			if (!data.ContainsKey(name))
 				data.Add(name, value.ToString("F2"));
-		}
-		
-
+		}		
 		
 		public static string CleanHeader(string txt)
 		{
