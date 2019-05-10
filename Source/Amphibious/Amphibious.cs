@@ -5,16 +5,16 @@ using System.Reflection;
 using System.Text;
 using Harmony;
 
-namespace MoreTraits
+namespace AmphibiousMod
 {
     [HarmonyPatch(typeof(ModifierSet), "LoadTraits")]
-    internal static class MoreTraits_ModifierSet_LoadTraits
+    internal static class AmphibiousMod_ModifierSet_LoadTraits
     {
         private static MethodInfo mi = AccessTools.Method(typeof(TUNING.TRAITS), "CreateNamedTrait");
 
         private static void Prefix()
         {
-            Debug.Log(" === MoreTraits_ModifierSet_LoadTraits === ");
+            //Debug.Log(" === AmphibiousMod_ModifierSet_LoadTraits === ");
             TUNING.DUPLICANTSTATS.GOODTRAITS.Add(
                    new TUNING.DUPLICANTSTATS.TraitVal
                    {
@@ -25,7 +25,6 @@ namespace MoreTraits
                );
 
             TUNING.TRAITS.TRAIT_CREATORS.Add(
-                    //(System.Action) mi.Invoke(null, new object[] { "Archaeologist", STRINGS.DUPLICANTS.TRAITS.ARCHAEOLOGIST.NAME, STRINGS.DUPLICANTS.TRAITS.ARCHAEOLOGIST.DESC })
                     (System.Action)mi.Invoke(null, new object[] { "Amphibious", "Amphibious", "This Duplicant breaths under water.", true})
                 );
         }
@@ -33,7 +32,7 @@ namespace MoreTraits
 
 
     [HarmonyPatch(typeof(OxygenBreather), "GetBreathableElementAtCell")]
-    internal static class MoreTraits_OxygenBreather_GetBreathableElementAtCell
+    internal static class AmphibiousMod_OxygenBreather_GetBreathableElementAtCell
     {
         
         private static MethodInfo mi = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
@@ -46,10 +45,10 @@ namespace MoreTraits
         private static bool Prefix(OxygenBreather __instance, ref SimHashes __result, ref int cell, ref CellOffset[] offsets)
         {
 
-            //Debug.Log(" === MoreTraits_OxygenBreather_GetBreathableElementAtCell === ");
+            //Debug.Log(" === AmphibiousMod_OxygenBreather_GetBreathableElementAtCell === ");
             Klei.AI.Traits traits = __instance.gameObject.GetComponent<Klei.AI.Traits>();
             bool flag = traits.GetTraitIds().Contains("Amphibious");
-            //Debug.Log(" === MoreTraits_OxygenBreather_GetBreathableElementAtCell === " + flag);
+            //Debug.Log(" === AmphibiousMod_OxygenBreather_GetBreathableElementAtCell === " + flag);
 
 
             if (offsets == null)
@@ -110,30 +109,30 @@ namespace MoreTraits
     }
     /*
     [HarmonyPatch(typeof(TUNING.DUPLICANTSTATS), MethodType.Constructor)]
-    internal static class MoreTraits_DUPLICANTSTATS_Constructor
+    internal static class AmphibiousMod_DUPLICANTSTATS_Constructor
     {
         //private static MethodInfo mi = AccessTools.Method(typeof(TUNING.TRAITS), "CreateNamedTrait");
 
         private static void Postfix()
         {
-            Debug.Log(" === MoreTraits_DUPLICANTSTATS_Constructor === ");
+            Debug.Log(" === AmphibiousMod_DUPLICANTSTATS_Constructor === ");
 
            
         }
     }
     
     [HarmonyPatch(typeof(GasBreatherFromWorldProvider), "ConsumeGas")]
-    internal static class MoreTraits_GasBreatherFromWorldProvider_ConsumeGas
+    internal static class AmphibiousMod_GasBreatherFromWorldProvider_ConsumeGas
     {
 
         //private static MethodInfo mi = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
         
         private static bool Prefix(GasBreatherFromWorldProvider __instance, OxygenBreather oxygen_breather, ref float gas_consumed)
         {
-            Debug.Log(" === MoreTraits_GasBreatherFromWorldProvider_ConsumeGas === "+ gas_consumed);
+            Debug.Log(" === AmphibiousMod_GasBreatherFromWorldProvider_ConsumeGas === "+ gas_consumed);
             Klei.AI.Traits mi = oxygen_breather.gameObject.GetComponent<Klei.AI.Traits>();
             bool flag = mi.GetTraitIds().Contains("Amphibious");
-            Debug.Log(" === MoreTraits_GasBreatherFromWorldProvider_ConsumeGas === " + flag);
+            Debug.Log(" === AmphibiousMod_GasBreatherFromWorldProvider_ConsumeGas === " + flag);
             
             SimHashes getBreathableElement = oxygen_breather.GetBreathableElement;
             if (getBreathableElement == SimHashes.Vacuum)
@@ -165,7 +164,7 @@ namespace MoreTraits
 
     
     [HarmonyPatch(typeof(Database.Attributes), MethodType.Constructor)]
-    internal static class MoreTraits_Attributes_Constructor
+    internal static class AmphibiousMod_Attributes_Constructor
     {
         public static Klei.AI.Attribute BreathableElement = null;
 
