@@ -7,9 +7,9 @@ using TUNING;
 using UnityEngine;
 
 
-public class InverseElectrolyzerAltConfig : IBuildingConfig
+public class InverseElectrolyzerConfig : IBuildingConfig
 {
-	public const string ID = "InverseElectrolyzerAlt";
+	public const string ID = "InverseElectrolyzer";
 
 	private const float CO2_CONSUMPTION_RATE = 0.3f;
 
@@ -24,7 +24,7 @@ public class InverseElectrolyzerAltConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		string id = "InverseElectrolyzerAlt";
+		//string id = "InverseElectrolyzerAlt";
 		int width = 4;
 		int height = 3;
 		string anim = "waterpurifier_kanim";
@@ -35,7 +35,7 @@ public class InverseElectrolyzerAltConfig : IBuildingConfig
 		float melting_point = 800f;
 		BuildLocationRule build_location_rule = BuildLocationRule.OnFloor;
 		EffectorValues tIER2 = NOISE_POLLUTION.NOISY.TIER3;
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(id, width, height, anim, hitpoints, construction_time, tIER, aLL_METALS, melting_point, build_location_rule, TUNING.BUILDINGS.DECOR.PENALTY.TIER2, tIER2, 0.2f);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(ID, width, height, anim, hitpoints, construction_time, tIER, aLL_METALS, melting_point, build_location_rule, TUNING.BUILDINGS.DECOR.PENALTY.TIER2, tIER2, 0.2f);
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.EnergyConsumptionWhenActive = 120f;
 		buildingDef.ExhaustKilowattsWhenActive = 0f;
@@ -63,7 +63,7 @@ public class InverseElectrolyzerAltConfig : IBuildingConfig
 		storage.capacityKg = 30f;
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 
-		InverseElectrolyzerAlt airFilter = go.AddOrGet<InverseElectrolyzerAlt>();
+		InverseElectrolyzer airFilter = go.AddOrGet<InverseElectrolyzer>();
 		airFilter.filterTag = GameTagExtensions.Create(SimHashes.Hydrogen);
 		airFilter.portInfo = this.secondaryInputPort;
 		
@@ -77,20 +77,20 @@ public class InverseElectrolyzerAltConfig : IBuildingConfig
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
 	{
-		GeneratedBuildings.RegisterLogicPorts(go, InverseElectrolyzerAltConfig.INPUT_PORTS);
+		GeneratedBuildings.RegisterLogicPorts(go, InverseElectrolyzerConfig.INPUT_PORTS);
 		this.AttachPort(go);
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
-		GeneratedBuildings.RegisterLogicPorts(go, InverseElectrolyzerAltConfig.INPUT_PORTS);
+		GeneratedBuildings.RegisterLogicPorts(go, InverseElectrolyzerConfig.INPUT_PORTS);
 		this.AttachPort(go);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		BuildingTemplates.DoPostConfigure(go);
-		GeneratedBuildings.RegisterLogicPorts(go, InverseElectrolyzerAltConfig.INPUT_PORTS);
+		GeneratedBuildings.RegisterLogicPorts(go, InverseElectrolyzerConfig.INPUT_PORTS);
 		go.AddOrGet<LogicOperationalController>();
         /*
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate (GameObject game_object)

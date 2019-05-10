@@ -6,7 +6,7 @@ using KSerialization;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class InverseElectrolyzerAlt: KMonoBehaviour, ISaveLoadable, ISecondaryInput
+public class InverseElectrolyzer: KMonoBehaviour, ISaveLoadable, ISecondaryInput
 {
 	
 	[MyCmpGet]
