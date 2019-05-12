@@ -31,9 +31,9 @@ namespace ExportDailyReports
         {
 			bool error = false;
 
-			List<DailyReport> dailyReports = ReportManager.Instance.reports;
-            if (dailyReports == null)
-                return;
+            if (ReportManager.Instance == null) return;
+            List<DailyReport> dailyReports = ReportManager.Instance.reports;
+            if (dailyReports == null) return;
 
 			ReportData data = new ReportData();
 
