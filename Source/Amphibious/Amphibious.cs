@@ -10,22 +10,25 @@ namespace AmphibiousMod
     [HarmonyPatch(typeof(ModifierSet), "LoadTraits")]
     internal static class AmphibiousMod_ModifierSet_LoadTraits
     {
-        private static MethodInfo mi = AccessTools.Method(typeof(TUNING.TRAITS), "CreateNamedTrait");
+        private static MethodInfo CreateNamedTraitM = AccessTools.Method(typeof(TUNING.TRAITS), "CreateNamedTrait");
 
         private static void Prefix()
         {
             //Debug.Log(" === AmphibiousMod_ModifierSet_LoadTraits === ");
+
             TUNING.DUPLICANTSTATS.GOODTRAITS.Add(
                    new TUNING.DUPLICANTSTATS.TraitVal
                    {
                        id = "Amphibious",
-                       statBonus = -TUNING.DUPLICANTSTATS.MEDIUM_STATPOINT_BONUS,
-                       probability = TUNING.DUPLICANTSTATS.PROBABILITY_LOW
+                       statBonus = -TUNING.DUPLICANTSTATS.MEDIUM_STATPOINT_BONUS*2,
+                       probability = TUNING.DUPLICANTSTATS.PROBABILITY_MINISCULE*2f
                    }
                );
 
             TUNING.TRAITS.TRAIT_CREATORS.Add(
-                    (System.Action)mi.Invoke(null, new object[] { "Amphibious", "Amphibious", "This Duplicant breaths under water.", true})
+                    (System.Action)CreateNamedTraitM.Invoke(null,
+                            new object[] { "Amphibious", "Amphibious", "This duplicant breaths under water.", true}     // true: positive trait
+                        )
                 );
         }
     }
@@ -35,29 +38,27 @@ namespace AmphibiousMod
     internal static class AmphibiousMod_OxygenBreather_GetBreathableElementAtCell
     {
         
-        private static MethodInfo mi = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
-        /*
-        private static MethodInfo _GetMouthCellAtCellM = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
-        private delegate int GetMouthCellAtCell_Delegate(int cell, CellOffset[] offsets);
-        private static GetMouthCellAtCell_Delegate _GetMouthCellAtCell =
-            (GetMouthCellAtCell_Delegate)Delegate.CreateDelegate(typeof(GetMouthCellAtCell_Delegate), _GetMouthCellAtCellM);
-        */
+        private static MethodInfo GetMouthCellAtCellM = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
+       
         private static bool Prefix(OxygenBreather __instance, ref SimHashes __result, ref int cell, ref CellOffset[] offsets)
         {
-
             //Debug.Log(" === AmphibiousMod_OxygenBreather_GetBreathableElementAtCell === ");
+
             Klei.AI.Traits traits = __instance.gameObject.GetComponent<Klei.AI.Traits>();
             bool flag = traits.GetTraitIds().Contains("Amphibious");
+
             //Debug.Log(" === AmphibiousMod_OxygenBreather_GetBreathableElementAtCell === " + flag);
 
+            if (!flag) return true;
 
             if (offsets == null)
             {
                 offsets = __instance.breathableCells;
             }
-            int mouthCellAtCell = (int)mi.Invoke(__instance, new object[] { cell, offsets });//this.GetMouthCellAtCell(cell, offsets);
-            //int mouthCellAtCell = GetMouthCellAtCell(__instance, cell, offsets);
-            //int mouthCellAtCell = _GetMouthCellAtCell(cell, offsets);
+
+            //this.GetMouthCellAtCell(cell, offsets);
+            int mouthCellAtCell = (int)GetMouthCellAtCellM.Invoke(__instance, new object[] { cell, offsets });            
+
             if (!Grid.IsValidCell(mouthCellAtCell))
             {
                 __result = SimHashes.Vacuum;
@@ -75,6 +76,14 @@ namespace AmphibiousMod
             }
             return false;
         }
+
+        /*
+       private static MethodInfo _GetMouthCellAtCellM = AccessTools.Method(typeof(OxygenBreather), "GetMouthCellAtCell");
+       private delegate int GetMouthCellAtCell_Delegate(int cell, CellOffset[] offsets);
+       private static GetMouthCellAtCell_Delegate _GetMouthCellAtCell =
+           (GetMouthCellAtCell_Delegate)Delegate.CreateDelegate(typeof(GetMouthCellAtCell_Delegate), _GetMouthCellAtCellM);
+       */
+
         /*
         private static int GetMouthCellAtCell(OxygenBreather __instance, int cell, CellOffset[] offsets)
         {
