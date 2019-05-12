@@ -79,7 +79,7 @@ namespace WorkableEditorMod
 			if (!WorkableEditorConfig.Instance.Enabled) return;
 			//Debug.Log(" === WorkEditorMod_Constructable_GetSkillExperienceMultiplier === " + __instance.GetType().ToString());
 
-			__result = WorkableEditorUtils.GetMultiplier("GetSkillExperienceMultiplier", __result, __instance);
+			__result = WorkableEditorUtils.GetMultiplier("SkillExperienceMultiplier", __result, __instance);
 		}
 	}
 
