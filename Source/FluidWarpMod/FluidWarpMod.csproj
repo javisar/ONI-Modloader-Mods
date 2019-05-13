@@ -78,9 +78,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-xcopy "$(TargetDir.TrimEnd('\'))" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
-
-xcopy "$(TargetDir.TrimEnd('\'))" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+xcopy "$(TargetDir.TrimEnd('\'))" "%25UserProfile%25\Documents\Klei\OxygenNotIncluded\mods\dev\$(ProjectName)" /Y /S /E /I
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
