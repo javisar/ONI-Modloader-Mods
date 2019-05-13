@@ -61,15 +61,15 @@ namespace CustomWorldSize
                 
                 foreach (SettingConfig settingConfig in settings)
                 {
-                /*
-                __instance.QualitySettings.Add(settingConfig.id, settingConfig);
-                if (!__instance.CurrentQualityLevelsBySetting.ContainsKey(settingConfig.id) || string.IsNullOrEmpty(__instance.CurrentQualityLevelsBySetting[settingConfig.id]))
-                {
-                    __instance.CurrentQualityLevelsBySetting[settingConfig.id] = settingConfig.default_level_id;
-                }
-                */
-                __instance.AddSettingConfig(settingConfig);
-            }
+					/*
+					__instance.QualitySettings.Add(settingConfig.id, settingConfig);
+					if (!__instance.CurrentQualityLevelsBySetting.ContainsKey(settingConfig.id) || string.IsNullOrEmpty(__instance.CurrentQualityLevelsBySetting[settingConfig.id]))
+					{
+						__instance.CurrentQualityLevelsBySetting[settingConfig.id] = settingConfig.default_level_id;
+					}
+					*/
+					__instance.AddSettingConfig(settingConfig);
+				}
             }
         }
 

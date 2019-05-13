@@ -34,7 +34,61 @@ namespace AmphibiousMod
     }
 
 
-    [HarmonyPatch(typeof(OxygenBreather), "GetBreathableElementAtCell")]
+	[HarmonyPatch(typeof(GasBreatherFromWorldProvider), "ConsumeGas")]
+	internal static class AmphibiousMod_GasBreatherFromWorldProvider_ConsumeGas
+	{
+
+		private static bool Prefix(GasBreatherFromWorldProvider __instance, ref bool __result, ref OxygenBreather oxygen_breather, ref float gas_consumed)
+		{
+
+			//Debug.Log(" === AmphibiousMod_GasBreatherFromWorldProvider_ConsumeGas === ");
+			Klei.AI.Traits traits = oxygen_breather.gameObject.GetComponent<Klei.AI.Traits>();
+			bool flag = traits.GetTraitIds().Contains("Amphibious");
+			if (!flag) return true;
+
+			SimHashes getBreathableElement = oxygen_breather.GetBreathableElement;
+			if (getBreathableElement == SimHashes.Vacuum)
+			{
+				__result = false;
+				return false;
+			}
+			//HandleVector<Game.ComplexCallbackInfo<Sim.MassConsumedCallback>>.Handle handle = Game.Instance.massConsumedCallbackManager.Add(OnSimConsumeCallback, __instance, "GasBreatherFromWorldProvider");
+			//SimMessages.ConsumeMass(oxygen_breather.mouthCell, getBreathableElement, gas_consumed/5f, 3, handle.index);
+			SimMessages.ConsumeMass(oxygen_breather.mouthCell, getBreathableElement, gas_consumed / 5f, 1);
+			__result = true;
+			return false;
+		}
+
+		/*
+		private static MethodInfo OnSimConsumeM = AccessTools.Method(typeof(GasBreatherFromWorldProvider), "OnSimConsume");
+
+		private static void OnSimConsumeCallback(Sim.MassConsumedCallback mass_cb_info, object data)
+		{
+			//((GasBreatherFromWorldProvider)data).OnSimConsume(mass_cb_info);
+			//mi.Invoke((GasBreatherFromWorldProvider) data, new object[] { mass_cb_info });			
+			mass_cb_info.mass /= 5f;
+			OnSimConsume(((GasBreatherFromWorldProvider)data), mass_cb_info);
+			
+		}
+
+		private static FieldInfo oxygenBreatherF = AccessTools.Field(typeof(GasBreatherFromWorldProvider), "oxygenBreather");
+
+		private static void OnSimConsume(GasBreatherFromWorldProvider data, Sim.MassConsumedCallback mass_cb_info)
+		{
+			OxygenBreather oxygenBreather = (OxygenBreather) oxygenBreatherF.GetValue(data);
+			if (!(oxygenBreather == null) && !oxygenBreather.GetComponent<KPrefabID>().HasTag(GameTags.Dead))
+			{
+				//Game.Instance.accumulators.Accumulate(oxygenBreather.O2Accumulator, mass_cb_info.mass);
+				float value = 0f - mass_cb_info.mass;
+				//ReportManager.Instance.ReportValue(ReportManager.ReportType.OxygenCreated, value, oxygenBreather.GetProperName());
+				oxygenBreather.Consume(mass_cb_info);
+			}
+		}
+		*/
+	}
+
+
+	[HarmonyPatch(typeof(OxygenBreather), "GetBreathableElementAtCell")]
     internal static class AmphibiousMod_OxygenBreather_GetBreathableElementAtCell
     {
         
@@ -46,12 +100,10 @@ namespace AmphibiousMod
 
             Klei.AI.Traits traits = __instance.gameObject.GetComponent<Klei.AI.Traits>();
             bool flag = traits.GetTraitIds().Contains("Amphibious");
-
             //Debug.Log(" === AmphibiousMod_OxygenBreather_GetBreathableElementAtCell === " + flag);
-
             if (!flag) return true;
 
-            if (offsets == null)
+ 			if (offsets == null)
             {
                 offsets = __instance.breathableCells;
             }
@@ -66,15 +118,8 @@ namespace AmphibiousMod
             }
             Element element = Grid.Element[mouthCellAtCell];
 
-            if (flag)
-            {
-                __result = ((!element.IsGas || !element.HasTag(GameTags.Breathable)) && (!element.IsLiquid || !element.HasTag(GameTags.AnyWater)) || !(Grid.Mass[mouthCellAtCell] > __instance.noOxygenThreshold)) ? SimHashes.Vacuum : element.id;
-            }
-            else
-            {
-                __result = (!element.IsGas || !element.HasTag(GameTags.Breathable) || !(Grid.Mass[mouthCellAtCell] > __instance.noOxygenThreshold)) ? SimHashes.Vacuum : element.id;
-            }
-            return false;
+			__result = ((!element.IsGas || !element.HasTag(GameTags.Breathable)) && (!element.IsLiquid || !element.HasTag(GameTags.AnyWater)) || !(Grid.Mass[mouthCellAtCell] > __instance.noOxygenThreshold)) ? SimHashes.Vacuum : element.id;
+			return false;
         }
 
         /*
