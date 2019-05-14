@@ -68,7 +68,7 @@ namespace FluidWarpMod
 
             int width = 1;
             int height = 2;
-            string anim = "valveliquid_kanim";
+            string anim = "valvegas_kanim";
             int hitpoints = 30;
             float construction_time = 5f;
             float[] tIER = BUILDINGS.CONSTRUCTION_MASS_KG.TIER3;

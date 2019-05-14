@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "11_Outdated", "11_Outdated"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildableAETN", "BuildableAETN\BuildableAETN.csproj", "{DB33F126-AECD-4E02-9F1F-1E4B08DC27C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluidWarpMod", "FluidWarpMod\FluidWarpMod.csproj", "{74B7B353-BB3E-4EE1-9035-7357D5472D39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluidWarp", "FluidWarpMod\FluidWarp.csproj", "{74B7B353-BB3E-4EE1-9035-7357D5472D39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomSize", "RoomSize\RoomSize.csproj", "{7D13E2D1-D400-4A50-8AFA-147EAF5375C1}"
 EndProject
