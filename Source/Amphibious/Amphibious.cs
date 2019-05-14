@@ -20,8 +20,8 @@ namespace AmphibiousMod
                    new TUNING.DUPLICANTSTATS.TraitVal
                    {
                        id = "Amphibious",
-                       statBonus = -TUNING.DUPLICANTSTATS.MEDIUM_STATPOINT_BONUS*2,
-                       probability = TUNING.DUPLICANTSTATS.PROBABILITY_MINISCULE*2f
+                       statBonus = -TUNING.DUPLICANTSTATS.MEDIUM_STATPOINT_BONUS,
+                       probability = 2.5f
                    }
                );
 
