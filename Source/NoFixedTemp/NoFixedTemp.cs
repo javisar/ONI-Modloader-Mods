@@ -7,6 +7,26 @@ using UnityEngine;
 
 namespace NoFixedTemp
 {
+
+	[HarmonyPatch(typeof(AirFilterConfig), "ConfigureBuildingTemplate")]
+	internal class NoFixedTemp_AirFilterConfig_ConfigureBuildingTemplate
+	{
+
+		private static void Postfix(AirFilterConfig __instance, GameObject go, Tag prefab_tag)
+		{
+			ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
+			elementConverter.outputElements = new ElementConverter.OutputElement[2]
+			{
+                /*
+                new ElementConverter.OutputElement(0.143333346f, SimHashes.Clay, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 0.25f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.0899999961f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 0f, apply_input_temperature: false, 0.75f, byte.MaxValue)
+                */
+                new ElementConverter.OutputElement(0.143333346f, SimHashes.Clay, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 0.25f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.0899999961f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 0f, apply_input_temperature: true, 0.75f, byte.MaxValue)
+			};
+		}
+	}
+
 	[HarmonyPatch(typeof(AlgaeDistilleryConfig), "ConfigureBuildingTemplate")]
 	internal class NoFixedTemp_AlgaeDistilleryConfig_ConfigureBuildingTemplate
 	{
@@ -17,16 +37,16 @@ namespace NoFixedTemp
 			elementConverter.outputElements = new ElementConverter.OutputElement[2]
 			{
                 /*
-                new ElementConverter.OutputElement(0.2f, SimHashes.Algae, 303.15f, storeOutput: true, 0f, 1f),
-			    new ElementConverter.OutputElement(0.400000036f, SimHashes.DirtyWater, 303.15f, storeOutput: true)
+                new ElementConverter.OutputElement(0.2f, SimHashes.Algae, 303.15f, storeOutput: true, 0f, 1f, apply_input_temperature: false, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.400000036f, SimHashes.DirtyWater, 303.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue)
                 */
-                new ElementConverter.OutputElement(0.2f, SimHashes.Algae, 0f, storeOutput: true, 0f, 1f, true),
-				new ElementConverter.OutputElement(0.400000036f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, true)
+                new ElementConverter.OutputElement(0.2f, SimHashes.Algae, 0f, storeOutput: true, 0f, 1f, apply_input_temperature: true, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.400000036f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
 
-    /*
+	/*
 	[HarmonyPatch(typeof(AlgaeHabitatConfig), "ConfigureBuildingTemplate")]
 	internal class NoFixedTemp_AlgaeHabitatConfig_ConfigureBuildingTemplate
 	{
@@ -38,14 +58,14 @@ namespace NoFixedTemp
 
             elementConverters[0].outputElements = new ElementConverter.OutputElement[1]
             {
-                //new ElementConverter.OutputElement(0.0400000028f, SimHashes.Oxygen, 303.15f, storeOutput: false, 0f, 1f)
-                new ElementConverter.OutputElement(0.0400000028f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 1f, true)
+                //new ElementConverter.OutputElement(0.0400000028f, SimHashes.Oxygen, 303.15f, storeOutput: false, 0f, 1f, apply_input_temperature: false, 1f, byte.MaxValue)
+                new ElementConverter.OutputElement(0.0400000028f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 1f, apply_input_temperature: true, 1f, byte.MaxValue)
             };
 
             elementConverters[1].outputElements = new ElementConverter.OutputElement[1]
             {
-                //new ElementConverter.OutputElement(0.290333331f, SimHashes.DirtyWater, 303.15f, storeOutput: true, 0f, 1f)
-                new ElementConverter.OutputElement(0.290333331f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 1f, true)
+                //new ElementConverter.OutputElement(0.290333331f, SimHashes.DirtyWater, 303.15f, storeOutput: true, 0f, 1f, apply_input_temperature: false, 1f, byte.MaxValue)
+                new ElementConverter.OutputElement(0.0400000028f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 1f, apply_input_temperature: true, 1f, byte.MaxValue)
             };            
             
 		}
@@ -61,8 +81,8 @@ namespace NoFixedTemp
 			ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 			elementConverter.outputElements = new ElementConverter.OutputElement[1]
 			{
-                //new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 313.15f, storeOutput: true)
-                new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, true)
+                //new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 313.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue)
+                new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
@@ -76,8 +96,8 @@ namespace NoFixedTemp
 			ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 			elementConverter.outputElements = new ElementConverter.OutputElement[1]
 			{
-                //new ElementConverter.OutputElement(0.1f, SimHashes.Dirt, 348.15f, storeOutput: true)
-				new ElementConverter.OutputElement(0.1f, SimHashes.Dirt, 0f, storeOutput: true, 0f, 0.5f, true)
+                //new ElementConverter.OutputElement(0.1f, SimHashes.Dirt, 348.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue)
+				new ElementConverter.OutputElement(0.1f, SimHashes.Dirt, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
@@ -92,12 +112,12 @@ namespace NoFixedTemp
 			elementConverter.outputElements = new ElementConverter.OutputElement[2]
 			{
                 /*
-                new ElementConverter.OutputElement(0.888f, SimHashes.Oxygen, 343.15f, storeOutput: false, 0f, 1f),
-			    new ElementConverter.OutputElement(0.111999989f, SimHashes.Hydrogen, 343.15f, storeOutput: false, 0f, 1f)
+                new ElementConverter.OutputElement(0.888f, SimHashes.Oxygen, 343.15f, storeOutput: false, 0f, 1f, apply_input_temperature: false, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.111999989f, SimHashes.Hydrogen, 343.15f, storeOutput: false, 0f, 1f, apply_input_temperature: false, 1f, byte.MaxValue)
                 */
 
-                new ElementConverter.OutputElement(0.888f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 1f, true),
-				new ElementConverter.OutputElement(0.111999989f, SimHashes.Hydrogen, 0f, storeOutput: false, 0f, 1f, true)
+                new ElementConverter.OutputElement(0.888f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 1f, apply_input_temperature: true, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.111999989f, SimHashes.Hydrogen, 0f, storeOutput: false, 0f, 1f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
@@ -111,8 +131,8 @@ namespace NoFixedTemp
 			ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 			elementConverter.outputElements = new ElementConverter.OutputElement[1]
 			{
-                //nnew ElementConverter.OutputElement(0.12f, SimHashes.Fertilizer, 323.15f, storeOutput: true)
-                new ElementConverter.OutputElement(0.12f, SimHashes.Fertilizer, 0f, storeOutput: true, 0f, 0.5f, true)
+                //new ElementConverter.OutputElement(0.12f, SimHashes.Fertilizer, 323.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue)
+                new ElementConverter.OutputElement(0.12f, SimHashes.Fertilizer, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
@@ -126,8 +146,8 @@ namespace NoFixedTemp
 			ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 			elementConverter.outputElements = new ElementConverter.OutputElement[1]
 			{
-                //new ElementConverter.OutputElement(0.5f, SimHashes.Oxygen, 303.15f, storeOutput: false, 0f, 1f)
-				new ElementConverter.OutputElement(0.5f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 1f, true)
+                //new ElementConverter.OutputElement(0.5f, SimHashes.Oxygen, 303.15f, storeOutput: false, 0f, 1f, apply_input_temperature: false, 1f, byte.MaxValue)
+				new ElementConverter.OutputElement(0.5f, SimHashes.Oxygen, 0f, storeOutput: false, 0f, 1f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
@@ -146,8 +166,8 @@ namespace NoFixedTemp
 			    new ElementConverter.OutputElement(0.09f, SimHashes.Methane, 348.15f, storeOutput: false, 0f, 3f)
                 */
 
-                new ElementConverter.OutputElement(5f, SimHashes.Petroleum, 0f, storeOutput: true, 0f, 1f, true),
-				new ElementConverter.OutputElement(0.09f, SimHashes.Methane, 0f, storeOutput: false, 0f, 3f, true)
+                new ElementConverter.OutputElement(5f, SimHashes.Petroleum, 0f, storeOutput: true, 0f, 1f, apply_input_temperature: true, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.09f, SimHashes.Methane, 0f, storeOutput: false, 0f, 3f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
@@ -161,8 +181,8 @@ namespace NoFixedTemp
 			ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 			elementConverter.outputElements = new ElementConverter.OutputElement[1]
 			{
-                //new ElementConverter.OutputElement(3.33333325f, SimHashes.CrudeOil, 363.15f, storeOutput: false, 2f, 1.5f, apply_input_temperature: false, 0f)
-				new ElementConverter.OutputElement(3.33333325f, SimHashes.CrudeOil, 0f, storeOutput: false, 2f, 1.5f, true, 0f)
+                //new ElementConverter.OutputElement(3.33333325f, SimHashes.CrudeOil, 363.15f, storeOutput: false, 2f, 1.5f, apply_input_temperature: false, 0f, byte.MaxValue)
+				new ElementConverter.OutputElement(3.33333325f, SimHashes.CrudeOil, 0f, storeOutput: false, 2f, 1.5f, apply_input_temperature: true, 0f, byte.MaxValue)
 			};
 		}
 	}
@@ -177,13 +197,13 @@ namespace NoFixedTemp
             ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
             elementConverter.outputElements = new ElementConverter.OutputElement[1]
             {
-                //new ElementConverter.OutputElement(0.6f, SimHashes.OxyRock, 303.15f, storeOutput: true)
-				new ElementConverter.OutputElement(0.6f, SimHashes.OxyRock, 0f, storeOutput: true, 0f, 0.5f, true)
-            };
+                //new ElementConverter.OutputElement(0.6f, SimHashes.OxyRock, 303.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue)
+				new ElementConverter.OutputElement(0.6f, SimHashes.OxyRock, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
+			};
         }
     }
 
-    /*
+	/*
     [HarmonyPatch(typeof(PacuCleanerConfig), "ConfigureBuildingTemplate")]
 	internal class NoFixedTemp_PacuCleanerConfig_ConfigureBuildingTemplate
 	{
@@ -193,14 +213,14 @@ namespace NoFixedTemp
 			ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
             elementConverter.outputElements = new ElementConverter.OutputElement[1]
             {
-                //new ElementConverter.OutputElement(0.2f, SimHashes.Water, 0f, storeOutput: true)
-                new ElementConverter.OutputElement(0.2f, SimHashes.Water, 0f, storeOutput: true, 0f, 0.5f, true)
+                //new ElementConverter.OutputElement(0.2f, SimHashes.Water, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue)
+                new ElementConverter.OutputElement(0.2f, SimHashes.Water, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
             };
 		}
 	}
     */
-    
-    [HarmonyPatch(typeof(PolymerizerConfig), "ConfigureBuildingTemplate")]
+
+	[HarmonyPatch(typeof(PolymerizerConfig), "ConfigureBuildingTemplate")]
 	internal class NoFixedTemp_PolymerizerConfig_ConfigureBuildingTemplate
 	{
 
@@ -211,19 +231,19 @@ namespace NoFixedTemp
 			{
                 
                 /*
-                new ElementConverter.OutputElement(0.5f, SimHashes.Polypropylene, 348.15f, storeOutput: true),
-			    new ElementConverter.OutputElement(0.008333334f, SimHashes.Steam, 473.15f, storeOutput: true),
-			    new ElementConverter.OutputElement(0.008333334f, SimHashes.CarbonDioxide, 423.15f, storeOutput: true)
+                new ElementConverter.OutputElement(0.5f, SimHashes.Polypropylene, 348.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.008333334f, SimHashes.Steam, 473.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.008333334f, SimHashes.CarbonDioxide, 423.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 1f, byte.MaxValue)
                 */
                 
-				new ElementConverter.OutputElement(0.5f, SimHashes.Polypropylene, 0f, storeOutput: true, 0f, 0.5f, true),
-				new ElementConverter.OutputElement(0.008333334f, SimHashes.Steam, 0f, storeOutput: true, 0f, 0.5f, true),
-				new ElementConverter.OutputElement(0.008333334f, SimHashes.CarbonDioxide, 0f, storeOutput: true, 0f, 0.5f, true)
+				new ElementConverter.OutputElement(0.5f, SimHashes.Polypropylene, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.008333334f, SimHashes.Steam, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.008333334f, SimHashes.CarbonDioxide, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
-    
-    /*
+
+	/*
 	[HarmonyPatch(typeof(ShowerConfig), "ConfigureBuildingTemplate")]
 	internal class NoFixedTemp_ShowerConfig_ConfigureBuildingTemplate
 	{
@@ -234,15 +254,15 @@ namespace NoFixedTemp
 			elementConverter.outputElements = new ElementConverter.OutputElement[1]
 			{
                 
-                //new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true)
-				new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, true)
+                //new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
+				new ElementConverter.OutputElement(1f, SimHashes.DirtyWater, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 1f, byte.MaxValue)
 			};
 		}
 	}
     */
 
-    [HarmonyPatch(typeof(WaterPurifierConfig), "ConfigureBuildingTemplate")]
-	internal class NoFixedTemp_SWaterPurifierConfig_ConfigureBuildingTemplate
+	[HarmonyPatch(typeof(WaterPurifierConfig), "ConfigureBuildingTemplate")]
+	internal class NoFixedTemp_WaterPurifierConfig_ConfigureBuildingTemplate
 	{
 
 		private static void Postfix(WaterPurifierConfig __instance, GameObject go, Tag prefab_tag)
@@ -256,8 +276,8 @@ namespace NoFixedTemp
     			new ElementConverter.OutputElement(0.2f, SimHashes.ToxicSand, 313.15f, storeOutput: true, 0f, 0.5f, apply_input_temperature: false, 0.25f)
                 */
                 
-				new ElementConverter.OutputElement(5f, SimHashes.Water, 0f, storeOutput: true, 0f, 0.5f, true, 0.75f),
-				new ElementConverter.OutputElement(0.2f, SimHashes.ToxicSand, 0f, storeOutput: true, 0f, 0.5f, true, 0.25f)                
+				new ElementConverter.OutputElement(5f, SimHashes.Water, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 0.75f, byte.MaxValue),
+				new ElementConverter.OutputElement(0.2f, SimHashes.ToxicSand, 0f, storeOutput: true, 0f, 0.5f, apply_input_temperature: true, 0.25f, byte.MaxValue)
 			};
 		}
 	}
