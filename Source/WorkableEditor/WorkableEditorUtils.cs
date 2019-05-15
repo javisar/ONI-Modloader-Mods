@@ -37,7 +37,7 @@ namespace WorkableEditorMod
 				var workable = WorkableEditorConfig.Instance.Workables[instance.GetType().FullName];
 				//Debug.Log("workable: " + workable);
 				//Debug.Log("workable[" + name + "]: " + workable[name]);
-				if (workable.ContainsKey(name) && workable[name] > 0f)
+				if (workable.ContainsKey(name) && workable[name] >= 0f)
 				{
 					return defaultValue*workable[name];
 				}
