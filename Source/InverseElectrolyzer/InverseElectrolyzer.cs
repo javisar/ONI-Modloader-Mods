@@ -93,40 +93,49 @@ public class InverseElectrolyzer: KMonoBehaviour, ISaveLoadable, ISecondaryInput
 		bool value = false;
 		if (this.operational.IsOperational)
 		{
-			ConduitFlow flowManager = Conduit.GetFlowManager(this.portInfo.conduitType);
+			ConduitFlow gasFlow = Conduit.GetFlowManager(this.portInfo.conduitType);
 
-			ConduitFlow.ConduitContents contentsI1 = flowManager.GetContents(this.inputCell1);
-			ConduitFlow.ConduitContents contentsI2 = flowManager.GetContents(this.inputCell2);
+			ConduitFlow.ConduitContents contentsI1 = gasFlow.GetContents(this.inputCell1);
+			ConduitFlow.ConduitContents contentsI2 = gasFlow.GetContents(this.inputCell2);
 
-			//int num = (contents.element != this.filteredElem) ? this.outputCell : this.filteredCell;
-			ConduitFlow.ConduitContents contentsO = flowManager.GetContents(this.outputCell);
-			if (contentsI1.mass > 0.111999989f
-				&& contentsI2.mass > 0.888f
-				&& contentsO.mass <= 0f)
+            //Debug.Log("contentsI1.mass: " + contentsI1.mass);
+            //Debug.Log("contentsI2.mass: " + contentsI2.mass);
+
+            //int num = (contents.element != this.filteredElem) ? this.outputCell : this.filteredCell;
+            ConduitFlow.ConduitContents contentsO = gasFlow.GetContents(this.outputCell);
+			
+			if (contentsI1.element != SimHashes.Hydrogen || contentsI2.element != SimHashes.Oxygen)
 			{
-				if (contentsI1.element != SimHashes.Hydrogen || contentsI2.element != SimHashes.Oxygen)
+				base.Trigger((int)GameHashes.DoBuildingDamage, new BuildingHP.DamageSourceInfo
 				{
-					base.Trigger(-794517298, new BuildingHP.DamageSourceInfo
-					{
-						damage = 1,
-						source = STRINGS.BUILDINGS.DAMAGESOURCES.BAD_INPUT_ELEMENT,
-						popString = STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.WRONG_ELEMENT
-					});
-					flowManager.RemoveElement(this.inputCell1, 0.111999989f);
-					flowManager.RemoveElement(this.inputCell2, 0.888f);
-				}
-				else
-				{
-					value = true;
-					//float num2 = flowManager.AddElement(num, contents.element, contents.mass, contents.temperature, contents.diseaseIdx, contents.diseaseCount);
-					float num2 = flowManager.AddElement(this.outputCell, SimHashes.Steam, 1f, 393.15f, contentsI1.diseaseIdx, 0);
-					if (num2 > 0f)
-					{
-						flowManager.RemoveElement(this.inputCell1, 0.111999989f);
-						flowManager.RemoveElement(this.inputCell2, 0.888f);
-					}
-				}
+					damage = 1,
+					source = STRINGS.BUILDINGS.DAMAGESOURCES.BAD_INPUT_ELEMENT,
+					popString = STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.WRONG_ELEMENT
+				});
+				gasFlow.RemoveElement(this.inputCell1, 0.111999989f);
+				gasFlow.RemoveElement(this.inputCell2, 0.888f);
 			}
+			else
+			{
+                if (contentsI1.mass > 0.111999989f
+                    && contentsI2.mass > 0.888f
+                    && contentsO.mass <= 0f)
+                {
+                    value = true;
+                    //float num2 = flowManager.AddElement(num, contents.element, contents.mass, contents.temperature, contents.diseaseIdx, contents.diseaseCount);
+                    float outputTemperature = contentsI1.temperature * 0.111999989f + contentsI2.temperature * 0.888f;
+                    //Debug.Log("outputTemperature: " + outputTemperature);
+                    ConduitFlow liquidFlow = Conduit.GetFlowManager(ConduitType.Liquid);
+                    float num2 = liquidFlow.AddElement(this.outputCell, SimHashes.Water, 1f, outputTemperature, contentsI1.diseaseIdx, 0);
+                    if (num2 > 0f)
+                    {
+                        gasFlow.RemoveElement(this.inputCell1, 0.111999989f);
+                        gasFlow.RemoveElement(this.inputCell2, 0.888f);
+                    }
+                }
+                
+			}
+			
 		}
 		this.operational.SetActive(value, false);
 	}

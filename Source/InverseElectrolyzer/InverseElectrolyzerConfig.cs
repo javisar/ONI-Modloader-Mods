@@ -11,9 +11,6 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 {
 	public const string ID = "InverseElectrolyzer";
 
-	private const float CO2_CONSUMPTION_RATE = 0.3f;
-
-	private const float H2O_CONSUMPTION_RATE = 1f;
 
 	private static readonly LogicPorts.Port[] INPUT_PORTS = new LogicPorts.Port[1]
 	{
@@ -39,9 +36,9 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 		buildingDef.RequiresPowerInput = true;
 		buildingDef.EnergyConsumptionWhenActive = 120f;
 		buildingDef.ExhaustKilowattsWhenActive = 0f;
-		buildingDef.SelfHeatKilowattsWhenActive = 4f;
+		buildingDef.SelfHeatKilowattsWhenActive = 1f;
 		buildingDef.InputConduitType = ConduitType.Gas;
-		buildingDef.OutputConduitType = ConduitType.Gas;
+		buildingDef.OutputConduitType = ConduitType.Liquid;
 		buildingDef.ViewMode = OverlayModes.GasConduits.ID;
 		buildingDef.MaterialCategory = MATERIALS.ALL_METALS;
 		buildingDef.AudioCategory = "HollowMetal";
@@ -64,7 +61,7 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 
 		InverseElectrolyzer airFilter = go.AddOrGet<InverseElectrolyzer>();
-		airFilter.filterTag = GameTagExtensions.Create(SimHashes.Hydrogen);
+		airFilter.filterTag = GameTagExtensions.Create(SimHashes.Oxygen);
 		airFilter.portInfo = this.secondaryInputPort;
 		
 	}
