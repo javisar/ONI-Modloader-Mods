@@ -41,14 +41,15 @@ public class InverseElectrolyzer: KMonoBehaviour, ISaveLoadable, ISecondaryInput
 		base.OnSpawn();
 		//base.smi.StartSM();
 
-		this.inputCell = this.building.GetUtilityInputCell();
+		this.inputCell1 = this.building.GetUtilityInputCell();
 		this.outputCell = this.building.GetUtilityOutputCell();
 		int cell = Grid.PosToCell(base.transform.GetPosition());
 		CellOffset rotatedOffset = this.building.GetRotatedOffset(this.portInfo.offset);
-		this.sInputCell = Grid.OffsetCell(cell, rotatedOffset);
+		this.inputCell2 = Grid.OffsetCell(cell, rotatedOffset);
+
 		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(this.portInfo.conduitType);
-		this.itemSInput = new FlowUtilityNetwork.NetworkItem(this.portInfo.conduitType, Endpoint.Sink, this.sInputCell, base.gameObject);
-		networkManager.AddToNetworks(this.sInputCell, this.itemSInput, true);
+		this.itemInput2 = new FlowUtilityNetwork.NetworkItem(this.portInfo.conduitType, Endpoint.Sink, this.inputCell2, base.gameObject);
+		networkManager.AddToNetworks(this.inputCell2, this.itemInput2, true);
 		base.GetComponent<ConduitConsumer>().isConsuming = false;
 		//this.OnFilterChanged(ElementLoader.FindElementByHash(this.filteredElem).tag);
 		//this.filterable.onFilterChanged += this.OnFilterChanged;
@@ -65,22 +66,22 @@ public class InverseElectrolyzer: KMonoBehaviour, ISaveLoadable, ISecondaryInput
 
 	//private Tag filteredTag = GameTags.Oxygen;
 
-	private int inputCell = -1;
+	private int inputCell1 = -1;
+
+	private int inputCell2 = -1;
 
 	private int outputCell = -1;
 
-	private int sInputCell = -1;
+	private FlowUtilityNetwork.NetworkItem itemInput1;
 
-	private FlowUtilityNetwork.NetworkItem itemInput;
+	private FlowUtilityNetwork.NetworkItem itemInput2;
 
 	private FlowUtilityNetwork.NetworkItem itemOutput;
-
-	private FlowUtilityNetwork.NetworkItem itemSInput;
 
 	protected override void OnCleanUp()
 	{
 		IUtilityNetworkMgr networkManager = Conduit.GetNetworkManager(this.portInfo.conduitType);
-		networkManager.RemoveFromNetworks(this.sInputCell, this.itemSInput, true);
+		networkManager.RemoveFromNetworks(this.inputCell2, this.itemInput2, true);
 		ConduitFlow flowManager = Conduit.GetFlowManager(this.portInfo.conduitType);
 		flowManager.RemoveConduitUpdater(this.OnConduitTick);
 		base.OnCleanUp();
@@ -94,15 +95,16 @@ public class InverseElectrolyzer: KMonoBehaviour, ISaveLoadable, ISecondaryInput
 		{
 			ConduitFlow flowManager = Conduit.GetFlowManager(this.portInfo.conduitType);
 
-			ConduitFlow.ConduitContents contents = flowManager.GetContents(this.inputCell);
+			ConduitFlow.ConduitContents contentsI1 = flowManager.GetContents(this.inputCell1);
+			ConduitFlow.ConduitContents contentsI2 = flowManager.GetContents(this.inputCell2);
+
 			//int num = (contents.element != this.filteredElem) ? this.outputCell : this.filteredCell;
 			ConduitFlow.ConduitContents contentsO = flowManager.GetContents(this.outputCell);
-			ConduitFlow.ConduitContents contents2 = flowManager.GetContents(this.sInputCell);
-			if (contents.mass > 0.111999989f
-				&& contents2.mass > 0.888f
+			if (contentsI1.mass > 0.111999989f
+				&& contentsI2.mass > 0.888f
 				&& contentsO.mass <= 0f)
 			{
-				if (contents.element != SimHashes.Hydrogen || contents2.element != SimHashes.Oxygen)
+				if (contentsI1.element != SimHashes.Hydrogen || contentsI2.element != SimHashes.Oxygen)
 				{
 					base.Trigger(-794517298, new BuildingHP.DamageSourceInfo
 					{
@@ -110,18 +112,18 @@ public class InverseElectrolyzer: KMonoBehaviour, ISaveLoadable, ISecondaryInput
 						source = STRINGS.BUILDINGS.DAMAGESOURCES.BAD_INPUT_ELEMENT,
 						popString = STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.WRONG_ELEMENT
 					});
-					flowManager.RemoveElement(this.inputCell, 0.111999989f);
-					flowManager.RemoveElement(this.sInputCell, 0.888f);
+					flowManager.RemoveElement(this.inputCell1, 0.111999989f);
+					flowManager.RemoveElement(this.inputCell2, 0.888f);
 				}
 				else
 				{
 					value = true;
 					//float num2 = flowManager.AddElement(num, contents.element, contents.mass, contents.temperature, contents.diseaseIdx, contents.diseaseCount);
-					float num2 = flowManager.AddElement(this.outputCell, SimHashes.Steam, 1f, 523.15f, contents.diseaseIdx, 0);
+					float num2 = flowManager.AddElement(this.outputCell, SimHashes.Steam, 1f, 393.15f, contentsI1.diseaseIdx, 0);
 					if (num2 > 0f)
 					{
-						flowManager.RemoveElement(this.inputCell, 0.111999989f);
-						flowManager.RemoveElement(this.sInputCell, 0.888f);
+						flowManager.RemoveElement(this.inputCell1, 0.111999989f);
+						flowManager.RemoveElement(this.inputCell2, 0.888f);
 					}
 				}
 			}

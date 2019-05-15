@@ -20,7 +20,7 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 		LogicPorts.Port.InputPort(LogicOperationalController.PORT_ID, new CellOffset(-1, 0), UI.LOGIC_PORTS.CONTROL_OPERATIONAL,UI.LOGIC_PORTS.CONTROL_OPERATIONAL_ACTIVE,UI.LOGIC_PORTS.CONTROL_OPERATIONAL_INACTIVE, false)
 	};
 
-	private ConduitPortInfo secondaryInputPort = new ConduitPortInfo(ConduitType.Gas, new CellOffset(0, 0));
+	private ConduitPortInfo secondaryInputPort = new ConduitPortInfo(ConduitType.Gas, new CellOffset(-1, 0));
 
 	public override BuildingDef CreateBuildingDef()
 	{

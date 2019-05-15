@@ -15,8 +15,8 @@ namespace InverseElectrolyzerMod
 			//Debug.Log(" === GeneratedBuildings Prefix === " + InverseElectrolyzerConfig.ID);
 
 			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.NAME", "Inverse Electrolyzer");
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.DESC", "Hydrogen and oxygen goes in, water comes out");
-			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.EFFECT", "Converts " + STRINGS.UI.FormatAsLink("Oxygen", "OXYGEN") + " and " + STRINGS.UI.FormatAsLink("Hydrogen", "HYDROGEN") + " into " + STRINGS.UI.FormatAsLink("Water", "WATER") + ".\n\nGets oxygen from an input.");
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.DESC", "Hydrogen and oxygen goes in, water in the form of steam comes out");
+			Strings.Add("STRINGS.BUILDINGS.PREFABS.INVERSEELECTROLYZER.EFFECT", "Converts " + STRINGS.UI.FormatAsLink("Oxygen", "OXYGEN") + " and " + STRINGS.UI.FormatAsLink("Hydrogen", "HYDROGEN") + " into " + STRINGS.UI.FormatAsLink("Steam", "STEAM") + ".");
 
 			ModUtil.AddBuildingToPlanScreen("Utilities", InverseElectrolyzerConfig.ID);
 
