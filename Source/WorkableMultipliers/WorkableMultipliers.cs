@@ -4,25 +4,6 @@ using Harmony;
 namespace WorkableMultipliersMod
 {
 
-	[HarmonyPatch(typeof(Game), "OnPrefabInit")]
-	internal class WorkableMultipliersMod_Game_OnPrefabInit
-	{
-		private static void Postfix(Game __instance)
-		{
-			//Debug.Log(" === WorkableMultipliersMod_Game_OnPrefabInit Postfix === ");
-			if(!WorkableMultipliersConfig.Instance.Enabled) return;
-
-			if (WorkableMultipliersConfig.Instance.Logging)
-			{
-				Debug.Log(" === WorkableMultipliersMod_Game_OnPrefabInit === 'Workable' Derived Types:");
-				foreach (Type tp in WorkableMultipliersUtils.WorkableSubTypes)
-				{
-					Debug.Log(tp.FullName);
-				}
-			}
-		}
-	}
-
 	[HarmonyPatch(typeof(Workable), "GetEfficiencyMultiplier", new[] { typeof(Worker) })]
     internal static class WorkableMultipliersMod_Workable_GetEfficiencyMultiplier
 	{
@@ -32,29 +13,6 @@ namespace WorkableMultipliersMod
 			//Debug.Log(" === WorkEditorMod_Constructable_GetEfficiencyMultiplier === " + __instance.GetType().ToString());
 
 			__result = WorkableMultipliersUtils.GetMultiplier("EfficiencyMultiplier", __result, __instance);			
-			
-			/*
-			
-			*/
-
-			/*
-			foreach (var workable in WorkableMultipliersConfig.Config.Workables)
-			{
-				//Debug.Log("workable.Key: "+ workable.Key);
-				Type type = AccessTools.TypeByName(workable.Key);
-				//Debug.Log("type: " + type);
-				if (WorkableMultipliersMod_Utils.WorkableSubTypes.Contains(type)) {
-					//Debug.Log("__instance.GetType(): "+ __instance.GetType());
-					if (__instance.GetType() == type)
-					{
-						Debug.Log("workable.Value[EfficiencyMultiplier]: " + workable.Value["EfficiencyMultiplier"]);
-						__result = workable.Value["EfficiencyMultiplier"];
-					}
-				}
-			}
-			*/
-
-			//Debug.Log("__instance.GetType(): " + __instance.GetType());
 
 		}		
 	}
@@ -78,13 +36,33 @@ namespace WorkableMultipliersMod
 		{
 			if (!WorkableMultipliersConfig.Instance.Enabled) return;
 			//Debug.Log(" === WorkEditorMod_Constructable_GetSkillExperienceMultiplier === " + __instance.GetType().ToString());
-
-			__result = WorkableMultipliersUtils.GetMultiplier("SkillExperienceMultiplier", __result, __instance);
-		}
+            
+            __result = WorkableMultipliersUtils.GetMultiplier("SkillExperienceMultiplier", __result, __instance);
+    
+        }
 	}
 
 
-	/*
+    [HarmonyPatch(typeof(Game), "OnPrefabInit")]
+    internal class WorkableMultipliersMod_Game_OnPrefabInit
+    {
+        private static void Postfix(Game __instance)
+        {
+            //Debug.Log(" === WorkableMultipliersMod_Game_OnPrefabInit Postfix === ");
+            if (!WorkableMultipliersConfig.Instance.Enabled) return;
+
+            if (WorkableMultipliersConfig.Instance.Logging)
+            {
+                Debug.Log(" === WorkableMultipliersMod_Game_OnPrefabInit === 'Workable' Derived Types:");
+                foreach (Type tp in WorkableMultipliersUtils.WorkableSubTypes)
+                {
+                    Debug.Log(tp.FullName);
+                }
+            }
+        }
+    }
+
+    /*
     [HarmonyPatch(typeof(Database.AttributeConverters), "Create", new Type[] { typeof(string), typeof(string), typeof(string), typeof(Klei.AI.Attribute), typeof(float), typeof(float), typeof(IAttributeFormatter) })]
     internal class InstantDigAndBuildMod
     {
@@ -99,4 +77,28 @@ namespace WorkableMultipliersMod
         }
     }
     */
+
+    /*
+    [HarmonyPatch(typeof(MinionResume), "GetAptitudeExperienceMultiplier", new Type[] {typeof(HashedString),typeof(float) })]
+    internal static class MinionResumeMod_GetAptitudeExperienceMultiplier_GetSkillExperienceMultiplier
+    {
+        private static void Postfix(MinionResume __instance, ref float __result, HashedString skillGroupId, float buildingFrequencyMultiplier)
+        {
+            Debug.Log(" === WorkEditorMod_Constructable_GetSkillExperienceMultiplier === " + __instance.GetType().ToString());
+            Debug.Log(" __result = " + __result);
+            Debug.Log(" buildingFrequencyMultiplier = " + buildingFrequencyMultiplier);
+
+
+            float value = 0f;
+            __instance.AptitudeBySkillGroup.TryGetValue(skillGroupId, out value);
+            float total = 1f + value * TUNING.SKILLS.APTITUDE_EXPERIENCE_MULTIPLIER * buildingFrequencyMultiplier;
+            Debug.Log(" value = " + value);
+            Debug.Log(" TUNING.SKILLS.APTITUDE_EXPERIENCE_MULTIPLIER = " + TUNING.SKILLS.APTITUDE_EXPERIENCE_MULTIPLIER);
+            Debug.Log(" buildingFrequencyMultiplier = " + value);
+            Debug.Log(" total = " + total);
+        }
+    }
+    */
+
+
 }

@@ -1,18 +1,18 @@
 {
     "Enabled": true,
-    "Logging": false,
+    "Logging": false,		// If true, dumps to the output log the List of Workable subclasses
 
     "Workables": {
         "Constructable": {
-            "AttributeExperienceMultiplier": 1.0,
-            "EfficiencyMultiplier": 10.0,
-            "SkillExperienceMultiplier": 1.0
+            "AttributeExperienceMultiplier": 10.0,
+            "EfficiencyMultiplier": 2.0,
+            "SkillExperienceMultiplier": 10.0
         },
         "Diggable": {
-            "AttributeExperienceMultiplier": 1.0,
-            "EfficiencyMultiplier": 10.0,
-            "SkillExperienceMultiplier": 1.0
-        },        
+            "AttributeExperienceMultiplier": 10.0,
+            "EfficiencyMultiplier": 2.0,
+            "SkillExperienceMultiplier": 10.0
+        },		
         "Artable": {
 			"AttributeExperienceMultiplier": 1.0,
 			"EfficiencyMultiplier": 1.0,
@@ -272,12 +272,8 @@
 			"AttributeExperienceMultiplier": 1.0,
 			"EfficiencyMultiplier": 1.0,
 			"SkillExperienceMultiplier": 1.0
-		},
-        "TravelTubeEntrance+Work": {
-			"AttributeExperienceMultiplier": 1.0,
-			"EfficiencyMultiplier": 1.0,
-			"SkillExperienceMultiplier": 1.0
-		},
+		},		
+        //"TravelTubeEntrance+Work": { }	// DO NOT USE
         "Valve": {
 			"AttributeExperienceMultiplier": 1.0,
 			"EfficiencyMultiplier": 1.0,
@@ -397,6 +393,6 @@
 			"AttributeExperienceMultiplier": 1.0,
 			"EfficiencyMultiplier": 1.0,
 			"SkillExperienceMultiplier": 1.0
-		}        
+		}		
     }
 }

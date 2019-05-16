@@ -54,7 +54,8 @@ namespace WorkableMultipliersMod
 
 		public static List<Type> FindAllDerivedTypes(Type type)
 		{
-			var derivedTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+            //https://stackoverflow.com/questions/857705/get-all-derived-types-of-a-type
+            var derivedTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
 								from assemblyType in domainAssembly.GetTypes()
 								where type.IsAssignableFrom(assemblyType)
 								select assemblyType);
