@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkableEditor", "WorkableEditor\WorkableEditor.csproj", "{FF9011A6-FD08-45B5-AB3E-195C9C804AF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkableMultipliers", "WorkableMultipliers\WorkableMultipliers.csproj", "{FF9011A6-FD08-45B5-AB3E-195C9C804AF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeedControl", "SpeedControl\SpeedControl.csproj", "{77E7922A-306F-45E5-B572-FCDB9BA99374}"
 EndProject

@@ -1,21 +1,21 @@
 ﻿using System;
 using Harmony;
 
-namespace WorkableEditorMod
+namespace WorkableMultipliersMod
 {
 
 	[HarmonyPatch(typeof(Game), "OnPrefabInit")]
-	internal class WorkableEditorMod_Game_OnPrefabInit
+	internal class WorkableMultipliersMod_Game_OnPrefabInit
 	{
 		private static void Postfix(Game __instance)
 		{
-			//Debug.Log(" === WorkableEditorMod_Game_OnPrefabInit Postfix === ");
-			if(!WorkableEditorConfig.Instance.Enabled) return;
+			//Debug.Log(" === WorkableMultipliersMod_Game_OnPrefabInit Postfix === ");
+			if(!WorkableMultipliersConfig.Instance.Enabled) return;
 
-			if (WorkableEditorConfig.Instance.Logging)
+			if (WorkableMultipliersConfig.Instance.Logging)
 			{
-				Debug.Log(" === WorkableEditorMod_Game_OnPrefabInit === 'Workable' Derived Types:");
-				foreach (Type tp in WorkableEditorUtils.WorkableSubTypes)
+				Debug.Log(" === WorkableMultipliersMod_Game_OnPrefabInit === 'Workable' Derived Types:");
+				foreach (Type tp in WorkableMultipliersUtils.WorkableSubTypes)
 				{
 					Debug.Log(tp.FullName);
 				}
@@ -24,26 +24,26 @@ namespace WorkableEditorMod
 	}
 
 	[HarmonyPatch(typeof(Workable), "GetEfficiencyMultiplier", new[] { typeof(Worker) })]
-    internal static class WorkableEditorMod_Workable_GetEfficiencyMultiplier
+    internal static class WorkableMultipliersMod_Workable_GetEfficiencyMultiplier
 	{
         private static void Postfix(Workable __instance, Worker worker, ref float __result)
         {
-			if (!WorkableEditorConfig.Instance.Enabled) return;
+			if (!WorkableMultipliersConfig.Instance.Enabled) return;
 			//Debug.Log(" === WorkEditorMod_Constructable_GetEfficiencyMultiplier === " + __instance.GetType().ToString());
 
-			__result = WorkableEditorUtils.GetMultiplier("EfficiencyMultiplier", __result, __instance);			
+			__result = WorkableMultipliersUtils.GetMultiplier("EfficiencyMultiplier", __result, __instance);			
 			
 			/*
 			
 			*/
 
 			/*
-			foreach (var workable in WorkableEditorConfig.Config.Workables)
+			foreach (var workable in WorkableMultipliersConfig.Config.Workables)
 			{
 				//Debug.Log("workable.Key: "+ workable.Key);
 				Type type = AccessTools.TypeByName(workable.Key);
 				//Debug.Log("type: " + type);
-				if (WorkableEditorMod_Utils.WorkableSubTypes.Contains(type)) {
+				if (WorkableMultipliersMod_Utils.WorkableSubTypes.Contains(type)) {
 					//Debug.Log("__instance.GetType(): "+ __instance.GetType());
 					if (__instance.GetType() == type)
 					{
@@ -60,26 +60,26 @@ namespace WorkableEditorMod
 	}
 
 	[HarmonyPatch(typeof(Workable), "GetAttributeExperienceMultiplier", new Type[] {  })]
-	internal static class WorkableEditorMod_Workable_GetAttributeExperienceMultiplier
+	internal static class WorkableMultipliersMod_Workable_GetAttributeExperienceMultiplier
 	{
 		private static void Postfix(Workable __instance, ref float __result)
 		{
-			if (!WorkableEditorConfig.Instance.Enabled) return;
+			if (!WorkableMultipliersConfig.Instance.Enabled) return;
 			//Debug.Log(" === WorkEditorMod_Constructable_GetAttributeExperienceMultiplier === " + __instance.GetType().ToString());
 
-			__result = WorkableEditorUtils.GetMultiplier("AttributeExperienceMultiplier", __result, __instance);			
+			__result = WorkableMultipliersUtils.GetMultiplier("AttributeExperienceMultiplier", __result, __instance);			
 		}
 	}
 
 	[HarmonyPatch(typeof(Workable), "GetSkillExperienceMultiplier", new Type[] {  })]
-	internal static class WorkableEditorMod_Workable_GetSkillExperienceMultiplier
+	internal static class WorkableMultipliersMod_Workable_GetSkillExperienceMultiplier
 	{
 		private static void Postfix(Workable __instance, ref float __result)
 		{
-			if (!WorkableEditorConfig.Instance.Enabled) return;
+			if (!WorkableMultipliersConfig.Instance.Enabled) return;
 			//Debug.Log(" === WorkEditorMod_Constructable_GetSkillExperienceMultiplier === " + __instance.GetType().ToString());
 
-			__result = WorkableEditorUtils.GetMultiplier("SkillExperienceMultiplier", __result, __instance);
+			__result = WorkableMultipliersUtils.GetMultiplier("SkillExperienceMultiplier", __result, __instance);
 		}
 	}
 

@@ -8,14 +8,6 @@ using static RoomConstraints;
 namespace RoomSize
 {
 
-    internal class RoomSizeMod_OnLoad
-    {
-        public static void OnLoad(string modPath)
-        {
-            RoomSizeConfig.LoadConfig(modPath);
-        }
-    }
-
 
     [HarmonyPatch(typeof(Game),"OnPrefabInit")]
     internal class RoomSizeMod_Game_OnPrefabInit
@@ -37,7 +29,7 @@ namespace RoomSize
             Debug.Log(" === RoomSizeMod_RoomProber Postfix === Original Max. Room Size: "+ TuningData<RoomProber.Tuning>.Get().maxRoomSize);            
             //RoomProber.MaxRoomSize = 1024;
             //RoomProber.MaxRoomSize = RoomSizeState.StateManager.State.OverallMaximumRoomSize;
-            TuningData<RoomProber.Tuning>.Get().maxRoomSize = RoomSizeConfig.Config.OverallMaximumRoomSize;
+            TuningData<RoomProber.Tuning>.Get().maxRoomSize = RoomSizeConfig.Instance.OverallMaximumRoomSize;
             Debug.Log(" === RoomSizeMod_RoomProber Postfix === New Max. Room Size: " + TuningData<RoomProber.Tuning>.Get().maxRoomSize);
         }
     }
@@ -90,7 +82,7 @@ namespace RoomSize
 			ChangeRoomMaximumSize(__instance.RecRoom,			MAXIMUM_SIZE_128);
             */
             //foreach (KeyValuePair<string, int> entry in RoomSizeStateManager.ConfiguratorState.MaximumRoomSizes)
-            foreach (KeyValuePair<string, int> entry in RoomSizeConfig.Config.MaximumRoomSizes)
+            foreach (KeyValuePair<string, int> entry in RoomSizeConfig.Instance.MaximumRoomSizes)
             {
                 try
                 {
@@ -111,10 +103,18 @@ namespace RoomSize
         }
 	}
 
+	/*
+	internal class RoomSizeMod_OnLoad
+	{
+		public static void OnLoad(string modPath)
+		{
+			RoomSizeConfig.LoadConfig(modPath);
+		}
+	}
+	*/
 
-    
 
-    /*
+	/*
 	public static class RoomSizeModData
 	{
 		//public static List<PacketData> LiquidPackets = new List<PacketData>();

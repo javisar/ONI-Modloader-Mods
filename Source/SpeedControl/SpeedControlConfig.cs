@@ -16,34 +16,14 @@ namespace SpeedControl
 
 
 
-        public static SpeedControlConfig Config = null;
-        public static void LoadConfig(string modPath) { Config = LoadConfig<SpeedControlConfig>(Path.Combine(modPath, "Config/SpeedControlConfig.json"));  }
-        
-
-        protected static T LoadConfig<T>(string path)
-        {
-			Debug.Log("Loading Config from: " + path);
-			try
+		// Load Config		
+		public static SpeedControlConfig Instance
+		{
+			get
 			{
-				JsonSerializer serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings { Formatting = Formatting.Indented, ObjectCreationHandling = ObjectCreationHandling.Replace });
-				T result;
-				using (StreamReader streamReader = new StreamReader(path))
-				{
-					using (JsonTextReader jsonReader = new JsonTextReader(streamReader))
-					{
-						result = serializer.Deserialize<T>(jsonReader);
-						jsonReader.Close();
-					}
-					streamReader.Close();
-				}
-				return result;
+				return ConfigUtils<SpeedControlConfig>.LoadConfig("Config", "SpeedControlConfig.json");
 			}
-			catch (Exception ex)
-			{
-				Debug.LogError(ex);
-				return (T) Activator.CreateInstance(typeof(T));
+		}
+		
 	}
-}
-
-    }
 }

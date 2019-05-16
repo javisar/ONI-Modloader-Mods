@@ -7,8 +7,8 @@
     <ProjectGuid>{FF9011A6-FD08-45B5-AB3E-195C9C804AF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorkableEditor</RootNamespace>
-    <AssemblyName>WorkableEditor</AssemblyName>
+    <RootNamespace>WorkableMultipliers</RootNamespace>
+    <AssemblyName>WorkableMultipliers</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -29,7 +29,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Mods\WorkableEditor\</OutputPath>
+    <OutputPath>..\..\Mods\WorkableMultipliers\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,8 +53,9 @@
     </PluginReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WorkableEditor.cs" />
-    <Compile Include="WorkableEditorConfig.cs" />
+    <Compile Include="ConfigUtils.cs" />
+    <Compile Include="WorkableMultipliers.cs" />
+    <Compile Include="WorkableMultipliersConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +78,7 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\UnityEngine.dll</HintPath>
@@ -94,7 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config\WorkableEditorConfig.json">
+    <None Include="Config\WorkableMultipliersConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -103,7 +105,7 @@
     <Content Include="Config\WorkableList.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Compile Include="WorkableEditorUtils.cs" />
+    <Compile Include="WorkableMultipliersUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
