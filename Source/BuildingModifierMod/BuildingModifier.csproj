@@ -7,8 +7,8 @@
     <ProjectGuid>{AE64BD07-9B27-4E16-9767-DD7894F70806}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildingModifierMod</RootNamespace>
-    <AssemblyName>BuildingModifierMod</AssemblyName>
+    <RootNamespace>BuildingModifier</RootNamespace>
+    <AssemblyName>BuildingModifier</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -60,6 +60,9 @@
   <ItemGroup>
     <Compile Include="AggregateStateManager.cs" />
     <Compile Include="BuildingModifierMod.cs" />
+    <None Include="Config\Examples\TravelTubes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Config\Examples\Wires.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -121,41 +124,21 @@
     <None Include="Config\BuildingModifierState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Config\Modifiers\Batteries.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\MoreMaterials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\Canvas.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\Reservoirs.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\Storage.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\Vents.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\Sensors.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\Doors.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Modifiers\Generators.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Config\Modifiers\Batteries.json" />
+    <None Include="Config\Modifiers\Canvas.json" />
+    <None Include="Config\Modifiers\Doors.json" />
+    <None Include="Config\Modifiers\Generators.json" />
+    <None Include="Config\Modifiers\MoreMaterials.json" />
+    <None Include="Config\Modifiers\Reservoirs.json" />
+    <None Include="Config\Modifiers\Sensors.json" />
+    <None Include="Config\Modifiers\Storage.json" />
+    <None Include="Config\Modifiers\Vents.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-xcopy "$(TargetDir.TrimEnd('\'))" "Z:\Applications\Steam Games\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
-
-xcopy "$(TargetDir.TrimEnd('\'))" "C:\Program Files (x86)\Steam\SteamApps\common\OxygenNotIncluded\Mods\$(ProjectName)" /Y /S /E /I
+xcopy "$(TargetDir.TrimEnd('\'))" "%25UserProfile%25\Documents\Klei\OxygenNotIncluded\mods\dev\$(ProjectName)" /Y /S /E /I
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
