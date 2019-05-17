@@ -1,0 +1,13 @@
+{
+
+    "Modifiers": {
+
+        "TravelTubeEntrance": {
+            "EnergyConsumptionWhenActive": 2000.0,
+            "TravelTubeEntrance": {
+                "joulesPerLaunch": 20000.0,
+                "jouleCapacity": 80000.0
+            }
+        }
+    }
+}
