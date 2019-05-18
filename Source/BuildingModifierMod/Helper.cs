@@ -13,7 +13,9 @@ namespace BuildingModifierMod
     {       
         public static HashSet<string> ModifiersAll = new HashSet<string>();
         public static HashSet<string> ModifiersFound = new HashSet<string>();
+        //private static HashSet<string> ModifiersRecheck = new HashSet<string>();
         public static BuildingModifierState Config = BuildingModifierState.StateManager.State;
+        private static string State = null;
 
 		public enum BuildingType
 		{
@@ -25,9 +27,11 @@ namespace BuildingModifierMod
 		};
 
         // Applies mod config to building attributes
-        public static void Process(BuildingDef def, GameObject go, BuildingType type = BuildingType.None)
+        public static void Process(string state, BuildingDef def, GameObject go, BuildingType type = BuildingType.None)
         {
-            Helper.Log(" === [BuildingModifier] Process === " + def.PrefabID);
+            State = state;
+            Helper.Log(" === [BuildingModifier] Process("+State+")=== " + def.PrefabID);
+
             bool error = false;
 
             ModifiersAll.Add(def.PrefabID);
@@ -71,11 +75,15 @@ namespace BuildingModifierMod
 								if (building != null)
 								{
                                     UnityEngine.Object _building = building;
-                                    ProcessObject(ref _building, def, modifier.Key, modifier);
+                                    bool allgood = ProcessObject(ref _building, def, modifier.Key, modifier);
 
 									Debug.Log(" === [BuildingModifier] Found: " + def.PrefabID + "_" + modifier.Key);
-									ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
-								}
+                                    if (allgood)
+                                        ModifiersFound.Add(def.PrefabID + "_" + modifier.Key);
+                                    else
+                                        error = true;
+
+                                }
 								else // def.Building
 								{
 									error = true;
@@ -143,15 +151,28 @@ namespace BuildingModifierMod
 
         }        
         
-        private static void ProcessObject(ref UnityEngine.Object go, BuildingDef buildingDef, String componentName, KeyValuePair<string, object> modifier)
+        private static bool ProcessObject(ref UnityEngine.Object go, BuildingDef buildingDef, String componentName, KeyValuePair<string, object> modifier)
         {
             Debug.Log(" === [BuildingModifier] ProcessObject === " + go.name+ " "+componentName);
-
+            Debug.Log(" State = " +State);
+            bool allgood = true;
             // For every component in the building
             foreach (JProperty x in (JToken)modifier.Value)
             {                
                 string name = x.Name;
                 JToken value = x.Value;
+                string state = name.Substring(name.IndexOf('[') + 1, name.IndexOf(']') - name.IndexOf('[') - 1);
+                Debug.Log("state = " + state);
+
+                if (name.IndexOf("[") >= 0)
+                {
+                    if (!state.Equals(State))
+                    {
+                        allgood = false;
+                        continue;
+                    }
+                }
+               
                 try
                 {
                     //Debug.Log(componentName + ", " + name + ": " + value.ToString());
@@ -179,24 +200,36 @@ namespace BuildingModifierMod
                             //ProcessComponent(ref _component, buildingDef, component.name, name, (JObject)value);
 
                             UnityEngine.Object _component =component;
-                            ProcessObject(ref _component, buildingDef, component.name, ((JObject)value).ToObject<KeyValuePair<string, object>>());
+                            allgood = allgood &
+                                ProcessObject(ref _component, buildingDef, component.name, ((JObject)value).ToObject<KeyValuePair<string, object>>());
                         }
                         else
                         {
                             Debug.Log(" === [BuildingModifier] Warning: JTokenType.Object Not implemented. " + component.name + "_" + component.name + "_" + name + ": " + value);
                         }
+
+                        Debug.Log(" === [BuildingModifier] Found: " + buildingDef.PrefabID + "_" + componentName + "_" + name);
+                        //if (name.IndexOf('[') >= 0 && name.IndexOf(']') >= 0)
+                        if (allgood)
+                            ModifiersFound.Add(buildingDef.PrefabID + "_" + componentName + "_" + name);
                     }
                     else
                     {
-						//Debug.Log("component: " + component);
-						//Debug.Log("x: " + x);
-						//Debug.Log("getType: " + Type.GetType(componentName + ", Assembly-CSharp"));
-						bool found = SetValue(component, x, Type.GetType(componentName + ", Assembly-CSharp"));
-						//Debug.Log("found: " + found);
-					}
-                    
-                    Debug.Log(" === [BuildingModifier] Found: " + buildingDef.PrefabID + "_" + componentName + "_" + name);
-                    ModifiersFound.Add(buildingDef.PrefabID + "_" + componentName + "_" + name);
+                        Debug.Log("component: " + component);
+                        Debug.Log("x: " + x);
+                        Debug.Log("getType: " + Type.GetType(componentName + ", Assembly-CSharp"));
+
+                        allgood = allgood & SetValue(component, x, Type.GetType(componentName + ", Assembly-CSharp"));
+                        Debug.Log("found: " + allgood);
+
+                        Debug.Log(" === [BuildingModifier] Found: " + buildingDef.PrefabID + "_" + componentName + "_" + name);
+                        //if (name.IndexOf('[') >= 0 && name.IndexOf(']') >= 0)
+                        if (allgood)
+                            ModifiersFound.Add(buildingDef.PrefabID + "_" + componentName + "_" + name);
+                        
+                     
+                    }
+             
                 }
                 catch (Exception ex)
                 {
@@ -205,12 +238,18 @@ namespace BuildingModifierMod
                     throw ex;
                 }
             }
+            return allgood;
 
         }
 
         private static bool SetValue(UnityEngine.Object component, JProperty property, Type type)
-        {
+        {            
             string name = property.Name;
+            if (name.IndexOf('[') >= 0 && name.IndexOf(']') >= 0)
+            {
+                name = name.Substring(0, name.IndexOf('['));
+            }
+
             JToken value = property.Value;
             if (value == null) Debug.Log(String.Format(" === [BuildingModifier] Warning: null value for property {0} while processing type {1}", property.Name, type.Name));
 

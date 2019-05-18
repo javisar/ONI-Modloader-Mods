@@ -4,22 +4,22 @@
 
         "Wire": { // Wire, HighWattageWire, WireRefined, WireRefinedHighWattage
             "Wire": {
-                "MaxWattageRating": "Wire+WattageRating.Max1000" //    Max500, Max1000, Max2000, Max20000, Max50000
+                "MaxWattageRating[DoPostConfigureComplete]": "Wire+WattageRating.Max20000" //    Max500, Max1000, Max2000, Max20000, Max50000
             }
         },
         "HighWattageWire": {
             "Wire": {
-                "MaxWattageRating": "Wire+WattageRating.Max20000"
+                "MaxWattageRating[DoPostConfigureComplete]": "Wire+WattageRating.Max20000"
             }
         },
         "WireRefined": {
             "Wire": {
-                "MaxWattageRating": "Wire+WattageRating.Max2000"
+                "MaxWattageRating[DoPostConfigureComplete]": "Wire+WattageRating.Max20000"
             }
         },
         "WireRefinedHighWattage": {
             "Wire": {
-                "MaxWattageRating": "Wire+WattageRating.Max20000"
+                "MaxWattageRating[DoPostConfigureComplete]": "Wire+WattageRating.Max20000"
             }
         }
     }

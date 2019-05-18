@@ -124,15 +124,36 @@
     <None Include="Config\BuildingModifierState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Config\Modifiers\Batteries.json" />
-    <None Include="Config\Modifiers\Canvas.json" />
-    <None Include="Config\Modifiers\Doors.json" />
-    <None Include="Config\Modifiers\Generators.json" />
-    <None Include="Config\Modifiers\MoreMaterials.json" />
-    <None Include="Config\Modifiers\Reservoirs.json" />
-    <None Include="Config\Modifiers\Sensors.json" />
-    <None Include="Config\Modifiers\Storage.json" />
-    <None Include="Config\Modifiers\Vents.json" />
+    <None Include="Config\Modifiers\Batteries.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Canvas.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Doors.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Generators.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\MoreMaterials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Reservoirs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Sensors.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Storage.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Vents.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\Modifiers\Wires.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
