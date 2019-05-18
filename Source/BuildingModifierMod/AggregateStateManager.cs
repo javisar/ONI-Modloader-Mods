@@ -6,26 +6,40 @@ using System.Linq;
 namespace BuildingModifierMod
 {
 
-	public class AggregateStateManager : BaseStateManager<BuildingModifierState>
+	public class AggregateStateManager
 	{
 		private String name;
 
-		private BuildingModifierState _state;
+        public readonly string StateFilePath;
 
-		new public BuildingModifierState State
+        public readonly JsonManager JsonLoader;
+
+
+        public AggregateStateManager(string name)
+        {
+            this.name = name;
+            this.StateFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "Config" + Path.DirectorySeparatorChar + name + "State.json";
+            //IOHelper.EnsureDirectoryExists(Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "_Logs");
+            //this.Logger = new ONI_Common.IO.Logger(Paths.GetLogsPath() + System.IO.Path.DirectorySeparatorChar + name + "Log.txt");
+            this.JsonLoader = new JsonManager();
+        }
+
+
+        private BuildingModifierState _state;
+
+		public BuildingModifierState State
 		{
 			get
 			{
-				if (_state != null)
-				{
-					return _state;
-				}
+
+				if (_state != null) return _state;
+				
                 Debug.Log("Loading: " + this.StateFilePath);
 				
 				if (!File.Exists(this.StateFilePath))
 				{
                     Debug.Log(this.StateFilePath + " not found. Creating a default config file...");
-					IOHelper.EnsureDirectoryExists(new FileInfo(this.StateFilePath).Directory.FullName);
+					EnsureDirectoryExists(new FileInfo(this.StateFilePath).Directory.FullName);
 
 					JsonLoader.TrySaveConfiguration(this.StateFilePath, (BuildingModifierState)Activator.CreateInstance(typeof(BuildingModifierState)));
 				}
@@ -42,7 +56,7 @@ namespace BuildingModifierMod
 
 					try
 					{
-						BuildingModifierState config = JsonLoader.GetJsonManager().Deserialize<BuildingModifierState>(file);
+						BuildingModifierState config = JsonLoader.Deserialize<BuildingModifierState>(file);
                         //Debug.Log("config.Modifiers.Count =" + config.Modifiers.Count);
                         // Append config, ignore duplicates
                         /*
@@ -89,28 +103,9 @@ namespace BuildingModifierMod
 				_state = value;
 			}
 		}
+	
 
-
-		new public bool TryReloadConfiguratorState()
-		{
-			BuildingModifierState state;
-			if (!JsonLoader.TryLoadConfiguration(this.StateFilePath, out state))
-			{
-				return false;
-			}
-
-			State = state;
-			return true;
-		}
-
-
-		public AggregateStateManager(string name) : base(name)
-		{
-			this.name = name;
-		}	
-
-		
-		public static IEnumerable<string> GetJsonFiles(string path)
+        public static IEnumerable<string> GetJsonFiles(string path)
 		{
 			string[] files = null;
 			Queue<string> queue = new Queue<string>();
@@ -146,5 +141,15 @@ namespace BuildingModifierMod
 			}
 		}
 
-	}
+
+
+        public static void EnsureDirectoryExists(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+    }
+
 }

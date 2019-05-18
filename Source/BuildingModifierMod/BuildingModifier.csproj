@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AggregateStateManager.cs" />
-    <Compile Include="BaseStateManager.cs" />
+    <None Include="BaseStateManager.cs.bak" />
     <Compile Include="BuildingModifierMod.cs" />
     <None Include="Config\Examples\TravelTubes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -71,8 +71,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="Helper.cs" />
-    <Compile Include="IOHelper.cs" />
-    <Compile Include="JsonFileManager.cs" />
+    <None Include="JsonFileManager.cs.bak" />
     <Compile Include="JsonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BuildingModifierState.cs" />

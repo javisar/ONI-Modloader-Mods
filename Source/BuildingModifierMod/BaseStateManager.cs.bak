@@ -1,0 +1,40 @@
+﻿using System;
+using System.IO;
+
+namespace BuildingModifierMod
+{
+
+    public class BaseStateManager<T>
+    {
+		public readonly string StateFilePath;
+
+		public readonly JsonFileManager JsonLoader;
+
+        
+        public static void EnsureDirectoryExists(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+
+        public BaseStateManager(string name)
+        {
+            this.StateFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "Config" + Path.DirectorySeparatorChar + name + "State.json";
+            //IOHelper.EnsureDirectoryExists(Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "_Logs");
+            //this.Logger = new ONI_Common.IO.Logger(Paths.GetLogsPath() + System.IO.Path.DirectorySeparatorChar + name + "Log.txt");
+			this.JsonLoader = new JsonFileManager(new JsonManager());
+        }
+        
+        /*
+        public BaseStateManager(string configFileName, string logFilePath)
+        {
+            this.StateFilePath = configFileName;
+			//this.Logger = new ONI_Common.IO.Logger(logFilePath);
+			this.JsonLoader = new JsonFileManager(new JsonManager());
+        }
+        */
+    }
+}

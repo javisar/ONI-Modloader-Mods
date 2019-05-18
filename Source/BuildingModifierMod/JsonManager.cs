@@ -1,6 +1,7 @@
 ﻿namespace BuildingModifierMod
 {
     using Newtonsoft.Json;
+    using System;
     using System.IO;
 
     public class JsonManager
@@ -26,8 +27,8 @@
 
             return result;
         }
-        /*
-        public void Serialize(object value, string path)
+        
+        public void Serialize<T>(T value, string path)
         {
             using (StreamWriter streamReader = new StreamWriter(path))
             {
@@ -41,19 +42,43 @@
                 streamReader.Close();
             }
         }
-        */
-        public void Serialize<T>(T value, string path)
+
+        public bool TryLoadConfiguration<T>(string path, out T state)
         {
-            using (StreamWriter streamReader = new StreamWriter(path))
+            try
             {
-                using (JsonTextWriter jsonReader = new JsonTextWriter(streamReader))
-                {
-                    this.Serializer.Serialize(jsonReader, value);
+                state = Deserialize<T>(path);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                const string Message = "Can't load configurator state.";
 
-                    jsonReader.Close();
-                }
 
-                streamReader.Close();
+                Debug.Log(Message);
+                Debug.LogException(ex);
+
+                state = (T)Activator.CreateInstance(typeof(T));
+
+                return false;
+            }
+        }
+
+        public bool TrySaveConfiguration<T>(string path, T state)
+        {
+            try
+            {
+                Serialize<T>(state, path);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                const string Message = "Can't save configurator state.";
+
+                Debug.Log(Message);
+                Debug.LogException(ex);
+
+                return false;
             }
         }
     }
