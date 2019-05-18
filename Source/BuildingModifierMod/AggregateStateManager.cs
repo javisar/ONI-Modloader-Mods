@@ -1,9 +1,4 @@
-﻿
-
-using ONI_Common;
-using ONI_Common.IO;
-using ONI_Common.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,23 +20,25 @@ namespace BuildingModifierMod
 				{
 					return _state;
 				}
-				Logger.Log("Loading: " + this.StateFilePath);
+                Debug.Log("Loading: " + this.StateFilePath);
 				
 				if (!File.Exists(this.StateFilePath))
 				{
-					Logger.Log(this.StateFilePath + " not found. Creating a default config file...");
+                    Debug.Log(this.StateFilePath + " not found. Creating a default config file...");
 					IOHelper.EnsureDirectoryExists(new FileInfo(this.StateFilePath).Directory.FullName);
 
 					JsonLoader.TrySaveConfiguration(this.StateFilePath, (BuildingModifierState)Activator.CreateInstance(typeof(BuildingModifierState)));
 				}
 				JsonLoader.TryLoadConfiguration(this.StateFilePath, out _state);
-				
-				// Load all json configs
-				foreach (string file in GetJsonFiles(Paths.GetStatePath(name)))
+
+                // Load all json configs
+                string path = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "Config";
+
+                foreach (string file in GetJsonFiles(path))
 				{
 					if (Path.GetFileNameWithoutExtension(file).Equals(name+"State")) continue;
 
-					Logger.Log("Loading: " + file);
+					Debug.Log("Loading: " + file);
 
 					try
 					{
