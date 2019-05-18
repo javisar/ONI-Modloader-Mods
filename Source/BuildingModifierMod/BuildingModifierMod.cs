@@ -181,6 +181,10 @@ namespace BuildingModifierMod
 					}
 				}
 			}
+            else
+            {
+                Debug.Log(" === [BuildingModifier] No errors found.");
+            }   
             Debug.Log(" === [BuildingModifier] Finished.");
         }
 	}
@@ -194,6 +198,9 @@ namespace BuildingModifierMod
         {
             if (!Helper.Config.Enabled)
                 return;
+
+			if (!Helper.Config.DumpBuildingIDList)
+				return;
 
             Helper.Log(" === [BuildingModifier] BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings Postfix === ");
             Helper.Log(" === [BuildingModifier] Building ID List === ");

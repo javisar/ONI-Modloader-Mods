@@ -46,13 +46,39 @@ namespace BuildingModifierMod
 					try
 					{
 						BuildingModifierState config = JsonLoader.GetJsonManager().Deserialize<BuildingModifierState>(file);
-						//Debug.Log(config.Modifiers.Count);
-
-						// Append config, ignore duplicates
+                        //Debug.Log("config.Modifiers.Count =" + config.Modifiers.Count);
+                        // Append config, ignore duplicates
+                        /*
 						_state.Modifiers = _state.Modifiers.Concat(config.Modifiers).GroupBy(d => d.Key)
 									.ToDictionary(d => d.Key, d => d.First().Value);
-						//Debug.Log(_state.Modifiers.Count);
-					}
+                        */
+
+
+                        foreach (KeyValuePair<string, Dictionary<string, object>> entry in config.Modifiers)
+						{
+                            //Debug.Log("entry.Key = "+ entry.Key);
+                            //Debug.Log("entry.Value = " + entry.Value);
+
+                            if (_state.Modifiers.ContainsKey(entry.Key))
+							{
+                                //Debug.Log("Contains");
+                                Dictionary<string, object> currentModifier = _state.Modifiers[entry.Key];
+                                //Debug.Log("currentModifier = "+ currentModifier.Count);
+                                currentModifier = currentModifier.Concat(entry.Value).GroupBy(d => d.Key)
+										.ToDictionary(d => d.Key, d => d.First().Value);
+                                //Debug.Log("currentModifier = " + currentModifier.Count);
+                                _state.Modifiers[entry.Key] = currentModifier;
+                            }
+							else
+							{
+								_state.Modifiers[entry.Key] = entry.Value;
+							}
+
+                            //Debug.Log("_state.Modifiers[entry.Key].Count = " + _state.Modifiers[entry.Key].Count); 
+                        }
+						
+                        //Debug.Log("_state.Modifiers.Count ="+_state.Modifiers.Count);
+                    }
 					catch (Exception ex)
 					{
 						Debug.LogError(ex);
