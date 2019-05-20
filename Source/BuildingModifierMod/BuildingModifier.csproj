@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregateStateManager.cs" />
+    <Compile Include="AggregateConfigManager.cs" />
     <Compile Include="BuildingModifierMod.cs" />
     <None Include="Config\Examples\TravelTubes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
