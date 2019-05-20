@@ -14,7 +14,7 @@ namespace BuildingModifierMod
         public static HashSet<string> ModifiersAll = new HashSet<string>();
         public static HashSet<string> ModifiersFound = new HashSet<string>();
         //private static HashSet<string> ModifiersRecheck = new HashSet<string>();
-        public static BuildingModifierState Config = BuildingModifierState.StateManager.State;
+        public static BuildingModifierConfig Config = BuildingModifierConfig.Config.Instance;
         private static string State = null;
 
 		public enum BuildingType

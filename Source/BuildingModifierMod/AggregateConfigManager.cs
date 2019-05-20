@@ -6,36 +6,43 @@ using System.Linq;
 namespace BuildingModifierMod
 {
 
-	public class AggregateStateManager
+	public class AggregateConfigManager
 	{
+		private String path;
 		private String name;
 
+		/*		
         public readonly string StateFilePath;
 
         public readonly JsonManager JsonLoader;
+		*/
+
+		public AggregateConfigManager(string path, string name)
+		{
+			this.path = path;
+			this.name = name;
+			/*			
+			this.StateFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "Config" + Path.DirectorySeparatorChar + name + "State.json";
+			this.JsonLoader = new JsonManager();
+			*/
+
+			//IOHelper.EnsureDirectoryExists(Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "_Logs");
+			//this.Logger = new ONI_Common.IO.Logger(Paths.GetLogsPath() + System.IO.Path.DirectorySeparatorChar + name + "Log.txt");
+		}
 
 
-        public AggregateStateManager(string name)
-        {
-            this.name = name;
-            this.StateFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "Config" + Path.DirectorySeparatorChar + name + "State.json";
-            //IOHelper.EnsureDirectoryExists(Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "_Logs");
-            //this.Logger = new ONI_Common.IO.Logger(Paths.GetLogsPath() + System.IO.Path.DirectorySeparatorChar + name + "Log.txt");
-            this.JsonLoader = new JsonManager();
-        }
+		private BuildingModifierConfig _instance;
 
-
-        private BuildingModifierState _state;
-
-		public BuildingModifierState State
+		public BuildingModifierConfig Instance
 		{
 			get
 			{
 
-				if (_state != null) return _state;
-				
-                Debug.Log("Loading: " + this.StateFilePath);
-				
+				if (_instance != null) return _instance;
+
+
+				/*
+				Debug.Log("Loading: " + this.StateFilePath);
 				if (!File.Exists(this.StateFilePath))
 				{
                     Debug.Log(this.StateFilePath + " not found. Creating a default config file...");
@@ -44,50 +51,54 @@ namespace BuildingModifierMod
 					JsonLoader.TrySaveConfiguration(this.StateFilePath, (BuildingModifierState)Activator.CreateInstance(typeof(BuildingModifierState)));
 				}
 				JsonLoader.TryLoadConfiguration(this.StateFilePath, out _state);
+				*/
+				_instance = ConfigUtils<BuildingModifierConfig>.LoadConfig(this.path, this.name+".json",true);
 
-                // Load all json configs
-                string path = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierState)).Location) + Path.DirectorySeparatorChar + "Config";
+				// Load all json configs
+				string path = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(BuildingModifierConfig)).Location) + Path.DirectorySeparatorChar + this.path;
 
                 foreach (string file in GetJsonFiles(path))
 				{
-					if (Path.GetFileNameWithoutExtension(file).Equals(name+"State")) continue;
-
-					Debug.Log("Loading: " + file);
+					if (Path.GetFileNameWithoutExtension(file).Equals(this.name)) continue;
 
 					try
 					{
+						/*
 						BuildingModifierState config = JsonLoader.Deserialize<BuildingModifierState>(file);
-                        //Debug.Log("config.Modifiers.Count =" + config.Modifiers.Count);
-                        // Append config, ignore duplicates
-                        /*
+						Debug.Log("Loading: " + file);
+						*/
+						BuildingModifierConfig config = ConfigUtils<BuildingModifierConfig>.LoadConfig(Path.GetDirectoryName(file),Path.GetFileName(file), true);
+
+						//Debug.Log("config.Modifiers.Count =" + config.Modifiers.Count);
+						// Append config, ignore duplicates
+						/*
 						_state.Modifiers = _state.Modifiers.Concat(config.Modifiers).GroupBy(d => d.Key)
 									.ToDictionary(d => d.Key, d => d.First().Value);
                         */
 
 
-                        foreach (KeyValuePair<string, Dictionary<string, object>> entry in config.Modifiers)
+						foreach (KeyValuePair<string, Dictionary<string, object>> entry in config.Modifiers)
 						{
                             //Debug.Log("entry.Key = "+ entry.Key);
                             //Debug.Log("entry.Value = " + entry.Value);
 
-                            if (_state.Modifiers.ContainsKey(entry.Key))
+                            if (_instance.Modifiers.ContainsKey(entry.Key))
 							{
                                 //Debug.Log("Contains");
-                                Dictionary<string, object> currentModifier = _state.Modifiers[entry.Key];
+                                Dictionary<string, object> currentModifier = _instance.Modifiers[entry.Key];
                                 //Debug.Log("currentModifier = "+ currentModifier.Count);
                                 currentModifier = currentModifier.Concat(entry.Value).GroupBy(d => d.Key)
 										.ToDictionary(d => d.Key, d => d.First().Value);
                                 //Debug.Log("currentModifier = " + currentModifier.Count);
-                                _state.Modifiers[entry.Key] = currentModifier;
+                                _instance.Modifiers[entry.Key] = currentModifier;
                             }
 							else
 							{
-								_state.Modifiers[entry.Key] = entry.Value;
+								_instance.Modifiers[entry.Key] = entry.Value;
 							}
 
                             //Debug.Log("_state.Modifiers[entry.Key].Count = " + _state.Modifiers[entry.Key].Count); 
-                        }
-						
+                        }						
                         //Debug.Log("_state.Modifiers.Count ="+_state.Modifiers.Count);
                     }
 					catch (Exception ex)
@@ -95,12 +106,12 @@ namespace BuildingModifierMod
 						Debug.LogError(ex);
 					}
 				}
-				return _state;
+				return _instance;
 			}
 
 			private set
 			{
-				_state = value;
+				_instance = value;
 			}
 		}
 	
@@ -142,7 +153,7 @@ namespace BuildingModifierMod
 		}
 
 
-
+		/*
         public static void EnsureDirectoryExists(string path)
         {
             if (!Directory.Exists(path))
@@ -150,6 +161,7 @@ namespace BuildingModifierMod
                 Directory.CreateDirectory(path);
             }
         }
+		*/
     }
 
 }
