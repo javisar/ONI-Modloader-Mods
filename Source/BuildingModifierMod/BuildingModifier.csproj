@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="RegisterBuilding.cs.txt" />
     <Content Include="BuildingModifierHowto.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

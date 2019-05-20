@@ -80,6 +80,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RenderOffline.cs.txt" />
     <Content Include="WorldGenReloadedHowto.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

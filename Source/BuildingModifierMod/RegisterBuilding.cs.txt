@@ -1,0 +1,44 @@
+// BuildingConfigManager
+using UnityEngine;
+
+public void RegisterBuilding(IBuildingConfig config)
+{
+	BuildingDef buildingDef = config.CreateBuildingDef();
+	configTable[config] = buildingDef;
+	GameObject gameObject = Object.Instantiate(baseTemplate);
+	Object.DontDestroyOnLoad(gameObject);
+	gameObject.GetComponent<KPrefabID>().PrefabTag = buildingDef.Tag;
+	gameObject.name = buildingDef.PrefabID + "Template";
+	gameObject.GetComponent<Building>().Def = buildingDef;
+	gameObject.GetComponent<OccupyArea>().OccupiedCellsOffsets = buildingDef.PlacementOffsets;
+	if (buildingDef.Deprecated)
+	{
+		gameObject.GetComponent<KPrefabID>().AddTag(GameTags.DeprecatedContent);
+	}
+	config.ConfigureBuildingTemplate(gameObject, buildingDef.Tag);
+	buildingDef.BuildingComplete = BuildingLoader.Instance.CreateBuildingComplete(gameObject, buildingDef);
+	bool flag = true;
+	for (int i = 0; i < NonBuildableBuildings.Length; i++)
+	{
+		if (buildingDef.PrefabID == NonBuildableBuildings[i])
+		{
+			flag = false;
+			break;
+		}
+	}
+	if (flag)
+	{
+		buildingDef.BuildingUnderConstruction = BuildingLoader.Instance.CreateBuildingUnderConstruction(buildingDef);
+		buildingDef.BuildingUnderConstruction.name = GetUnderConstructionName(buildingDef.BuildingUnderConstruction.name);
+		buildingDef.BuildingPreview = BuildingLoader.Instance.CreateBuildingPreview(buildingDef);
+		buildingDef.BuildingPreview.name += "Preview";
+	}
+	buildingDef.PostProcess();
+	config.DoPostConfigureComplete(buildingDef.BuildingComplete);
+	if (flag)
+	{
+		config.DoPostConfigurePreview(buildingDef, buildingDef.BuildingPreview);
+		config.DoPostConfigureUnderConstruction(buildingDef.BuildingUnderConstruction);
+	}
+	Assets.AddBuildingDef(buildingDef);
+}
