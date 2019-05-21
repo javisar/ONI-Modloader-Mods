@@ -50,9 +50,8 @@ Mods Installation
       * \Mods\\[MOD_NAME]\Config\\*.json
    2. ONI Builtin Modloader (Steam)
       * \mods\local\\[MOD_NAME]\Config\\*.json
-5. **IMPORTANT: Copy also ONI-Common folder** since many mods use it as a support library.
-6. Run the game.
-7. **Check for error logs in**:
+5. Run the game.
+6. **Check for error logs in**:
    * Windows: %USERPROFILE%\AppData\LocalLow\Klei\Oxygen Not Included\\**output_log.txt** 
    * Linux: ~/.config/unity3d/Klei/Oxygen Not Included/**Player.log**
    * MacOS: ~/Library/Logs/Unity/**Player.log**
