@@ -64,14 +64,14 @@ Mods
 | Name  | Description | Steam | Contributors |
 | ----- | ----------- | ----- | ------------ |
 | Amphibious | Adds new duplicant traits: Amphibious (They also breath under water). EXPERIMENTAL. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1741246395) | [@javisar](https://github.com/javisar) |
-| Better Mod Load Logs | Adds exception log in case of Harmony patch error at mod loading. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1744626595) | [@javisar](https://github.com/javisar) |
+| BetterModLoadLogs | Adds exception log in case of Harmony patch error at mod loading. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1744626595) | [@javisar](https://github.com/javisar) |
 | BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1714094338) | [@javisar](https://github.com/javisar) |
 | BuildOverFacilities | Allows to construct on top of Gravitas furniture. | [Steam]() | [@javisar](https://github.com/javisar) |
 | BuildingModifier | Allows to modify building attributes. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/BuildingModifier/BuildingModifierHowto.txt) | [Steam]() | [@javisar](https://github.com/javisar) |
 | CustomWorld | Enables the player to use custom world sizes. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1713687582) | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
 | FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. | [Steam]() | [@javisar](https://github.com/javisar) |
 | FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1741267647) | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) [@Moonkis](https://github.com/Moonkis) |
-| Export Daily Reports | Export your colony daily reports to CSV format. EXPERIMENTAL. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1736659376) | [@javisar](https://github.com/javisar) |
+| ExportDailyReports | Export your colony daily reports to CSV format. EXPERIMENTAL. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1736659376) | [@javisar](https://github.com/javisar) |
 | InstantResearch | Forces instant research without Debug mode. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1714091093) | [@javisar](https://github.com/javisar) |
 | InverseElectrolyzer | Combines hydrogen and oxygen into water. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1742051024) | [@javisar](https://github.com/javisar) |
 | NoDamage | Disables various damages in game. Overload, Overheat, boiling, cold, buildings. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1728703506) | [@javisar](https://github.com/javisar) |
