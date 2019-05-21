@@ -1,20 +1,20 @@
 # ONI-Modloader Mods
-Javisar's Oxygen Not Included Mods for [**ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
+Javisar's Oxygen Not Included Mods for **Steam Workshop** or [**ONI-Modloader**](https://github.com/javisar/ONI-Modloader)
 
 [**Forums in Klei**](https://forums.kleientertainment.com/forums/topic/97444-mods-trevices-mods-lair/)
 
 
 Disclaimers
 -----------
-* Please DON'T REPORT BUGS you encounter to Klei while mods are active.
+* Please DON'T REPORT BUGS you encounter to Klei while mods are active unless they relate to the builtin ONI Modlioader
 * BE AWARE that many of the mods are still a WIP and may fail. If you are having problems use a clean ONI installation and try to test the mods one by one to narrow the error. Then post a issue in github.
-* We do not take any responsibility for broken saves or any other damage. Use this software at your own risk.
-* If you load a savegame, it requires that you have exactly the same mods when you saved it.
+* **We do not take any responsibility for broken saves or any other damage. Use this software at your own risk.**
+* If you load a savegame, it probably requires that you have exactly the same mods when you saved it.
 
 This project uses source code of and is based on: [Harmony](https://github.com/pardeike/Harmony), [ModLoader Installer](https://github.com/zeobviouslyfakeacc/ModLoaderInstaller), [Besiege Modloader](https://github.com/spaar/besiege-modloader), [OnionPatcher](https://forums.kleientertainment.com/topic/81296-mod159-materialcolor-onionpatcher/)
 
 
-**NOTE**: Compiled for **Q2-312713** and ONI-Modloader v0.5.2
+**NOTE**: Compiled for **Q3-327401**
 
 **[Report Mod Bugs](https://github.com/javisar/ONI-Modloader-Mods/issues/new/choose)**
 
@@ -28,7 +28,7 @@ Mods Installation
 0. Prerequisites:
    * This mod installation guide ONLY applies to the mods below.
    * Make SURE you're using the latest version from Github main branch.
-   * **[ONI-Modloader](https://github.com/javisar/ONI-Modloader#quick-start) must be installed**
+   * **[ONI-Modloader](https://github.com/javisar/ONI-Modloader#quick-start) must be installed ONLY if you DO NOT use ONI Builtin Modloader**
    * Make sure you deleted all previous mod files and its config:
      1. ONI-Modloader	
         * Windows: %PROGRAMFILES(X86)%\Steam\steamapps\common\OxygenNotIncluded\Mods\
@@ -60,46 +60,39 @@ Mods Installation
    * \OxygenNotIncluded\Mods\\_Logs\
 
 
-ONI-Common
---------------------
-| Name  | Description | ONI-Common | Contributors |
-| ----- | ----------- | ---------- | ------- |
-| **ONI-Common** | **Requieres Mono.Cecil.dll** Common code. Provides config load/save functionality, logger, help tools. | Y | [@EtiamNullam](https://github.com/EtiamNullam) [@Killface1980](https://github.com/Killface1980) [@javisar](https://github.com/javisar) |
-
-
 Mods - New Buildings
 --------------------
-| Name  | Description | ONI-Common | Contributors |
-| ----- | ----------- | ---------- | ------- |
-| BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | N | [@javisar](https://github.com/javisar) |
-| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | N | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) |
-| InverseElectrolyzer | Combines hydrogen and oxygen into steam. 2 buildings, one gets oxygen from the environment, the other uses two input conduits instead. | N | [@javisar](https://github.com/javisar) |
-| ZeroPointModule | A battery that gets unlimited energy from the vacuum. | N | [@javisar](https://github.com/javisar) |
+| Name  | Description | Contributors |
+| ----- | ----------- | ------- |
+| BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | [@javisar](https://github.com/javisar) |
+| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) |
+| InverseElectrolyzer | Combines hydrogen and oxygen into steam. 2 buildings, one gets oxygen from the environment, the other uses two input conduits instead. | [@javisar](https://github.com/javisar) |
+| ZeroPointModule | A battery that gets unlimited energy from the vacuum. | [@javisar](https://github.com/javisar) |
 
 
 Mods - GUI
 --------------------
 | Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
-| CustomWorld | Enables the player to use custom world sizes. | N | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
-| SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | N | [@javisar](https://github.com/javisar) |
+| CustomWorld | Enables the player to use custom world sizes. | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
+| SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | [@javisar](https://github.com/javisar) |
 
 
 Mods - Game Mechanics
 --------------------
 | Name  | Description | ONI-Common | Contributors |
 | ----- | ----------- | ---------- | ------- |
-| BuildOverFacilities | Allows to construct on top of Gravitas furniture. | N | [@javisar](https://github.com/javisar) |
-| BuildingModifier | Allows to modify building attributes. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/BuildingModifier/BuildingModifierHowto.txt) | Y | [@javisar](https://github.com/javisar) |
-| FastMode | Duplicants will build and dig very fast. | N | [@javisar](https://github.com/javisar) |
-| FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | N | [@javisar](https://github.com/javisar) |
-| InstantResearch | Forces instant research without Debug mode. | N | [@javisar](https://github.com/javisar) |
-| MoreTraits | Adds new duplicant traits: Amphibious (They also breath under water). EXPERIMENTAL. | N | [@javisar](https://github.com/javisar) |
-| NoDamage | Disables various damages in game. Overload, Overheat, boiling, cold, buildings. | Y | [@javisar](https://github.com/javisar) |
-| NoFixedTemps | The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). | N | [@javisar](https://github.com/javisar) |
-| RoomSize | Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. | Y | [@javisar](https://github.com/javisar) |
-| SuperMiner | Digging drops the complete mass of the cell. | N | [@javisar](https://github.com/javisar) |
-| WorldGenReloaded | Changes geysers properties, frequency and allowed zones. EXPERIMENTAL. Don't use small world sizes! More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/WorldGenReloaded/WorldGenReloadedHowto.txt) | Y | [@javisar](https://github.com/javisar) |
+| BuildOverFacilities | Allows to construct on top of Gravitas furniture. | [@javisar](https://github.com/javisar) |
+| BuildingModifier | Allows to modify building attributes. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/BuildingModifier/BuildingModifierHowto.txt) | [@javisar](https://github.com/javisar) |
+| WorkableMuiltipliers | Duplicants will build and dig very fast. | [@javisar](https://github.com/javisar) |
+| FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | [@javisar](https://github.com/javisar) |
+| InstantResearch | Forces instant research without Debug mode. | [@javisar](https://github.com/javisar) |
+| Amphibious | Adds new duplicant traits: Amphibious (They also breath under water). EXPERIMENTAL. | [@javisar](https://github.com/javisar) |
+| NoDamage | Disables various damages in game. Overload, Overheat, boiling, cold, buildings. | [@javisar](https://github.com/javisar) |
+| NoFixedTemps | The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). | [@javisar](https://github.com/javisar) |
+| RoomSize | Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. | [@javisar](https://github.com/javisar) |
+| SuperMiner | Digging drops the complete mass of the cell. | [@javisar](https://github.com/javisar) |
+| WorldGenReloaded | Changes geysers properties, frequency and allowed zones. EXPERIMENTAL. Don't use small world sizes! More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/WorldGenReloaded/WorldGenReloadedHowto.txt) | [@javisar](https://github.com/javisar) |
 
 
 [Outdated/Deprecated Mods](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Outdated.md)
