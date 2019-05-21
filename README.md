@@ -101,8 +101,4 @@ Mods - Game Mechanics
 Downloads
 ---------
 * Choose 'Download or Clone'.
-* Put the desired mods into the Mods folder "OxygenNotIncluded\Mods".
-* BE SURE to also copy **ALL** required config and icons folders.
-
-
 
