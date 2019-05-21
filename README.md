@@ -60,39 +60,30 @@ Mods Installation
    * \OxygenNotIncluded\Mods\\_Logs\
 
 
-Mods - New Buildings
---------------------
-| Name  | Description | Contributors |
-| ----- | ----------- | ------- |
-| BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | [@javisar](https://github.com/javisar) |
-| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) |
-| InverseElectrolyzer | Combines hydrogen and oxygen into steam. 2 buildings, one gets oxygen from the environment, the other uses two input conduits instead. | [@javisar](https://github.com/javisar) |
-| ZeroPointModule | A battery that gets unlimited energy from the vacuum. | [@javisar](https://github.com/javisar) |
+Mods
+----
+| Name  | Description | Steam | Contributors |
+| ----- | ----------- | ----- | ------------ |
+| Amphibious | Adds new duplicant traits: Amphibious (They also breath under water). EXPERIMENTAL. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1741246395) | [@javisar](https://github.com/javisar) |
+| Better Mod Load Logs | Adds exception log in case of Harmony patch error at mod loading. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1744626595) | [@javisar](https://github.com/javisar) |
+| BuildableAETN | Makes the AETN buildable and researchable. 20k Refined Metal. There is no preprint sprite. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1714094338) | [@javisar](https://github.com/javisar) |
+| BuildOverFacilities | Allows to construct on top of Gravitas furniture. | [Steam]() | [@javisar](https://github.com/javisar) |
+| BuildingModifier | Allows to modify building attributes. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/BuildingModifier/BuildingModifierHowto.txt) | [Steam]() | [@javisar](https://github.com/javisar) |
+| CustomWorld | Enables the player to use custom world sizes. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1713687582) | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
+| FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. | [Steam]() | [@javisar](https://github.com/javisar) |
+| FluidWarp | Teleports liquids and gases between places. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/FluidWarp/FluidWarpModHowto.txt) | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1741267647) | [@javisar](https://github.com/javisar) [@Blindfold](https://github.com/Blindfold) |
+| Export Daily Reports | Export your colony daily reports to CSV format. EXPERIMENTAL. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1736659376) | [@javisar](https://github.com/javisar) |
+| InstantResearch | Forces instant research without Debug mode. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1714091093) | [@javisar](https://github.com/javisar) |
+| InverseElectrolyzer | Combines hydrogen and oxygen into water. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1742051024) | [@javisar](https://github.com/javisar) |
+| NoDamage | Disables various damages in game. Overload, Overheat, boiling, cold, buildings. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1728703506) | [@javisar](https://github.com/javisar) |
+| NoFixedTemps | The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1742003542) | [@javisar](https://github.com/javisar) |
+| RoomSize | Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1715802131) | [@javisar](https://github.com/javisar) |
+| SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1713359495) | [@javisar](https://github.com/javisar) |
+| SuperMiner | Digging drops the complete mass of the cell. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1728728517) | [@javisar](https://github.com/javisar) |
+| WorldGenReloaded | Changes geysers properties, frequency and allowed zones. EXPERIMENTAL. Don't use small world sizes! More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/WorldGenReloaded/WorldGenReloadedHowto.txt) | [Steam]() | [@javisar](https://github.com/javisar) |
+| WorkableMuiltipliers | Duplicants will build and dig very fast. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1742986928) | [@javisar](https://github.com/javisar) |
+| ZeroPointModule | A battery that gets unlimited energy from the vacuum. | [Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1715786411) | [@javisar](https://github.com/javisar) |
 
-
-Mods - GUI
---------------------
-| Name  | Description | ONI-Common | Contributors |
-| ----- | ----------- | ---------- | ------- |
-| CustomWorld | Enables the player to use custom world sizes. | [@Moonkis](https://github.com/Moonkis) [@javisar](https://github.com/javisar) |
-| SpeedControl | Overwrites the method SpeedControlScreen.OnChange. Fast Speed set to behave like Ultra Speed in debug mode. | [@javisar](https://github.com/javisar) |
-
-
-Mods - Game Mechanics
---------------------
-| Name  | Description | ONI-Common | Contributors |
-| ----- | ----------- | ---------- | ------- |
-| BuildOverFacilities | Allows to construct on top of Gravitas furniture. | [@javisar](https://github.com/javisar) |
-| BuildingModifier | Allows to modify building attributes. EXPERIMENTAL. More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/BuildingModifier/BuildingModifierHowto.txt) | [@javisar](https://github.com/javisar) |
-| WorkableMuiltipliers | Duplicants will build and dig very fast. | [@javisar](https://github.com/javisar) |
-| FluidPhysics | Overwrite some fluids molar mass to make them equal, this produces more mixing. EXPERIMENTAL. (Oxygen, Hydrogen, ChlorineGas, ContaminatedOxygen, Propane, Helium, Methane, CarbonDioxide, Water, DirtyWater, CrudeOil, Petroleum). | [@javisar](https://github.com/javisar) |
-| InstantResearch | Forces instant research without Debug mode. | [@javisar](https://github.com/javisar) |
-| Amphibious | Adds new duplicant traits: Amphibious (They also breath under water). EXPERIMENTAL. | [@javisar](https://github.com/javisar) |
-| NoDamage | Disables various damages in game. Overload, Overheat, boiling, cold, buildings. | [@javisar](https://github.com/javisar) |
-| NoFixedTemps | The output fluid temperatures of the machinery depends on the input (Except AirFilter, AlgaeTerraium and PacuCleaner). | [@javisar](https://github.com/javisar) |
-| RoomSize | Recognizes rooms (count cells) to a room size maximum of 1024. Configures maximum room sizes. | [@javisar](https://github.com/javisar) |
-| SuperMiner | Digging drops the complete mass of the cell. | [@javisar](https://github.com/javisar) |
-| WorldGenReloaded | Changes geysers properties, frequency and allowed zones. EXPERIMENTAL. Don't use small world sizes! More at: [HowTo](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Mods/WorldGenReloaded/WorldGenReloadedHowto.txt) | [@javisar](https://github.com/javisar) |
 
 
 [Outdated/Deprecated Mods](https://github.com/javisar/ONI-Modloader-Mods/blob/master/Outdated.md)
