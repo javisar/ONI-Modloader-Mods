@@ -1,6 +1,6 @@
 {
   "Enabled": true,
-  "OverallMaximumRoomSize": 256,
+  "OverallMaximumRoomSize": 256,	// This must be greater or equal than any room max. size
 
   "MaximumRoomSizes": {
     "PlumbedBathroom": 128,
@@ -15,6 +15,8 @@
     "Farm": 192,
     "CreaturePen": 192,
     //"MachineShop": 192,
-    "RecRoom": 128
+    "RecRoom": 128,
+	"Park": 128,
+	"NatureReserve": 240
   }
 }

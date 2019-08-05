@@ -12,10 +12,7 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 	public const string ID = "InverseElectrolyzer";
 
 
-	private static readonly LogicPorts.Port[] INPUT_PORTS = new LogicPorts.Port[1]
-	{
-		LogicPorts.Port.InputPort(LogicOperationalController.PORT_ID, new CellOffset(-1, 0), UI.LOGIC_PORTS.CONTROL_OPERATIONAL,UI.LOGIC_PORTS.CONTROL_OPERATIONAL_ACTIVE,UI.LOGIC_PORTS.CONTROL_OPERATIONAL_INACTIVE, false)
-	};
+	private static readonly LogicPorts.Port[] INPUT_PORTS = LogicOperationalController.INPUT_PORTS_N1_0;
 
 	private ConduitPortInfo secondaryInputPort = new ConduitPortInfo(ConduitType.Gas, new CellOffset(-1, 0));
 
@@ -61,7 +58,7 @@ public class InverseElectrolyzerConfig : IBuildingConfig
 		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 
 		InverseElectrolyzer airFilter = go.AddOrGet<InverseElectrolyzer>();
-		airFilter.filterTag = GameTagExtensions.Create(SimHashes.Oxygen);
+		//airFilter.filterTag = GameTagExtensions.Create(SimHashes.Oxygen);
 		airFilter.portInfo = this.secondaryInputPort;
 		
 	}

@@ -19,8 +19,7 @@ namespace CustomWorldSize
                                                                                                 "Name02",
                                                                                                 "Default 384"),
                                                                                "Disabled",
-																			   "Disabled",
-																				false);
+																			   "Disabled");
             public const string UseCustomWorldSize = "UseCustomWorldSize";
             public const string WorldsizeX         = "WorldSizeX";
             public const string WorldsizeY         = "WorldSizeY";
@@ -35,27 +34,27 @@ namespace CustomWorldSize
             /// <param name="config"></param>
             public static void Prefix(CustomGameSettings __instance, SettingConfig config)
             {
-                if (config != CustomGameSettingConfigs.ImmuneSystem)
+                if (config != CustomGameSettingConfigs.WorldgenSeed)
                 {
                     return;
                 }
 
                 var worldListX = new List<SettingLevel>();
-                for (int i = 64; i <= 1024; i+=32)
+                for (int i = 64; i <= 8192; i+=32)
                 {
                     worldListX.Add(new SettingLevel(i.ToString(), i.ToString(), "Default: 256"));
                 }
                 var worldListY = new List<SettingLevel>();
-                for (int i = 64; i <= 1024; i += 32)
+                for (int i = 64; i <= 8192; i += 32)
                 {
                     worldListY.Add(new SettingLevel(i.ToString(), i.ToString(), "Default: 384"));
                 }
 
-                WorldgenSeedX =  new ListSettingConfig(WorldsizeX, "Custom World Width ", "Use a custom size.",
-                                                        worldListX, "256", "256", false);
+                WorldgenSeedX =  new ListSettingConfig(WorldsizeX, "Custom World Width", "Use a custom width.",
+                                                        worldListX, "256", "256");
 
-                WorldgenSeedY = new ListSettingConfig(WorldsizeY, "Custom World Height", "Use a custom size.",
-                                                      worldListY, "384", "384", false);
+                WorldgenSeedY = new ListSettingConfig(WorldsizeY, "Custom World Height", "Use a custom height.",
+                                                      worldListY, "384", "384");
 
                 List<SettingConfig> settings = new List<SettingConfig> { UseCustomWorld, WorldgenSeedX, WorldgenSeedY };
                 

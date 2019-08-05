@@ -8,10 +8,7 @@ class ZeroPointModuleConfig : BaseBatteryConfig
 {
     public const string ID = "ZeroPointModule";
 
-    private static readonly LogicPorts.Port[] OUTPUT_PORTS = new LogicPorts.Port[1]
-    {
-        LogicPorts.Port.OutputPort(BatterySmart.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.BATTERYSMART.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.BATTERYSMART.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.BATTERYSMART.LOGIC_PORT_INACTIVE, show_wire_missing_icon: true)
-    };
+    private static readonly LogicPorts.Port[] OUTPUT_PORTS = LogicOperationalController.INPUT_PORTS_0_0;
 
     public override BuildingDef CreateBuildingDef()
     {

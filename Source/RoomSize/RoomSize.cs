@@ -8,7 +8,7 @@ using static RoomConstraints;
 namespace RoomSize
 {
 
-
+    
     [HarmonyPatch(typeof(Game),"OnPrefabInit")]
     internal class RoomSizeMod_Game_OnPrefabInit
     {       
@@ -19,7 +19,7 @@ namespace RoomSize
         }
     }
 
-
+    
     [HarmonyPatch(typeof(RoomProber),MethodType.Constructor)]
     internal class RoomSizeMod_RoomProber
     {
@@ -33,8 +33,9 @@ namespace RoomSize
             Debug.Log(" === RoomSizeMod_RoomProber Postfix === New Max. Room Size: " + TuningData<RoomProber.Tuning>.Get().maxRoomSize);
         }
     }
+    
 
-	[HarmonyPatch(typeof(Database.RoomTypes), MethodType.Constructor)]
+    [HarmonyPatch(typeof(Database.RoomTypes), MethodType.Constructor)]
 	[HarmonyPatch(new Type[] { typeof(ResourceSet)})]
 	internal class RoomSizeMod_RoomTypes
 	{
