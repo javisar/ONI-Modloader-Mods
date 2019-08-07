@@ -1,0 +1,14 @@
+﻿{
+
+  "Modifiers": {
+
+    "LiquidHeater": {
+      "SpaceHeater": {
+        "targetTemperature": 358.15,
+        "minimumCellMass": 400,
+        "radius":  2.0
+      }
+    }
+
+  }
+}

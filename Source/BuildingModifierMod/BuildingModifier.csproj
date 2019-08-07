@@ -121,6 +121,9 @@
     <None Include="Config\BuildingModifierState.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Config\Modifiers\LiquidHeater.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Config\Modifiers\Batteries.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
