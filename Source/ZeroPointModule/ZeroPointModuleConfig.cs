@@ -22,7 +22,7 @@ class ZeroPointModuleConfig : BaseBatteryConfig
         string[] aLL_METALS = TUNING.MATERIALS.REFINED_METALS;
         float melting_point = 800f;
         float exhaust_temperature_active = 0f;
-        float self_heat_kilowatts_active = 10f;
+        float self_heat_kilowatts_active = 100f;
        
         BuildingDef result = base.CreateBuildingDef(ID, width, height, hitpoints, anim, construction_time, tIER, aLL_METALS, melting_point, exhaust_temperature_active, self_heat_kilowatts_active, TUNING.BUILDINGS.DECOR.PENALTY.TIER5, TUNING.NOISE_POLLUTION.NOISY.TIER6);
         //result.EnergyConsumptionWhenActive = 120f;
