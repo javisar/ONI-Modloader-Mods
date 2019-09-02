@@ -23,7 +23,7 @@ This project uses source code of and is based on: [Harmony](https://github.com/p
 
 Mods Installation -> **[STEAM WORKSHOP](https://steamcommunity.com/profiles/76561198113833876/myworkshopfiles/?appid=457140)**
 -----------------------------------
-THE CODE IN THE [MASTER BRANCH](https://github.com/javisar/ONI-Modloader-Mods) IS ONLY FOR ONI STEAM BUILTIN MODLOADER.
+**THE CODE IN THE [MASTER BRANCH](https://github.com/javisar/ONI-Modloader-Mods) IS ONLY FOR ONI STEAM BUILTIN MODLOADER.
 THIS BRANCH CODE WON'T WORK WITH OLD [MODLOADER](https://github.com/javisar/ONI-Modloader)**
 
 
