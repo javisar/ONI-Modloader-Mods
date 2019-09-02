@@ -6,7 +6,7 @@
     public static class Paths
     {
 
-		private const string ModsDirectory = "Mods";
+		private const string ModsDirectory = "dev";
 
 		//private static readonly string LogsPath = ModsDirectory + Path.DirectorySeparatorChar + "_Logs";
 
@@ -85,7 +85,7 @@
 
 		public static string GetLogsPath()
         {
-            return ModsDirectory + Path.DirectorySeparatorChar + "_Logs";
+            return Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Paths)).Location) + Path.DirectorySeparatorChar + "_Logs";
         }
 
         public static string GetCommonLogFilePath()
@@ -105,7 +105,7 @@
 
 		public static string GetStatePath(string name)
 		{
-			return ModsDirectory + Path.DirectorySeparatorChar + name + Path.DirectorySeparatorChar + "Config";
+			return Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Paths)).Location) + Path.DirectorySeparatorChar + "Config";
 
 		}
 		public static string GetStateFilePath(string name)

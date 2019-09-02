@@ -1,6 +1,7 @@
 {
   "Enabled": true,
   "Debug": false,
+  "DumpBuildingIDList": false,
 
   "Modifiers": {
 

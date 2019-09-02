@@ -135,7 +135,7 @@ namespace WorlGenReloadedMod
             Action<OfflineWorldGen.ErrorInfo> errorCallback = ((Action<OfflineWorldGen.ErrorInfo>)errorCallbackF.GetValue(__instance));
 
 
-            Sim.Cell[] array = null;
+            Sim.Cell[] cells = null;
             float[] bgTemp = null;
             dc = null;
             HashSet<int> borderCells = new HashSet<int>();
@@ -143,12 +143,12 @@ namespace WorlGenReloadedMod
             __instance.CompleteLayout(successCallbackFn);
 			//WriteOverWorldNoise(successCallbackFn);
 			__instance.WriteOverWorldNoise(successCallbackFn);
-            if (!__instance.RenderToMap(successCallbackFn, ref array, ref bgTemp, ref dc, ref borderCells))
+            if (!__instance.RenderToMap(successCallbackFn, ref cells, ref bgTemp, ref dc, ref borderCells))
             {
                 successCallbackFn(UI.WORLDGEN.FAILED.key, -100f, WorldGenProgressStages.Stages.Failure);
                 return null;
             }
-			__instance.EnsureEnoughAlgaeInStartingBiome(array);
+			__instance.EnsureEnoughAlgaeInStartingBiome(cells);
             List<KeyValuePair<Vector2I, TemplateContainer>> list = new List<KeyValuePair<Vector2I, TemplateContainer>>();
             TemplateContainer baseStartingTemplate = TemplateCache.GetBaseStartingTemplate();
             List<TerrainCell> terrainCellsForTag = __instance.GetTerrainCellsForTag(WorldGenTags.StartLocation);
@@ -285,12 +285,12 @@ namespace WorlGenReloadedMod
             */
 			foreach (int item8 in borderCells)
             {
-				array[item8].SetValues(WorldGen.unobtaniumElement, ElementLoader.elements);
+				cells[item8].SetValues(WorldGen.unobtaniumElement, ElementLoader.elements);
             }
             if (doSettle)
             {
 				//this.running = WorldGenSimUtil.DoSettleSim(this.Settings, array, bgTemp, dc, this.successCallbackFn, this.data, list, this.errorCallback, delegate(Sim.Cell[] updatedCells, float[] updatedBGTemp, Sim.DiseaseCell[] updatedDisease)
-				runningF.SetValue(__instance, WorldGenSimUtil.DoSettleSim(__instance.Settings, array, bgTemp, dc, successCallbackFn, data, list, errorCallback, delegate (Sim.Cell[] updatedCells, float[] updatedBGTemp, Sim.DiseaseCell[] updatedDisease)
+				runningF.SetValue(__instance, WorldGenSimUtil.DoSettleSim(__instance.Settings, cells, bgTemp, dc, successCallbackFn, data, list, errorCallback, delegate (Sim.Cell[] updatedCells, float[] updatedBGTemp, Sim.DiseaseCell[] updatedDisease)
                 {
                     //SpawnMobsAndTemplates(updatedCells, updatedBGTemp, updatedDisease, borderCells);
                     SpawnMobsAndTemplatesM.Invoke(__instance, new object[] { updatedCells, updatedBGTemp, updatedDisease, borderCells });
@@ -337,7 +337,7 @@ namespace WorlGenReloadedMod
             successCallbackFn(UI.WORLDGEN.COMPLETE.key, 101f, WorldGenProgressStages.Stages.Complete);
             //running = false;
             runningF.SetValue(__instance, false);
-            return array;
+            return cells;
         }
 
         private static void DisableDefaultPoiGeysers(ref SubWorld subWorld)

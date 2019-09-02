@@ -65,8 +65,7 @@ namespace BuildingModifierMod
 
             Debug.Log(" === [BuildingModifier] Processing: " + buildingDef.PrefabID);
 
-            Helper.Log(" === [BuildingModifier] CreateBuildingDef === ");
-            Helper.Process(buildingDef, null);
+            Helper.Process("CreateBuildingDef", buildingDef, null);
             buildingDef.GenerateOffsets();  // Remake the offsets after modification
 
 
@@ -87,13 +86,11 @@ namespace BuildingModifierMod
 
             //ConfigureBuildingTemplate
             config.ConfigureBuildingTemplate(gameObject, buildingDef.Tag);
-            Helper.Log(" === [BuildingModifier] ConfigureBuildingTemplate === ");
-            Helper.Process(buildingDef, gameObject, Helper.BuildingType.Building);
+            Helper.Process("ConfigureBuildingTemplate", buildingDef, gameObject, Helper.BuildingType.Building);
 
             //ConfigureBuildingTemplate
             buildingDef.BuildingComplete = BuildingLoader.Instance.CreateBuildingComplete(gameObject, buildingDef);
-            Helper.Log(" === [BuildingModifier] CreateBuildingComplete === ");
-            Helper.Process(buildingDef, gameObject, Helper.BuildingType.Building);
+            Helper.Process("CreateBuildingComplete", buildingDef, gameObject, Helper.BuildingType.Building);
 
             bool flag = true;
 			//for (int i = 0; i < NonBuildableBuildings.Length; i++)
@@ -126,20 +123,19 @@ namespace BuildingModifierMod
 
             //DoPostConfigureComplete
             config.DoPostConfigureComplete(buildingDef.BuildingComplete);
-            Helper.Log(" === [BuildingModifier] DoPostConfigureComplete === ");
-            Helper.Process(buildingDef, gameObject, Helper.BuildingType.BuildingComplete);
+            Helper.Process("DoPostConfigureComplete", buildingDef, gameObject, Helper.BuildingType.BuildingComplete);
 
             // Previews
-			if (flag)
+            if (flag)
 			{
 				config.DoPostConfigurePreview(buildingDef, buildingDef.BuildingPreview);
-                Helper.Log(" === [BuildingModifier] DoPostConfigurePreview === ");
-                Helper.Process(buildingDef, gameObject, Helper.BuildingType.BuildingPreview);
+                Helper.Process("DoPostConfigurePreview", buildingDef, gameObject, Helper.BuildingType.BuildingPreview);
 
-				config.DoPostConfigureUnderConstruction(buildingDef.BuildingUnderConstruction);
-                Helper.Log(" === [BuildingModifier] DoPostConfigureUnderConstruction === ");
-                Helper.Process(buildingDef, gameObject, Helper.BuildingType.BuildingUnderConstruction);
-			}
+
+                config.DoPostConfigureUnderConstruction(buildingDef.BuildingUnderConstruction);
+                Helper.Process("DoPostConfigureUnderConstruction", buildingDef, gameObject, Helper.BuildingType.BuildingUnderConstruction);
+
+            }
 
 			Assets.AddBuildingDef(buildingDef);
 
@@ -169,9 +165,9 @@ namespace BuildingModifierMod
                 if (!Helper.Config.Modifiers.ContainsKey(item.Value.PrefabID))
                     continue;
 
-                Helper.Log(" === [BuildingModifier] ConfigurePost === ");
-				Helper.Process(item.Value, item.Value.BuildingComplete);
-			}
+				Helper.Process("ConfigurePost", item.Value, item.Value.BuildingComplete);
+
+            }
 
             // List all config attributes not found or that throw an error
 			if (Helper.ModifiersAll.Count() != Helper.ModifiersFound.Count())
@@ -185,6 +181,10 @@ namespace BuildingModifierMod
 					}
 				}
 			}
+            else
+            {
+                Debug.Log(" === [BuildingModifier] No errors found.");
+            }   
             Debug.Log(" === [BuildingModifier] Finished.");
         }
 	}
@@ -198,6 +198,9 @@ namespace BuildingModifierMod
         {
             if (!Helper.Config.Enabled)
                 return;
+
+			if (!Helper.Config.DumpBuildingIDList)
+				return;
 
             Helper.Log(" === [BuildingModifier] BuildingModifierMod_GeneratedBuildings_LoadGeneratedBuildings Postfix === ");
             Helper.Log(" === [BuildingModifier] Building ID List === ");

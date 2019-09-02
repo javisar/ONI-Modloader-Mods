@@ -1,0 +1,8 @@
+{
+  "Enabled": true,
+  "Logging": false,
+
+  "SpeedMultiplier1": 1,
+  "SpeedMultiplier2": 3,
+  "SpeedMultiplier3": 10
+}

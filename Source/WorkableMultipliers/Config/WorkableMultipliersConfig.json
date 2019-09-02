@@ -1,0 +1,398 @@
+{
+    "Enabled": true,
+    "Logging": false,		// If true, dumps to the output log the List of Workable subclasses
+
+    "Workables": {
+        "Constructable": {
+            "AttributeExperienceMultiplier": 10.0,
+            "EfficiencyMultiplier": 2.0,
+            "SkillExperienceMultiplier": 10.0
+        },
+        "Diggable": {
+            "AttributeExperienceMultiplier": 10.0,
+            "EfficiencyMultiplier": 2.0,
+            "SkillExperienceMultiplier": 10.0
+        },		
+        "Artable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "AttackableBase": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "AutoDisinfectable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Breakable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Clearable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "ComplexFabricatorWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Deconstructable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Disinfectable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Edible": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Moppable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Painting": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Pickupable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "RangedAttackable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Repairable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Sculpture": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Storage": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Studyable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Toggleable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Unsealable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Workable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "ArcadeMachineWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Attackable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "BuildingHP": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "AlgaeHabitatEmpty": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "AstronautTrainingCenter": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Bed": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "DoctorChoreWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "CommandModuleWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "CompostWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Door": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "EggIncubator": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "EggIncubatorWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "GasBottler": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "GeneShuffler": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "HandSanitizer+Work": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "IceCooledFanWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "LiquidCooledFanWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "LiquidPumpingStation": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "ManualGenerator": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "MassageTable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "MessStation": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "OilRefinery+WorkableTarget": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "OilWellCap": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "OreScrubber+Work": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "PlantablePlot": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "ResetSkillsStation": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Shower": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "SingleEntityReceptacle": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "SuitLocker+ReturnSuitWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Telescope": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "ToiletWorkableClean": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "ToiletWorkableUse": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},		
+        //"TravelTubeEntrance+Work": { }	// DO NOT USE
+        "Valve": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Butcherable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Clinic": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Capturable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "DoctorStation": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "DoctorStationDoctorWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "DropAllWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "DropToUserCapacity": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Dumpable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "EmptyConduitWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "EquippableWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "EspressoMachineWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Harvestable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "MedicinalPill": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "PhonoboxWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "RelaxationPoint": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "ResearchCenter": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "RoleStation": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Sleepable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "SocialGatheringPointWorkable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "FuelTank": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Tinkerable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "TinkerStation": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		},
+        "Uprootable": {
+			"AttributeExperienceMultiplier": 1.0,
+			"EfficiencyMultiplier": 1.0,
+			"SkillExperienceMultiplier": 1.0
+		}		
+    }
+}
