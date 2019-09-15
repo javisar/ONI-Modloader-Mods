@@ -36,7 +36,7 @@ namespace FluidWarpMod
             }
         }
 #if DEBUG
-        static UnityEngine.Logger u_logger = new UnityEngine.Logger(new FileLogHandler("Mods" + Path.DirectorySeparatorChar + "_Logs" + Path.DirectorySeparatorChar + "FluidWarpMod.txt"));
+        static UnityEngine.Logger u_logger = new UnityEngine.Logger(new FileLogHandler("FluidWarpMod.txt"));
 #endif
         
         public static void Log(string message)
