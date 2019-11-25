@@ -24,7 +24,7 @@ namespace CustomWorldSize
             public const string WorldsizeX         = "WorldSizeX";
             public const string WorldsizeY         = "WorldSizeY";
 
-        public static SettingConfig WorldgenSeedX;
+            public static SettingConfig WorldgenSeedX;
 
             public static SettingConfig WorldgenSeedY;
             /// <summary>

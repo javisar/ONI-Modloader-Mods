@@ -12,7 +12,7 @@ namespace CustomWorldSize
     //[HarmonyPatch(typeof(GridSettings), nameof(GridSettings.Reset))]
     //public static class GridSettings_Reset
     [HarmonyPatch(typeof(WorldGenSettings), MethodType.Constructor)]
-    [HarmonyPatch(new Type[] { typeof(string),typeof(List<string>) })]
+    [HarmonyPatch(new Type[] { typeof(string),typeof(List<string>),typeof(bool) })]
     public static class WorldGenSettings_Constructor
     {
         public const string ModName = "CustomWorldSize";
