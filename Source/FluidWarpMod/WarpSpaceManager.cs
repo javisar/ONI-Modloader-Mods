@@ -26,13 +26,13 @@ namespace FluidWarpMod
         public bool isValidRequestor()
         {
 
-            Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 Is valid requestor {0}", FlowManager.HasConduit(ValveBase.GetOutputCell())));
+            //Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 Is valid requestor {0}", FlowManager.HasConduit(ValveBase.GetOutputCell())));
             return ValveBase != null && FlowManager.HasConduit(ValveBase.GetOutputCell());
         }
 
         public bool isValidProvider()
         {
-            Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 Is valid provider {0}", FlowManager.HasConduit(ValveBase.GetInputCell())));
+            //Logger.Log(String.Format("WarpSpaceManager.RequestFluid2 Is valid provider {0}", FlowManager.HasConduit(ValveBase.GetInputCell())));
             return ValveBase != null && FlowManager.HasConduit(ValveBase.GetInputCell());
         }
 
@@ -65,11 +65,9 @@ namespace FluidWarpMod
         {
             if (!isUpdaterRegistered)
             {
-                Logger.Log("WarpSpaceManager.RegisterConduitUpdater start");
                 Conduit.GetFlowManager(ConduitType.Gas).AddConduitUpdater(new Action<float>(WarpSpaceManager.GasConduitUpdate), ConduitFlowPriority.Default);
                 Conduit.GetFlowManager(ConduitType.Liquid).AddConduitUpdater(new Action<float>(WarpSpaceManager.LiquidConduitUpdate), ConduitFlowPriority.Default);
                 isUpdaterRegistered = true;
-                Logger.Log("WarpSpaceManager.RegisterConduitUpdater end");
             }
         }
 
@@ -77,11 +75,9 @@ namespace FluidWarpMod
         {
             if (isUpdaterRegistered)
             {
-                Logger.Log("WarpSpaceManager.UnregisterConduitUpdate start");
                 Conduit.GetFlowManager(ConduitType.Gas).RemoveConduitUpdater(new Action<float>(WarpSpaceManager.GasConduitUpdate));
                 Conduit.GetFlowManager(ConduitType.Liquid).RemoveConduitUpdater(new Action<float>(WarpSpaceManager.LiquidConduitUpdate));
                 isUpdaterRegistered = false;
-                Logger.Log("WarpSpaceManager.UnregisterConduitUpdate end");
             }
         }
 
@@ -144,21 +140,26 @@ namespace FluidWarpMod
             {
                 if (!provider.isValidProvider())
                     continue;
-                Logger.LogFormat("-----WarpSpaceManager.RequestFluid start for channel: {0}", provider.Channel);
                 var flowManager = provider.FlowManager;
                 int fromCell = provider.ValveBase.GetInputCell();
                 ConduitFlow.Conduit providerConduit = flowManager.GetConduit(fromCell);
                 ConduitFlow.ConduitContents providerContents = providerConduit.GetContents(flowManager);
                 if (SimHashes.Vacuum.Equals(providerContents.element))
+                {
+                    Logger.LogFormat("PushFluid: Vacuum found in Provider {0}, channel {1}", provider.ID, provider.Channel);
                     continue;
+                }
 
                 var matchedRequesters = requesters.Where(x => x.Channel == provider.Channel).ToList();
                 if (matchedRequesters.Count == 0)
+                {
+                    Logger.LogFormat("PushFluid: No matched requestors for Provider {0}, channel {1}", provider.ID, provider.Channel);
                     continue;
+                }
                 var splitMass = providerContents.mass / matchedRequesters.Count();
 
-                Logger.Log(String.Format("WarpSpaceManager.RequestFluid splitMass: {0}", splitMass));
-                Logger.Log(String.Format("WarpSpaceManager.RequestFluid matchedRequesters: {0}", matchedRequesters.Count));
+                //Logger.Log(String.Format("WarpSpaceManager.RequestFluid splitMass: {0}", splitMass));
+                //Logger.Log(String.Format("WarpSpaceManager.RequestFluid matchedRequesters: {0}", matchedRequesters.Count));
                 foreach (var requester in matchedRequesters)
                 {
                     if (!requester.isValidRequestor())
@@ -169,22 +170,22 @@ namespace FluidWarpMod
 
                     if (requestorContents.mass < 1f && requestorContents.element != providerContents.element && requestorContents.element != SimHashes.Vacuum)
                     {
-                        Logger.LogFormat("Removing contents is: {0} kg. of {1}", requestorContents.mass, requestorContents.element);
+                        //Logger.LogFormat("Removing contents is: {0} kg. of {1}", requestorContents.mass, requestorContents.element);
                         flowManager.RemoveElement(requestorConduit, requestorContents.mass);
                     }
 
                     float addedMass = flowManager.AddElement(toCell, providerContents.element, splitMass, providerContents.temperature, providerContents.diseaseIdx, providerContents.diseaseCount);
                     Game.Instance.accumulators.Accumulate(provider.ValveBase.AccumulatorHandle, addedMass);
-                    Logger.LogFormat($@"Requestor Info 
-requester mass: {requestorContents.mass} requester element: {requestorContents.element}
-provider mass: {providerContents.mass} provider element: {providerContents.element}
-provider split: {splitMass} added mass: {addedMass}
-\r\n ");
+//                    Logger.LogFormat($@"Requestor Info 
+//requester mass: {requestorContents.mass} requester element: {requestorContents.element}
+//provider mass: {providerContents.mass} provider element: {providerContents.element}
+//provider split: {splitMass} added mass: {addedMass}
+//");
                     if (addedMass > 0f)
                     {
                         ConduitFlow.ConduitContents removed = flowManager.RemoveElement(providerConduit, addedMass);
                         Game.Instance.accumulators.Accumulate(requester.ValveBase.AccumulatorHandle, addedMass);
-                        Logger.LogFormat("Moved {0} kg. from {1} to {2}. ", addedMass, fromCell, toCell);
+                       // Logger.LogFormat("Moved {0} kg. from {1} to {2}. ", addedMass, fromCell, toCell);
                     }
                     else
                     {
@@ -192,16 +193,16 @@ provider split: {splitMass} added mass: {addedMass}
                     }
                 }
 
-                Logger.LogFormat("-----WarpSpaceManager.RequestFluid end for channel: {0}", provider.Channel);
             }
 
-            Logger.LogFormat("WarpSpaceManager.RequestFluid end");
         }
 
         private static void UpdateConduitsOfWarpGates(float dt, ConduitType warpGateType)
         {
             try
             {
+                Logger.LogFormat("UpdateConduitsOfWarpGates: Liquid Providers: {0}, Gas Providers {1}", _liquidProviders.Count, _gasProviders.Count);
+                Logger.LogFormat("UpdateConduitsOfWarpGates: Liquid Requestors: {0}, Gas Requestors {1}", _liquidRequesters.Count, _gasRequesters.Count);
                 if (warpGateType == ConduitType.Liquid)
                 {
                     var requesters = _liquidRequesters.Values.Where(x => x.Channel != 10000).ToList();
