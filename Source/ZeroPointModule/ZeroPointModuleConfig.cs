@@ -8,8 +8,6 @@ class ZeroPointModuleConfig : BaseBatteryConfig
 {
     public const string ID = "ZeroPointModule";
 
-    private static readonly LogicPorts.Port[] OUTPUT_PORTS = LogicOperationalController.INPUT_PORTS_0_0;
-
     public override BuildingDef CreateBuildingDef()
     {
         //string id = "ZeroPointModule";
@@ -17,12 +15,12 @@ class ZeroPointModuleConfig : BaseBatteryConfig
         int height = 2;
         int hitpoints = 60;
         string anim = "smartbattery_kanim";
-        float construction_time = 120f;
+        float construction_time = 20f;
         float[] tIER = TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER7;
-        string[] aLL_METALS = TUNING.MATERIALS.REFINED_METALS;
+        string[] aLL_METALS = TUNING.MATERIALS.ALL_METALS;
         float melting_point = 800f;
         float exhaust_temperature_active = 0f;
-        float self_heat_kilowatts_active = 100f;
+        float self_heat_kilowatts_active = 0f;
        
         BuildingDef result = base.CreateBuildingDef(ID, width, height, hitpoints, anim, construction_time, tIER, aLL_METALS, melting_point, exhaust_temperature_active, self_heat_kilowatts_active, TUNING.BUILDINGS.DECOR.PENALTY.TIER5, TUNING.NOISE_POLLUTION.NOISY.TIER6);
         //result.EnergyConsumptionWhenActive = 120f;
@@ -31,23 +29,12 @@ class ZeroPointModuleConfig : BaseBatteryConfig
         return result;
     }
 
-    public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
-    {
-        GeneratedBuildings.RegisterLogicPorts(go, null, OUTPUT_PORTS);
-    }
-
-    public override void DoPostConfigureUnderConstruction(GameObject go)
-    {
-        GeneratedBuildings.RegisterLogicPorts(go, null, OUTPUT_PORTS);
-    }
-
     public override void DoPostConfigureComplete(GameObject go)
     {
         Battery battery = go.AddOrGet<Battery>();
         battery.capacity = 40000f;
         battery.joulesLostPerSecond = battery.capacity * 0.05f / 600f;
 
-        GeneratedBuildings.RegisterLogicPorts(go, null, OUTPUT_PORTS);
         base.DoPostConfigureComplete(go);
     }
 }
