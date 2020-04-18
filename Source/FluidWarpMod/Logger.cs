@@ -6,37 +6,8 @@ namespace FluidWarpMod
 {
     static class Logger
     {
-        internal sealed class FileLogHandler : ILogHandler, IDisposable
-        {
-            private FileStream fileStream;
-            private StreamWriter streamWriter;
-
-            public FileLogHandler(string LogFileName)
-            {
-                fileStream = new FileStream(LogFileName, FileMode.Create, FileAccess.ReadWrite);
-                streamWriter = new StreamWriter(fileStream);
-            }
-
-            public void Dispose()
-            {
-                fileStream.Dispose();
-            }
-
-            public void LogException(Exception exception, UnityEngine.Object context)
-            {
-                streamWriter.WriteLine("Exception: {0}", exception.Message);
-                streamWriter.WriteLine("Stacktrace: {0}", exception.StackTrace);
-                streamWriter.Flush();
-            }
-
-            public void LogFormat(LogType logType, UnityEngine.Object context, string format, params object[] args)
-            {
-                streamWriter.WriteLine(format, args);
-                streamWriter.Flush();
-            }
-        }
-#if DEBUG
-        static UnityEngine.Logger u_logger = new UnityEngine.Logger(new FileLogHandler("Mods" + Path.DirectorySeparatorChar + "_Logs" + Path.DirectorySeparatorChar + "FluidWarpMod.txt"));
+#if DEBUG    
+        static UnityEngine.Logger u_logger;
 #endif
         
         public static void Log(string message)
@@ -56,6 +27,19 @@ namespace FluidWarpMod
         static Logger()
         {
 #if DEBUG
+            String logPath = "Mods" + Path.DirectorySeparatorChar + "_Logs" + Path.DirectorySeparatorChar + "FluidWarpMod.txt";
+            for (int i = 0; i < 3; i++)
+            {
+                try
+                {
+                    u_logger = new UnityEngine.Logger(UnityEngine.Debug.unityLogger.logHandler);
+                }
+                catch (DirectoryNotFoundException ex)
+                {
+                    Debug.LogError(ex.ToString() + $"\nUnity logger is not started since the direcrtory {logPath} doesn't exist");
+                    Directory.CreateDirectory(Path.GetDirectoryName(logPath));
+                }
+            }
             u_logger.logEnabled = true;
 #endif
         }

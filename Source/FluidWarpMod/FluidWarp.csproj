@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FluidWarpMod</RootNamespace>
     <AssemblyName>FluidWarp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -36,27 +36,21 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\lib\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\lib\Assembly-CSharp-firstpass.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
-      <HintPath>..\lib\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\lib\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
